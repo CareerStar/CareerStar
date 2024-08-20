@@ -18,6 +18,14 @@ function MainPage() {
                     <h1>career journey</h1>
                     <p>Personalized & motivating professional development tool that puts people first. Built with love. </p>
                 </div>
+
+                <div className='main-page-button'>
+                    <p>Get Started Free -></p>
+                </div>
+
+                <div className='main-page-footer'>
+                    <p>Have an account? <a href='https://google.com' target='_blank'>Log in</a></p>
+                </div>
             </div>
         </div>
     );
