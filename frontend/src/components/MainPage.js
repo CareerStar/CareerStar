@@ -1,5 +1,5 @@
 import React from 'react';
-import careerStarLogo from '../assets/images/CareerStarlogowhite.png';
+import careerStarLogo from '../assets/images/main-page-career-star-logo-white.png';
 import astroaut from '../assets/images/main-page-astronaut.png';
 
 function MainPage() {
