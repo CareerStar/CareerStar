@@ -62,7 +62,7 @@
 
 }
 
-.main-page>.main-page-contnent {
+.main-page .main-page-contnent {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -72,12 +72,12 @@
   height: 100vh;
 }
 
-.main-page>.main-page-contnent>.main-page-header {
+.main-page .main-page-contnent .main-page-header {
   margin-top: -40px;
   width: 100%;
 }
 
-.main-page>.main-page-contnent>.main-page-header h1 {
+.main-page .main-page-contnent .main-page-header h1 {
 
   /* width: 745px;
   height: 160px; */
@@ -103,7 +103,7 @@
 
 }
 
-.main-page>.main-page-contnent>.main-page-header p {
+.main-page .main-page-contnent .main-page-header p {
   height: 50px;
   max-width: 475px;
   margin: 0 auto;
@@ -119,7 +119,7 @@
   color: #FFFFFF;
 }
 
-.main-page>.main-page-contnent>.main-page-button {
+.main-page .main-page-contnent .main-page-button {
 
   display: flex;
   flex-direction: row;
@@ -138,11 +138,15 @@
 
 }
 
-.main-page>.main-page-contnent>.main-page-button p {
+.main-page .main-page-contnent .main-page-button:hover{
+  cursor: pointer !important;
+}
+
+.main-page .main-page-contnent .main-page-button p {
   margin: 5px;
 }
 
-.main-page>.main-page-contnent>.main-page-footer {
+.main-page .main-page-contnent .main-page-footer {
 
   font-family: 'Nunito';
   font-style: normal;
@@ -154,7 +158,7 @@
   color: #FFFFFF;
 }
 
-.main-page>.main-page-contnent>.main-page-footer a{
+.main-page .main-page-contnent .main-page-footer a{
 
   font-family: 'Nunito';
   font-style: normal;
