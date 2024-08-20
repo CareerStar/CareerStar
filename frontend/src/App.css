@@ -52,7 +52,6 @@
 }
 
 .main-page .career-star-logo {
-  /* CareerStar logo white */
 
   position: absolute;
   width: 110px;
@@ -79,28 +78,22 @@
 
 .main-page .main-page-contnent .main-page-header h1 {
 
-  /* width: 745px;
-  height: 160px; */
-
   font-family: 'Satoshi';
   font-style: normal;
   font-weight: 900;
   font-size: 80px;
   line-height: 100%;
-  /* or 80px */
+  
   text-align: center;
   letter-spacing: -2px;
   margin: 0;
   padding: 0px;
   color: #FFFFFF;
 
-
-  /* Inside auto layout */
   flex: none;
   order: 0;
   align-self: stretch;
   flex-grow: 0;
-
 }
 
 .main-page .main-page-contnent .main-page-header p {
