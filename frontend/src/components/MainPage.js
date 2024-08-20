@@ -20,7 +20,7 @@ function MainPage() {
                 </div>
 
                 <div className='main-page-button'>
-                    <p>Get Started Free -></p>
+                    <p>Get Started Free &rarr;</p>
                 </div>
 
                 <div className='main-page-footer'>
