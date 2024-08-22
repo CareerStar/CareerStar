@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import MainPage from './components/MainPage';
+import UserIntent from './components/UserIntent';
 import {
   BrowserRouter as Router,
   Routes,
@@ -26,6 +27,12 @@ function App() {
             exact
             path="/signup"
             element={<SignUp />}
+          />
+
+          <Route
+            exact
+            path="/userIntent"
+            element={<UserIntent />}
           />
         </Routes>
       </Router>
