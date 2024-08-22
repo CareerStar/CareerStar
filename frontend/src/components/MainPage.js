@@ -1,11 +1,16 @@
 import React from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
+
 import careerStarLogo from '../assets/images/main-page-career-star-logo-white.png';
 import astroaut from '../assets/images/main-page-astronaut.png';
 
 function MainPage() {
 
+    const navigate = useNavigate(); 
+
     const handleClick = () => {
         console.log('Div clicked!');
+        navigate('/signup');
     };
 
     return (
