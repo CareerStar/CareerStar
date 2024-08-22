@@ -54,16 +54,16 @@
   flex-direction: row;
   width: 100%;
   height: 16px;
-  background-color: #F1F5F9; 
-  border-radius: 40px; 
+  background-color: #F1F5F9;
+  border-radius: 40px;
   overflow: hidden;
 }
 
 .progress-bar {
   height: 100%;
   max-width: 100%;
-  background: linear-gradient(180deg, #BAB0D4 0%, #7562E3 0%, #2B30F5 100%); 
-  border-radius: 40px; 
+  background: linear-gradient(180deg, #BAB0D4 0%, #7562E3 0%, #2B30F5 100%);
+  border-radius: 40px;
   transition: width 0.3s ease-in-out;
 }
 
@@ -78,6 +78,7 @@
   white-space: nowrap;
 }
 
+/* Main page styles */
 .main-page {
   display: flex;
   flex-direction: column;
@@ -101,7 +102,7 @@
 
 }
 
-.main-page .main-page-contnent {
+.main-page-contnent {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,19 +112,19 @@
   height: 100vh;
 }
 
-.main-page .main-page-contnent .main-page-header {
+.main-page-header {
   margin-top: -40px;
   width: 100%;
 }
 
-.main-page .main-page-contnent .main-page-header h1 {
+.main-page-header h1 {
 
   font-family: 'Satoshi';
   font-style: normal;
   font-weight: 900;
   font-size: 80px;
   line-height: 100%;
-  
+
   text-align: center;
   letter-spacing: -2px;
   margin: 0;
@@ -136,7 +137,7 @@
   flex-grow: 0;
 }
 
-.main-page .main-page-contnent .main-page-header p {
+.main-page-header p {
   height: 50px;
   max-width: 475px;
   margin: 0 auto;
@@ -152,7 +153,7 @@
   color: #FFFFFF;
 }
 
-.main-page .main-page-contnent .main-page-button {
+.main-page-button {
 
   display: flex;
   flex-direction: row;
@@ -171,15 +172,15 @@
 
 }
 
-.main-page .main-page-contnent .main-page-button:hover{
+.main-page-button:hover {
   cursor: pointer !important;
 }
 
-.main-page .main-page-contnent .main-page-button p {
+.main-page-button p {
   margin: 5px;
 }
 
-.main-page .main-page-contnent .main-page-footer {
+.main-page-footer {
 
   font-family: 'Nunito';
   font-style: normal;
@@ -191,7 +192,7 @@
   color: #FFFFFF;
 }
 
-.main-page .main-page-contnent .main-page-footer a{
+.main-page-footer a {
 
   font-family: 'Nunito';
   font-style: normal;
@@ -203,6 +204,7 @@
   color: #FFFFFF;
 }
 
+/* Sign up page styles */
 .signUp-page {
   display: flex;
   flex-direction: column;
@@ -232,7 +234,108 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  max-width: 475px;
+  max-width: 489px;
   width: 100%;
   height: 100vh;
+}
+
+.signUp-page-question {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 40px;
+  gap: 10px;
+
+  max-width: 489px;
+  max-height: 229px;
+
+  background: #FFFFFF;
+  border-radius: 24px;
+  border: 2px solid #E5E5E5;
+
+  flex: none;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.signUp-page-question h2 {
+  font-family: 'Satoshi';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 100%;
+
+  text-align: left;
+  letter-spacing: -2px;
+  margin: 0;
+  padding: 0px;
+  color: #161219;
+
+  flex: none;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.signUp-page-question h2 .highlight {
+  color: #3536F3
+}
+
+.signUp-page-question p {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 27px;
+
+  text-align: left;
+  margin: 0;
+  padding: 0px;
+  color: #161219;
+
+}
+
+.signUp-page-question input {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+
+  width: 409px;
+  height: 45px;
+
+  background: #F5F5F5;
+  border-radius: 4px;
+  border: none;
+}
+
+.signUp-page-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+
+  width: 473px;
+  height: 30px;
+
+  margin: 0 auto;
+  margin-top: 20px;
+  background: linear-gradient(180deg, #BAB0D4 0%, #7562E3 0%, #2B30F5 100%);
+  border-radius: 8px;
+
+  color: #FFFFFF;
+}
+
+.signUp-page-footer {
+
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 19px;
+  text-align: center;
+
+  color: #161219;
 }
