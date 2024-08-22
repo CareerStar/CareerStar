@@ -228,6 +228,10 @@
 
 }
 
+.career-star-logo:hover {
+  cursor: pointer !important;
+}
+
 .signUp-page .signUp-page-content {
   display: flex;
   flex-direction: column;
