@@ -10,6 +10,7 @@ function SignUp() {
 
     const nextPageNavigation = () => {
         console.log('Div clicked!');
+        navigate('/userIntent');
     }
 
     const navigateToMainPage = () => {
