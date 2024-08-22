@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import MainPage from './components/MainPage';
 import UserIntent from './components/UserIntent';
+import EmailCredentialPage from './components/EmailCredentialPage';
 import {
   BrowserRouter as Router,
   Routes,
@@ -33,6 +34,12 @@ function App() {
             exact
             path="/userIntent"
             element={<UserIntent />}
+          />
+
+          <Route
+            exact
+            path="/emalCredential"
+            element={<EmailCredentialPage />}
           />
         </Routes>
       </Router>
