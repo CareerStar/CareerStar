@@ -341,7 +341,7 @@
   font-family: 'Nunito';
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 18px;
   line-height: 19px;
   text-align: center;
 
@@ -370,8 +370,70 @@
 }
 
 .dropdown-menu option {
-  background: #FFFFFF; /* Same background as the select element */
-  color: #000000; /* Text color for options */
-  padding: 20px; /* Add padding for better readability */
-  border: none; /* Remove any default borders */
+  background: #FFFFFF;
+  color: #000000;
+  padding: 20px;
+  border: none;
+}
+
+/* Email Credentaial page styles */
+
+.toggle-button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.toggle-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 44px;
+  height: 24px;
+  background: #0056b3;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-right: 10px;
+}
+
+.toggle-button::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  transform: translateX(2px);
+}
+
+.toggle-button.checked {
+  background: #007bff;
+}
+
+.toggle-button.checked::before {
+  transform: translateX(calc(100% + 2px));
+}
+
+.toggle-button-container p {
+  line-height: 29px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.email-credential-page-footer {
+  margin-top: 40px;
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  text-align: center;
+  color: #000000;
+}
+
+.email-credential-page-footer .email-credential-page-footer-bold {
+  font-weight: 700;
 }
