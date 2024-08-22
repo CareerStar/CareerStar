@@ -38,6 +38,46 @@
   }
 }
 
+/* Progress bar styles */
+.main-progress-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.progress-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 16px;
+  background-color: #F1F5F9; 
+  border-radius: 40px; 
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  max-width: 100%;
+  background: linear-gradient(180deg, #BAB0D4 0%, #7562E3 0%, #2B30F5 100%); 
+  border-radius: 40px; 
+  transition: width 0.3s ease-in-out;
+}
+
+.progress-text {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 29px;
+  text-align: center;
+  color: #000000;
+  white-space: nowrap;
+}
+
 .main-page {
   display: flex;
   flex-direction: column;
@@ -172,6 +212,27 @@
   width: 100%;
   height: 100vh;
 
-  background: linear-gradient(180deg, #BAB0D4 0%, #7562E3 45%, #2B30F5 100%);
+  background: white;
 
+}
+
+.signUp-page .career-star-logo {
+
+  position: absolute;
+  width: 110px;
+  height: 59px;
+  left: 57px;
+  top: 52px;
+
+}
+
+.signUp-page .signUp-page-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  max-width: 475px;
+  width: 100%;
+  height: 100vh;
 }
