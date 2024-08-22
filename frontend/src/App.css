@@ -332,6 +332,10 @@
   color: #FFFFFF;
 }
 
+.signUp-page-button:hover {
+  cursor: pointer !important;
+}
+
 .signUp-page-footer {
 
   font-family: 'Nunito';
