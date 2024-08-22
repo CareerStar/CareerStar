@@ -15,7 +15,7 @@ function UserIntent() {
     const navigate = useNavigate();
 
     const nextPageNavigation = () => {
-        console.log('Div clicked!');
+        navigate('/emalCredential');
     }
 
     const navigateToMainPage = () => {
