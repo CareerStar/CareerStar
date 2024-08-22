@@ -347,3 +347,31 @@
 
   color: #161219;
 }
+
+/* User Intent page styles */
+.dropdown-menu {
+  box-sizing: border-box;
+
+  padding: 8px 12px;
+  margin-right: 60px;
+
+  width: 409px;
+  height: 41px;
+
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1.5L5 5.5L9 1.5" stroke="%2394A3B8" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 10px 7px;
+}
+
+.dropdown-menu option {
+  background: #FFFFFF; /* Same background as the select element */
+  color: #000000; /* Text color for options */
+  padding: 20px; /* Add padding for better readability */
+  border: none; /* Remove any default borders */
+}
