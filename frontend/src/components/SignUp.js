@@ -8,7 +8,7 @@ function SignUp() {
 
     const navigate = useNavigate(); 
 
-    const handleClick = () => {
+    const nextPageNavigation = () => {
         console.log('Div clicked!');
     }
 
@@ -24,11 +24,11 @@ function SignUp() {
             <div className='signUp-page-content'>
                 <ProgressBar currentStep={currentStep} />
                 <div className='signUp-page-question'>
-                    <h2>What's your <span class="highlight">name?</span></h2>
+                    <h2>What's your <span className="highlight">name?</span></h2>
                     <p>First name</p>
                     <input type='text' placeholder='Your First name' />
                 </div>
-                <div className='signUp-page-button' onClick={handleClick}>
+                <div className='signUp-page-button' onClick={nextPageNavigation}>
                     <p>Continue</p>
                 </div>
 
