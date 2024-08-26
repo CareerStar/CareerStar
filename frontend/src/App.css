@@ -38,6 +38,48 @@
   }
 }
 
+/* Header styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 40px;
+  background-color: #FFFFFF;
+}
+
+.header .logo img {
+  height: 40px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-info .star-count {
+  margin-left: 30px;
+  margin-right: 10px;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+}
+
+.user-info img {
+  margin-right: 20px;
+}
+
+.user-info .username {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  margin-right: 4px;
+  color: #404040;
+}
+
 /* Progress bar styles */
 .main-progress-container {
   display: flex;
@@ -436,4 +478,10 @@
 
 .email-credential-page-footer .email-credential-page-footer-bold {
   font-weight: 700;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
