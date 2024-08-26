@@ -80,6 +80,56 @@
   color: #404040;
 }
 
+/* Sidebar styles */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FFFFFF;
+  width: 190px;
+  height: 100vh;
+  padding: 20px 0;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  cursor: pointer;
+  padding: 12px 21px;
+}
+
+.sidebar li:hover {
+  background-color: #F5F5F5;
+  border-radius: 10px;
+}
+
+.sidebar li p {
+
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  margin: 0;
+  color: #000000;
+
+}
+
+.sidebar li.selected {
+  background-color: linear-gradient(180deg, #BAB0D4 0%, #7562E3 0%, #2B30F5 100%);
+  background: #F0EFFF;
+  border-radius: 8px;
+}
+
+.sidebar li.selected img {
+  filter: brightness(0) invert(1);
+  color: #FFE044;
+}
+
 /* Progress bar styles */
 .main-progress-container {
   display: flex;
