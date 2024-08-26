@@ -4,7 +4,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import careerStarLogo from '../assets/images/main-page-career-star-logo-white.png';
 import astroaut from '../assets/images/main-page-astronaut.png';
 
-function MainPage() {
+function StartPage() {
 
     const navigate = useNavigate(); 
 
@@ -41,4 +41,4 @@ function MainPage() {
     );
 }
 
-export default MainPage;
+export default StartPage;

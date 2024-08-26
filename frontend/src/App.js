@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import MainPage from './components/MainPage';
+import StartPage from './components/StartPage';
 import UserIntent from './components/UserIntent';
 import EmailCredentialPage from './components/EmailCredentialPage';
 import {
@@ -21,7 +21,7 @@ function App() {
           <Route
             exact
             path="/"
-            element={<MainPage />}
+            element={<StartPage />}
           />
 
           <Route

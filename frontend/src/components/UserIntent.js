@@ -18,13 +18,13 @@ function UserIntent() {
         navigate('/emalCredential');
     }
 
-    const navigateToMainPage = () => {
+    const navigateToStartPage = () => {
         navigate('/');
     }
 
     return (
         <div className='signUp-page'>
-            <div className='career-star-logo' onClick={navigateToMainPage}>
+            <div className='career-star-logo' onClick={navigateToStartPage}>
                 <img src={careerStarLogo} alt='Career Star Logo' />
             </div>
             <div className='signUp-page-content'>
