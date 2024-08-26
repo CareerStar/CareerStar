@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 
 import SignUp from './components/SignUp';
+import Dashboard from './components/Dashboard';
 
 function App() {
   return (
@@ -40,6 +41,12 @@ function App() {
             exact
             path="/emalCredential"
             element={<EmailCredentialPage />}
+          />
+
+          <Route
+            exact
+            path='/dashboard'
+            element={<Dashboard />}
           />
         </Routes>
       </Router>
