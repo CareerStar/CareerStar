@@ -535,3 +535,18 @@
   flex-direction: column;
   height: 100vh;
 }
+
+.dashboard-container {
+  display: flex;
+  flex: 1;
+  height: 100vh;
+}
+
+.dashboard-sidebar {
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+.dashboard-container .content {
+  flex: 1;
+}
