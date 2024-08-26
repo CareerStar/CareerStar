@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
+import DashboardContent from './DashboardContent';
 
 function Dashboard() {
     const [selectedPage, setSelectedPage] = useState('Home');
@@ -11,7 +12,7 @@ function Dashboard() {
             <div className='dashboard-container'>
                 <Sidebar pages={pages} onSelectPage={setSelectedPage} selectedPage={selectedPage} />
                 <div className='content'>
-                    <h1>{selectedPage}</h1>
+                    <DashboardContent />
                 </div>
             </div>
         </div>
