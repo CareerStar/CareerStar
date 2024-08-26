@@ -16,7 +16,7 @@ function EmailCredentialPage() {
 
     const nextPageNavigation = () => {
         console.log('Div clicked!');
-        navigate('/signup');
+        navigate('/dashboard');
     }
 
     const navigateToStartPage = () => {
