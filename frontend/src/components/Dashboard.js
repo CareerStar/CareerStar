@@ -12,7 +12,7 @@ function Dashboard() {
             <div className='dashboard-container'>
                 <Sidebar pages={pages} onSelectPage={setSelectedPage} selectedPage={selectedPage} />
                 <div className='content'>
-                    <DashboardContent />
+                    <DashboardContent selectedPage={selectedPage}/>
                 </div>
             </div>
         </div>
