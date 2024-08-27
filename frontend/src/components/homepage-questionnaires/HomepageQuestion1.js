@@ -11,7 +11,7 @@ function HomepageQuestion1() {
         <div className='home-page-question'>
             <h2>This describes me best...</h2>
             <div className=''>
-                <select id="options" className='home-page-dropdown-menu' value={selectedOption} onChange={handleChange}>
+                <select id="options" className='home-page-question-dropdown-menu' value={selectedOption} onChange={handleChange}>
                     <option value="" disabled>Select an option</option>
                     <option value="option1">Option 1</option>
                     <option value="option2">Option 2</option>
