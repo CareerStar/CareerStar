@@ -5,6 +5,7 @@ import careerStarLogo from '../assets/images/career-star-logo-black.png';
 
 function SignUp() {
     const currentStep = 1;
+    const totalSteps = 3;
 
     const navigate = useNavigate(); 
 
@@ -23,7 +24,7 @@ function SignUp() {
                 <img src={careerStarLogo} alt='Career Star Logo' />
             </div>
             <div className='signUp-page-content'>
-                <ProgressBar currentStep={currentStep} />
+                <ProgressBar currentStep={currentStep} totalSteps={totalSteps}/>
                 <div className='signUp-page-question'>
                     <h2>What's your <span className="highlight">name?</span></h2>
                     <p>First name</p>

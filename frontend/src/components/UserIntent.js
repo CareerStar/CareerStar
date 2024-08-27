@@ -5,6 +5,7 @@ import careerStarLogo from '../assets/images/career-star-logo-black.png';
 
 function UserIntent() {
     const currentStep = 2;
+    const totalSteps = 3;
 
     const [selectedOption, setSelectedOption] = useState('');
 
@@ -28,7 +29,7 @@ function UserIntent() {
                 <img src={careerStarLogo} alt='Career Star Logo' />
             </div>
             <div className='signUp-page-content'>
-                <ProgressBar currentStep={currentStep} />
+                <ProgressBar currentStep={currentStep} totalSteps={totalSteps}/>
                 <div className='signUp-page-question'>
                     <h2>I will mostly <span className="highlight">use CareerStar for</span>...</h2>
                     <div className=''>

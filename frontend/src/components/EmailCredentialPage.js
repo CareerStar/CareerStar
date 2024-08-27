@@ -5,6 +5,7 @@ import careerStarLogo from '../assets/images/career-star-logo-black.png';
 
 function EmailCredentialPage() {
     const currentStep = 3;
+    const totalSteps = 3;
 
     const [isChecked, setIsChecked] = useState(true);
 
@@ -29,7 +30,7 @@ function EmailCredentialPage() {
                 <img src={careerStarLogo} alt='Career Star Logo' />
             </div>
             <div className='signUp-page-content'>
-                <ProgressBar currentStep={currentStep} />
+                <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
                 <div className='signUp-page-question'>
                     <h2>Create <span className="highlight">my account</span></h2>
                     <p>Email address</p>
