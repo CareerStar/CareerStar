@@ -612,8 +612,8 @@
 }
 
 .home-welcome-right {
-  display: flex; 
-  flex-direction: row; 
+  display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   margin-right: 5px;
@@ -622,4 +622,128 @@
 
 .home-welcome-right .star-count {
   margin-right: 8px;
+}
+
+.home-page-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+
+  width: 473px;
+  height: 30px;
+
+  margin: 0 auto;
+  margin-top: 20px;
+  background: linear-gradient(180deg, #BAB0D4 0%, #7562E3 0%, #2B30F5 100%);
+  border-radius: 8px;
+
+  color: #FFFFFF;
+}
+
+.home-page-button:hover {
+  cursor: pointer !important;
+}
+
+/* Home Page Questionnaire styles */
+
+.home-page-question {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 40px;
+  gap: 10px;
+
+  max-width: 489px;
+  max-height: 229px;
+
+  background: #FFFFFF;
+  border-radius: 24px;
+  border: 2px solid #E5E5E5;
+}
+
+.home-page-question h2 {
+  font-family: 'Satoshi';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 100%;
+
+  text-align: left;
+  letter-spacing: -2px;
+  margin: 0;
+  padding: 0px;
+  color: #161219;
+}
+
+.home-page-question h2 .highlight {
+  color: #3536F3
+}
+
+.home-page-question p {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 27px;
+
+  text-align: left;
+  margin: 0;
+  padding: 0px;
+  color: #161219;
+}
+
+.home-questions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  max-width: 489px;
+  width: 100%;
+  max-height: 100vh;
+  margin-top: 50px;
+}
+
+.personalize-text {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 164%;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0;
+  color: #000000;
+}
+
+.home-question-wrapper {
+  margin: 40px;
+}
+
+.home-page-dropdown-menu {
+  box-sizing: border-box;
+
+  padding: 8px 12px;
+
+  width: 409px;
+  height: 41px;
+
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1.5L5 5.5L9 1.5" stroke="%2394A3B8" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 10px 7px;
+}
+
+.home-page-dropdown-menu option {
+  background: #FFFFFF;
+  color: #000000;
+  padding: 20px;
+  border: none;
 }
