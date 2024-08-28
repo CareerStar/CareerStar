@@ -8,7 +8,7 @@ function Dashboard() {
     const pages = ['Home', 'Profile', 'Roadmap', 'Events', 'Network','Support'];
     return (
         <div className='dashboard'>
-            <Header userName='John Doe' starCount={5} />
+            <Header userName='Abigail' starCount={3} />
             <div className='dashboard-container'>
                 <Sidebar pages={pages} onSelectPage={setSelectedPage} selectedPage={selectedPage} />
                 <div className='content'>
