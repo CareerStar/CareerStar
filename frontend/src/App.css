@@ -126,8 +126,11 @@
 }
 
 .sidebar li.selected img {
-  filter: brightness(0) invert(1);
   color: #FFE044;
+}
+
+.sidebar li.selected p {
+  color: #6F4CFF;
 }
 
 /* Progress bar styles */
@@ -730,6 +733,10 @@
 
 .home-page-button:hover {
   cursor: pointer !important;
+}
+
+.home-page-skip-video-button:hover {
+  cursor: pointer;
 }
 
 /* Home Page Questionnaire styles */
