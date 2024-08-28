@@ -6,13 +6,17 @@ import DashboardContent from './DashboardContent';
 function Dashboard() {
     const [selectedPage, setSelectedPage] = useState('Home');
     const pages = ['Home', 'Profile', 'Roadmap', 'Events', 'Network','Support'];
+
+    const handlePageChange = (page) => {
+        setSelectedPage(page);
+    }
     return (
         <div className='dashboard'>
             <Header userName='Abigail' starCount={3} />
             <div className='dashboard-container'>
                 <Sidebar pages={pages} onSelectPage={setSelectedPage} selectedPage={selectedPage} />
                 <div className='content'>
-                    <DashboardContent selectedPage={selectedPage}/>
+                    <DashboardContent selectedPage={selectedPage} onComplete={(page) => handlePageChange(page)}/>
                 </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Navigate, useNavigate } from 'react-router-dom';
 import astronaut from '../../assets/images/home-page-astronaut.png'
 import star from '../../assets/images/star.png'
 import HomepageQuestion1 from "../homepage-questionnaires/HomepageQuestion1";
@@ -7,7 +8,9 @@ import HomepageQuestion3 from "../homepage-questionnaires/HomepageQuestion3";
 import HomepageQuestion4 from "../homepage-questionnaires/HomepageQuestion4";
 import ProgressBar from "../ProgressBar";
 
-function Home() {
+function Home({onComplete}) {
+    const navigate = useNavigate();
+    
     const [currentStep, setCurrentStep] = useState(0);
     const [videoEnded, setVideoEnded] = useState(false);
     const totalSteps = 4;
@@ -28,6 +31,9 @@ function Home() {
     }
     const handleClick = () => {
         setCurrentStep(currentStep + 1);
+        if (currentStep === totalSteps) {
+            onComplete('Roadmap');
+        }
     }
 
     const handleSkipVideo = () => {
@@ -37,7 +43,7 @@ function Home() {
     const handleVideoEnd = () => {
         setVideoEnded(true);
     }
-    
+
     return (
         <div className="home">
             <div className="home-welcome">
