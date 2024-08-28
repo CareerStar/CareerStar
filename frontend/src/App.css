@@ -530,6 +530,91 @@
   font-weight: 700;
 }
 
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background: white;
+  padding: 20px 50px;
+  border-radius: 15px;
+  text-align: center;
+  position: relative;
+}
+
+.popup-content .earned-star {
+  margin-top: 10px;
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 27px;
+  background: linear-gradient(180deg, #BAB0D4 0%, #7562E3 0%, #2B30F5 100%);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+}
+
+.popup-content .popup-text {
+
+  width: 260px;
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  text-align: center;
+  letter-spacing: 0.3px;
+
+  color: #000000;
+
+}
+
+.popup-content img {
+  gap: 12px;
+
+  width: 125.96px;
+  height: 116.98px;
+
+}
+
+.popup-content h2 {
+  margin: 0 0 10px;
+}
+
+.popup-content .popup-submit-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+
+  width: 200px;
+  height: 30px;
+
+  margin: 0 auto;
+  margin-top: 20px;
+  background: linear-gradient(180deg, #BAB0D4 0%, #7562E3 0%, #2B30F5 100%);
+  border-radius: 8px;
+
+  color: #FFFFFF;
+}
+
+.popup-content .popup-submit-button:hover {
+  cursor: pointer !important;
+}
+
+/* Dashboard page styles */
+
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -550,6 +635,7 @@
 .dashboard-container .content {
   flex: 1;
   background-color: #F9F8FF;
+  margin-bottom: 20px;
 }
 
 /* Home page styles */
