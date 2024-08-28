@@ -872,3 +872,12 @@
   border: 1px solid #6F4CFF;
   cursor: pointer;
 }
+
+.home-page-skip-video-button {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 10px;
+  color: #000000;
+}
