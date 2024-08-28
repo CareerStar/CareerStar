@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import astronaut from '../../assets/images/home-page-astronaut.png'
 import star from '../../assets/images/star.png'
 import HomepageQuestion1 from "../homepage-questionnaires/HomepageQuestion1";
@@ -8,7 +8,8 @@ import HomepageQuestion4 from "../homepage-questionnaires/HomepageQuestion4";
 import ProgressBar from "../ProgressBar";
 
 function Home() {
-    const [currentStep, setCurrentStep] = useState(1);
+    const [currentStep, setCurrentStep] = useState(0);
+    const [videoEnded, setVideoEnded] = useState(false);
     const totalSteps = 4;
 
     const renderPage = () => {
@@ -18,7 +19,7 @@ function Home() {
             case 2:
                 return <HomepageQuestion2 />;
             case 3:
-                return <HomepageQuestion3/>;
+                return <HomepageQuestion3 />;
             case 4:
                 return <HomepageQuestion4 />;
             default:
@@ -28,6 +29,15 @@ function Home() {
     const handleClick = () => {
         setCurrentStep(currentStep + 1);
     }
+
+    const handleSkipVideo = () => {
+        setCurrentStep(1);
+    }
+
+    const handleVideoEnd = () => {
+        setVideoEnded(true);
+    }
+    
     return (
         <div className="home">
             <div className="home-welcome">
@@ -40,16 +50,34 @@ function Home() {
                 </div>
                 <div className="home-welcome-right"><span className="star-count"> 3 </span>  <img src={star} className='star' /></div>
             </div>
-            <div className="home-questions">
-                <span className="personalize-text">LET'S PERSONALIZE YOUR CAREERSTAR JOURNEY</span>
+            {currentStep >= 1 ? (
+                <div className="home-questions">
+                    <span className="personalize-text">LET'S PERSONALIZE YOUR CAREERSTAR JOURNEY</span>
                     <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
-                <div className="home-question-wrapper">
-                    {renderPage()}
+                    <div className="home-question-wrapper">
+                        {renderPage()}
+                    </div>
+                    <div className='home-page-button' onClick={handleClick}>
+                        <p>Continue</p>
+                    </div>
                 </div>
-                <div className='home-page-button' onClick={handleClick}>
-                    <p>Continue</p>
+            ) : (
+                <div className="home-questions">
+                    <iframe
+                        width="754"
+                        height="392"
+                        src="https://www.youtube.com/embed/QJKc4WsIkvw"
+                        title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        onEnded={handleVideoEnd}
+                    >
+                    </iframe>
+                    <div className='home-page-skip-video-button' onClick={handleSkipVideo}>
+                        <p>{videoEnded ? "Next" : "Skip Video"}</p>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }
