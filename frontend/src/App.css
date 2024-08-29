@@ -966,8 +966,6 @@
 
 .activity-card-container:hover {
   cursor: pointer;
-  padding-left: 40px;
-  padding-right: 40px;
 }
 
 .activity-card-image img {
