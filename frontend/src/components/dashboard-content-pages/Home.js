@@ -40,6 +40,8 @@ function Home({ onComplete }) {
                 return <HomepageQuestion4 onOptionSelect={handleOptionSelect} />;
             case 5:
                 return <HomepageQuestion5 />;
+            case 6:
+                return <Activities />;
             default:
                 return <HomepageQuestion1 />;
         }
@@ -49,6 +51,10 @@ function Home({ onComplete }) {
         if (currentStep === totalSteps) {
             onComplete('Roadmap');
         }
+    }
+
+    const handleClickActivities = () => {
+        setCurrentStep(currentStep + 1);
     }
 
     const handleSkipVideo = () => {
@@ -82,15 +88,19 @@ function Home({ onComplete }) {
                         <p>Continue</p>
                     </div>
                 </div>
-            ) : currentStep > totalSteps ? (
+            ) : currentStep === (totalSteps + 1) ? (
                 <div className="home-questions">
                     <span className="personalize-text">LET'S GET GOING THEN!</span>
                     <div className="home-question-wrapper">
                         {renderPage()}
                     </div>
-                    <div className='home-page-button' onClick={handleClick}>
+                    <div className='home-page-button' onClick={handleClickActivities}>
                         <p>Continue</p>
                     </div>
+                </div>
+            ) : currentStep === (totalSteps + 2) ? (
+                <div className="">
+                    {renderPage()}
                 </div>
             ) : (
                 <div className="home-questions">
