@@ -750,7 +750,7 @@
   gap: 10px;
 
   max-width: 489px;
-  max-height: 229px;
+  max-height: 100vh;
 
   background: #FFFFFF;
   border-radius: 24px;
@@ -763,7 +763,7 @@
   font-weight: 700;
   font-size: 40px;
   line-height: 100%;
-
+  width: 409px;
   text-align: left;
   letter-spacing: -2px;
   margin: 0;
@@ -881,4 +881,50 @@
   font-size: 16px;
   margin-top: 10px;
   color: #000000;
+}
+
+.home-page-question-description p {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  margin: 0px;
+  padding: 0px;
+  line-height: 20px;
+  color: #727272;
+}
+
+.home-page-question-checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+
+.home-page-question-checkbox-group label {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.home-page-question-checkbox-group input[type="checkbox"] {
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.home-page-question-checkbox-group input[type="checkbox"]:checked {
+  accent-color: #fff;
+}
+
+.home-page-question-checkbox-group p {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 25px;
+
+  color: #2E2E2E;
 }
