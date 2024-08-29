@@ -17,10 +17,17 @@ function Home({ onComplete }) {
     const [videoEnded, setVideoEnded] = useState(false);
     const totalSteps = 4;
 
+    const buttonVisibility = {
+        1: true,
+        2: true,
+        3: true,
+        4: false,
+        5: true,
+        6: false
+    };
+
     const handleOptionSelect = (selectedOption) => {
         console.log(`Option selected: ${selectedOption}`);
-        // You can perform additional actions based on the selected option here
-        // For example, navigate to another page, update state, etc.
         if (selectedOption === 'roadmap') {
             onComplete('Roadmap');
         } else if (selectedOption === 'activities') {
@@ -84,9 +91,11 @@ function Home({ onComplete }) {
                     <div className="home-question-wrapper">
                         {renderPage()}
                     </div>
-                    <div className='home-page-button' onClick={handleClick}>
-                        <p>Continue</p>
-                    </div>
+                    {buttonVisibility[currentStep] && (
+                        <div className='home-page-button' onClick={handleClick}>
+                            <p>Continue</p>
+                        </div>
+                    )}
                 </div>
             ) : currentStep === (totalSteps + 1) ? (
                 <div className="home-questions">
