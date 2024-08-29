@@ -6,14 +6,27 @@ import HomepageQuestion1 from "../homepage-questionnaires/HomepageQuestion1";
 import HomepageQuestion2 from "../homepage-questionnaires/HomepageQuestion2";
 import HomepageQuestion3 from "../homepage-questionnaires/HomepageQuestion3";
 import HomepageQuestion4 from "../homepage-questionnaires/HomepageQuestion4";
+import HomepageQuestion5 from "../homepage-questionnaires/HomepageQuestion5";
 import ProgressBar from "../ProgressBar";
+import Activities from "../Activities";
 
-function Home({onComplete}) {
+function Home({ onComplete }) {
     const navigate = useNavigate();
-    
+
     const [currentStep, setCurrentStep] = useState(0);
     const [videoEnded, setVideoEnded] = useState(false);
     const totalSteps = 4;
+
+    const handleOptionSelect = (selectedOption) => {
+        console.log(`Option selected: ${selectedOption}`);
+        // You can perform additional actions based on the selected option here
+        // For example, navigate to another page, update state, etc.
+        if (selectedOption === 'roadmap') {
+            onComplete('Roadmap');
+        } else if (selectedOption === 'activities') {
+            setCurrentStep(currentStep + 1);
+        }
+    };
 
     const renderPage = () => {
         switch (currentStep) {
@@ -24,7 +37,9 @@ function Home({onComplete}) {
             case 3:
                 return <HomepageQuestion3 />;
             case 4:
-                return <HomepageQuestion4 />;
+                return <HomepageQuestion4 onOptionSelect={handleOptionSelect} />;
+            case 5:
+                return <HomepageQuestion5 />;
             default:
                 return <HomepageQuestion1 />;
         }
@@ -56,10 +71,20 @@ function Home({onComplete}) {
                 </div>
                 <div className="home-welcome-right"><span className="star-count"> 3 </span>  <img src={star} className='star' /></div>
             </div>
-            {currentStep >= 1 ? (
+            {currentStep >= 1 && currentStep <= totalSteps ? (
                 <div className="home-questions">
                     <span className="personalize-text">LET'S PERSONALIZE YOUR CAREERSTAR JOURNEY</span>
                     <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
+                    <div className="home-question-wrapper">
+                        {renderPage()}
+                    </div>
+                    <div className='home-page-button' onClick={handleClick}>
+                        <p>Continue</p>
+                    </div>
+                </div>
+            ) : currentStep > totalSteps ? (
+                <div className="home-questions">
+                    <span className="personalize-text">LET'S GET GOING THEN!</span>
                     <div className="home-question-wrapper">
                         {renderPage()}
                     </div>
@@ -72,7 +97,7 @@ function Home({onComplete}) {
                     <iframe
                         width="754"
                         height="392"
-                        src="https://www.youtube.com/embed/QJKc4WsIkvw"
+                        src="https://www.youtube.com/embed/epZ5_DVQzFE"
                         title="YouTube video player"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
