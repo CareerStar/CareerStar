@@ -534,6 +534,7 @@
   font-weight: 700;
 }
 
+/*Pop up styles*/
 .popup {
   position: fixed;
   top: 0;
@@ -963,6 +964,12 @@
   text-align: left;
 }
 
+.activity-card-container:hover {
+  cursor: pointer;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
 .activity-card-image img {
   width: 200px;
   margin: 0px;
@@ -1043,4 +1050,96 @@
   line-height: 16px;
   text-align: center;
   color: #000000;
+}
+
+/* Activity card popup styles */
+.activity-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.activity-popup-content {
+  background: white;
+  padding: 20px 20px;
+  border-radius: 15px;
+  text-align: center;
+  position: relative;
+}
+
+.activity-popup-content h2 {
+  width: 335px;
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 27px;
+  text-align: left;
+  color: #000000;
+  margin: 0 0;
+}
+
+.activity-popup-content img {
+  gap: 12px;
+  width: 100%;
+}
+
+.activity-popup-content .activity-popup-text {
+
+  max-width: 350px;
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  text-align: left;
+  letter-spacing: 0.3px;
+
+  color: #000000;
+
+}
+
+.activity-popup-content .activity-popup-submit-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; 
+  align-items: center;
+  padding: 8px 0px;
+
+  width: 100%;
+  height: 20px;
+
+  margin: 0 auto;
+  margin-top: 20px;
+  background: linear-gradient(180deg, #BAB0D4 0%, #7562E3 0%, #2B30F5 100%);
+  border-radius: 8px;
+
+  color: #FFFFFF;
+}
+
+.activity-popup-content .activity-popup-submit-button:hover {
+  cursor: pointer !important;
+}
+
+.activity-popup-tags {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.activity-popup-star-and-count {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }

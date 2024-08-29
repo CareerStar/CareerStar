@@ -75,7 +75,7 @@ function Activities() {
                                 <div className='activity-card-tags'>
                                     {currentCard.tags.map(tag => <div className='activity-card-tag'><p>{tag}</p></div>)}
                                 </div>
-                                <div className='activity-popup-star'>
+                                <div className='activity-popup-star-and-count'>
                                     <p>{currentCard.starCount}</p>
                                     <img src={starEmpty} alt='star' />
                                 </div>
