@@ -1335,9 +1335,9 @@ button:hover {
 
 .roadmap-goal-card img {
   position: absolute;
-  top: 16px; 
-  right: 16px; 
-  width: 24px; 
+  top: 16px;
+  right: 16px;
+  width: 24px;
   height: 24px;
 }
 
@@ -1370,4 +1370,68 @@ button:hover {
   text-align: center;
   letter-spacing: 0.3px;
   color: #171717;
+}
+
+.roadmap-phase-title {
+  font-family: 'Satoshi';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 38px;
+  letter-spacing: 0.3px;
+  color: #171717;
+}
+
+.roadmap-sub-phase{
+  width: 100%;
+  gap:12px;
+  margin-bottom: 12px;
+}
+
+.roadmap-phase-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 24px;
+
+  width: 100%;
+  height: auto;
+
+  background: #FFFFFF;
+  border-radius: 12px;
+}
+
+.roadmap-phase-card input[type="checkbox"] {
+  width: 16px;
+  height: 16px; 
+  transform: scale(1.5); 
+  margin-right: 32px; 
+}
+
+.roadmap-phase-card p {
+  flex-grow: 1;
+  margin: 0; 
+  padding: 0;
+}
+
+.roadmap-phase-card img {
+  width: 24px;
+  height: 24px;
+}
+
+.roadmap-phase-star-count {
+  align-items: center;
+  padding: 20px 20px;
+  gap: 8px;
+
+  width: auto;
+  height: auto;
+
+  background: #FFFFFF;
+  border-radius: 12px;
+}
+
+.bold {
+  font-weight: 700;
 }
