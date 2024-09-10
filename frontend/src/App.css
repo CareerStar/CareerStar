@@ -1294,3 +1294,80 @@
 button:hover {
   background-color: #0056b3;
 }
+
+/* Roadmap page styles */
+.roadmap-container {
+  padding: 50px;
+  text-align: left;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.roadmap-title {
+  font-family: 'Satoshi';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 38px;
+  letter-spacing: 0.3px;
+  color: #171717;
+}
+
+.roadmap-goals-container {
+  gap: 24px;
+}
+
+.roadmap-goal-card {
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 8px;
+  isolation: isolate;
+  width: 100%;
+  height: auto;
+  background: #FFFFFF;
+  border-radius: 24px;
+  border: 1px solid #6F4CFF;
+  position: relative;
+}
+
+.roadmap-goal-card img {
+  position: absolute;
+  top: 16px; 
+  right: 16px; 
+  width: 24px; 
+  height: 24px;
+}
+
+.roadmap-goal-card img:hover {
+  cursor: pointer;
+}
+
+.roadmap-goal-card p {
+  margin: 0;
+  padding: 0;
+}
+
+.roadmap-goal-card-heading {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: #171717;
+}
+
+.roadmap-goal-card-answer {
+  font-family: 'Satoshi';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 38px;
+  text-align: center;
+  letter-spacing: 0.3px;
+  color: #171717;
+}
