@@ -57,6 +57,7 @@ function EmailCredentialPage() {
         } catch (error) {
             if (error.status === 400) {
                 console.log('User already exists!');
+                alert('User already exists.');
             }
             console.error("Error fetching data:", error);
         }
