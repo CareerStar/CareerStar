@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import ProgressBar from './ProgressBar';
 import careerStarLogo from '../assets/images/career-star-logo-black.png';
 
@@ -9,6 +9,10 @@ function UserIntent() {
 
     const [selectedOption, setSelectedOption] = useState('');
 
+    const location = useLocation();
+    const { firstname } = location.state || {};
+    console.log('First name:', firstname);
+
     const handleChange = (event) => {
         setSelectedOption(event.target.value);
     };
@@ -16,7 +20,7 @@ function UserIntent() {
     const navigate = useNavigate();
 
     const nextPageNavigation = () => {
-        navigate('/emalCredential');
+        navigate('/emalCredential', { state: { firstname } });
     }
 
     const navigateToStartPage = () => {
