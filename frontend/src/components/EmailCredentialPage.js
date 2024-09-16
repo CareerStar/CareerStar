@@ -16,6 +16,7 @@ function EmailCredentialPage() {
     const [lastname, setLastname] = useState('');
     const [emailID, setEmailID] = useState('');
     const [password, setPassword] = useState('');
+    const [userId, setUserID] = useState(0);
 
     const [isChecked, setIsChecked] = useState(true);
     const [showPopup, setShowPopup] = useState(false);
@@ -52,7 +53,7 @@ function EmailCredentialPage() {
             if (response.status === 200) {
                 console.log('User created successfully!');
             }
-            console.log(response);
+            setUserID(response.data.userId);
             setShowPopup(true);
             // navigate('/dashboard');
         } catch (error) {
@@ -66,7 +67,7 @@ function EmailCredentialPage() {
 
     const navigateToDashboard = () => {
         setShowPopup(false);
-        navigate('/dashboard', { state: { firstname: firstname } });
+        navigate('/dashboard', { state: { firstname: firstname, userId: userId } });
     };
 
     const navigateToStartPage = () => {
