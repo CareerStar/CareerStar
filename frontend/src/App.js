@@ -12,6 +12,7 @@ import {
 
 import SignUp from './components/SignUp';
 import Dashboard from './components/Dashboard';
+import LogIn from './components/LogIn';
 
 function App() {
   return (
@@ -47,6 +48,12 @@ function App() {
             exact
             path='/dashboard'
             element={<Dashboard />}
+          />
+
+          <Route
+            exact
+            path='/login'
+            element={<LogIn />}
           />
         </Routes>
       </Router>
