@@ -84,7 +84,7 @@ def add_user():
 
         cursor.execute(insert_query, (firstname, lastname, emailID, hashed_password, stars))
         user_id = 0
-        user_id - cursor.fetchone()[0]
+        user_id = cursor.fetchone()[0]
 
         connection.commit()
 
@@ -98,6 +98,36 @@ def add_user():
         if connection:
             cursor.close()
             connection.close()
+
+
+@app.route('/user/<int:userId>', methods=['GET'])
+def get_user_details(userId):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        get_user_query = """
+        SELECT firstname, lastname, emailID, stars FROM Users WHERE userId = %s;
+        """
+        cursor.execute(get_user_query, (userId,))
+        user = cursor.fetchone()
+
+        if user:
+            user_dict = {
+                "firstname": user[0],
+                "lastname": user[1],
+                "emailID": user[2],
+                "stars": user[3]
+            }
+            return jsonify(user_dict)
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            cursor.close()
+            connection.close()
+
 
 @app.route('/login', methods=['POST'])
 def login():
