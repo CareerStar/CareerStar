@@ -454,6 +454,15 @@
   color: #161219;
 }
 
+.signUp-page-footer a {
+  text-decoration: underline;
+  color: #3536F3;
+}
+
+.signUp-page-footer a:hover {
+  cursor: pointer !important;
+}
+
 /* User Intent page styles */
 .dropdown-menu {
   box-sizing: border-box;
