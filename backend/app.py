@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 import os
 import psycopg2
 from dotenv import load_dotenv
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 
 load_dotenv()
@@ -97,5 +97,37 @@ def add_user():
             cursor.close()
             connection.close()
 
+@app.route('/login', methods=['POST'])
+def login():
+    try:
+        user_data = request.json
+        emailID = user_data.get('emailID')
+        password = user_data.get('password')
+
+        if not emailID or not password:
+            return jsonify({"error": "Missing email or password"}), 400
+        
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        cursor.execute("SELECT userId, password FROM Users WHERE emailID = %s;", (emailID,))
+        user = cursor.fetchone()
+
+        if user:
+            user_id, hashed_password = user
+
+            if check_password_hash(hashed_password, password):
+                return jsonify({"message": "Login successful", "userId": user_id}), 200
+            else:
+                return jsonify({"error": "Invalid email or password"}), 400
+        else:
+            return jsonify({"error": "Invalid email or password"}), 400
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+    finally:
+        if connection:
+            cursor.close()
+            connection.close()
+        
 if __name__ == '__main__':
     app.run(debug=True)
