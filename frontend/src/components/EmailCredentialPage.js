@@ -12,7 +12,7 @@ function EmailCredentialPage() {
 
     const location = useLocation();
 
-    const [firstname, setFirstname] = useState(location.state.firstname || {});
+    const [firstname, setFirstname] = useState(location.state?.firstname || {});
     const [lastname, setLastname] = useState('');
     const [emailID, setEmailID] = useState('');
     const [password, setPassword] = useState('');
@@ -45,7 +45,8 @@ function EmailCredentialPage() {
                 "emailID": emailID,
                 "firstname": firstname,
                 "lastname": "No last name",
-                "password": password
+                "password": password,
+                "stars": 3
             };
             const response = await axios.post('http://127.0.0.1:5000/users', requestBody);
             if (response.status === 200) {
@@ -65,7 +66,7 @@ function EmailCredentialPage() {
 
     const navigateToDashboard = () => {
         setShowPopup(false);
-        navigate('/dashboard');
+        navigate('/dashboard', { state: { firstname: firstname } });
     };
 
     const navigateToStartPage = () => {
@@ -73,7 +74,7 @@ function EmailCredentialPage() {
     };
 
     const logInPageNavigation = () => {
-        navigate('/login');
+        navigate('/login', { state: { emailID: emailID } });
     };
 
     return (
