@@ -52,17 +52,17 @@ function LogIn() {
         } catch (error) {
             if (error.status === 400) {
                 console.log('User does not exist!');
-                alert('User does not exist.');
+                alert('Incorrect email ID or password. Please try again.');
             } else {
                 console.error("Error fetching data:", error);
             }
         }
     };
 
-    const navigateToDashboard = () => {
-        setShowPopup(false);
-        navigate('/dashboard');
-    };
+    // const navigateToDashboard = () => {
+    //     setShowPopup(false);
+    //     navigate('/dashboard');
+    // };
 
     const navigateToStartPage = () => {
         navigate('/');
@@ -78,7 +78,7 @@ function LogIn() {
                 <img src={careerStarLogo} alt='Career Star Logo' />
             </div>
             <div className='signUp-page-content'>
-                <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
+                {/* <ProgressBar currentStep={currentStep} totalSteps={totalSteps} /> */}
                 <div className='signUp-page-question'>
                     <h2>Log in to <span className="highlight">my account</span></h2>
                     <p>Email address</p>
