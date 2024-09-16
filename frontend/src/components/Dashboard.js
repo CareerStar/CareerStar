@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import Header from './Header';
 import Sidebar from './Sidebar';
@@ -8,19 +8,42 @@ function Dashboard() {
 
     const location = useLocation();
     const [firstname, setFirstname] = useState(location.state?.firstname || '');
+    const [userId, setUserId] = useState(location.state?.userId || '');
+    const [userDetails, setUserDetails] = useState({});
     const [selectedPage, setSelectedPage] = useState('Home');
     const pages = ['Home', 'Profile', 'Roadmap', 'Events', 'Network','Support'];
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/user/${userId}`);
+                const data = await response.json();
+                if (response.ok) {
+                    setUserDetails(data);
+                    console.log('User details:', data);
+                } else {
+                    console.error('Error fetching user details:', data);
+                }
+            } catch (error) {
+                console.error('Error fetching user details:', error);
+            }
+        };
+
+        if (userId) {
+            fetchUserDetails();
+        }
+    }, [userId]);
 
     const handlePageChange = (page) => {
         setSelectedPage(page);
     }
     return (
         <div className='dashboard'>
-            <Header userName={firstname} starCount={3} />
+            <Header userName={firstname} starCount={userDetails.stars} />
             <div className='dashboard-container'>
                 <Sidebar pages={pages} onSelectPage={setSelectedPage} selectedPage={selectedPage} />
                 <div className='content'>
-                    <DashboardContent selectedPage={selectedPage} onComplete={(page) => handlePageChange(page)}/>
+                    <DashboardContent selectedPage={selectedPage} onComplete={(page) => handlePageChange(page)} userId={userId}/>
                 </div>
             </div>
         </div>
