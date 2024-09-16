@@ -10,8 +10,7 @@ function LogIn() {
     const totalSteps = 3;
 
     const location = useLocation();
-
-    const [emailID, setEmailID] = useState('');
+    const [emailID, setEmailID] = useState(location.state?.emailID || '');
     const [password, setPassword] = useState('');
 
     const [isChecked, setIsChecked] = useState(true);
@@ -44,11 +43,11 @@ function LogIn() {
             const response = await axios.post('http://127.0.0.1:5000/login', requestBody);
 
             if (response.status === 200) {
-                const {userId, token} = response.data;
-                console.log('User logged in successfully!', userId);
+                const {userId, firstname, token} = response.data;
+                console.log('User logged in successfully!', userId, firstname, token);
                 localStorage.setItem('userId', userId);
                 localStorage.setItem('token', token);
-                navigate('/dashboard', { state: { userId: userId } });
+                navigate('/dashboard', { state: { userId: userId, firstname: firstname  } });
             }
         } catch (error) {
             if (error.status === 400) {
@@ -85,7 +84,8 @@ function LogIn() {
                     <p>Email address</p>
                     <input 
                         type='text' 
-                        placeholder='abigail@gmail.com' 
+                        placeholder='abigail@gmail.com'
+                        value={emailID} 
                         onChange={handleEmailIDInputChange}
                     />
                     <p>Password</p>
