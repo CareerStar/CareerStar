@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from 'react-router-dom';
 import astronaut from '../../assets/images/home-page-astronaut.png'
 import star from '../../assets/images/star.png'
@@ -10,11 +10,11 @@ import HomepageQuestion5 from "../homepage-questionnaires/HomepageQuestion5";
 import ProgressBar from "../ProgressBar";
 import Activities from "../Activities";
 
-function Home({ onComplete }) {
+function Home({ onComplete, userId }) {
     const navigate = useNavigate();
-
     const [currentStep, setCurrentStep] = useState(0);
     const [videoEnded, setVideoEnded] = useState(false);
+    const [userDetails, setUserDetails] = useState({});
     const totalSteps = 4;
 
     const buttonVisibility = {
@@ -26,6 +26,26 @@ function Home({ onComplete }) {
         6: false
     };
 
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/user/${userId}`);
+                const data = await response.json();
+                if (response.ok) {
+                    setUserDetails(data);
+                    console.log('User details:', data);
+                } else {
+                    console.error('Error fetching user details:', data);
+                }
+            } catch (error) {
+                console.error('Error fetching user details:', error);
+            }
+        };
+
+        if (userId) {
+            fetchUserDetails();
+        }
+    }, [userId]);
     const handleOptionSelect = (selectedOption) => {
         console.log(`Option selected: ${selectedOption}`);
         if (selectedOption === 'roadmap') {
@@ -78,11 +98,11 @@ function Home({ onComplete }) {
                 <div className='home-welcome-left'>
                     <img src={astronaut} alt="Astronaut" />
                     <div className="home-welcome-left-text">
-                        <h1>Welcome, Abigail!</h1>
+                        <h1>Welcome, {userDetails.firstname}!</h1>
                         <p>It's great day to be a career star!</p>
                     </div>
                 </div>
-                <div className="home-welcome-right"><span className="star-count"> 3 </span>  <img src={star} className='star' /></div>
+                <div className="home-welcome-right"><span className="star-count"> {userDetails.stars} </span>  <img src={star} className='star' /></div>
             </div>
             {currentStep >= 1 && currentStep <= totalSteps ? (
                 <div className="home-questions">

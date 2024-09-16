@@ -6,11 +6,11 @@ import Events from './dashboard-content-pages/Events';
 import Network from './dashboard-content-pages/Network';
 import Support from './dashboard-content-pages/Support';
 
-function DashboardContent({selectedPage, onComplete}) {
+function DashboardContent({selectedPage, onComplete, userId}) {
     const renderPage = () => {
         switch (selectedPage) {
             case 'Home':
-                return <Home onComplete={onComplete}/>;
+                return <Home onComplete={onComplete} userId={userId}/>;
             case 'Profile':
                 return <Profile />;
             case 'Roadmap':
