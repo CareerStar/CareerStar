@@ -64,7 +64,9 @@ def add_user():
         firstname = user_data.get('firstname')
         lastname = user_data.get('lastname')
         emailID = user_data.get('emailID')
+        emailID = emailID.lower()
         password = user_data.get('password')
+        stars = user_data.get('stars')
 
         if not firstname or not lastname or not emailID or not password:
             return jsonify({"error": "Missing required fields"}), 400
@@ -75,12 +77,12 @@ def add_user():
         cursor = connection.cursor()
 
         insert_query = """
-        INSERT INTO Users (firstname, lastname, emailID, password)
-        VALUES (%s, %s, %s, %s)
+        INSERT INTO Users (firstname, lastname, emailID, password, stars)
+        VALUES (%s, %s, %s, %s, %s)
         RETURNING userId, created_at;
         """
 
-        cursor.execute(insert_query, (firstname, lastname, emailID, hashed_password))
+        cursor.execute(insert_query, (firstname, lastname, emailID, hashed_password, stars))
         user_id = 0
         user_id - cursor.fetchone()[0]
 
@@ -102,6 +104,7 @@ def login():
     try:
         user_data = request.json
         emailID = user_data.get('emailID')
+        emailID = emailID.lower()
         password = user_data.get('password')
 
         if not emailID or not password:
@@ -110,14 +113,14 @@ def login():
         connection = get_db_connection()
         cursor = connection.cursor()
 
-        cursor.execute("SELECT userId, password FROM Users WHERE emailID = %s;", (emailID,))
+        cursor.execute("SELECT userId, password, firstname FROM Users WHERE emailID = %s;", (emailID,))
         user = cursor.fetchone()
 
         if user:
-            user_id, hashed_password = user
+            user_id, hashed_password, firstname = user
 
             if check_password_hash(hashed_password, password):
-                return jsonify({"message": "Login successful", "userId": user_id}), 200
+                return jsonify({"message": "Login successful", "userId": user_id, "firstname": firstname}), 200
             else:
                 return jsonify({"error": "Invalid email or password"}), 400
         else:
