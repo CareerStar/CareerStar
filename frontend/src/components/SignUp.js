@@ -23,6 +23,10 @@ function SignUp() {
         navigate('/');
     };
 
+    const logInPageNavigation = () => {
+        navigate('/login');
+    }
+
     return (
         <div className='signUp-page'>
             <div className='career-star-logo' onClick={navigateToStartPage}>
@@ -45,7 +49,7 @@ function SignUp() {
                 </div>
 
                 <div className='signUp-page-footer'>
-                    <p>Have an account? <a href='https://google.com' target='_blank'>Log in</a></p>
+                    <p>Have an account? <a onClick={logInPageNavigation}>Log in</a></p>
                 </div>
             </div>
         </div>
