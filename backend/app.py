@@ -1,11 +1,14 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import os
 import psycopg2
 from dotenv import load_dotenv
+from werkzeug.security import generate_password_hash
+from flask_cors import CORS
 
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 
 db_host = os.getenv('DB_HOST')
 db_port = os.getenv('DB_PORT')
@@ -48,6 +51,47 @@ def get_users():
     except Exception as error:
         return jsonify({"error": str(error)}), 500
 
+    finally:
+        if connection:
+            cursor.close()
+            connection.close()
+
+@app.route('/users', methods=['POST'])
+def add_user():
+    try:
+        user_data = request.json
+
+        firstname = user_data.get('firstname')
+        lastname = user_data.get('lastname')
+        emailID = user_data.get('emailID')
+        password = user_data.get('password')
+
+        if not firstname or not lastname or not emailID or not password:
+            return jsonify({"error": "Missing required fields"}), 400
+        
+        hashed_password = generate_password_hash(password)
+
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        insert_query = """
+        INSERT INTO Users (firstname, lastname, emailID, password)
+        VALUES (%s, %s, %s, %s)
+        RETURNING userId, created_at;
+        """
+
+        cursor.execute(insert_query, (firstname, lastname, emailID, hashed_password))
+        user_id = 0
+        user_id - cursor.fetchone()[0]
+
+        connection.commit()
+
+        return jsonify({"message": "User added successfully", "userId": user_id}), 201
+
+    except psycopg2.IntegrityError as e:
+        return jsonify({"error": "Email already exists"}), 400
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
     finally:
         if connection:
             cursor.close()
