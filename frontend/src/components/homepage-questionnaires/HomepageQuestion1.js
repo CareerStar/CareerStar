@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 
-function HomepageQuestion1() {
+function HomepageQuestion1({onChange}) {
     const [selectedOption, setSelectedOption] = useState('');
 
     const handleChange = (event) => {
         setSelectedOption(event.target.value);
+        onChange(event.target.value);
     };
 
     return (
