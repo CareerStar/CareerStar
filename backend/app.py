@@ -200,6 +200,38 @@ def onboarding():
         if connection:
             cursor.close()
             connection.close()
+
+@app.route('/onboarding/<int:userId>', methods=['GET'])
+def get_user_onboarding_details(userId):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        get_user_onboarding_details_query = """
+        SELECT describeMe, currentSituation, choice, onboarded, goal FROM user_personalization WHERE userId = %s;
+        """
+        cursor.execute(get_user_onboarding_details_query, (userId,))
+        user = cursor.fetchone()
+
+        if user:
+            user_dict = {
+                "describeMe": user[0],
+                "currentSituation": user[1],
+                "choice": user[2],
+                "onboarded": user[3],
+                "userId": userId,
+                "goal": user[4]
+            }
+            return jsonify(user_dict)
+        else:
+            return jsonify({"error": "User has not onboarded yet"}), 404
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            cursor.close()
+            connection.close()
         
 if __name__ == '__main__':
     app.run(debug=True)
