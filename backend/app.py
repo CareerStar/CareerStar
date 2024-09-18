@@ -232,6 +232,41 @@ def get_user_onboarding_details(userId):
         if connection:
             cursor.close()
             connection.close()
-        
+
+@app.route('/update_onboarding/<int:userId>', methods=['PUT'])
+def update_user_onboarding_details(userId):
+    try:
+        data = request.get_json()
+        current_situation = data.get('currentSituation')
+        goal = data.get('goal')
+
+        if not current_situation or not goal:
+            return jsonify({"error": "Both 'currentSituation' and 'goal' fields are required"}), 400
+
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        update_user_onboarding_query = """
+        UPDATE user_personalization
+        SET currentSituation = %s, goal = %s
+        WHERE userId = %s;
+        """
+        cursor.execute(update_user_onboarding_query, (current_situation, goal, userId))
+
+        connection.commit()
+
+        if cursor.rowcount > 0:
+            return jsonify({"message": "User onboarding details updated successfully"}), 200
+        else:
+            return jsonify({"error": "User not found or no changes made"}), 404
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            cursor.close()
+            connection.close()
+
 if __name__ == '__main__':
     app.run(debug=True)
