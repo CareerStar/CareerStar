@@ -161,6 +161,45 @@ def login():
         if connection:
             cursor.close()
             connection.close()
+
+@app.route('/onboarding', methods=['POST'])
+def onboarding():
+    try:
+        user_data = request.json
+        print(user_data)
+        userId = user_data.get('userId')
+        describeMe = user_data.get('describeMe')
+        currentSituation = user_data.get('currentSituation')
+        goal = user_data.get('goal')
+        choice = user_data.get('choice')
+
+        if not userId or not describeMe or not currentSituation or not goal:
+            return jsonify({"error": "Missing data"}), 400
+        
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        insert_query = """
+        INSERT INTO user_personalization (userId, describeMe, currentSituation, goal, onboarded, choice)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        RETURNING userId;
+        """
+
+        cursor.execute(insert_query, (userId, describeMe, currentSituation, goal, True, choice))
+        user_id = 0
+        user_id = cursor.fetchone()[0]
+
+        connection.commit()
+        if userId:
+            return jsonify({"message": "Data added successful", "userId": user_id, "onboarded": True}), 200
+        else:
+            return jsonify({"error": "Issue with data insertion"}), 400
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+    finally:
+        if connection:
+            cursor.close()
+            connection.close()
         
 if __name__ == '__main__':
     app.run(debug=True)
