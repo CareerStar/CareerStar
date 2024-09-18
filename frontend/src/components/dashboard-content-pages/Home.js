@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import astronaut from '../../assets/images/home-page-astronaut.png'
 import star from '../../assets/images/star.png'
 import HomepageQuestion1 from "../homepage-questionnaires/HomepageQuestion1";
@@ -15,6 +16,13 @@ function Home({ onComplete, userId }) {
     const [currentStep, setCurrentStep] = useState(0);
     const [videoEnded, setVideoEnded] = useState(false);
     const [userDetails, setUserDetails] = useState({});
+    const [answers, setAnswers] = useState({
+        describeMe: '',
+        currentSituation: '',
+        goal: '',
+        onboarded: false,
+        choice: '',
+    });
     const totalSteps = 4;
 
     const buttonVisibility = {
@@ -49,20 +57,53 @@ function Home({ onComplete, userId }) {
     const handleOptionSelect = (selectedOption) => {
         console.log(`Option selected: ${selectedOption}`);
         if (selectedOption === 'roadmap') {
+            answers.onboarded = true;
+            answers.choice = 'roadmap'; 
             onComplete('Roadmap');
         } else if (selectedOption === 'activities') {
+            answers.onboarded = true;
+            answers.choice = 'activities';
             setCurrentStep(currentStep + 1);
         }
+        addUserOnboardingDeatils();
     };
+
+    const addUserOnboardingDeatils = async () => {
+        try {
+            const requestBody = {
+                "userId": userId,
+                "describeMe": answers.describeMe,
+                "currentSituation": answers.currentSituation,
+                "goal": answers.goal,
+                "onboarded": answers.onboarded,
+                "choice": answers.choice,
+            };
+            const response = await axios.post('http://127.0.0.1:5000/onboarding', requestBody);
+            if (response.status === 200) {
+                const {responseUserId} = response.data;
+                console.log('User onboarding details added successfully!', responseUserId);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+
+
+    const handleAnswerChange = (field, value) => {
+        setAnswers((prevAnswers) => ({
+            ...prevAnswers,
+            [field]: value,
+        }));
+    }
 
     const renderPage = () => {
         switch (currentStep) {
             case 1:
-                return <HomepageQuestion1 />;
+                return <HomepageQuestion1 onChange={(value) => handleAnswerChange('describeMe', value)}/>;
             case 2:
-                return <HomepageQuestion2 />;
+                return <HomepageQuestion2 onChange={(value) => handleAnswerChange('currentSituation', value)}/>;
             case 3:
-                return <HomepageQuestion3 />;
+                return <HomepageQuestion3 onChange={(value) => handleAnswerChange('goal', value)}/>;
             case 4:
                 return <HomepageQuestion4 onOptionSelect={handleOptionSelect} />;
             case 5:
