@@ -1428,9 +1428,9 @@ button:hover {
   color: #171717;
 }
 
-.roadmap-sub-phase{
+.roadmap-sub-phase {
   width: 100%;
-  gap:12px;
+  gap: 12px;
   margin-bottom: 12px;
 }
 
@@ -1450,14 +1450,14 @@ button:hover {
 
 .roadmap-phase-card input[type="checkbox"] {
   width: 16px;
-  height: 16px; 
-  transform: scale(1.5); 
-  margin-right: 32px; 
+  height: 16px;
+  transform: scale(1.5);
+  margin-right: 32px;
 }
 
 .roadmap-phase-card p {
   flex-grow: 1;
-  margin: 0; 
+  margin: 0;
   padding: 0;
 }
 
