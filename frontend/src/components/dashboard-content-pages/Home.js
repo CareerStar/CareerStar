@@ -48,12 +48,39 @@ function Home({ onComplete, userId }) {
             } catch (error) {
                 console.error('Error fetching user details:', error);
             }
+
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/onboarding/${userId}`);
+                const data = await response.json();
+                if (response.ok) {
+                    if (data.onboarded) {
+                        if (data.choice === 'roadmap') {
+                            onComplete('Roadmap');
+                        } else if (data.choice === 'activities') {
+                            setCurrentStep(6);
+                        }
+                    }
+                    setAnswers((prevAnswers) => ({
+                        ...prevAnswers,
+                        ["describeMe"]: data.describeMe,
+                        ["currentSituation"]: data.currentSituation,
+                        ["goal"]: data.goal,
+                        ["onboarded"]: data.onboarded,
+                    }));
+                    console.log('User onboarding details:', data);
+                } else {
+                    console.error('Error fetching user details:', data);
+                }
+            } catch (error) {
+                console.error('Error fetching user details:', error);
+            }
         };
 
         if (userId) {
             fetchUserDetails();
         }
     }, [userId]);
+
     const handleOptionSelect = (selectedOption) => {
         console.log(`Option selected: ${selectedOption}`);
         if (selectedOption === 'roadmap') {
