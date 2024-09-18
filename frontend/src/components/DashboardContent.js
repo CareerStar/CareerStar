@@ -12,9 +12,9 @@ function DashboardContent({selectedPage, onComplete, userId}) {
             case 'Home':
                 return <Home onComplete={onComplete} userId={userId}/>;
             case 'Profile':
-                return <Profile />;
+                return <Profile userId={userId}/>;
             case 'Roadmap':
-                return <Roadmap />;
+                return <Roadmap userId={userId}/>;
             case 'Events':
                 return <Events />;
             case 'Network':
