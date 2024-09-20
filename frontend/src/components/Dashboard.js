@@ -17,6 +17,7 @@ function Dashboard() {
         const fetchUserDetails = async () => {
             try {
                 const response = await fetch(`http://127.0.0.1:5000/user/${userId}`);
+                // const response = await fetch(`http://localhost:8080/users/${userId}`);
                 const data = await response.json();
                 if (response.ok) {
                     setUserDetails(data);

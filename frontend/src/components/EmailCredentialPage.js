@@ -50,6 +50,7 @@ function EmailCredentialPage() {
                 "stars": 3
             };
             const response = await axios.post('http://127.0.0.1:5000/users', requestBody);
+            // const response = await axios.post('http://localhost:8080/users', requestBody);
             if (response.status === 200) {
                 console.log('User created successfully!');
             }

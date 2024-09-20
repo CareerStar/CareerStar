@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import axios from 'axios';
 import editIcon from '../../assets/images/edit-icon.png';
 import starEmpty from '../../assets/images/star-empty.png';
 import downArrow from '../../assets/images/down-arrow-roadmap.png';
@@ -15,7 +16,9 @@ function Roadmap({ userId }) {
         const fetchUserDetails = async () => {
             try {
                 const response = await fetch(`http://127.0.0.1:5000/onboarding/${userId}`);
+                // const response = await fetch(`http://localhost:8080/onboarding/${userId}`);
                 const data = await response.json();
+                // console.log('Data:', data);
                 if (response.ok) {
                     setCurrentSituation(data.currentSituation);
                     setGoal(data.goal);
@@ -35,6 +38,7 @@ function Roadmap({ userId }) {
     // Handle save function for current situation and goal
     const saveUserDetails = async () => {
         try {
+            // const response = await fetch(`http://localhost:8080/onboarding/update/${userId}`, {
             const response = await fetch(`http://127.0.0.1:5000/update_onboarding/${userId}`, {
                 method: 'PUT',
                 headers: {

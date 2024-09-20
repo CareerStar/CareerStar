@@ -38,6 +38,8 @@ function Home({ onComplete, userId }) {
         const fetchUserDetails = async () => {
             try {
                 const response = await fetch(`http://127.0.0.1:5000/user/${userId}`);
+                // const response = await fetch(`http://localhost:8080/users/${userId}`);
+                // console.log('Response:', response, "User ID:", userId);
                 const data = await response.json();
                 if (response.ok) {
                     setUserDetails(data);
@@ -51,6 +53,7 @@ function Home({ onComplete, userId }) {
 
             try {
                 const response = await fetch(`http://127.0.0.1:5000/onboarding/${userId}`);
+                // const response = await fetch(`http://localhost:8080/onboarding/${userId}`);
                 const data = await response.json();
                 if (response.ok) {
                     if (data.onboarded) {
@@ -105,7 +108,9 @@ function Home({ onComplete, userId }) {
                 "onboarded": answers.onboarded,
                 "choice": answers.choice,
             };
+            // console.log('Request body:', requestBody);
             const response = await axios.post('http://127.0.0.1:5000/onboarding', requestBody);
+            // const response = await axios.post('http://localhost:8080/onboarding', requestBody);
             if (response.status === 200) {
                 const {responseUserId} = response.data;
                 console.log('User onboarding details added successfully!', responseUserId);
