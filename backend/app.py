@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import os
 import psycopg2
+from psycopg2 import pool
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
@@ -16,15 +17,28 @@ db_name = os.getenv('DB_NAME')
 db_user = os.getenv('DB_USER')
 db_password = os.getenv('DB_PASSWORD')
 
+connection_pool = psycopg2.pool.SimpleConnectionPool(
+    1, 20,  # Min and max connections
+    host=db_host,
+    port=db_port,
+    database=db_name,
+    user=db_user,
+    password=db_password
+)
+
 def get_db_connection():
-    connection = psycopg2.connect(
-        host=db_host,
-        port=db_port,
-        database=db_name,
-        user=db_user,
-        password=db_password
-    )
-    return connection
+    # connection = psycopg2.connect(
+    #     host=db_host,
+    #     port=db_port,
+    #     database=db_name,
+    #     user=db_user,
+    #     password=db_password
+    # )
+    # return connection
+    return connection_pool.getconn()
+
+def return_db_connection(conn):
+    connection_pool.putconn(conn)
 
 @app.route('/users', methods=['GET'])
 def get_users():
@@ -53,8 +67,9 @@ def get_users():
 
     finally:
         if connection:
-            cursor.close()
-            connection.close()
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
 
 @app.route('/users', methods=['POST'])
 def add_user():
@@ -96,8 +111,9 @@ def add_user():
         return jsonify({"error": str(error)}), 500
     finally:
         if connection:
-            cursor.close()
-            connection.close()
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
 
 
 @app.route('/user/<int:userId>', methods=['GET'])
@@ -125,8 +141,9 @@ def get_user_details(userId):
 
     finally:
         if connection:
-            cursor.close()
-            connection.close()
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
 
 
 @app.route('/login', methods=['POST'])
@@ -159,8 +176,9 @@ def login():
         return jsonify({"error": str(error)}), 500
     finally:
         if connection:
-            cursor.close()
-            connection.close()
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
 
 @app.route('/onboarding', methods=['POST'])
 def onboarding():
@@ -198,8 +216,9 @@ def onboarding():
         return jsonify({"error": str(error)}), 500
     finally:
         if connection:
-            cursor.close()
-            connection.close()
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
 
 @app.route('/onboarding/<int:userId>', methods=['GET'])
 def get_user_onboarding_details(userId):
@@ -230,8 +249,9 @@ def get_user_onboarding_details(userId):
 
     finally:
         if connection:
-            cursor.close()
-            connection.close()
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
 
 @app.route('/update_onboarding/<int:userId>', methods=['PUT'])
 def update_user_onboarding_details(userId):
@@ -265,8 +285,9 @@ def update_user_onboarding_details(userId):
 
     finally:
         if connection:
-            cursor.close()
-            connection.close()
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
 
 if __name__ == '__main__':
     app.run(debug=True)
