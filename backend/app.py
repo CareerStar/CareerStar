@@ -190,6 +190,7 @@ def onboarding():
         currentSituation = user_data.get('currentSituation')
         goal = user_data.get('goal')
         choice = user_data.get('choice')
+        summary = user_data.get('summary')
 
         if not userId or not describeMe or not currentSituation or not goal:
             return jsonify({"error": "Missing data"}), 400
@@ -198,12 +199,12 @@ def onboarding():
         cursor = connection.cursor()
 
         insert_query = """
-        INSERT INTO user_personalization (userId, describeMe, currentSituation, goal, onboarded, choice)
-        VALUES (%s, %s, %s, %s, %s, %s)
+        INSERT INTO user_personalization (userId, describeMe, currentSituation, goal, onboarded, choice, summary)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
         RETURNING userId;
         """
 
-        cursor.execute(insert_query, (userId, describeMe, currentSituation, goal, True, choice))
+        cursor.execute(insert_query, (userId, describeMe, currentSituation, goal, True, choice, summary))
         user_id = 0
         user_id = cursor.fetchone()[0]
 
@@ -226,7 +227,7 @@ def get_user_onboarding_details(userId):
         connection = get_db_connection()
         cursor = connection.cursor()
         get_user_onboarding_details_query = """
-        SELECT describeMe, currentSituation, choice, onboarded, goal FROM user_personalization WHERE userId = %s;
+        SELECT describeMe, currentSituation, choice, onboarded, goal, summary FROM user_personalization WHERE userId = %s;
         """
         cursor.execute(get_user_onboarding_details_query, (userId,))
         user = cursor.fetchone()
@@ -238,7 +239,8 @@ def get_user_onboarding_details(userId):
                 "choice": user[2],
                 "onboarded": user[3],
                 "userId": userId,
-                "goal": user[4]
+                "goal": user[4],
+                "summary": user[5]
             }
             return jsonify(user_dict)
         else:
@@ -277,6 +279,41 @@ def update_user_onboarding_details(userId):
 
         if cursor.rowcount > 0:
             return jsonify({"message": "User onboarding details updated successfully"}), 200
+        else:
+            return jsonify({"error": "User not found or no changes made"}), 404
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
+
+@app.route('/update_profile/<int:userId>', methods=['PUT'])
+def update_user_profile_details(userId):
+    try:
+        data = request.get_json()
+        summary = data.get('summary')
+
+        if not summary:
+            return jsonify({"error": "Summary field is required"}), 400
+
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        update_user_onboarding_query = """
+        UPDATE user_personalization
+        SET summary = %s
+        WHERE userId = %s;
+        """
+        cursor.execute(update_user_onboarding_query, (summary, userId))
+
+        connection.commit()
+
+        if cursor.rowcount > 0:
+            return jsonify({"message": "User profile details updated successfully"}), 200
         else:
             return jsonify({"error": "User not found or no changes made"}), 404
 
