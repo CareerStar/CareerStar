@@ -143,7 +143,7 @@ function Home({ onComplete, userId }) {
             case 5:
                 return <HomepageQuestion5 />;
             case 6:
-                return <Activities />;
+                return <Activities userId={userId}/>;
             default:
                 return <HomepageQuestion1 />;
         }
