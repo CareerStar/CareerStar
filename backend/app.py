@@ -342,7 +342,7 @@ def get_user_activities_details(userId):
                 "imageURL": activity[0],
                 "title": activity[1],
                 "description": activity[2],
-                "tags": str(activity[3]),
+                "tags": activity[3],
                 "star": activity[4]
             }
             activity_list.append(activity_dict)
