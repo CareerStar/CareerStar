@@ -22,6 +22,7 @@ function Home({ onComplete, userId }) {
         goal: '',
         onboarded: false,
         choice: '',
+        summary: 'My summary',
     });
     const totalSteps = 4;
 
@@ -107,6 +108,7 @@ function Home({ onComplete, userId }) {
                 "goal": answers.goal,
                 "onboarded": answers.onboarded,
                 "choice": answers.choice,
+                "summary": answers.summary,
             };
             // console.log('Request body:', requestBody);
             const response = await axios.post('http://127.0.0.1:5000/onboarding', requestBody);
