@@ -144,6 +144,11 @@
   color: #6F4CFF;
 }
 
+.sidebar ul li.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 /* Progress bar styles */
 .main-progress-container {
   display: flex;
