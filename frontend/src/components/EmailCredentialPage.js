@@ -31,10 +31,16 @@ function EmailCredentialPage() {
 
     const handleEmailIDInputChange = (event) => {
         setEmailID(event.target.value);
+        if (event.target.value.trim() !== '') {
+            setErrorEmail('');
+        }
     };
 
     const handlePasswordInputChange = (event) => {
         setPassword(event.target.value);
+        if (event.target.value.trim() !== '') {
+            setErrorPassword('');
+        }
     };
 
     const nextPageNavigation = async () => {
@@ -47,8 +53,6 @@ function EmailCredentialPage() {
         if (emailID.trim() === '') {
             setErrorEmail('Email ID cannot be empty*');
             return;
-        } else {
-            setErrorEmail('');
         }
 
         if (password.trim() === '') {
