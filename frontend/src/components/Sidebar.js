@@ -6,7 +6,7 @@ import supportIcon from '../assets/images/support-icon.png';
 import networkIcon from '../assets/images/network-icon.png';
 import eventsIcon from '../assets/images/events-icon.png';
 
-function Sidebar({pages, onSelectPage, selectedPage}) {
+function Sidebar({pages, onSelectPage, selectedPage, onboarded}) {
     const getIcon = (page) => {
         switch(page) {
             case 'Home':
@@ -27,7 +27,9 @@ function Sidebar({pages, onSelectPage, selectedPage}) {
     }
 
     const handleClick = (page) => {
-        onSelectPage(page);
+        if (onboarded || page === 'Home') {
+            onSelectPage(page);
+        }
     }
 
     return (
@@ -37,7 +39,7 @@ function Sidebar({pages, onSelectPage, selectedPage}) {
                     <li 
                         key={index} 
                         onClick={() => handleClick(page)}
-                        className={selectedPage === page ? 'selected' : ''}
+                        className={selectedPage === page ? 'selected' : onboarded || page === 'Home' ? '' : 'disabled'}
                     >
                         <img src={getIcon(page)} alt={page} />
                         <p>{page}</p>
