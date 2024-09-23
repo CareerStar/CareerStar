@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ProgressBar from './ProgressBar';
 import careerStarLogo from '../assets/images/career-star-logo-black.png';
 
@@ -8,6 +8,7 @@ function UserIntent() {
     const totalSteps = 3;
 
     const [selectedOption, setSelectedOption] = useState('');
+    const [error, setError] = useState('');
 
     const location = useLocation();
     const { firstname } = location.state || {};
@@ -15,13 +16,26 @@ function UserIntent() {
 
     const handleChange = (event) => {
         setSelectedOption(event.target.value);
+        if (event.target.value) {
+            setError('');
+        }
     };
 
     const navigate = useNavigate();
 
     const nextPageNavigation = () => {
+        if (!selectedOption) {
+            setError('Please select an option*');
+            return;
+        }
         navigate('/emalCredential', { state: { firstname } });
     }
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            nextPageNavigation();
+        }
+    };
 
     const navigateToStartPage = () => {
         navigate('/');
@@ -41,12 +55,19 @@ function UserIntent() {
                 <div className='signUp-page-question'>
                     <h2>I will mostly <span className="highlight">use CareerStar for</span>...</h2>
                     <div className=''>
-                        <select id="options" className='dropdown-menu' value={selectedOption} onChange={handleChange}>
+                        <select 
+                            id="options" 
+                            className={`dropdown-menu ${error ? 'input-error' : ''}`} 
+                            value={selectedOption} 
+                            onChange={handleChange}
+                            onKeyDown={handleKeyPress}
+                        >
                             <option value="" disabled>Select an option</option>
                             <option value="option1">Option 1</option>
                             <option value="option2">Option 2</option>
                             <option value="option3">Option 3</option>
                         </select>
+                        {error && <div className='error-text'><p>{error}</p></div>}
                         {selectedOption && <p>You selected: {selectedOption}</p>}
                     </div>
                 </div>
