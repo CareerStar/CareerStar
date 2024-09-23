@@ -1,4 +1,3 @@
-'use client';
 import React, { useState } from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -21,6 +20,11 @@ function EmailCredentialPage() {
     const [isChecked, setIsChecked] = useState(true);
     const [showPopup, setShowPopup] = useState(false);
 
+    const [errorEmail, setErrorEmail] = useState('');
+    const [errorPassword, setErrorPassword] = useState('');
+
+    const navigate = useNavigate();
+
     const handleToggle = () => {
         setIsChecked(!isChecked);
     };
@@ -33,21 +37,32 @@ function EmailCredentialPage() {
         setPassword(event.target.value);
     };
 
-    const navigate = useNavigate();
-
     const nextPageNavigation = async () => {
         console.log('Div clicked!');
         console.log('First name:', firstname);
         console.log('Last name:', lastname);
         console.log('Email ID:', emailID);
         console.log('Password', password);
+
+        if (emailID.trim() === '') {
+            setErrorEmail('Email ID cannot be empty*');
+            return;
+        } else {
+            setErrorEmail('');
+        }
+
+        if (password.trim() === '') {
+            setErrorPassword('Password cannot be empty*');
+            return;
+        }
+
         try {
             const requestBody = {
-                "emailID": emailID,
-                "firstname": firstname,
-                "lastname": "No last name",
-                "password": password,
-                "stars": 3
+                emailID: emailID,
+                firstname: firstname,
+                lastname: "No last name",
+                password: password,
+                stars: 3
             };
             const response = await axios.post('http://127.0.0.1:5000/users', requestBody);
             // const response = await axios.post('http://localhost:8080/users', requestBody);
@@ -58,7 +73,7 @@ function EmailCredentialPage() {
             setShowPopup(true);
             // navigate('/dashboard');
         } catch (error) {
-            if (error.status === 400) {
+            if (error.response && error.response.status === 400) {
                 console.log('User already exists!');
                 alert('User already exists.');
             }
@@ -69,6 +84,15 @@ function EmailCredentialPage() {
     const navigateToDashboard = () => {
         setShowPopup(false);
         navigate('/dashboard', { state: { firstname: firstname, userId: userId } });
+    };
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter' && !showPopup) {
+            nextPageNavigation();
+        }
+        if (event.key === 'Enter' && showPopup) {
+            navigateToDashboard();
+        }
     };
 
     const navigateToStartPage = () => {
@@ -93,20 +117,23 @@ function EmailCredentialPage() {
                         type='text' 
                         placeholder='abigail@gmail.com' 
                         onChange={handleEmailIDInputChange}
+                        onKeyDown={handleKeyPress}
                     />
+                    {errorEmail && <div className='error-text'><p>{errorEmail}</p></div>}
                     <p>Password</p>
                     <input 
                         type='text' 
                         placeholder='**********'
                         onChange={handlePasswordInputChange}
+                        onKeyDown={handleKeyPress}
                     />
+                    {errorPassword && <div className='error-text'><p>{errorPassword}</p></div>}
                 </div>
                 <div className='toggle-button-container'>
                     <div
                         className={`toggle-button ${isChecked ? 'checked' : ''}`}
                         onClick={handleToggle}
-                    >
-                    </div>
+                    />
                     <p>Yes, I’d like to receive updates and events from CareerStar</p>
                 </div>
                 <div className='signUp-page-button' onClick={nextPageNavigation}>
@@ -130,7 +157,7 @@ function EmailCredentialPage() {
                         <div className='popup-text'>
                             <p>You took the first step to owning your professional journey - let’s celebrate that small win!</p>
                         </div>
-                        <div className='popup-submit-button' onClick={navigateToDashboard}>
+                        <div className='popup-submit-button' onClick={navigateToDashboard} onKeyDown={handleKeyPress}>
                             <p>Let's get started</p>
                         </div>
                     </div>
