@@ -90,6 +90,12 @@ function Roadmap({ userId }) {
         saveUserDetails();
     };
 
+    const handleKeyPress = (event, saveFunction) => {
+        if (event.key === 'Enter') {
+            saveFunction();
+        }
+    };
+
     return (
         <div className='roadmap-container'>
             <p className='roadmap-title'>My Roadmap</p>
@@ -105,6 +111,7 @@ function Roadmap({ userId }) {
                                 type="text"
                                 value={currentSituation}
                                 onChange={(e) => setCurrentSituation(e.target.value)}
+                                onKeyDown={(event) => handleKeyPress(event, handleSaveCurrentSituation)}
                             />
                             <button onClick={handleSaveCurrentSituation} className='situation-goal-save-button'>Save</button>
                         </div>
@@ -123,6 +130,7 @@ function Roadmap({ userId }) {
                                 type="text"
                                 value={goal}
                                 onChange={(e) => setGoal(e.target.value)}
+                                onKeyDown={(event) => handleKeyPress(event, handleSaveGoal)}
                             />
                             <button onClick={handleSaveGoal} className='situation-goal-save-button'>Save</button>
                         </div>
