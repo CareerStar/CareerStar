@@ -6,36 +6,61 @@ import activity3 from '../assets/images/activity-3.png';
 import activity4 from '../assets/images/activity-4.png';
 import starEmpty from '../assets/images/star-empty.png';
 
-function Activities() {
+function Activities({ userId }) {
+    const [activites, setActivities] = useState([]);
+    useEffect(() => {
+        const fetchUserActivitiesDetails = async () => {
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/activities/${userId}`);
+
+                const data = await response.json();
+                if (response.ok) {
+                    if (data) {
+                        setActivities(data);
+                    }
+                    console.log('User activities details:', data);
+                } else {
+                    console.error('Error fetching user details:', data);
+                }
+            }
+            catch (error) {
+                console.error('Error fetching user details:', error);
+            }
+        }
+        if (userId) {
+            fetchUserActivitiesDetails();
+        }
+    }, [userId]);
+
     const cards =
         [
             {
-                image: activity1,
+                imageURL: activity1,
                 tags: ['Profile', 'Event'],
                 title: 'Complete your LinkedIn profile',
                 description: 'Enhance your professional presence with a fully optimized LinkedIn profile. This step-by-step guide will walk you through the process, ensuring you showcase your skills and experience effectively.',
-                starCount: 7
+                star: 7
             },
             {
-                image: activity2,
+                imageURL: activity2,
                 tags: ['Event'],
                 title: 'TechWalk - Brooklyn',
                 description: 'This is a chance to network, share ideas, and build relationships in a healthy and refreshing alternative to the average happy hour.',
-                starCount: 15
+                star: 15
             },
             {
-                image: activity3,
+                imageURL: activity3,
                 tags: ['Upskill', 'Community'],
                 title: 'Flushing Tech Meetup at TIQC',
                 description: 'Get ready to dive into the world of innovation and collaboration at the Tech Incubator at Queens College, where the Flushing Tech Meetup is hosting an electrifying hackathon just for you!',
-                starCount: 20
+                star: 20
             },
             {
-                image: activity4,
+                imageURL: activity4,
                 tags: ['Tip of the day'],
                 title: 'Showing confidence in job interviews',
                 description: 'Watch our tip of the day: How to show confidence in job interviews. It’s easier than you think!',
-                starCount: 3
+                star: 3
             }
         ];
     const [showPopup, setShowPopup] = useState(false);
@@ -64,12 +89,16 @@ function Activities() {
         <div className='activites-container'>
             <h1>Top Activities For You This Week</h1>
             <div className='activity-cards'>
-                {cards.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard image={card.image} tags={card.tags} title={card.title} description={card.description} starCount={card.starCount} /></div>)}
+                {activites.length > 0 ? (
+                    activites.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
+                ):(
+                    cards.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
+                )}
             </div>
             {showPopup && (
                 <div className='activity-popup'>
                     <div className='activity-popup-content' ref={popupRef}>
-                        <img src={currentCard.image} />
+                        <img src={currentCard.imageURL} />
                         <div className='activity-popuop-tags-stars'>
                             <div className='activity-popup-tags'>
                                 <div className='activity-card-tags'>
@@ -83,7 +112,7 @@ function Activities() {
                         </div>
                         <h2>{currentCard.title}</h2>
                         <div className='activity-popup-text'>
-                            <p>You took the first step to owning your professional journey - let’s celebrate that small win!</p>
+                            <p>{currentCard.description}</p>
                         </div>
                         <div className='activity-popup-submit-button' onClick={closePopUp}>
                             <p>I watched this</p>
