@@ -24,6 +24,12 @@ function Home({ onComplete, userId }) {
         choice: '',
         summary: 'My summary',
     });
+    const [errors, setErrors] = useState({
+        describeMe: '',
+        currentSituation: '',
+        goal: '',
+    });
+
     const totalSteps = 4;
 
     const buttonVisibility = {
@@ -85,11 +91,25 @@ function Home({ onComplete, userId }) {
         }
     }, [userId]);
 
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.key === 'Enter') {
+                handleClick();
+            }
+        };
+    
+        window.addEventListener('keydown', handleKeyDown);
+    
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [currentStep, answers]);
+
     const handleOptionSelect = async (selectedOption) => {
         console.log(`Option selected: ${selectedOption}`);
         if (selectedOption === 'roadmap') {
             answers.onboarded = true;
-            answers.choice = 'roadmap'; 
+            answers.choice = 'roadmap';
             await addUserOnboardingDeatils();
             onComplete('Roadmap');
         } else if (selectedOption === 'activities') {
@@ -116,7 +136,7 @@ function Home({ onComplete, userId }) {
             const response = await axios.post('http://127.0.0.1:5000/onboarding', requestBody);
             // const response = await axios.post('http://localhost:8080/onboarding', requestBody);
             if (response.status === 200) {
-                const {responseUserId} = response.data;
+                const { responseUserId } = response.data;
                 console.log('User onboarding details added successfully!', responseUserId);
             }
         } catch (error) {
@@ -135,31 +155,60 @@ function Home({ onComplete, userId }) {
     const renderPage = () => {
         switch (currentStep) {
             case 1:
-                return <HomepageQuestion1 onChange={(value) => handleAnswerChange('describeMe', value)}/>;
+                return (
+                    <>
+                        <HomepageQuestion1 onChange={(value) => handleAnswerChange('describeMe', value)} />
+                        {errors.describeMe && <div className='error-text'><p>{errors.describeMe}</p></div>}
+                    </>
+                );
             case 2:
-                return <HomepageQuestion2 onChange={(value) => handleAnswerChange('currentSituation', value)}/>;
+                return (
+                    <>
+                        <HomepageQuestion2 onChange={(value) => handleAnswerChange('currentSituation', value)} />
+                        {errors.currentSituation && <div className='error-text'><p>{errors.currentSituation}</p></div>}
+                    </>
+                );
             case 3:
-                return <HomepageQuestion3 onChange={(value) => handleAnswerChange('goal', value)}/>;
+                return (
+                    <>
+                        <HomepageQuestion3 onChange={(value) => handleAnswerChange('goal', value)} />
+                        {errors.goal && <div className='error-text'><p>{errors.goal}</p></div>}
+                    </>
+                );
             case 4:
                 return <HomepageQuestion4 onOptionSelect={handleOptionSelect} />;
             case 5:
                 return <HomepageQuestion5 />;
             case 6:
-                return <Activities userId={userId}/>;
+                return <Activities userId={userId} />;
             default:
                 return <HomepageQuestion1 />;
         }
-    }
-    const handleClick = () => {
-        setCurrentStep(currentStep + 1);
-        if (currentStep === totalSteps) {
-            onComplete('Roadmap');
-        }
-    }
+    };
 
-    const handleClickActivities = () => {
-        setCurrentStep(currentStep + 1);
-    }
+    const validateStep = () => {
+        let stepErrors = {};
+        if (currentStep === 1 && !answers.describeMe.trim()) {
+            stepErrors.describeMe = 'This field cannot be empty*';
+        }
+        if (currentStep === 2 && !answers.currentSituation.trim()) {
+            stepErrors.currentSituation = 'This field cannot be empty*';
+        }
+        if (currentStep === 3 && !answers.goal.trim()) {
+            stepErrors.goal = 'This field cannot be empty*';
+        }
+        setErrors(stepErrors);
+        return Object.keys(stepErrors).length === 0;
+    };
+
+    const handleClick = () => {
+        if (validateStep()) {
+            setCurrentStep(currentStep + 1);
+            if (currentStep === totalSteps) {
+                onComplete('Roadmap');
+            }
+        }
+    };
 
     const handleSkipVideo = () => {
         setCurrentStep(1);
@@ -200,7 +249,7 @@ function Home({ onComplete, userId }) {
                     <div className="home-question-wrapper">
                         {renderPage()}
                     </div>
-                    <div className='home-page-button' onClick={handleClickActivities}>
+                    <div className='home-page-button' onClick={handleClick}>
                         <p>Continue</p>
                     </div>
                 </div>
