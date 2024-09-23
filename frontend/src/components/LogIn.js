@@ -16,16 +16,25 @@ function LogIn() {
     const [isChecked, setIsChecked] = useState(true);
     const [showPopup, setShowPopup] = useState(false);
 
+    const [errorEmail, setErrorEmail] = useState('');
+    const [errorPassword, setErrorPassword] = useState('');
+
     const handleToggle = () => {
         setIsChecked(!isChecked);
     };
 
     const handleEmailIDInputChange = (event) => {
         setEmailID(event.target.value);
+        if (event.target.value.trim() !== '') {
+            setErrorEmail('');
+        }
     };
 
     const handlePasswordInputChange = (event) => {
         setPassword(event.target.value);
+        if (event.target.value.trim() !== '') {
+            setErrorPassword('');
+        }
     };
 
     const navigate = useNavigate();
@@ -34,6 +43,14 @@ function LogIn() {
         console.log('Div clicked!');
         console.log('Email ID:', emailID);
         console.log('Password', password);
+        if (emailID.trim() === '') {
+            setErrorEmail('Email ID cannot be empty*');
+            return;
+        }
+        if (password.trim() === '') {
+            setErrorPassword('Password cannot be empty*');
+            return;
+        }
         try {
             const requestBody = {
                 "emailID": emailID,
@@ -56,6 +73,12 @@ function LogIn() {
             } else {
                 console.error("Error fetching data:", error);
             }
+        }
+    };
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            handleLogIn();
         }
     };
 
@@ -87,13 +110,17 @@ function LogIn() {
                         placeholder='abigail@gmail.com'
                         value={emailID} 
                         onChange={handleEmailIDInputChange}
+                        onKeyDown={handleKeyPress}
                     />
+                    {errorEmail && <div className='error-text'><p>{errorEmail}</p></div>}
                     <p>Password</p>
                     <input 
                         type='text' 
                         placeholder='**********'
                         onChange={handlePasswordInputChange}
+                        onKeyDown={handleKeyPress}
                     />
+                    {errorPassword && <div className='error-text'><p>{errorPassword}</p></div>}
                 </div>
                 <div className='signUp-page-button' onClick={handleLogIn}>
                     <p>Continue</p>
