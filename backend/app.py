@@ -356,5 +356,38 @@ def get_user_activities_details(userId):
             return_db_connection(connection)
             # cursor.close()
             # connection.close()
+
+@app.route('/activities/', methods=['GET'])
+def get_all_activities_details(userId):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        get_user_activities_details_query = """
+        SELECT a.imageURL, a.title, a.description, a.tags, a.star FROM user_activities;
+        """
+        cursor.execute(get_user_activities_details_query, (userId,))
+        activities = cursor.fetchall()
+        activity_list = []
+        for activity in activities:
+            activity_dict = {
+                "imageURL": activity[0],
+                "title": activity[1],
+                "description": activity[2],
+                "tags": activity[3],
+                "star": activity[4]
+            }
+            activity_list.append(activity_dict)
+        return jsonify(activity_list)
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
+
+
 if __name__ == '__main__':
     app.run(debug=True)
