@@ -85,18 +85,20 @@ function Home({ onComplete, userId }) {
         }
     }, [userId]);
 
-    const handleOptionSelect = (selectedOption) => {
+    const handleOptionSelect = async (selectedOption) => {
         console.log(`Option selected: ${selectedOption}`);
         if (selectedOption === 'roadmap') {
             answers.onboarded = true;
             answers.choice = 'roadmap'; 
+            await addUserOnboardingDeatils();
             onComplete('Roadmap');
         } else if (selectedOption === 'activities') {
             answers.onboarded = true;
             answers.choice = 'activities';
+            await addUserOnboardingDeatils();
             setCurrentStep(currentStep + 1);
+            onComplete('Home');
         }
-        addUserOnboardingDeatils();
     };
 
     const addUserOnboardingDeatils = async () => {
