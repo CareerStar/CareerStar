@@ -5,6 +5,7 @@ import careerStarLogo from '../assets/images/career-star-logo-black.png';
 
 function SignUp() {
     const [firstname, setFirstname] = useState('');
+    const [error, setError] = useState('');
     const currentStep = 1;
     const totalSteps = 3;
 
@@ -12,11 +13,23 @@ function SignUp() {
 
     const handleInputChange = (event) => {
         setFirstname(event.target.value);
+        if (event.target.value.trim() !== '') {
+            setError('');
+        }
     };
 
     const nextPageNavigation = () => {
-        console.log('Div clicked!');
-        navigate('/userIntent', { state: { firstname } });
+        if (firstname.trim() === '') {
+            setError('First name cannot be empty*');
+        } else {
+            navigate('/userIntent', { state: { firstname } });
+        }
+    };
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            nextPageNavigation();
+        }
     };
 
     const navigateToStartPage = () => {
@@ -25,7 +38,7 @@ function SignUp() {
 
     const logInPageNavigation = () => {
         navigate('/login');
-    }
+    };
 
     return (
         <div className='signUp-page'>
@@ -42,7 +55,9 @@ function SignUp() {
                         placeholder='Your First name'
                         value={firstname}
                         onChange={handleInputChange}
+                        onKeyDown={handleKeyPress}
                     />
+                    {error && <div className='error-text'><p>{error}</p></div>}
                 </div>
                 <div className='signUp-page-button' onClick={nextPageNavigation}>
                     <p>Continue</p>
