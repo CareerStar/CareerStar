@@ -1,9 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ActivityCard from '../ActivityCard';
 import starEmpty from '../../assets/images/star-empty.png';
 
 function AdminActivities() {
+
+    const navigate = useNavigate();
+
     const [activities, setActivities] = useState([]);
     const [newActivity, setNewActivity] = useState({
         title: '',
@@ -30,6 +34,7 @@ function AdminActivities() {
                 }
             } catch (error) {
                 console.error('Error fetching user details:', error);
+                navigate('/admin');
             }
         }
         fetchUserActivitiesDetails();
