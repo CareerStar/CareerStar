@@ -161,88 +161,90 @@ function AdminActivities() {
     };
 
     return (
-        <div className='activities-container'>
-            <h1>Add new activity below</h1>
-            <div className='flex-row'>
-                <input
-                    type='text'
-                    value={newActivity.title}
-                    placeholder='Title'
-                    onChange={(e) => handleChangeNewActivity('title', e.target.value)}
-                />
-                <textarea
-                    value={newActivity.description}
-                    placeholder='Description'
-                    onChange={(e) => handleChangeNewActivity('description', e.target.value)}
-                />
-                <input
-                    type='text'
-                    value={newActivity.tags?.join(', ')}
-                    placeholder='Tags'
-                    onChange={(e) => handleChangeNewActivity('tags', e.target.value)}
-                />
-                <input
-                    type='text'
-                    value={newActivity.imageURL}
-                    placeholder='Image URL'
-                    onChange={(e) => handleChangeNewActivity('imageURL', e.target.value)}
-                />
-                <input
-                    type='number'
-                    value={newActivity.star}
-                    placeholder='Star'
-                    onChange={(e) => handleChangeNewActivity('star', e.target.value)}
-                />
-                <button onClick={() => handleAddNewActivity()}>Save</button>
-            </div>
-            <div className='activity-cards'>
-                {activities.map((activity, index) => (
-                    <div key={activity.activityId} className='activity-card'>
-                        {isEditing === index ? (
-                            <div className='flex-row'>
-                                <input
-                                    type='text'
-                                    value={activity.title}
-                                    onChange={(e) => handleChange(index, 'title', e.target.value)}
-                                />
-                                <textarea
-                                    value={activity.description}
-                                    onChange={(e) => handleChange(index, 'description', e.target.value)}
-                                />
-                                <input
-                                    type='text'
-                                    value={activity.tags.join(', ')}
-                                    onChange={(e) => handleChange(index, 'tags', e.target.value)}
-                                />
-                                <input
-                                    type='text'
-                                    value={activity.imageURL}
-                                    onChange={(e) => handleChange(index, 'imageURL', e.target.value)}
-                                />
-                                <input
-                                    type='number'
-                                    value={activity.star}
-                                    onChange={(e) => handleChange(index, 'star', e.target.value)}
-                                />
-                                <button onClick={() => handleSave(activity)}>Save</button>
-                            </div>
-                        ) : (
-                            <div className='flex-col'>
-                                <div className='activity-card-edit' onClick={() => handleEdit(activity.activityId)}>
-                                    <ActivityCard
-                                        activityId={activity.activityId}
-                                        image={activity.imageURL}
-                                        tags={activity.tags}
-                                        title={activity.title}
-                                        description={activity.description}
-                                        starCount={activity.star}
+        <div className='admin-activities'>
+            <div className='activities-container'>
+                <h1>Add new activity below</h1>
+                <div className='flex-row'>
+                    <input
+                        type='text'
+                        value={newActivity.title}
+                        placeholder='Title'
+                        onChange={(e) => handleChangeNewActivity('title', e.target.value)}
+                    />
+                    <textarea
+                        value={newActivity.description}
+                        placeholder='Description'
+                        onChange={(e) => handleChangeNewActivity('description', e.target.value)}
+                    />
+                    <input
+                        type='text'
+                        value={newActivity.tags?.join(', ')}
+                        placeholder='Tags'
+                        onChange={(e) => handleChangeNewActivity('tags', e.target.value)}
+                    />
+                    <input
+                        type='text'
+                        value={newActivity.imageURL}
+                        placeholder='Image URL'
+                        onChange={(e) => handleChangeNewActivity('imageURL', e.target.value)}
+                    />
+                    <input
+                        type='number'
+                        value={newActivity.star}
+                        placeholder='Star'
+                        onChange={(e) => handleChangeNewActivity('star', e.target.value)}
+                    />
+                    <button onClick={() => handleAddNewActivity()}>Save</button>
+                </div>
+                <div className='activity-cards'>
+                    {activities.map((activity, index) => (
+                        <div key={activity.activityId} className='activity-card'>
+                            {isEditing === index ? (
+                                <div className='flex-row'>
+                                    <input
+                                        type='text'
+                                        value={activity.title}
+                                        onChange={(e) => handleChange(index, 'title', e.target.value)}
                                     />
+                                    <textarea
+                                        value={activity.description}
+                                        onChange={(e) => handleChange(index, 'description', e.target.value)}
+                                    />
+                                    <input
+                                        type='text'
+                                        value={activity.tags.join(', ')}
+                                        onChange={(e) => handleChange(index, 'tags', e.target.value)}
+                                    />
+                                    <input
+                                        type='text'
+                                        value={activity.imageURL}
+                                        onChange={(e) => handleChange(index, 'imageURL', e.target.value)}
+                                    />
+                                    <input
+                                        type='number'
+                                        value={activity.star}
+                                        onChange={(e) => handleChange(index, 'star', e.target.value)}
+                                    />
+                                    <button onClick={() => handleSave(activity)}>Save</button>
                                 </div>
-                                <button className='activity-delete-button' onClick={() => handleDelete(activity.activityId)}>Delete</button>
-                            </div>
-                        )}
-                    </div>
-                ))}
+                            ) : (
+                                <div className='flex-col'>
+                                    <div className='activity-card-edit' onClick={() => handleEdit(activity.activityId)}>
+                                        <ActivityCard
+                                            activityId={activity.activityId}
+                                            image={activity.imageURL}
+                                            tags={activity.tags}
+                                            title={activity.title}
+                                            description={activity.description}
+                                            starCount={activity.star}
+                                        />
+                                    </div>
+                                    <button className='activity-delete-button' onClick={() => handleDelete(activity.activityId)}>Delete</button>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );
