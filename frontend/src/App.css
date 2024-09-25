@@ -965,7 +965,7 @@
 }
 
 /* Activities page styles */
-.activites-container {
+.activities-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -974,7 +974,7 @@
   max-width: 1300px;
 }
 
-.activites-container .activity-cards {
+.activities-container .activity-cards {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -1491,4 +1491,19 @@ button:hover {
 
 .bold {
   font-weight: 700;
+}
+
+/* Admin page styles */
+.activity-delete-button {
+  background-color: red;
+  color: white;
+  max-height: 40px;
+  padding: 10px 20px;
+  align-self: center;
+  width: 100%;
+}
+
+.activity-delete-button:hover {
+  cursor: pointer;
+  background-color: darkred;
 }
