@@ -5,10 +5,13 @@ from psycopg2 import pool
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 
 load_dotenv()
 
 app = Flask(__name__)
+app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'  # Change this to a secure random key
+jwt = JWTManager(app)
 CORS(app)
 
 db_host = os.getenv('DB_HOST')
@@ -332,7 +335,7 @@ def get_user_activities_details(userId):
         connection = get_db_connection()
         cursor = connection.cursor()
         get_user_activities_details_query = """
-        SELECT a.imageURL, a.title, a.description, a.tags, a.star FROM user_activities u JOIN activities a ON a.activityId = u.activityId WHERE u.userId = %s;
+        SELECT a.imageURL, a.title, a.description, a.tags, a.star, a.activityId FROM user_activities u JOIN activities a ON a.activityId = u.activityId WHERE u.userId = %s;
         """
         cursor.execute(get_user_activities_details_query, (userId,))
         activities = cursor.fetchall()
@@ -343,7 +346,8 @@ def get_user_activities_details(userId):
                 "title": activity[1],
                 "description": activity[2],
                 "tags": activity[3],
-                "star": activity[4]
+                "star": activity[4],
+                "activityId": activity[5]
             }
             activity_list.append(activity_dict)
         return jsonify(activity_list)
@@ -357,16 +361,20 @@ def get_user_activities_details(userId):
             # cursor.close()
             # connection.close()
 
-@app.route('/activities/', methods=['GET'])
-def get_all_activities_details(userId):
+@app.route('/activities', methods=['GET'])
+@jwt_required()
+def get_all_activities_details():
+    current_user = get_jwt_identity()
+    print(current_user)
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
         get_user_activities_details_query = """
-        SELECT a.imageURL, a.title, a.description, a.tags, a.star FROM user_activities;
+        SELECT imageURL, title, description, tags, star, activityId FROM activities;
         """
-        cursor.execute(get_user_activities_details_query, (userId,))
+        cursor.execute(get_user_activities_details_query)
         activities = cursor.fetchall()
+        print(activities)
         activity_list = []
         for activity in activities:
             activity_dict = {
@@ -374,7 +382,8 @@ def get_all_activities_details(userId):
                 "title": activity[1],
                 "description": activity[2],
                 "tags": activity[3],
-                "star": activity[4]
+                "star": activity[4],
+                "activityId": activity[5]
             }
             activity_list.append(activity_dict)
         return jsonify(activity_list)
@@ -388,6 +397,15 @@ def get_all_activities_details(userId):
             # cursor.close()
             # connection.close()
 
+@app.route('/adminlogin', methods=['POST'])
+def admin_login():
+    username = request.json.get("username")
+    password = request.json.get("password")
+    if username == os.getenv('ADMIN_USERNAME') and password == os.getenv('ADMIN_PASSWORD'):
+        access_token = create_access_token(identity={"username":username, "role":"admin"})
+        return jsonify(access_token=access_token), 200
+    else:
+        return jsonify({"error": "Invalid credentials"}), 401
 
 if __name__ == '__main__':
     app.run(debug=True)
