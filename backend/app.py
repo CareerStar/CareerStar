@@ -365,7 +365,6 @@ def get_user_activities_details(userId):
 @jwt_required()
 def get_all_activities_details():
     current_user = get_jwt_identity()
-    print(current_user)
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
@@ -417,6 +416,32 @@ def update_activity(activityId):
         connection.commit()
 
         return jsonify({"message": "Activity updated successfully"}), 200
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+
+@app.route('/activities/<int:activityId>', methods=['DELETE'])
+@jwt_required()
+def delete_activity(activityId):
+    current_user = get_jwt_identity()
+    if current_user['role'] != 'admin':
+        return jsonify({"error": "Unauthorized"}), 401
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        delete_activity_query = """
+        DELETE FROM activities 
+        WHERE activityId = %s;
+        """
+        cursor.execute(delete_activity_query, (activityId,))
+        connection.commit()
+
+        return jsonify({"message": "Activity deleted successfully"}), 200
 
     except Exception as error:
         return jsonify({"error": str(error)}), 500
