@@ -395,6 +395,55 @@ def get_all_activities_details():
             # cursor.close()
             # connection.close()
 
+@app.route('/activities', methods=['POST'])
+@jwt_required()
+def add_new_activities():
+    current_user = get_jwt_identity()
+    if current_user['role'] != 'admin':
+        return jsonify({"error": "Unauthorized"}), 401
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        data = request.json
+        title = data.get("title")
+        description = data.get("description")
+        tags = data.get("tags")
+        star = data.get("star")
+        imageURL = data.get("imageURL")
+
+        print(title, description, tags, star)
+
+        add_new_activities_query = """
+        INSERT INTO activities (imageURL, title, description, tags, star)
+        VALUES (%s, %s, %s, %s, %s)
+        RETURNING activityId;
+        """
+
+        cursor.execute(add_new_activities_query, (imageURL, title, description, tags, star, ))
+        activity_id = cursor.fetchone()[0]
+        connection.commit()
+
+        added_activity = {
+            "activityId": activity_id,
+            "title": title,
+            "description": description,
+            "tags": tags,
+            "star": star
+        }
+
+        return jsonify({"message": "Activity added successfully", "activity": added_activity}), 201
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
+
+
 @app.route('/activities/<int:activityId>', methods=['PUT'])
 def update_activity(activityId):
     try:
