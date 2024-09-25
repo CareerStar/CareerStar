@@ -1,7 +1,7 @@
 import React from 'react';
 import starEmpty from '../assets/images/star-empty.png';
 
-function ActivityCard({ image, tags, title, description, starCount }) {
+function ActivityCard({ activityId, image, tags, title, description, starCount }) {
     return (
         <div className='activity-card-container'>
             <div className='activity-card-image'>
