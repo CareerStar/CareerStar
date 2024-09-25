@@ -35,6 +35,7 @@ function Activities({ userId }) {
     const cards =
         [
             {
+                activityId: 1,
                 imageURL: activity1,
                 tags: ['Profile', 'Event'],
                 title: 'Complete your LinkedIn profile',
@@ -42,6 +43,7 @@ function Activities({ userId }) {
                 star: 7
             },
             {
+                activityId: 2,
                 imageURL: activity2,
                 tags: ['Event'],
                 title: 'TechWalk - Brooklyn',
@@ -49,6 +51,7 @@ function Activities({ userId }) {
                 star: 15
             },
             {
+                activityId: 3,
                 imageURL: activity3,
                 tags: ['Upskill', 'Community'],
                 title: 'Flushing Tech Meetup at TIQC',
@@ -56,6 +59,7 @@ function Activities({ userId }) {
                 star: 20
             },
             {
+                activityId: 4,
                 imageURL: activity4,
                 tags: ['Tip of the day'],
                 title: 'Showing confidence in job interviews',
@@ -90,9 +94,9 @@ function Activities({ userId }) {
             <h1>Top Activities For You This Week</h1>
             <div className='activity-cards'>
                 {activites.length > 0 ? (
-                    activites.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
+                    activites.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
                 ):(
-                    cards.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
+                    cards.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
                 )}
             </div>
             {showPopup && (
