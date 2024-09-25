@@ -5,6 +5,7 @@ import Roadmap from './dashboard-content-pages/Roadmap';
 import Events from './dashboard-content-pages/Events';
 import Network from './dashboard-content-pages/Network';
 import Support from './dashboard-content-pages/Support';
+import AdminActivities from './admin/AdminActivities';
 
 function DashboardContent({selectedPage, onComplete, userId}) {
     const renderPage = () => {
@@ -21,6 +22,8 @@ function DashboardContent({selectedPage, onComplete, userId}) {
                 return <Network />;
             case 'Support':
                 return <Support />;
+            case 'AdminActivities':
+                return <AdminActivities />;
             default:
                 return <Home />;
         }
