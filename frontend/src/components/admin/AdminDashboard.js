@@ -16,7 +16,7 @@ const AdminDashboard = () => {
     }
     return (
         <div className='dashboard'>
-            <Header />
+            <Header userName={'Admin'}/>
             <div className='dashboard-container'>
                 <Sidebar pages={pages} onSelectPage={setSelectedPage} selectedPage={selectedPage} onboarded={onboarded}/>
                 <div className='content'>
