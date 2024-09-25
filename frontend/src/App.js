@@ -13,6 +13,8 @@ import {
 import SignUp from './components/SignUp';
 import Dashboard from './components/Dashboard';
 import LogIn from './components/LogIn';
+import AdminLogin from './components/admin/AdminLogin';
+import AdminDashboard from './components/admin/AdminDashboard';
 
 function App() {
   return (
@@ -54,6 +56,18 @@ function App() {
             exact
             path='/login'
             element={<LogIn />}
+          />
+
+          <Route
+            exact
+            path='/admin'
+            element={<AdminLogin />}
+          />
+
+          <Route
+            exact
+            path='/admin/dashboard'
+            element={<AdminDashboard />}
           />
         </Routes>
       </Router>
