@@ -374,7 +374,6 @@ def get_all_activities_details():
         """
         cursor.execute(get_user_activities_details_query)
         activities = cursor.fetchall()
-        print(activities)
         activity_list = []
         for activity in activities:
             activity_dict = {
@@ -396,6 +395,35 @@ def get_all_activities_details():
             return_db_connection(connection)
             # cursor.close()
             # connection.close()
+
+@app.route('/activities/<int:activityId>', methods=['PUT'])
+def update_activity(activityId):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        data = request.json
+        title = data.get("title")
+        description = data.get("description")
+        tags = data.get("tags")
+        star = data.get("star")
+
+        update_activity_query = """
+        UPDATE activities 
+        SET title = %s, description = %s, tags = %s, star = %s 
+        WHERE activityId = %s;
+        """
+        cursor.execute(update_activity_query, (title, description, tags, star, activityId))
+        connection.commit()
+
+        return jsonify({"message": "Activity updated successfully"}), 200
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
 
 @app.route('/adminlogin', methods=['POST'])
 def admin_login():
