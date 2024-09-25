@@ -90,7 +90,7 @@ function Activities({ userId }) {
     }, [popupRef]);
 
     return (
-        <div className='activites-container'>
+        <div className='activities-container'>
             <h1>Top Activities For You This Week</h1>
             <div className='activity-cards'>
                 {activites.length > 0 ? (
