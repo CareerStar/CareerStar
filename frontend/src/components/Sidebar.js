@@ -21,6 +21,8 @@ function Sidebar({pages, onSelectPage, selectedPage, onboarded}) {
                 return networkIcon;
             case 'Events':
                 return eventsIcon;
+            case 'AdminActivities':
+                return eventsIcon;
             default:
                 return <i className="fas fa-tachometer-alt"></i>;
         }
