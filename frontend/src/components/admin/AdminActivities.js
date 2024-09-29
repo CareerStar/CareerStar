@@ -164,7 +164,7 @@ function AdminActivities() {
         <div className='admin-activities'>
             <div className='activities-container'>
                 <h1>Add new activity below</h1>
-                <div className='flex-row'>
+                <div className='edit-activity flex-row'>
                     <input
                         type='text'
                         value={newActivity.title}

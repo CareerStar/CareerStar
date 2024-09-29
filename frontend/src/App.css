@@ -1504,6 +1504,18 @@ button:hover {
   height: 100%;
 }
 
+.edit-activity {
+  gap:10px;
+}
+
+.edit-activity button {
+  padding: 10px 20px;
+  background-color: #2B30F5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+
 .activity-delete-button {
   background-color: red;
   color: white;
