@@ -232,7 +232,7 @@ def get_user_onboarding_details(userId):
         connection = get_db_connection()
         cursor = connection.cursor()
         get_user_onboarding_details_query = """
-        SELECT describeMe, currentSituation, choice, onboarded, goal, summary FROM user_personalization WHERE userId = %s;
+        SELECT describeMe, currentSituation, choice, onboarded, goal, summary, degree, major FROM user_personalization WHERE userId = %s;
         """
         cursor.execute(get_user_onboarding_details_query, (userId,))
         user = cursor.fetchone()
@@ -245,7 +245,9 @@ def get_user_onboarding_details(userId):
                 "onboarded": user[3],
                 "userId": userId,
                 "goal": user[4],
-                "summary": user[5]
+                "summary": user[5],
+                "degree": user[6],
+                "major": user[7],
             }
             return jsonify(user_dict)
         else:
