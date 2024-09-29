@@ -6,6 +6,7 @@ import star from '../../assets/images/star.png'
 import HomepageQuestion1 from "../homepage-questionnaires/HomepageQuestion1";
 import HomepageQuestion2 from "../homepage-questionnaires/HomepageQuestion2";
 import HomepageQuestion3 from "../homepage-questionnaires/HomepageQuestion3";
+import HomepageQuestion4 from "../homepage-questionnaires/HomepageQuestion4";
 import HomepageChoiceQuestion from "../homepage-questionnaires/HomepageChoiceQuestion";
 import HomepageQuestion5 from "../homepage-questionnaires/HomepageQuestion5";
 import ProgressBar from "../ProgressBar";
@@ -23,22 +24,27 @@ function Home({ onComplete, userId }) {
         onboarded: false,
         choice: '',
         summary: 'My summary',
+        degree: '',
+        major: '',
     });
     const [errors, setErrors] = useState({
         describeMe: '',
         currentSituation: '',
         goal: '',
+        degree: '',
+        major: '',
     });
 
-    const totalSteps = 4;
+    const totalSteps = 5;
 
     const buttonVisibility = {
         1: true,
         2: true,
         3: true,
-        4: false,
-        5: true,
-        6: false
+        4: true,
+        5: false,
+        6: true,
+        7: false
     };
 
     useEffect(() => {
@@ -97,9 +103,9 @@ function Home({ onComplete, userId }) {
                 handleClick();
             }
         };
-    
+
         window.addEventListener('keydown', handleKeyDown);
-    
+
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
@@ -131,6 +137,8 @@ function Home({ onComplete, userId }) {
                 "onboarded": answers.onboarded,
                 "choice": answers.choice,
                 "summary": answers.summary,
+                "degree": answers.degree,
+                "major": answers.major,
             };
             // console.log('Request body:', requestBody);
             const response = await axios.post('http://127.0.0.1:5000/onboarding', requestBody);
@@ -176,10 +184,18 @@ function Home({ onComplete, userId }) {
                     </>
                 );
             case 4:
-                return <HomepageChoiceQuestion onOptionSelect={handleOptionSelect} />;
+                return (
+                    <>
+                        <HomepageQuestion4 onChangeDegree={(value) => handleAnswerChange('degree', value)} onChangeMajor={(value) => handleAnswerChange('major', value)} />
+                        {errors.degree && <div className='error-text'><p>{errors.degree}</p></div>}
+                        {errors.major && <div className='error-text'><p>{errors.major}</p></div>}
+                    </>
+                );
             case 5:
-                return <HomepageQuestion5 />;
+                return <HomepageChoiceQuestion onOptionSelect={handleOptionSelect} />;
             case 6:
+                return <HomepageQuestion5 />;
+            case 7:
                 return <Activities userId={userId} />;
             default:
                 return <HomepageQuestion1 />;
@@ -196,6 +212,12 @@ function Home({ onComplete, userId }) {
         }
         if (currentStep === 3 && !answers.goal.trim()) {
             stepErrors.goal = 'This field cannot be empty*';
+        }
+        if (currentStep === 4 && !answers.degree.trim()) {
+            stepErrors.degree = 'Please choose your degree*';
+        }
+        if (currentStep === 4 && !answers.major.trim()) {
+            stepErrors.major = 'Please choose your major*';
         }
         setErrors(stepErrors);
         return Object.keys(stepErrors).length === 0;
