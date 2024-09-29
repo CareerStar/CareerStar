@@ -55,6 +55,13 @@ function EmailCredentialPage() {
             return;
         }
 
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (!emailRegex.test(emailID)) {
+            setErrorEmail('Invalid email format*');
+            return;
+        }
+
         if (password.trim() === '') {
             setErrorPassword('Password cannot be empty*');
             return;
@@ -117,16 +124,16 @@ function EmailCredentialPage() {
                 <div className='signUp-page-question'>
                     <h2>Create <span className="highlight">my account</span></h2>
                     <p>Email address</p>
-                    <input 
-                        type='text' 
-                        placeholder='abigail@gmail.com' 
+                    <input
+                        type='text'
+                        placeholder='abigail@gmail.com'
                         onChange={handleEmailIDInputChange}
                         onKeyDown={handleKeyPress}
                     />
                     {errorEmail && <div className='error-text'><p>{errorEmail}</p></div>}
                     <p>Password</p>
-                    <input 
-                        type='text' 
+                    <input
+                        type='text'
                         placeholder='**********'
                         onChange={handlePasswordInputChange}
                         onKeyDown={handleKeyPress}
