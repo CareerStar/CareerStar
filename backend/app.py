@@ -194,6 +194,8 @@ def onboarding():
         goal = user_data.get('goal')
         choice = user_data.get('choice')
         summary = user_data.get('summary')
+        degree = user_data.get('degree')
+        major = user_data.get('major')
 
         if not userId or not describeMe or not currentSituation or not goal:
             return jsonify({"error": "Missing data"}), 400
@@ -202,12 +204,12 @@ def onboarding():
         cursor = connection.cursor()
 
         insert_query = """
-        INSERT INTO user_personalization (userId, describeMe, currentSituation, goal, onboarded, choice, summary)
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        INSERT INTO user_personalization (userId, describeMe, currentSituation, goal, onboarded, choice, summary, degree, major)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING userId;
         """
 
-        cursor.execute(insert_query, (userId, describeMe, currentSituation, goal, True, choice, summary))
+        cursor.execute(insert_query, (userId, describeMe, currentSituation, goal, True, choice, summary, degree, major))
         user_id = 0
         user_id = cursor.fetchone()[0]
 
