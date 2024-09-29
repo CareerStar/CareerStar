@@ -1,6 +1,6 @@
 import React from 'react';
 
-function HomepageQuestion4({ onOptionSelect }) {
+function HomepageChoiceQuestion({ onOptionSelect }) {
     const handleOptionSelect = (option) => {
         onOptionSelect(option);
     };
@@ -18,4 +18,4 @@ function HomepageQuestion4({ onOptionSelect }) {
     );
 }
 
-export default HomepageQuestion4;
+export default HomepageChoiceQuestion;

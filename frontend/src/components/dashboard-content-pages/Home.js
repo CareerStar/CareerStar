@@ -6,7 +6,7 @@ import star from '../../assets/images/star.png'
 import HomepageQuestion1 from "../homepage-questionnaires/HomepageQuestion1";
 import HomepageQuestion2 from "../homepage-questionnaires/HomepageQuestion2";
 import HomepageQuestion3 from "../homepage-questionnaires/HomepageQuestion3";
-import HomepageQuestion4 from "../homepage-questionnaires/HomepageQuestion4";
+import HomepageChoiceQuestion from "../homepage-questionnaires/HomepageChoiceQuestion";
 import HomepageQuestion5 from "../homepage-questionnaires/HomepageQuestion5";
 import ProgressBar from "../ProgressBar";
 import Activities from "../Activities";
@@ -176,7 +176,7 @@ function Home({ onComplete, userId }) {
                     </>
                 );
             case 4:
-                return <HomepageQuestion4 onOptionSelect={handleOptionSelect} />;
+                return <HomepageChoiceQuestion onOptionSelect={handleOptionSelect} />;
             case 5:
                 return <HomepageQuestion5 />;
             case 6:
