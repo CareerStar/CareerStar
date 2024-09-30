@@ -22,7 +22,7 @@ function AdminActivities() {
         const fetchUserActivitiesDetails = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://127.0.0.1:5000/activities', {
+                const response = await axios.get('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/activities', {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -55,7 +55,7 @@ function AdminActivities() {
             const requestBody = {
                 newActivity
             };
-            const response = await axios.post('http://127.0.0.1:5000/activities', newActivity, {
+            const response = await axios.post('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/activities', newActivity, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ function AdminActivities() {
     const handleDelete = async (activityId) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.delete(`http://127.0.0.1:5000/activities/${activityId}`, {
+            const response = await axios.delete(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/activities/${activityId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -139,7 +139,7 @@ function AdminActivities() {
             // activity.tags = activity.tags.split(',').map(tag => tag.trim());
             console.log('Saving activity:', activity);
             const response = await axios.put(
-                `http://127.0.0.1:5000/activities/${activity.activityId}`,
+                `https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/activities/${activity.activityId}`,
                 activity,
                 {
                     headers: {

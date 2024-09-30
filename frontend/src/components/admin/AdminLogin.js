@@ -42,14 +42,14 @@ const AdminLogin = () => {
                 "password": password
             };
 
-            const response = await axios.post('http://127.0.0.1:5000/adminlogin', requestBody);
+            const response = await axios.post('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/adminlogin', requestBody);
             if (response.status === 200) {
                 const token = response.data.access_token;
                 localStorage.setItem('token', token);
                 console.log(localStorage.getItem('token'));
                 navigate('/admin/dashboard');
                 // console.log('Token:', token);
-                // const response2 = await axios.get('http://127.0.0.1:5000/activities',{
+                // const response2 = await axios.get('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/activities',{
                 //     headers: {
                 //         Authorization: `Bearer ${token}`
                 //     }

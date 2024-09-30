@@ -57,7 +57,7 @@ function LogIn() {
                 "password": password
             };
 
-            const response = await axios.post('http://127.0.0.1:5000/login', requestBody);
+            const response = await axios.post('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/login', requestBody);
             // const response = await axios.post('http://localhost:8080/users/login', requestBody);
             if (response.status === 200) {
                 const {userId, firstname, token} = response.data;
