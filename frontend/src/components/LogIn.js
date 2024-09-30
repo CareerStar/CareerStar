@@ -115,7 +115,7 @@ function LogIn() {
                     {errorEmail && <div className='error-text'><p>{errorEmail}</p></div>}
                     <p>Password</p>
                     <input 
-                        type='text' 
+                        type='password' 
                         placeholder='**********'
                         onChange={handlePasswordInputChange}
                         onKeyDown={handleKeyPress}
