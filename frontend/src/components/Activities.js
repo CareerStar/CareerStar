@@ -11,7 +11,7 @@ function Activities({ userId }) {
     useEffect(() => {
         const fetchUserActivitiesDetails = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:5000/activities/${userId}`);
+                const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/activities/${userId}`);
 
                 const data = await response.json();
                 if (response.ok) {

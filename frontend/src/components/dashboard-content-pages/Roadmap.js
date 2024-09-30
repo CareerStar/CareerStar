@@ -15,7 +15,7 @@ function Roadmap({ userId }) {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:5000/onboarding/${userId}`);
+                const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/onboarding/${userId}`);
                 // const response = await fetch(`http://localhost:8080/onboarding/${userId}`);
                 const data = await response.json();
                 // console.log('Data:', data);
@@ -39,7 +39,7 @@ function Roadmap({ userId }) {
     const saveUserDetails = async () => {
         try {
             // const response = await fetch(`http://localhost:8080/onboarding/update/${userId}`, {
-            const response = await fetch(`http://127.0.0.1:5000/update_onboarding/${userId}`, {
+            const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/update_onboarding/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

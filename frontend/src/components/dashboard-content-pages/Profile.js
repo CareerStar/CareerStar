@@ -18,7 +18,7 @@ function Profile({userId}) {
     useEffect(() => {  
         const fetchUserDetails = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:5000/user/${userId}`);
+                const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/user/${userId}`);
 
                 const data = await response.json();
                 if (response.ok) {
@@ -35,7 +35,7 @@ function Profile({userId}) {
                 console.error('Error fetching user details:', error);
             }
             try {
-                const response = await fetch(`http://127.0.0.1:5000/onboarding/${userId}`);
+                const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/onboarding/${userId}`);
                 const data = await response.json();
                 if (response.ok) {
                     if (data.summary) {
@@ -58,7 +58,7 @@ function Profile({userId}) {
     const handleSave = async () => {
         console.log("Summary saved:", summary);
         try {
-            const response = await fetch(`http://127.0.0.1:5000/update_profile/${userId}`, {
+            const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/update_profile/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
