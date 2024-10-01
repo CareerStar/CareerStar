@@ -73,7 +73,7 @@ function Home({ onComplete, userId }) {
                         if (data.choice === 'roadmap') {
                             onComplete('Roadmap');
                         } else if (data.choice === 'activities') {
-                            setCurrentStep(6);
+                            setCurrentStep(7);
                         }
                     }
                     setAnswers((prevAnswers) => ({
