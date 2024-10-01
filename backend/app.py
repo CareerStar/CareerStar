@@ -366,14 +366,14 @@ def get_user_activities_details(userId):
             # connection.close()
 
 @app.route('/activities', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def get_all_activities_details():
-    current_user = get_jwt_identity()
+    # current_user = get_jwt_identity()
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
         get_user_activities_details_query = """
-        SELECT imageURL, title, description, tags, star, activityId FROM activities;
+        SELECT imageURL, title, description, tags, star, activityId, videoURL FROM activities;
         """
         cursor.execute(get_user_activities_details_query)
         activities = cursor.fetchall()
@@ -385,7 +385,8 @@ def get_all_activities_details():
                 "description": activity[2],
                 "tags": activity[3],
                 "star": activity[4],
-                "activityId": activity[5]
+                "activityId": activity[5],
+                "videoURL": activity[6]
             }
             activity_list.append(activity_dict)
         return jsonify(activity_list)
