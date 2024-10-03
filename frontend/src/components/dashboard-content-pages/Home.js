@@ -17,6 +17,7 @@ function Home({ onComplete, userId }) {
     const [currentStep, setCurrentStep] = useState(0);
     const [videoEnded, setVideoEnded] = useState(false);
     const [userDetails, setUserDetails] = useState({});
+    const [activityChoices, setActivityChoices] = useState([]);
     const [answers, setAnswers] = useState({
         describeMe: '',
         currentSituation: '',
@@ -26,6 +27,7 @@ function Home({ onComplete, userId }) {
         summary: 'My summary',
         degree: '',
         major: '',
+        activityChoices: [],
     });
     const [errors, setErrors] = useState({
         describeMe: '',
@@ -121,11 +123,30 @@ function Home({ onComplete, userId }) {
         } else if (selectedOption === 'activities') {
             answers.onboarded = true;
             answers.choice = 'activities';
-            await addUserOnboardingDeatils();
+            // await addUserOnboardingDeatils();
             setCurrentStep(currentStep + 1);
-            onComplete('Home');
         }
     };
+
+    const saveUserOnboardingDetailsWithActivities = async () => {
+        answers.onboarded = true;
+        answers.choice = 'activities';
+        answers.activityChoices = activityChoices;
+        try {
+            await addUserOnboardingDeatils();
+        } catch (error) {
+            console.error("Error adding onboarding details:", error);
+        } finally {
+            setTimeout(() => {
+                setCurrentStep(currentStep + 1);
+                onComplete('Home');
+            }, 1000);
+        }
+    }
+
+    const handleActivityChoicesSelect = async (selectedActivities) => {
+        setActivityChoices(selectedActivities);
+    }
 
     const addUserOnboardingDeatils = async () => {
         try {
@@ -139,16 +160,22 @@ function Home({ onComplete, userId }) {
                 "summary": answers.summary,
                 "degree": answers.degree,
                 "major": answers.major,
+                "activityChoices": answers.activityChoices,
             };
             // console.log('Request body:', requestBody);
             const response = await axios.post('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/onboarding', requestBody);
             // const response = await axios.post('http://localhost:8080/onboarding', requestBody);
             if (response.status === 200) {
                 const { responseUserId } = response.data;
-                console.log('User onboarding details added successfully!', responseUserId);
+                console.log('User onboarding details added successfully!-----', responseUserId);
+                return true;
+            } else {
+                console.error('Error adding user onboarding details:', response);
+                return false;
             }
         } catch (error) {
             console.error("Error fetching data:", error);
+            return false;
         }
     }
 
@@ -194,7 +221,7 @@ function Home({ onComplete, userId }) {
             case 5:
                 return <HomepageChoiceQuestion onOptionSelect={handleOptionSelect} />;
             case 6:
-                return <HomepageQuestion5 />;
+                return <HomepageQuestion5 onActivityChoicesSelect={handleActivityChoicesSelect} />;
             case 7:
                 return <Activities userId={userId} />;
             default:
@@ -271,7 +298,7 @@ function Home({ onComplete, userId }) {
                     <div className="home-question-wrapper">
                         {renderPage()}
                     </div>
-                    <div className='home-page-button' onClick={handleClick}>
+                    <div className='home-page-button' onClick={() => { saveUserOnboardingDetailsWithActivities(); }}>
                         <p>Continue</p>
                     </div>
                 </div>
