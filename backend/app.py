@@ -183,6 +183,46 @@ def login():
             # cursor.close()
             # connection.close()
 
+def addActivityToUserActivitiesTable(user_id, activityId):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        update_user_activities_details_query = """
+        INSERT INTO user_activities (userId, activityId) VALUES (%s, %s);
+        """
+        cursor.execute(update_user_activities_details_query, (user_id, activityId))
+        connection.commit()
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+            
+def assignActivitiesToUser(user_id, activitychoices):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        get_activities_details_query = """
+        SELECT activityId, tags FROM activities;
+        """
+        cursor.execute(get_activities_details_query)
+        activities = cursor.fetchall()
+        activity_list = []
+        for activity in activities:
+            # print((set(activity[1]) - set(activitychoices)))
+            if (set(activity[1]) & set(activitychoices)):
+                addActivityToUserActivitiesTable(user_id, activity[0])
+        return True
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+
 @app.route('/onboarding', methods=['POST'])
 def onboarding():
     try:
@@ -196,6 +236,7 @@ def onboarding():
         summary = user_data.get('summary')
         degree = user_data.get('degree')
         major = user_data.get('major')
+        activitychoices = user_data.get('activityChoices')
 
         if not userId or not describeMe or not currentSituation or not goal:
             return jsonify({"error": "Missing data"}), 400
@@ -204,17 +245,19 @@ def onboarding():
         cursor = connection.cursor()
 
         insert_query = """
-        INSERT INTO user_personalization (userId, describeMe, currentSituation, goal, onboarded, choice, summary, degree, major)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+        INSERT INTO user_personalization (userId, describeMe, currentSituation, goal, onboarded, choice, summary, degree, major, activitychoices)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING userId;
         """
 
-        cursor.execute(insert_query, (userId, describeMe, currentSituation, goal, True, choice, summary, degree, major))
+        cursor.execute(insert_query, (userId, describeMe, currentSituation, goal, True, choice, summary, degree, major, activitychoices))
         user_id = 0
         user_id = cursor.fetchone()[0]
 
         connection.commit()
-        if userId:
+
+        assign_activities_successful = assignActivitiesToUser(user_id, activitychoices)
+        if assign_activities_successful:
             return jsonify({"message": "Data added successful", "userId": user_id, "onboarded": True}), 200
         else:
             return jsonify({"error": "Issue with data insertion"}), 400
