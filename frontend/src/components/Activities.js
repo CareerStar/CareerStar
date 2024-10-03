@@ -105,11 +105,12 @@ function Activities({ userId }) {
         <div className='activities-container'>
             <h1>Top Activities For You This Week</h1>
             <div className='activity-cards'>
-                {activites.length > 0 ? (
+                {/* {activites.length > 0 ? (
                     activites.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
                 ) : (
                     cards.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
-                )}
+                )} */}
+                {activites.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)            }
             </div>
             {showPopup && (
                 <div className='activity-popup'>
