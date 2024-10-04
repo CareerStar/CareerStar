@@ -16,6 +16,7 @@ function Home({ onComplete, userId }) {
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(0);
     const [videoEnded, setVideoEnded] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [userDetails, setUserDetails] = useState({});
     const [activityChoices, setActivityChoices] = useState([]);
     const [answers, setAnswers] = useState({
@@ -51,6 +52,7 @@ function Home({ onComplete, userId }) {
 
     useEffect(() => {
         const fetchUserDetails = async () => {
+            setLoading(true);
             try {
                 const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/user/${userId}`);
                 // const response = await fetch(`http://localhost:8080/users/${userId}`);
@@ -91,6 +93,8 @@ function Home({ onComplete, userId }) {
                 }
             } catch (error) {
                 console.error('Error fetching user details:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -129,6 +133,7 @@ function Home({ onComplete, userId }) {
     };
 
     const saveUserOnboardingDetailsWithActivities = async () => {
+        setLoading(true);
         answers.onboarded = true;
         answers.choice = 'activities';
         answers.activityChoices = activityChoices;
@@ -141,6 +146,7 @@ function Home({ onComplete, userId }) {
                 setCurrentStep(currentStep + 1);
                 onComplete('Home');
             }, 1000);
+            setLoading(false);
         }
     }
 
@@ -269,6 +275,11 @@ function Home({ onComplete, userId }) {
 
     return (
         <div className="home">
+            {loading && (
+                <div className="spinner-overlay">
+                    <div className="spinner"></div>
+                </div>
+            )}
             <div className="home-welcome">
                 <div className='home-welcome-left'>
                     <img src={astronaut} alt="Astronaut" />
