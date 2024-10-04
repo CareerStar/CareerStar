@@ -1123,6 +1123,11 @@
   width: 100%;
 }
 
+.activity-popup-content .popup-image {
+  max-width: 350px;
+  max-height: 350px;
+}
+
 .activity-popup-content .activity-popup-text {
 
   max-width: 350px;

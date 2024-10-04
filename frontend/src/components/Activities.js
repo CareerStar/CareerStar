@@ -123,7 +123,7 @@ function Activities({ userId }) {
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                         >
-                        </iframe>) : (<img src={currentCard.imageURL} />)}
+                        </iframe>) : (<img src={currentCard.imageURL} className='popup-image' />)}
                         <div className='activity-popuop-tags-stars'>
                             <div className='activity-popup-tags'>
                                 <div className='activity-card-tags'>
