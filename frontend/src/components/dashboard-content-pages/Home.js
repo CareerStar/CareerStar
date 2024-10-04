@@ -322,7 +322,7 @@ function Home({ onComplete, userId }) {
                     <iframe
                         width="754"
                         height="392"
-                        src="https://www.youtube.com/embed/epZ5_DVQzFE"
+                        src="https://www.youtube.com/embed/b7eMnAn_WhI?si=_JK_K37lxh5f7HI0"
                         title="YouTube video player"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
