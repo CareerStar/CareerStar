@@ -9,11 +9,13 @@ function Roadmap({ userId }) {
     const [goal, setGoal] = useState('To get my first full-time role as a software engineer');
     const [isEditingCurrentSituation, setIsEditingCurrentSituation] = useState(false);
     const [isEditingGoal, setIsEditingGoal] = useState(false);
+    const [loading, setLoading] = useState(false);
     const inputGoalRef = useRef(null);
     const inputSituationRef = useRef(null);
 
     useEffect(() => {
         const fetchUserDetails = async () => {
+            setLoading(true);
             try {
                 const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/onboarding/${userId}`);
                 // const response = await fetch(`http://localhost:8080/onboarding/${userId}`);
@@ -28,6 +30,8 @@ function Roadmap({ userId }) {
                 }
             } catch (error) {
                 console.error('Error fetching user details:', error);
+            } finally {
+                setLoading(false);
             }
         }
         if (userId) {
@@ -37,6 +41,7 @@ function Roadmap({ userId }) {
 
     // Handle save function for current situation and goal
     const saveUserDetails = async () => {
+        setLoading(true);
         try {
             // const response = await fetch(`http://localhost:8080/onboarding/update/${userId}`, {
             const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/update_onboarding/${userId}`, {
@@ -57,6 +62,8 @@ function Roadmap({ userId }) {
             }
         } catch (error) {
             console.error('Error updating user details:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -98,6 +105,11 @@ function Roadmap({ userId }) {
 
     return (
         <div className='roadmap-container'>
+            {loading && (
+                <div className="spinner-overlay">
+                    <div className="spinner"></div>
+                </div>
+            )}
             <p className='roadmap-title'>My Roadmap</p>
             <div className='roadmap-goals-container flex-row'>
                 <div className='roadmap-goal-card flex-column'>
