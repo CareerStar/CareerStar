@@ -14,9 +14,10 @@ function HomepageQuestion1({onChange}) {
             <div className=''>
                 <select id="options" className='home-page-question-dropdown-menu' value={selectedOption} onChange={handleChange}>
                     <option value="" disabled>Select an option</option>
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
+                    <option value="Early Career Adventurer">Early Career Adventurer: I’m just starting out and ready to conquer the professional world!</option>
+                    <option value="Mid-Career Navigator">Mid-Career Navigator: I’ve been around the block and am steering my career towards new horizons.</option>
+                    <option value="Seasoned Pro">Seasoned Pro: I’ve got wisdom and experience, looking for the next big challenge or way to give back.</option>
+                    <option value="Career Transition Explorer">Career Transition Explorer: I’m switching lanes and navigating my way to a new career path.</option>
                 </select>
             </div>
         </div>

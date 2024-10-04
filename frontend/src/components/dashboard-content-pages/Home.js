@@ -145,7 +145,7 @@ function Home({ onComplete, userId }) {
             setTimeout(() => {
                 setCurrentStep(currentStep + 1);
                 onComplete('Home');
-            }, 1000);
+            }, 0);
             setLoading(false);
         }
     }
