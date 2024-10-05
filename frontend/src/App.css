@@ -1061,6 +1061,7 @@
   font-size: 12px;
   line-height: 16px;
   color: #000000;
+  text-align: justify;
   /* margin: 0px; */
   margin-bottom: 0px;
 }
@@ -1136,9 +1137,9 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 22px;
-  text-align: left;
+  /* text-align: left; */
+  text-align: justify;
   letter-spacing: 0.3px;
-
   color: #000000;
 
 }
