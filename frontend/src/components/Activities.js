@@ -23,17 +23,17 @@ function Activities({ userId }) {
                     console.error('Error fetching user details:', data);
                 }
 
-                if (data.length === 0) {
-                    const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/activities`);
-                    const data = await response.json();
-                    console.log('All activities:', data);
-                    if (response.ok) {
-                        if (data) {
-                            setActivities(data);
-                        }
-                        console.log('User activities details:', data);
-                    }
-                }
+                // if (data.length === 0) {
+                //     const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/activities`);
+                //     const data = await response.json();
+                //     console.log('All activities:', data);
+                //     if (response.ok) {
+                //         if (data) {
+                //             setActivities(data);
+                //         }
+                //         console.log('User activities details:', data);
+                //     }
+                // }
             }
             catch (error) {
                 console.error('Error fetching user details:', error);
@@ -123,7 +123,7 @@ function Activities({ userId }) {
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                         >
-                        </iframe>) : (<img src={currentCard.imageURL} />)}
+                        </iframe>) : (<img src={currentCard.imageURL} className='popup-image' />)}
                         <div className='activity-popuop-tags-stars'>
                             <div className='activity-popup-tags'>
                                 <div className='activity-card-tags'>
