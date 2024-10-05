@@ -189,6 +189,12 @@ function AdminActivities() {
                         onChange={(e) => handleChangeNewActivity('imageURL', e.target.value)}
                     />
                     <input
+                        type='text'
+                        value={newActivity.videoURL}
+                        placeholder='Video URL'
+                        onChange={(e) => handleChangeNewActivity('videoURL', e.target.value)}
+                    />
+                    <input
                         type='number'
                         value={newActivity.star}
                         placeholder='Star'
@@ -219,6 +225,11 @@ function AdminActivities() {
                                         type='text'
                                         value={activity.imageURL}
                                         onChange={(e) => handleChange(index, 'imageURL', e.target.value)}
+                                    />
+                                    <input
+                                        type='text'
+                                        value={activity.videoURL}
+                                        onChange={(e) => handleChange(index, 'videoURL', e.target.value)}
                                     />
                                     <input
                                         type='number'
