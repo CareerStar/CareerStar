@@ -382,7 +382,7 @@ def get_user_activities_details(userId):
         connection = get_db_connection()
         cursor = connection.cursor()
         get_user_activities_details_query = """
-        SELECT a.imageURL, a.title, a.description, a.tags, a.star, a.activityId FROM user_activities u JOIN activities a ON a.activityId = u.activityId WHERE u.userId = %s;
+        SELECT a.imageURL, a.videoURL, a.title, a.description, a.tags, a.star, a.activityId FROM user_activities u JOIN activities a ON a.activityId = u.activityId WHERE u.userId = %s;
         """
         cursor.execute(get_user_activities_details_query, (userId,))
         activities = cursor.fetchall()
@@ -390,11 +390,12 @@ def get_user_activities_details(userId):
         for activity in activities:
             activity_dict = {
                 "imageURL": activity[0],
-                "title": activity[1],
-                "description": activity[2],
-                "tags": activity[3],
-                "star": activity[4],
-                "activityId": activity[5]
+                "videoURL": activity[1],
+                "title": activity[2],
+                "description": activity[3],
+                "tags": activity[4],
+                "star": activity[5],
+                "activityId": activity[6]
             }
             activity_list.append(activity_dict)
         return jsonify(activity_list)
@@ -409,9 +410,11 @@ def get_user_activities_details(userId):
             # connection.close()
 
 @app.route('/activities', methods=['GET'])
-# @jwt_required()
+@jwt_required()
 def get_all_activities_details():
-    # current_user = get_jwt_identity()
+    current_user = get_jwt_identity()
+    if current_user['role'] != 'admin':
+        return jsonify({"error": "Unauthorized"}), 401
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
@@ -459,16 +462,17 @@ def add_new_activities():
         tags = data.get("tags")
         star = data.get("star")
         imageURL = data.get("imageURL")
+        videoURL = data.get("videoURL")
 
         print(title, description, tags, star)
 
         add_new_activities_query = """
-        INSERT INTO activities (imageURL, title, description, tags, star)
-        VALUES (%s, %s, %s, %s, %s)
+        INSERT INTO activities (imageURL, title, description, tags, star, videoURL)
+        VALUES (%s, %s, %s, %s, %s, %s)
         RETURNING activityId;
         """
 
-        cursor.execute(add_new_activities_query, (imageURL, title, description, tags, star, ))
+        cursor.execute(add_new_activities_query, (imageURL, title, description, tags, star, videoURL, ))
         activity_id = cursor.fetchone()[0]
         connection.commit()
 
@@ -477,7 +481,8 @@ def add_new_activities():
             "title": title,
             "description": description,
             "tags": tags,
-            "star": star
+            "star": star,
+            "videoURL": videoURL
         }
 
         return jsonify({"message": "Activity added successfully", "activity": added_activity}), 201
@@ -503,13 +508,15 @@ def update_activity(activityId):
         description = data.get("description")
         tags = data.get("tags")
         star = data.get("star")
+        imageURL = data.get("imageURL")
+        videoURL = data.get("videoURL")
 
         update_activity_query = """
         UPDATE activities 
-        SET title = %s, description = %s, tags = %s, star = %s 
+        SET title = %s, description = %s, tags = %s, star = %s, imageURL = %s, videoURL = %s 
         WHERE activityId = %s;
         """
-        cursor.execute(update_activity_query, (title, description, tags, star, activityId))
+        cursor.execute(update_activity_query, (title, description, tags, star, imageURL, videoURL, activityId))
         connection.commit()
 
         return jsonify({"message": "Activity updated successfully"}), 200
