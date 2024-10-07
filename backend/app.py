@@ -563,6 +563,7 @@ def update_user_activity(userId, activityId):
 
         data = request.json
         completed = data.get("completed")
+        stars = data.get('stars')
 
         update_user_activity_query = """
         UPDATE user_activities 
@@ -570,6 +571,14 @@ def update_user_activity(userId, activityId):
         WHERE userId=%s AND activityId = %s;
         """
         cursor.execute(update_user_activity_query, (completed, userId, activityId))
+        connection.commit()
+
+        update_user_star_query = """
+        UPDATE Users
+        SET stars = stars + %s
+        WHERE userId=%s
+        """
+        cursor.execute(update_user_star_query, (stars, userId))
         connection.commit()
 
         return jsonify({"message": "User activity table updated successfully"}), 200
