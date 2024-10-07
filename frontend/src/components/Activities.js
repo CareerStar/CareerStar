@@ -5,6 +5,7 @@ import activity2 from '../assets/images/activity-2.png';
 import activity3 from '../assets/images/activity-3.png';
 import activity4 from '../assets/images/activity-4.png';
 import starEmpty from '../assets/images/star-empty.png';
+import star from '../assets/images/star.png';
 
 function Activities({ userId }) {
     const [activites, setActivities] = useState([]);
@@ -101,6 +102,49 @@ function Activities({ userId }) {
         };
     }, [popupRef]);
 
+    const updateActivity = (activityId, updatedData) => {
+        setActivities((prevActivities) =>
+            prevActivities.map((activity) =>
+                activity.activityId === activityId
+                    ? { ...activity, ...updatedData }
+                    : activity
+            )
+        );
+    };
+    
+
+    const updateUserActivity = async () => {
+        if (currentCard.completed) {
+            closePopUp();
+            return;
+        }
+        try {
+            const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/user_activities/${userId}/${currentCard.activityId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    completed: true,
+                    stars: currentCard.star
+                })
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                console.log('User activity updated:', data);
+                updateActivity(currentCard.activityId, { completed: true });
+                closePopUp();
+                window.location.reload();
+            } else {
+                console.error('Error updating user activity:', data);
+            }
+        }
+        catch (error) {
+            console.error('Error updating user activity:', error);
+        }
+    }
+
     return (
         <div className='activities-container'>
             <h1>Top Activities For You This Week</h1>
@@ -110,7 +154,7 @@ function Activities({ userId }) {
                 ) : (
                     cards.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
                 )} */}
-                {activites.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)            }
+                {activites.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} completed={card.completed} /></div>)            }
             </div>
             {showPopup && (
                 <div className='activity-popup'>
@@ -130,8 +174,8 @@ function Activities({ userId }) {
                                     {currentCard.tags.map(tag => <div className='activity-card-tag'><p>{tag}</p></div>)}
                                 </div>
                                 <div className='activity-popup-star-and-count'>
-                                    <p>{currentCard.starCount}</p>
-                                    <img src={starEmpty} alt='star' />
+                                    <p>{currentCard.star}</p>
+                                    {currentCard.completed ? <img src={star} alt='star' /> : <img src={starEmpty} alt='star' />}
                                 </div>
                             </div>
                         </div>
@@ -139,8 +183,9 @@ function Activities({ userId }) {
                         <div className='activity-popup-text'>
                             <p>{currentCard.description}</p>
                         </div>
-                        <div className='activity-popup-submit-button' onClick={closePopUp}>
-                            <p>I watched this</p>
+                        <div className='activity-popup-submit-button' onClick={updateUserActivity}>
+                            {currentCard.completed ? <p>Completed</p> : <p>Mark as completed</p>}
+                            {/* <p>I watched this</p> */}
                         </div>
                     </div>
                 </div>
