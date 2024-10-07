@@ -4,8 +4,9 @@ import star from '../../assets/images/star.png';
 
 function Profile({userId}) {
     const [firstname, setFirstname] = useState('');
-    const [summary, setSummary] = useState('My Summary');
+    const [summary, setSummary] = useState('');
     const [stars, setStars] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     const handleSummaryChange = (event) => {
         setSummary(event.target.value);
@@ -17,6 +18,7 @@ function Profile({userId}) {
 
     useEffect(() => {  
         const fetchUserDetails = async () => {
+            setLoading(true);
             try {
                 const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/user/${userId}`);
 
@@ -48,6 +50,8 @@ function Profile({userId}) {
             }
             catch (error) {
                 console.error('Error fetching user details:', error);
+            } finally {
+                setLoading(false);
             }
         }
         if (userId) {
@@ -80,6 +84,11 @@ function Profile({userId}) {
 
     return (
         <div className='profile-container'>
+            {loading && (
+                <div className="spinner-overlay">
+                    <div className="spinner"></div>
+                </div>
+            )}
             <div className='profile-informtation'>
                 <img src={displayPicture} alt='Profile icon' />
                 <div className='profile-user-info flex-row'>
@@ -96,6 +105,7 @@ function Profile({userId}) {
                         onChange={handleSummaryChange}
                         rows="4"
                         cols="50"
+                        placeholder='Write a summary about yourself...'
                     />
 
                     <div className='summary-buttons flex-row'>

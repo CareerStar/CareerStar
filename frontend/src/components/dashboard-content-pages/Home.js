@@ -16,7 +16,9 @@ function Home({ onComplete, userId }) {
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(0);
     const [videoEnded, setVideoEnded] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [userDetails, setUserDetails] = useState({});
+    const [activityChoices, setActivityChoices] = useState([]);
     const [answers, setAnswers] = useState({
         describeMe: '',
         currentSituation: '',
@@ -26,6 +28,7 @@ function Home({ onComplete, userId }) {
         summary: 'My summary',
         degree: '',
         major: '',
+        activityChoices: [],
     });
     const [errors, setErrors] = useState({
         describeMe: '',
@@ -49,6 +52,7 @@ function Home({ onComplete, userId }) {
 
     useEffect(() => {
         const fetchUserDetails = async () => {
+            setLoading(true);
             try {
                 const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/user/${userId}`);
                 // const response = await fetch(`http://localhost:8080/users/${userId}`);
@@ -73,7 +77,7 @@ function Home({ onComplete, userId }) {
                         if (data.choice === 'roadmap') {
                             onComplete('Roadmap');
                         } else if (data.choice === 'activities') {
-                            setCurrentStep(6);
+                            setCurrentStep(7);
                         }
                     }
                     setAnswers((prevAnswers) => ({
@@ -89,6 +93,8 @@ function Home({ onComplete, userId }) {
                 }
             } catch (error) {
                 console.error('Error fetching user details:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -121,11 +127,32 @@ function Home({ onComplete, userId }) {
         } else if (selectedOption === 'activities') {
             answers.onboarded = true;
             answers.choice = 'activities';
-            await addUserOnboardingDeatils();
+            // await addUserOnboardingDeatils();
             setCurrentStep(currentStep + 1);
-            onComplete('Home');
         }
     };
+
+    const saveUserOnboardingDetailsWithActivities = async () => {
+        setLoading(true);
+        answers.onboarded = true;
+        answers.choice = 'activities';
+        answers.activityChoices = activityChoices;
+        try {
+            await addUserOnboardingDeatils();
+        } catch (error) {
+            console.error("Error adding onboarding details:", error);
+        } finally {
+            setTimeout(() => {
+                setCurrentStep(currentStep + 1);
+                onComplete('Home');
+            }, 0);
+            setLoading(false);
+        }
+    }
+
+    const handleActivityChoicesSelect = async (selectedActivities) => {
+        setActivityChoices(selectedActivities);
+    }
 
     const addUserOnboardingDeatils = async () => {
         try {
@@ -139,16 +166,22 @@ function Home({ onComplete, userId }) {
                 "summary": answers.summary,
                 "degree": answers.degree,
                 "major": answers.major,
+                "activityChoices": answers.activityChoices,
             };
             // console.log('Request body:', requestBody);
             const response = await axios.post('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/onboarding', requestBody);
             // const response = await axios.post('http://localhost:8080/onboarding', requestBody);
             if (response.status === 200) {
                 const { responseUserId } = response.data;
-                console.log('User onboarding details added successfully!', responseUserId);
+                console.log('User onboarding details added successfully!-----', responseUserId);
+                return true;
+            } else {
+                console.error('Error adding user onboarding details:', response);
+                return false;
             }
         } catch (error) {
             console.error("Error fetching data:", error);
+            return false;
         }
     }
 
@@ -194,7 +227,7 @@ function Home({ onComplete, userId }) {
             case 5:
                 return <HomepageChoiceQuestion onOptionSelect={handleOptionSelect} />;
             case 6:
-                return <HomepageQuestion5 />;
+                return <HomepageQuestion5 onActivityChoicesSelect={handleActivityChoicesSelect} />;
             case 7:
                 return <Activities userId={userId} />;
             default:
@@ -242,6 +275,11 @@ function Home({ onComplete, userId }) {
 
     return (
         <div className="home">
+            {loading && (
+                <div className="spinner-overlay">
+                    <div className="spinner"></div>
+                </div>
+            )}
             <div className="home-welcome">
                 <div className='home-welcome-left'>
                     <img src={astronaut} alt="Astronaut" />
@@ -271,7 +309,7 @@ function Home({ onComplete, userId }) {
                     <div className="home-question-wrapper">
                         {renderPage()}
                     </div>
-                    <div className='home-page-button' onClick={handleClick}>
+                    <div className='home-page-button' onClick={() => { saveUserOnboardingDetailsWithActivities(); }}>
                         <p>Continue</p>
                     </div>
                 </div>
@@ -284,7 +322,7 @@ function Home({ onComplete, userId }) {
                     <iframe
                         width="754"
                         height="392"
-                        src="https://www.youtube.com/embed/epZ5_DVQzFE"
+                        src="https://www.youtube.com/embed/b7eMnAn_WhI?si=_JK_K37lxh5f7HI0"
                         title="YouTube video player"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
