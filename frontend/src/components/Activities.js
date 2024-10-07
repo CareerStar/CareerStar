@@ -114,6 +114,10 @@ function Activities({ userId }) {
     
 
     const updateUserActivity = async () => {
+        if (currentCard.completed) {
+            closePopUp();
+            return;
+        }
         try {
             const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/user_activities/${userId}/${currentCard.activityId}`, {
                 method: 'PUT',
@@ -121,7 +125,8 @@ function Activities({ userId }) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    completed: true
+                    completed: true,
+                    stars: currentCard.star
                 })
             });
 
@@ -130,6 +135,7 @@ function Activities({ userId }) {
                 console.log('User activity updated:', data);
                 updateActivity(currentCard.activityId, { completed: true });
                 closePopUp();
+                window.location.reload();
             } else {
                 console.error('Error updating user activity:', data);
             }
@@ -178,7 +184,8 @@ function Activities({ userId }) {
                             <p>{currentCard.description}</p>
                         </div>
                         <div className='activity-popup-submit-button' onClick={updateUserActivity}>
-                            <p>I watched this</p>
+                            {currentCard.completed ? <p>Completed</p> : <p>Mark as completed</p>}
+                            {/* <p>I watched this</p> */}
                         </div>
                     </div>
                 </div>
