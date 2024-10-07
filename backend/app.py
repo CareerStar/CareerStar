@@ -183,6 +183,46 @@ def login():
             # cursor.close()
             # connection.close()
 
+def addActivityToUserActivitiesTable(user_id, activityId):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        update_user_activities_details_query = """
+        INSERT INTO user_activities (userId, activityId) VALUES (%s, %s);
+        """
+        cursor.execute(update_user_activities_details_query, (user_id, activityId))
+        connection.commit()
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+            
+def assignActivitiesToUser(user_id, activitychoices):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        get_activities_details_query = """
+        SELECT activityId, tags FROM activities;
+        """
+        cursor.execute(get_activities_details_query)
+        activities = cursor.fetchall()
+        activity_list = []
+        for activity in activities:
+            # print((set(activity[1]) - set(activitychoices)))
+            if (set(activity[1]) & set(activitychoices)):
+                addActivityToUserActivitiesTable(user_id, activity[0])
+        return True
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+
 @app.route('/onboarding', methods=['POST'])
 def onboarding():
     try:
@@ -196,6 +236,7 @@ def onboarding():
         summary = user_data.get('summary')
         degree = user_data.get('degree')
         major = user_data.get('major')
+        activitychoices = user_data.get('activityChoices')
 
         if not userId or not describeMe or not currentSituation or not goal:
             return jsonify({"error": "Missing data"}), 400
@@ -204,17 +245,19 @@ def onboarding():
         cursor = connection.cursor()
 
         insert_query = """
-        INSERT INTO user_personalization (userId, describeMe, currentSituation, goal, onboarded, choice, summary, degree, major)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+        INSERT INTO user_personalization (userId, describeMe, currentSituation, goal, onboarded, choice, summary, degree, major, activitychoices)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING userId;
         """
 
-        cursor.execute(insert_query, (userId, describeMe, currentSituation, goal, True, choice, summary, degree, major))
+        cursor.execute(insert_query, (userId, describeMe, currentSituation, goal, True, choice, summary, degree, major, activitychoices))
         user_id = 0
         user_id = cursor.fetchone()[0]
 
         connection.commit()
-        if userId:
+
+        assign_activities_successful = assignActivitiesToUser(user_id, activitychoices)
+        if assign_activities_successful:
             return jsonify({"message": "Data added successful", "userId": user_id, "onboarded": True}), 200
         else:
             return jsonify({"error": "Issue with data insertion"}), 400
@@ -339,7 +382,7 @@ def get_user_activities_details(userId):
         connection = get_db_connection()
         cursor = connection.cursor()
         get_user_activities_details_query = """
-        SELECT a.imageURL, a.title, a.description, a.tags, a.star, a.activityId FROM user_activities u JOIN activities a ON a.activityId = u.activityId WHERE u.userId = %s;
+        SELECT a.imageURL, a.videoURL, a.title, a.description, a.tags, a.star, a.activityId, u.completed FROM user_activities u JOIN activities a ON a.activityId = u.activityId WHERE u.userId = %s;
         """
         cursor.execute(get_user_activities_details_query, (userId,))
         activities = cursor.fetchall()
@@ -347,11 +390,13 @@ def get_user_activities_details(userId):
         for activity in activities:
             activity_dict = {
                 "imageURL": activity[0],
-                "title": activity[1],
-                "description": activity[2],
-                "tags": activity[3],
-                "star": activity[4],
-                "activityId": activity[5]
+                "videoURL": activity[1],
+                "title": activity[2],
+                "description": activity[3],
+                "tags": activity[4],
+                "star": activity[5],
+                "activityId": activity[6],
+                "completed": activity[7],
             }
             activity_list.append(activity_dict)
         return jsonify(activity_list)
@@ -369,11 +414,13 @@ def get_user_activities_details(userId):
 @jwt_required()
 def get_all_activities_details():
     current_user = get_jwt_identity()
+    if current_user['role'] != 'admin':
+        return jsonify({"error": "Unauthorized"}), 401
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
         get_user_activities_details_query = """
-        SELECT imageURL, title, description, tags, star, activityId FROM activities;
+        SELECT imageURL, title, description, tags, star, activityId, videoURL FROM activities;
         """
         cursor.execute(get_user_activities_details_query)
         activities = cursor.fetchall()
@@ -385,7 +432,8 @@ def get_all_activities_details():
                 "description": activity[2],
                 "tags": activity[3],
                 "star": activity[4],
-                "activityId": activity[5]
+                "activityId": activity[5],
+                "videoURL": activity[6]
             }
             activity_list.append(activity_dict)
         return jsonify(activity_list)
@@ -415,16 +463,17 @@ def add_new_activities():
         tags = data.get("tags")
         star = data.get("star")
         imageURL = data.get("imageURL")
+        videoURL = data.get("videoURL")
 
         print(title, description, tags, star)
 
         add_new_activities_query = """
-        INSERT INTO activities (imageURL, title, description, tags, star)
-        VALUES (%s, %s, %s, %s, %s)
+        INSERT INTO activities (imageURL, title, description, tags, star, videoURL)
+        VALUES (%s, %s, %s, %s, %s, %s)
         RETURNING activityId;
         """
 
-        cursor.execute(add_new_activities_query, (imageURL, title, description, tags, star, ))
+        cursor.execute(add_new_activities_query, (imageURL, title, description, tags, star, videoURL, ))
         activity_id = cursor.fetchone()[0]
         connection.commit()
 
@@ -433,7 +482,8 @@ def add_new_activities():
             "title": title,
             "description": description,
             "tags": tags,
-            "star": star
+            "star": star,
+            "videoURL": videoURL
         }
 
         return jsonify({"message": "Activity added successfully", "activity": added_activity}), 201
@@ -459,13 +509,15 @@ def update_activity(activityId):
         description = data.get("description")
         tags = data.get("tags")
         star = data.get("star")
+        imageURL = data.get("imageURL")
+        videoURL = data.get("videoURL")
 
         update_activity_query = """
         UPDATE activities 
-        SET title = %s, description = %s, tags = %s, star = %s 
+        SET title = %s, description = %s, tags = %s, star = %s, imageURL = %s, videoURL = %s 
         WHERE activityId = %s;
         """
-        cursor.execute(update_activity_query, (title, description, tags, star, activityId))
+        cursor.execute(update_activity_query, (title, description, tags, star, imageURL, videoURL, activityId))
         connection.commit()
 
         return jsonify({"message": "Activity updated successfully"}), 200
@@ -495,6 +547,41 @@ def delete_activity(activityId):
         connection.commit()
 
         return jsonify({"message": "Activity deleted successfully"}), 200
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+
+@app.route('/user_activities/<int:userId>/<int:activityId>', methods=['PUT'])
+def update_user_activity(userId, activityId):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        data = request.json
+        completed = data.get("completed")
+        stars = data.get('stars')
+
+        update_user_activity_query = """
+        UPDATE user_activities 
+        SET completed = %s 
+        WHERE userId=%s AND activityId = %s;
+        """
+        cursor.execute(update_user_activity_query, (completed, userId, activityId))
+        connection.commit()
+
+        update_user_star_query = """
+        UPDATE Users
+        SET stars = stars + %s
+        WHERE userId=%s
+        """
+        cursor.execute(update_user_star_query, (stars, userId))
+        connection.commit()
+
+        return jsonify({"message": "User activity table updated successfully"}), 200
 
     except Exception as error:
         return jsonify({"error": str(error)}), 500
