@@ -382,7 +382,7 @@ def get_user_activities_details(userId):
         connection = get_db_connection()
         cursor = connection.cursor()
         get_user_activities_details_query = """
-        SELECT a.imageURL, a.videoURL, a.title, a.description, a.tags, a.star, a.activityId FROM user_activities u JOIN activities a ON a.activityId = u.activityId WHERE u.userId = %s;
+        SELECT a.imageURL, a.videoURL, a.title, a.description, a.tags, a.star, a.activityId, u.completed FROM user_activities u JOIN activities a ON a.activityId = u.activityId WHERE u.userId = %s;
         """
         cursor.execute(get_user_activities_details_query, (userId,))
         activities = cursor.fetchall()
@@ -395,7 +395,8 @@ def get_user_activities_details(userId):
                 "description": activity[3],
                 "tags": activity[4],
                 "star": activity[5],
-                "activityId": activity[6]
+                "activityId": activity[6],
+                "completed": activity[7],
             }
             activity_list.append(activity_dict)
         return jsonify(activity_list)
@@ -546,6 +547,41 @@ def delete_activity(activityId):
         connection.commit()
 
         return jsonify({"message": "Activity deleted successfully"}), 200
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+
+@app.route('/user_activities/<int:userId>/<int:activityId>', methods=['PUT'])
+def update_user_activity(userId, activityId):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        data = request.json
+        completed = data.get("completed")
+        stars = data.get('stars')
+
+        update_user_activity_query = """
+        UPDATE user_activities 
+        SET completed = %s 
+        WHERE userId=%s AND activityId = %s;
+        """
+        cursor.execute(update_user_activity_query, (completed, userId, activityId))
+        connection.commit()
+
+        update_user_star_query = """
+        UPDATE Users
+        SET stars = stars + %s
+        WHERE userId=%s
+        """
+        cursor.execute(update_user_star_query, (stars, userId))
+        connection.commit()
+
+        return jsonify({"message": "User activity table updated successfully"}), 200
 
     except Exception as error:
         return jsonify({"error": str(error)}), 500
