@@ -675,6 +675,7 @@
   flex: 1;
   background-color: #F9F8FF;
   margin-bottom: 20px;
+  height: fit-content;
 }
 
 /* Home page styles */
@@ -1497,6 +1498,32 @@ button:hover {
 
 .bold {
   font-weight: 700;
+}
+
+.activity-description-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  height: auto;
+  background: #FFFFFF;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.activity-description-content {
+  padding: 0px 20px;
+}
+
+.activity-description-content img {
+  max-width: 700px;
+}
+
+.activity-description-content input {
+  width: 600px;
+  height: 30px;
 }
 
 /* Admin page styles */
