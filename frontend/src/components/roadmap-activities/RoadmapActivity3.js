@@ -79,7 +79,7 @@ function RoadmapActivity3({ userId }) {
 
                         <h2>My results</h2>
                         <input type="file" onChange={handleImageUpload} accept="image/*,.pdf"/>
-                        <img src={uploadedImage} alt='Uploaded'/>
+                        {uploadedImage && (<img src={uploadedImage} alt='Uploaded'/>)}
                     </div>
                 </div>
             )}
