@@ -1511,6 +1511,7 @@ button:hover {
   background: #FFFFFF;
   border-radius: 12px;
   margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .activity-description-content {
