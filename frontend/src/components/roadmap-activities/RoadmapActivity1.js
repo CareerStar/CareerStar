@@ -6,19 +6,7 @@ import upArrow from '../../assets/images/up-arrow-roadmap.png';
 import hotTip1 from '../../assets/images/roadmap-activities/hot-tip-1.webp';
 
 function RoadmapActivity1({ userId }) {
-    const [uploadedImage, setUploadedImage] = useState(null);
     const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
-
-
-    const handleImageUpload = (e) => {
-        // const file = event.target.files[0];
-        // const reader = new FileReader();
-        // reader.onloadend = () => {
-        //     setUploadedImage(reader.result);
-        // };
-        // reader.readAsDataURL(file);
-        setUploadedImage(URL.createObjectURL(e.target.files[0]));
-    }
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -41,11 +29,6 @@ function RoadmapActivity1({ userId }) {
     }, [userId]);
 
     const toggleDescriptionVisibility = () => {
-        // setActivities(activities.map(activity =>
-        //     activity.id === id
-        //         ? { ...activity, isDescriptionVisible: !activity.isDescriptionVisible }
-        //         : activity
-        // ));
         setIsDescriptionVisible(!isDescriptionVisible);
     };
 

@@ -10,12 +10,6 @@ function RoadmapActivity2({ userId }) {
 
 
     const handleImageUpload = (e) => {
-        // const file = event.target.files[0];
-        // const reader = new FileReader();
-        // reader.onloadend = () => {
-        //     setUploadedImage(reader.result);
-        // };
-        // reader.readAsDataURL(file);
         setUploadedImage(URL.createObjectURL(e.target.files[0]));
     }
 
@@ -40,11 +34,6 @@ function RoadmapActivity2({ userId }) {
     }, [userId]);
 
     const toggleDescriptionVisibility = () => {
-        // setActivities(activities.map(activity =>
-        //     activity.id === id
-        //         ? { ...activity, isDescriptionVisible: !activity.isDescriptionVisible }
-        //         : activity
-        // ));
         setIsDescriptionVisible(!isDescriptionVisible);
     };
 

@@ -34,11 +34,6 @@ function RoadmapActivity3({ userId }) {
     }, [userId]);
 
     const toggleDescriptionVisibility = () => {
-        // setActivities(activities.map(activity =>
-        //     activity.id === id
-        //         ? { ...activity, isDescriptionVisible: !activity.isDescriptionVisible }
-        //         : activity
-        // ));
         setIsDescriptionVisible(!isDescriptionVisible);
     };
 
