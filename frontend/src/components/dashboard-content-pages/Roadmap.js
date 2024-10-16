@@ -1,8 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import DOMPurify from 'dompurify';
 import editIcon from '../../assets/images/edit-icon.png';
 import starEmpty from '../../assets/images/star-empty.png';
 import downArrow from '../../assets/images/down-arrow-roadmap.png';
+import upArrow from '../../assets/images/up-arrow-roadmap.png';
+import hotTip1 from '../../assets/images/roadmap-activities/hot-tip-1.webp';
+import RoadmapActivity1 from '../roadmap-activities/RoadmapActivity1';
+import RoadmapActivity2 from '../roadmap-activities/RoadmapActivity2';
+import RoadmapActivity3 from '../roadmap-activities/RoadmapActivity3';
 
 function Roadmap({ userId }) {
     const [currentSituation, setCurrentSituation] = useState('I’m a recent grad');
@@ -10,6 +16,7 @@ function Roadmap({ userId }) {
     const [isEditingCurrentSituation, setIsEditingCurrentSituation] = useState(false);
     const [isEditingGoal, setIsEditingGoal] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [uploadedImage, setUploadedImage] = useState(null);
     const inputGoalRef = useRef(null);
     const inputSituationRef = useRef(null);
 
@@ -18,13 +25,10 @@ function Roadmap({ userId }) {
             setLoading(true);
             try {
                 const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/onboarding/${userId}`);
-                // const response = await fetch(`http://localhost:8080/onboarding/${userId}`);
                 const data = await response.json();
-                // console.log('Data:', data);
                 if (response.ok) {
                     setCurrentSituation(data.currentSituation);
                     setGoal(data.goal);
-                    console.log('User onboarding details:', data);
                 } else {
                     console.error('Error fetching user details:', data);
                 }
@@ -39,16 +43,12 @@ function Roadmap({ userId }) {
         }
     }, [userId]);
 
-    // Handle save function for current situation and goal
     const saveUserDetails = async () => {
         setLoading(true);
         try {
-            // const response = await fetch(`http://localhost:8080/onboarding/update/${userId}`, {
             const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/update_onboarding/${userId}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     "currentSituation": currentSituation,
                     "goal": goal
@@ -72,7 +72,7 @@ function Roadmap({ userId }) {
         setTimeout(() => {
             if (inputSituationRef.current) {
                 inputSituationRef.current.focus();
-                inputSituationRef.current.setSelectionRange(currentSituation.length, currentSituation.length);  // Move cursor to the end
+                inputSituationRef.current.setSelectionRange(currentSituation.length, currentSituation.length);
             }
         }, 0);
     };
@@ -82,7 +82,7 @@ function Roadmap({ userId }) {
         setTimeout(() => {
             if (inputGoalRef.current) {
                 inputGoalRef.current.focus();
-                inputGoalRef.current.setSelectionRange(goal.length, goal.length);  // Move cursor to the end
+                inputGoalRef.current.setSelectionRange(goal.length, goal.length);
             }
         }, 0);
     };
@@ -155,39 +155,13 @@ function Roadmap({ userId }) {
             <div className='roadmap-phases-container'>
                 <div className='roadmap-phase flex-column'>
                     <p className='roadmap-phase-title'>Phase 1: Values & Goals</p>
-                    <div>
-                        <div className='roadmap-sub-phase flex-row'>
-                            <div className='roadmap-phase-card'>
-                                <input
-                                    type="checkbox"
-                                />
-                                <p>Looking back <span className='bold'>1 year</span> from now, what do you want to have accomplished professionally?</p>
-                                <img src={downArrow} alt='Down arrow icon' />
-                            </div>
-                            <div className='roadmap-phase-star-count flex-row'>
-                                <p>5</p>
-                                <img src={starEmpty} alt='Star icon' />
-                            </div>
-                        </div>
-
-                        <div className='roadmap-sub-phase flex-row'>
-                            <div className='roadmap-phase-card'>
-                                <input
-                                    type="checkbox"
-                                />
-                                <p>Let’s identify your <span className='bold'>Values</span></p>
-                                <img src={downArrow} alt='Down arrow icon' />
-                            </div>
-                            <div className='roadmap-phase-star-count flex-row'>
-                                <p>5</p>
-                                <img src={starEmpty} alt='Star icon' />
-                            </div>
-                        </div>
-                    </div>
+                    <RoadmapActivity1 userId={userId}/>
+                    <RoadmapActivity2 userId={userId}/>
+                    <RoadmapActivity3 userId={userId}/>
                 </div>
             </div>
         </div>
     );
-};
+}
 
 export default Roadmap;
