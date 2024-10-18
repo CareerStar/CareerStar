@@ -514,16 +514,35 @@ def roadmapactivitypost(userId, roadmapActivityId):
         connection = get_db_connection()
         cursor = connection.cursor()
 
-        insert_query = """
-        INSERT INTO user_roadmap_activities (userId, roadmapActivityId, completed, answer)
-        VALUES (%s, %s, %s, %s);
+        check_query = """
+        SELECT COUNT(*) FROM user_roadmap_activities
+        WHERE userId = %s AND roadmapActivityId = %s;
         """
 
-        cursor.execute(insert_query, (userId, roadmapActivityId, completed, answer_json, ))
+        cursor.execute(check_query, (userId, roadmapActivityId,))
+        record_exists = cursor.fetchone()[0]
 
-        connection.commit()
+        if record_exists:
+            update_query = """
+            UPDATE user_roadmap_activities SET answer = %s
+            WHERE userId = %s AND roadmapActivityId = %s;
+            """
 
-        return jsonify({"message": "Data added successful", "userId": userId, "roadmapActivityId": roadmapActivityId}), 200
+            cursor.execute(update_query, (answer_json, userId, roadmapActivityId,))
+            connection.commit()
+
+            return jsonify({"message": "Data update successful", "userId": userId, "roadmapActivityId": roadmapActivityId}), 200
+        else:
+            insert_query = """
+            INSERT INTO user_roadmap_activities (userId, roadmapActivityId, completed, answer)
+            VALUES (%s, %s, %s, %s);
+            """
+
+            cursor.execute(insert_query, (userId, roadmapActivityId, completed, answer_json, ))
+
+            connection.commit()
+
+            return jsonify({"message": "Data added successful", "userId": userId, "roadmapActivityId": roadmapActivityId}), 200
     except Exception as error:
         return jsonify({"error": str(error)}), 500
     finally:
