@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import os
 import psycopg2
+import json
 from psycopg2 import pool
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -491,6 +492,40 @@ def add_new_activities():
     except Exception as error:
         return jsonify({"error": str(error)}), 500
 
+    finally:
+        if connection:
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
+
+@app.route('/roadmapactivity/<int:userId>/<int:roadmapActivityId>', methods=['POST'])
+def roadmapactivitypost(userId, roadmapActivityId):
+    try:
+        activity_data = request.json
+        answer = activity_data.get('answers')
+        completed = activity_data.get('completed')
+        print(userId, roadmapActivityId, completed, answer)
+
+        if answer:
+            answer_json = json.dumps(answer)
+        else:
+            answer_json = None
+        
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        insert_query = """
+        INSERT INTO user_roadmap_activities (userId, roadmapActivityId, completed, answer)
+        VALUES (%s, %s, %s, %s);
+        """
+
+        cursor.execute(insert_query, (userId, roadmapActivityId, completed, answer_json, ))
+
+        connection.commit()
+
+        return jsonify({"message": "Data added successful", "userId": userId, "roadmapActivityId": roadmapActivityId}), 200
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
     finally:
         if connection:
             return_db_connection(connection)
