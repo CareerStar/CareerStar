@@ -498,6 +498,30 @@ def add_new_activities():
             # cursor.close()
             # connection.close()
 
+@app.route('/roadmapactivity/<int:userId>/<int:roadmapActivityId>', methods=['GET'])
+def roadmapactivityget(userId, roadmapActivityId):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        get_roadmapactivity_query="""
+        SELECT answer FROM user_roadmap_activities
+        WHERE userId = %s AND roadmapActivityId = %s;
+        """
+
+        cursor.execute(get_roadmapactivity_query, (userId, roadmapActivityId))
+        answer = cursor.fetchone()[0]
+
+        if answer:
+            return jsonify(answer)
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+    finally:
+        if connection:
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
+
 @app.route('/roadmapactivity/<int:userId>/<int:roadmapActivityId>', methods=['POST'])
 def roadmapactivitypost(userId, roadmapActivityId):
     try:
