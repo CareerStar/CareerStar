@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import starEmpty from '../../assets/images/star-empty.png';
+import star from '../../assets/images/star.png';
 import downArrow from '../../assets/images/down-arrow-roadmap.png';
 import upArrow from '../../assets/images/up-arrow-roadmap.png';
 
 function RoadmapActivity2({ userId }) {
-    const [uploadedImage, setUploadedImage] = useState(null);
     const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
+    const [completed, setCompleted] = useState(false);
+    const [starCount, setStarCount] = useState(5);
     const [answers, setAnswers] = useState({
         currentSituation1: '',
         currentSituation2: '',
@@ -32,6 +34,7 @@ function RoadmapActivity2({ userId }) {
                 if (response.data) {
                     // Handle response
                     setAnswers(response.data);
+                    setCompleted(true);
                 }
             } catch (error) {
                 console.error('Activity not completed', error);
@@ -53,10 +56,12 @@ function RoadmapActivity2({ userId }) {
                 roadmapActivityId: 1,
                 completed: true,
                 answers: answers,
+                stars: starCount,
             }; 
             const response = await axios.post(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/roadmapactivity/${userId}/1`, payload);
             if (response.status === 200) {
                 console.log(response.data.message);
+                setCompleted(true);
             }
         } catch (error) {
             console.error('Error saving answers:', error);
@@ -86,8 +91,12 @@ function RoadmapActivity2({ userId }) {
                     )}
                 </div>
                 <div className='roadmap-phase-star-count flex-row'>
-                    <p>5</p>
-                    <img src={starEmpty} alt='Star icon' />
+                    <p>{starCount}</p>
+                    {completed ? (
+                        <img src={star} alt='Star icon' />
+                    ) : (
+                        <img src={starEmpty} alt='Star icon' />
+                    )}
                 </div>
             </div>
             {isDescriptionVisible && (
