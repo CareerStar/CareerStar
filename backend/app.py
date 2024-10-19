@@ -528,6 +528,7 @@ def roadmapactivitypost(userId, roadmapActivityId):
         activity_data = request.json
         answer = activity_data.get('answers')
         completed = activity_data.get('completed')
+        stars = activity_data.get('stars')
         print(userId, roadmapActivityId, completed, answer)
 
         if answer:
@@ -564,6 +565,14 @@ def roadmapactivitypost(userId, roadmapActivityId):
 
             cursor.execute(insert_query, (userId, roadmapActivityId, completed, answer_json, ))
 
+            connection.commit()
+
+            update_user_star_query = """
+            UPDATE Users
+            SET stars = stars + %s
+            WHERE userId=%s
+            """
+            cursor.execute(update_user_star_query, (stars, userId))
             connection.commit()
 
             return jsonify({"message": "Data added successful", "userId": userId, "roadmapActivityId": roadmapActivityId}), 200
