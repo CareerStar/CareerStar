@@ -62,6 +62,8 @@ function RoadmapActivity2({ userId }) {
             if (response.status === 200) {
                 console.log(response.data.message);
                 setCompleted(true);
+                toggleDescriptionVisibility();
+                window.location.reload();
             }
         } catch (error) {
             console.error('Error saving answers:', error);
@@ -72,7 +74,10 @@ function RoadmapActivity2({ userId }) {
         <div>
             <div className='roadmap-sub-phase flex-row'>
                 <div className='roadmap-phase-card'>
-                    <input type="checkbox" />
+                    <input 
+                        type="checkbox" 
+                        checked={completed}
+                    />
                     <p>Where you’re at</p>
                     {isDescriptionVisible ? (
                         <img
