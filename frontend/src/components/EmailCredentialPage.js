@@ -4,8 +4,8 @@ import axios from 'axios';
 import ProgressBar from './ProgressBar';
 import careerStarLogo from '../assets/images/career-star-logo-black.png';
 import Stars3 from '../assets/images/stars3.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import eye from '../assets/images/eye.svg';
+import eyeOff from '../assets/images/eye-off.svg';
 
 function EmailCredentialPage() {
     const currentStep = 3;
@@ -152,7 +152,7 @@ function EmailCredentialPage() {
                             onClick={togglePasswordVisibility}
                             className='password-visibility-icon'
                         >
-                            <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
+                            {showPassword ? <img src={eye} alt='Eye icon' /> : <img src={eyeOff} alt='Eye off icon' />}
                         </span>
                     </div>
                     {errorPassword && <div className='error-text'><p>{errorPassword}</p></div>}

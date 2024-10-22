@@ -487,7 +487,7 @@
 .password-visibility-icon {
   position: absolute;
   right: 10px;
-  top: 67%;
+  top: 70%;
   transform: translateY(-50%);
   cursor: pointer;
 }
