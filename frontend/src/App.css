@@ -478,6 +478,20 @@
   margin-top: 5px;
 }
 
+/* Password section styles */
+.password-section {
+  position: relative;
+  display: inline-block;
+}
+
+.password-visibility-icon {
+  position: absolute;
+  right: 10px;
+  top: 67%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
 /* User Intent page styles */
 .dropdown-menu {
   box-sizing: border-box;

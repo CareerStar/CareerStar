@@ -4,6 +4,8 @@ import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import ProgressBar from './ProgressBar';
 import careerStarLogo from '../assets/images/career-star-logo-black.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 function LogIn() {
     const currentStep = 3;
@@ -18,6 +20,8 @@ function LogIn() {
 
     const [errorEmail, setErrorEmail] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleToggle = () => {
         setIsChecked(!isChecked);
@@ -93,7 +97,11 @@ function LogIn() {
 
     const signUpPageNavigation = () => {
         navigate('/signup');
-    }
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     return (
         <div className='signUp-page'>
@@ -113,13 +121,22 @@ function LogIn() {
                         onKeyDown={handleKeyPress}
                     />
                     {errorEmail && <div className='error-text'><p>{errorEmail}</p></div>}
-                    <p>Password</p>
-                    <input 
-                        type='password' 
-                        placeholder='**********'
-                        onChange={handlePasswordInputChange}
-                        onKeyDown={handleKeyPress}
-                    />
+                    <div className='password-section'>
+                        <p>Password</p>
+                        <input 
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder='**********'
+                            onChange={handlePasswordInputChange}
+                            onKeyDown={handleKeyPress}
+                            style={{paddingRight: '40px'}}
+                        />
+                        <span
+                            onClick={togglePasswordVisibility}
+                            className='password-visibility-icon'
+                        >
+                            <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
+                        </span>
+                    </div>
                     {errorPassword && <div className='error-text'><p>{errorPassword}</p></div>}
                 </div>
                 <div className='signUp-page-button' onClick={handleLogIn}>

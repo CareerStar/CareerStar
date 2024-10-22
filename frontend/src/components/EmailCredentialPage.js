@@ -4,6 +4,8 @@ import axios from 'axios';
 import ProgressBar from './ProgressBar';
 import careerStarLogo from '../assets/images/career-star-logo-black.png';
 import Stars3 from '../assets/images/stars3.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 function EmailCredentialPage() {
     const currentStep = 3;
@@ -22,6 +24,8 @@ function EmailCredentialPage() {
 
     const [errorEmail, setErrorEmail] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const navigate = useNavigate();
 
@@ -114,6 +118,10 @@ function EmailCredentialPage() {
         navigate('/login', { state: { emailID: emailID } });
     };
 
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+    
     return (
         <div className='signUp-page'>
             <div className='career-star-logo' onClick={navigateToStartPage}>
@@ -131,13 +139,22 @@ function EmailCredentialPage() {
                         onKeyDown={handleKeyPress}
                     />
                     {errorEmail && <div className='error-text'><p>{errorEmail}</p></div>}
-                    <p>Password</p>
-                    <input
-                        type='password'
-                        placeholder='**********'
-                        onChange={handlePasswordInputChange}
-                        onKeyDown={handleKeyPress}
-                    />
+                    <div className='password-section'>
+                        <p>Password</p>
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder='**********'
+                            onChange={handlePasswordInputChange}
+                            onKeyDown={handleKeyPress}
+                            style={{paddingRight: '40px'}}
+                        />
+                        <span
+                            onClick={togglePasswordVisibility}
+                            className='password-visibility-icon'
+                        >
+                            <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
+                        </span>
+                    </div>
                     {errorPassword && <div className='error-text'><p>{errorPassword}</p></div>}
                 </div>
                 <div className='toggle-button-container'>
