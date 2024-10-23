@@ -5,19 +5,18 @@ import star from '../../assets/images/star.png';
 import downArrow from '../../assets/images/down-arrow-roadmap.png';
 import upArrow from '../../assets/images/up-arrow-roadmap.png';
 
-function RoadmapActivity2({ userId }) {
-    const activityId = 2;
+function RoadmapActivity4({ userId }) {
+    const activityId = 4;
     const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
     const [completed, setCompleted] = useState(false);
-    const [starCount, setStarCount] = useState(5);
+    const [starCount, setStarCount] = useState(3);
     const [answers, setAnswers] = useState({
-        currentSituation1: '',
-        currentSituation2: '',
-        obstacles: '',
-        confidenceLinkedIn: '',
-        confidenceMessaging: '',
-        confidenceNetworking: '',
-        confidenceBehavioral: '',
+        strength1: '',
+        strength2: '',
+        strength3: '',
+        improvement1: '',
+        improvement2: '',
+        improvement3: '',
     });
 
     const handleInputChange = (e) => {
@@ -58,7 +57,7 @@ function RoadmapActivity2({ userId }) {
                 completed: true,
                 answers: answers,
                 stars: starCount,
-            }; 
+            };
             const response = await axios.post(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/roadmapactivity/${userId}/${activityId}`, payload);
             if (response.status === 200) {
                 console.log(response.data.message);
@@ -75,11 +74,11 @@ function RoadmapActivity2({ userId }) {
         <div>
             <div className='roadmap-sub-phase flex-row'>
                 <div className='roadmap-phase-card'>
-                    <input 
-                        type="checkbox" 
+                    <input
+                        type="checkbox"
                         checked={completed}
                     />
-                    <p>Where you’re at 📍</p>
+                    <p>My Top Strengths & Weaknesses🤔</p>
                     {isDescriptionVisible ? (
                         <img
                             src={upArrow}
@@ -108,81 +107,74 @@ function RoadmapActivity2({ userId }) {
             {isDescriptionVisible && (
                 <div className='activity-description-container'>
                     <div className='activity-description-content'>
-                        <h1>📍</h1>
-                        <h2>Let’s dive into understanding where you’re at at and uncover what might be holding you back. Take a moment to reflect and answer the following questions.
-                            The more honest you are, the clearer your path forward will be.</h2>
+                        <h1>🤔</h1>
+                        <h2>Identify your strengths and recognize areas for growth.
+                            Understanding both will empower you to leverage your abilities and address challenges
+                            as you pursue your ideal career path.
+                        </h2>
 
-                        <h2> Describe your current situation: Where are you in your job hunt journey? (1)</h2>
-                        <p> Are you just starting, applying but not hearing back, or maybe you’re getting interviews but no offers?
-                            <br />
-                            Example: "I’ve sent out 20 applications but haven’t received any interviews yet.”
-                        </p>
+                        <h2>Watch the below video for some great tips on how to identify your strongest traits!
+                            Don’t worry about your weaknesses for now, we focus on wins around here! 🏆
+                        </h2>
+
+                        <iframe width="560" height="315"
+                            src="https://www.youtube.com/embed/746-boIy1sI?si=9N87zssI7mdNkgoK"
+                            title="YouTube video player"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                        </iframe>
+                        <h3> My Top Strengths
+                        </h3>
                         <input
                             type="text"
-                            name="currentSituation1"
-                            value={answers.currentSituation1}
+                            name="strength1"
+                            value={answers.strength1}
                             onChange={handleInputChange}
                         />
 
-                        <h2> Describe your current situation: Where are you in your job hunt journey? (2) </h2>
-                        <p>Are you following up with people about these jobs, but not hearing back?
-                            <br />
-                            Example: "I’ve sent some emails, but not for every job, and only to a few people.”</p>
+                        <br />
+
                         <input
                             type="text"
-                            name="currentSituation2"
-                            value={answers.currentSituation2}
+                            name="strength2"
+                            value={answers.strength2}
                             onChange={handleInputChange}
                         />
 
-                        <h2>What do you think is holding you back or why is this happening? </h2>
-                        <p>Reflect on any obstacles, like lack of experience, unclear goals, or feeling unsure about how to market yourself.
-                            <br />
-                            Example: "I think my resume doesn’t reflect my strengths well, and I’m not sure how to improve it.”</p>
+                        <br />
+
                         <input
                             type="text"
-                            name="obstacles"
-                            value={answers.obstacles}
+                            name="strength3"
+                            value={answers.strength3}
                             onChange={handleInputChange}
                         />
 
-                        <h1> On a scale from 1-10, how confident do you feel about the following? </h1>
-
-                        <h2> Messaging someone you do not know on LinkedIn that you found through a job listing. </h2>
-                        <p> Example: "I’d say a 5. I feel nervous about reaching out because I don’t know what to say.”</p>
+                        <h3> My Areas for Improvement
+                        </h3>
                         <input
                             type="text"
-                            name="confidenceLinkedIn"
-                            value={answers.confidenceLinkedIn}
+                            name="improvement1"
+                            value={answers.improvement1}
                             onChange={handleInputChange}
                         />
 
-                        <h2>Messaging someone at a company you would like to work for, that has no affiliation with a job posting. </h2>
-                        <p> Example: "I’d say a 5. I feel nervous about reaching out because I don’t know what to say.”</p>
+                        <br />
+
                         <input
                             type="text"
-                            name="confidenceMessaging"
-                            value={answers.confidenceMessaging}
+                            name="improvement2"
+                            value={answers.improvement2}
                             onChange={handleInputChange}
                         />
 
-                        <h2>Going to a neworking event alone and chatting with new people (1-10)</h2>
-                        <p>How confident do you feel in putting yourself out there IRL?</p>
-                        <input
-                            type="text"
-                            name="confidenceNetworking"
-                            value={answers.confidenceNetworking}
-                            onChange={handleInputChange}
-                        />
+                        <br />
 
-                        <h2>Behavioural interviews (1-10)</h2>
-                        <p>How confident do you feel in handling behavioral interview questions (like "Tell me about a time when…")?
-                            <br />
-                            Example: "Probably a 4. I struggle to come up with examples quickly in interviews.”</p>
                         <input
                             type="text"
-                            name="confidenceBehavioral"
-                            value={answers.confidenceBehavioral}
+                            name="improvement3"
+                            value={answers.improvement3}
                             onChange={handleInputChange}
                         />
 
@@ -195,4 +187,4 @@ function RoadmapActivity2({ userId }) {
     );
 }
 
-export default RoadmapActivity2;
+export default RoadmapActivity4;

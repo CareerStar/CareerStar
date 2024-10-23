@@ -9,10 +9,10 @@ function HomepageChoiceQuestion({ onOptionSelect }) {
         <div className='home-page-question'>
             <h2>What do you need help with to reach that goal?</h2>
             <div className='home-page-question-choice' onClick={() => handleOptionSelect('roadmap')}>
-                <p>Build a career roadmap - I need clarity!</p>
+                <p>Help me build a career roadmap - I need clarity!</p>
             </div>
             <div className='home-page-question-choice' onClick={() => handleOptionSelect('activities')}>
-                <p>Do recommended activities - I need to get going!</p>
+                <p>Recommended activities - I need to get going!</p>
             </div>
         </div>
     );
