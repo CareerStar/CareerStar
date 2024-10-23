@@ -6,6 +6,7 @@ import downArrow from '../../assets/images/down-arrow-roadmap.png';
 import upArrow from '../../assets/images/up-arrow-roadmap.png';
 
 function RoadmapActivity2({ userId }) {
+    const activityId = 2;
     const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
     const [completed, setCompleted] = useState(false);
     const [starCount, setStarCount] = useState(5);
@@ -30,7 +31,7 @@ function RoadmapActivity2({ userId }) {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/roadmapactivity/${userId}/1`);
+                const response = await axios.get(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/roadmapactivity/${userId}/${activityId}`);
                 if (response.data) {
                     // Handle response
                     setAnswers(response.data);
@@ -58,7 +59,7 @@ function RoadmapActivity2({ userId }) {
                 answers: answers,
                 stars: starCount,
             }; 
-            const response = await axios.post(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/roadmapactivity/${userId}/1`, payload);
+            const response = await axios.post(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/roadmapactivity/${userId}/${activityId}`, payload);
             if (response.status === 200) {
                 console.log(response.data.message);
                 setCompleted(true);
