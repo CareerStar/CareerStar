@@ -79,7 +79,7 @@ function RoadmapActivity2({ userId }) {
                         type="checkbox" 
                         checked={completed}
                     />
-                    <p>Where you’re at</p>
+                    <p>Where you’re at 📍</p>
                     {isDescriptionVisible ? (
                         <img
                             src={upArrow}
@@ -108,6 +108,7 @@ function RoadmapActivity2({ userId }) {
             {isDescriptionVisible && (
                 <div className='activity-description-container'>
                     <div className='activity-description-content'>
+                        <h1>📍</h1>
                         <h2>Let’s dive into understanding where you’re at at and uncover what might be holding you back. Take a moment to reflect and answer the following questions.
                             The more honest you are, the clearer your path forward will be.</h2>
 

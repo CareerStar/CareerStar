@@ -67,7 +67,7 @@ function RoadmapActivity1({ userId }) {
                         type="checkbox"
                         checked={completed}
                     />
-                    <p>Hot Tip 1 - Get Immediately More Video Confident!</p>
+                    <p>Hot Tip 1 - Get Immediately More Video Confident! 🔥</p>
                     {isDescriptionVisible ? (
                         <img
                             src={upArrow}
@@ -96,6 +96,7 @@ function RoadmapActivity1({ userId }) {
             {isDescriptionVisible && (
                 <div className='activity-description-container'>
                     <div className='activity-description-content'>
+                        <h1>🔥</h1>
                         <h2>Did you know that it takes someone less than a second to decide if you are a confident person?</h2>
                         <p> Mastering video chats is key in today’s job market!
                             In this activity, you'll learn two quick tips to boost your confidence on video calls. Whether it’s

@@ -70,7 +70,7 @@ function RoadmapActivity3({ userId }) {
                         type="checkbox"
                         checked={completed}
                     />
-                    <p>Take the Career Test</p>
+                    <p>Take the Career Test 👀</p>
                     {isDescriptionVisible ? (
                         <img
                             src={upArrow}
@@ -99,6 +99,7 @@ function RoadmapActivity3({ userId }) {
             {isDescriptionVisible && (
                 <div className='activity-description-container'>
                     <div class='activity-description-content'>
+                        <h1>👀</h1>
                         <h2>Let’s dive deeper into understanding what drives you. This is the key to discovering
                             a job that excites you and a career that aligns with your unique personality.</h2>
                         <a href="https://www.careerexplorer.com/career-test/" target="_blank">Click here to take the test</a>
