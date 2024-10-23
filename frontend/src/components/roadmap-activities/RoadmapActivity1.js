@@ -10,7 +10,9 @@ function RoadmapActivity1({ userId }) {
     const activityId = 1;
     const [completed, setCompleted] = useState(false);
     const [starCount, setStarCount] = useState(3);
-    const [answers, setAnswers] = useState({});
+    const [answers, setAnswers] = useState({
+        answer1: '', //Answers can not be a null JSON object, it has to have at least one key-value pair
+    });
     const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
 
     useEffect(() => {
