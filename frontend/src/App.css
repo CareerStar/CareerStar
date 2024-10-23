@@ -173,7 +173,7 @@
 .progress-bar {
   height: 100%;
   max-width: 100%;
-  background: linear-gradient(180deg, #BAB0D4 0%, #7562E3 0%, #2B30F5 100%);
+  background: linear-gradient(210.77deg, #6B37F4 3.08%, #5118BF 74.31%, #D86C4C 100.81%);
   border-radius: 40px;
   transition: width 0.3s ease-in-out;
 }
@@ -199,7 +199,8 @@
   width: 100%;
   height: 100vh;
 
-  background: linear-gradient(180deg, #BAB0D4 0%, #7562E3 45%, #2B30F5 100%);
+  /* background: linear-gradient(180deg, #BAB0D4 0%, #7562E3 45%, #2B30F5 100%); */
+  background: radial-gradient(69.66% 91.85% at 54.1% 6.69%, #6B37F4 0%, #5118BF 72.89%, #D86C4C 100%);
 
 }
 
@@ -224,16 +225,15 @@
 }
 
 .main-page-header {
-  margin-top: -40px;
+  margin-top: 0px;
   width: 100%;
 }
 
 .main-page-header h1 {
-
-  font-family: 'Satoshi';
+  font-family: 'Sora';
   font-style: normal;
-  font-weight: 900;
-  font-size: 80px;
+  font-weight: 700;
+  font-size: 48px;
   line-height: 100%;
 
   text-align: center;
@@ -250,10 +250,10 @@
 
 .main-page-header p {
   height: 50px;
-  max-width: 475px;
+  max-width: 840px;
   margin: 0 auto;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 40px;
 
   font-family: 'Nunito';
   font-style: normal;
@@ -270,15 +270,15 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 8px 50px;
+  padding: 16px 50px;
   gap: 10px;
   margin: 0 auto;
-  margin-top: 20px;
+  margin-top: 40px;
 
   max-width: 288px;
   max-height: 56px;
 
-  background: #FFE044;
+  background: #F5FF85;
   border-radius: 40px;
 
 }
@@ -289,6 +289,13 @@
 
 .main-page-button p {
   margin: 5px;
+  font-family: 'Satoshi';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  align-items: center;
+  text-align: center;
+  color: #1C1C1C;
 }
 
 .main-page-footer {
@@ -378,14 +385,15 @@
 }
 
 .signUp-page-question h2 {
-  font-family: 'Satoshi';
+  font-family: 'Sora';
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 40px;
-  line-height: 100%;
+  line-height: 50px;
+  letter-spacing: -1px;
+  color: #242424;
 
   text-align: left;
-  letter-spacing: -2px;
   margin: 0;
   padding: 0px;
   color: #161219;
@@ -396,7 +404,7 @@
 }
 
 .signUp-page-question h2 .highlight {
-  color: #3536F3
+  color: #3536F3;
 }
 
 .signUp-page-question p {
@@ -410,7 +418,6 @@
   margin: 0;
   padding: 0px;
   color: #161219;
-
 }
 
 .signUp-page-question input {
@@ -434,16 +441,24 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 8px;
-
-  width: 473px;
-  height: 30px;
-
+  padding: 10px;
+  gap: 10px;
+  width: 479px;
+  height: 40px;
+  background: #581AD1;
+  border-radius: 40px;
   margin: 0 auto;
-  margin-top: 20px;
-  background: linear-gradient(180deg, #BAB0D4 0%, #7562E3 0%, #2B30F5 100%);
-  border-radius: 8px;
+  margin-top: 40px;
+  color: #FFFFFF;
+}
 
+.signUp-page-button p {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
   color: #FFFFFF;
 }
 
@@ -472,7 +487,7 @@
   cursor: pointer !important;
 }
 
-.error-text p{
+.error-text p {
   color: red;
   font-size: 15px;
   margin-top: 5px;
@@ -688,8 +703,8 @@
 .dashboard-container .content {
   flex: 1;
   background-color: #F9F8FF;
-  margin-bottom: 20px;
-  height: fit-content;
+  /* margin-bottom: 20px; */
+  height: initial;
 }
 
 /* Home page styles */
@@ -700,8 +715,8 @@
   align-items: center;
   position: relative;
   width: 100%;
-  max-height: 100vh;
-  background: #F9F8FF;
+  /* max-height: 100vh; */
+  /* background: #F9F8FF; */
 }
 
 .home-welcome {
@@ -736,9 +751,9 @@
   margin: 0px;
   margin-bottom: 5px;
   color: #171717;
-  font-family: 'Satoshi';
+  font-family: 'Sora';
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 40px;
 }
 
@@ -769,16 +784,14 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 8px;
-
-  width: 473px;
+  padding: 10px;
+  gap: 10px;
+  width: 479px;
   height: 30px;
-
+  background: #581AD1;
+  border-radius: 40px;
   margin: 0 auto;
   margin-top: 20px;
-  background: linear-gradient(180deg, #BAB0D4 0%, #7562E3 0%, #2B30F5 100%);
-  border-radius: 8px;
-
   color: #FFFFFF;
 }
 
@@ -808,12 +821,12 @@
 }
 
 .home-page-question h2 {
-  font-family: 'Satoshi';
+  font-family: 'Sora';
   font-style: normal;
   font-weight: 700;
   font-size: 40px;
   line-height: 100%;
-  width: 409px;
+  max-width: 500px;
   text-align: left;
   letter-spacing: -2px;
   margin: 0;
@@ -920,8 +933,22 @@
   height: 57px;
 
   border-radius: 8px;
-  border: 1px solid #6F4CFF;
+  border: 1px solid #581AD1;
+  border-radius: 40px;
+}
+
+.home-page-question-choice:hover {
   cursor: pointer;
+}
+
+.home-page-question-choice p {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+  color: #581AD1;
 }
 
 .home-page-skip-video-button {
@@ -1223,7 +1250,7 @@
 }
 
 .profile-user-name {
-  font-family: 'Satoshi';
+  font-family: 'Sora';
   font-style: normal;
   font-weight: 700;
   font-size: 40px;
@@ -1350,7 +1377,7 @@ button:hover {
 }
 
 .roadmap-title {
-  font-family: 'Satoshi';
+  font-family: 'Sora';
   font-style: normal;
   font-weight: 700;
   font-size: 28px;
@@ -1407,7 +1434,7 @@ button:hover {
 }
 
 .roadmap-goal-card-answer {
-  font-family: 'Satoshi';
+  font-family: 'Sora';
   font-style: normal;
   font-weight: 700;
   font-size: 28px;
@@ -1418,7 +1445,7 @@ button:hover {
 }
 
 .roadmap-goal-card-input {
-  font-family: 'Satoshi';
+  font-family: 'Sora';
   font-style: normal;
   font-weight: 700;
   font-size: 28px;
@@ -1451,7 +1478,7 @@ button:hover {
 }
 
 .roadmap-phase-title {
-  font-family: 'Satoshi';
+  font-family: 'Sora';
   font-style: normal;
   font-weight: 700;
   font-size: 28px;
@@ -1553,7 +1580,7 @@ button:hover {
 }
 
 .edit-activity {
-  gap:10px;
+  gap: 10px;
 }
 
 .edit-activity button {
@@ -1587,13 +1614,13 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255 , 255, 255, 0.9); 
+  background-color: rgba(255, 255, 255, 0.9);
   z-index: 1000;
 }
 
 .spinner {
   border: 8px solid rgba(0, 0, 0, 0.2);
-  border-left-color: #4caf50; 
+  border-left-color: #4caf50;
   border-radius: 50%;
   width: 80px;
   height: 80px;
@@ -1602,6 +1629,6 @@ button:hover {
 
 @keyframes spin {
   to {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
