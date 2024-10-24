@@ -63,9 +63,12 @@ function UserIntent() {
                             onKeyDown={handleKeyPress}
                         >
                             <option value="" disabled>Select an option</option>
+                            <option value="Building confidence for job outreach and applications">Building confidence for job outreach and applications</option>
+                            <option value="Improving my resume and professional assets">Improving my resume and professional assets</option>
+                            <option value="Getting clarity and setting professional goals">Getting clarity and setting professional goals</option>
                             <option value="Finding networking events">Finding networking events</option>
-                            <option value="Discover job Opportunities">Discover job Opportunities</option>
-                            <option value="Meet like minded professionals">Meet like minded professionals</option>
+                            <option value="Discovering networking events">Discovering networking events</option>
+                            <option value="Meeting like-minded professionals">Meeting like-minded professionals</option>
                         </select>
                         {error && <div className='error-text'><p>{error}</p></div>}
                     </div>
