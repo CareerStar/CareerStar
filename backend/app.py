@@ -677,6 +677,43 @@ def update_user_activity(userId, activityId):
         if connection:
             return_db_connection(connection)
 
+@app.route('/linkedin', methods=['GET'])
+@jwt_required()
+def get_users_linkedin_details():
+    current_user = get_jwt_identity()
+    if current_user['role'] != 'admin':
+        return jsonify({"error": "Unauthorized"}), 401
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        get_users_linkedin_details_query = """
+        SELECT p.userId, p.LinkedIn, u.firstname, u.emailId FROM Users u JOIN user_personalization p ON u.userId = p.userId;
+        """
+        cursor.execute(get_users_linkedin_details_query, ())
+        users = cursor.fetchall()
+        user_linkedIn_list = []
+        if users:
+            for user in users:
+                user_dict = {
+                    "userId": user[0],
+                    "LinkedIn": user[1],
+                    "firstname": user[2],
+                    "emailId": user[3]
+                }
+                user_linkedIn_list.append(user_dict)
+            return jsonify(user_linkedIn_list)
+        else:
+            return jsonify({"error": "User has not onboarded yet"}), 404
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
+
 @app.route('/adminlogin', methods=['POST'])
 def admin_login():
     username = request.json.get("username")
@@ -694,3 +731,4 @@ def home():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, ssl_context=('cert.pem', 'key.pem'))
+    # app.run(host='0.0.0.0', port=5000)
