@@ -8,8 +8,8 @@ const AdminDashboard = () => {
     const location = useLocation();
     const [userId, setUserId] = useState(location.state?.userId || '');
     const [selectedPage, setSelectedPage] = useState('AdminActivities');
-    const [onboarded, setOnboarded] = useState(false);
-    const pages = ['AdminActivities'];
+    const [onboarded, setOnboarded] = useState(true);
+    const pages = ['AdminActivities', 'LinkedIn'];
 
     const handlePageChange = (page) => {
         setSelectedPage(page);

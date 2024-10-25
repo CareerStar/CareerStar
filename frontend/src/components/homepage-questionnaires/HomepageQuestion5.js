@@ -27,7 +27,7 @@ function HomepageQuestion5({onActivityChoicesSelect}) {
     };
 
     return (
-        <div className='home-page-question'>
+        <div className='home-page-question home-page-question-choice-div'>
             <h2>Which areas do you need help with most right now?</h2>
             <div className='home-page-question-description'>
                 <p>This way we can tailor recommendations/activities for you.</p>

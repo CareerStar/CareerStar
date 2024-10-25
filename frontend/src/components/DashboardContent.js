@@ -6,6 +6,7 @@ import Events from './dashboard-content-pages/Events';
 import Network from './dashboard-content-pages/Network';
 import Support from './dashboard-content-pages/Support';
 import AdminActivities from './admin/AdminActivities';
+import LinkedIn from './admin/LinkedIn';
 
 function DashboardContent({selectedPage, onComplete, userId}) {
     const renderPage = () => {
@@ -24,6 +25,8 @@ function DashboardContent({selectedPage, onComplete, userId}) {
                 return <Support />;
             case 'AdminActivities':
                 return <AdminActivities />;
+            case 'LinkedIn':
+                return <LinkedIn />;
             default:
                 return <Home />;
         }

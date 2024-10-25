@@ -10,6 +10,7 @@ import RoadmapActivity1 from '../roadmap-activities/RoadmapActivity1';
 import RoadmapActivity2 from '../roadmap-activities/RoadmapActivity2';
 import RoadmapActivity3 from '../roadmap-activities/RoadmapActivity3';
 import RoadmapActivity4 from '../roadmap-activities/RoadmapActivity4';
+import RoadmapActivity5 from '../roadmap-activities/RoadmapActivity5';
 
 function Roadmap({ userId }) {
     const [currentSituation, setCurrentSituation] = useState('I’m a recent grad');
@@ -160,6 +161,7 @@ function Roadmap({ userId }) {
                     <RoadmapActivity2 userId={userId}/>
                     <RoadmapActivity3 userId={userId}/>
                     <RoadmapActivity4 userId={userId}/>
+                    <RoadmapActivity5 userId={userId}/>
                     {/* <p className='roadmap-phase-title'>Phase 2: Career & Guidance</p> */}
                 </div>
             </div>
