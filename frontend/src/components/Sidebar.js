@@ -23,6 +23,8 @@ function Sidebar({pages, onSelectPage, selectedPage, onboarded}) {
                 return eventsIcon;
             case 'AdminActivities':
                 return eventsIcon;
+            case 'LinkedIn':
+                return eventsIcon;
             default:
                 return <i className="fas fa-tachometer-alt"></i>;
         }
