@@ -81,61 +81,116 @@ function LinkedIn() {
     };
 
     return (
-        <div className='admin-activities'>
-            <div className='activities-container'>
-                <h1>LinkedIn</h1>
-                {userDetails.map((user) => (
-                    <div key={user.userId} className='flex-column'>
-                        <div className='flex-row'>
-                            <p>{user.firstname}</p>
-                            <p>{user.emailId}</p>
-                        </div>
-
-                        {isEditing === user.userId ? (
-                            <div>
-                                {/* Editable form for LinkedIn data */}
-                                <label>Headline:</label>
-                                <input
-                                    type='text'
-                                    name='headline'
-                                    value={linkedInData.headline}
-                                    onChange={handleInputChange}
-                                />
-
-                                <label>Resume:</label>
-                                <input
-                                    type='text'
-                                    name='resume'
-                                    value={linkedInData.resume}
-                                    onChange={handleInputChange}
-                                />
-
-                                <label>Remark:</label>
-                                <input
-                                    type='text'
-                                    name='remark'
-                                    value={linkedInData.remark}
-                                    onChange={handleInputChange}
-                                />
-
-                                {/* Add more fields as necessary */}
-                                
-                                <button onClick={() => handleSave(user.userId)}>Save</button>
-                                <button onClick={() => setIsEditing(null)}>Cancel</button>
-                            </div>
-                        ) : (
-                            <div>
-                                <p>Headline: {user.LinkedIn?.headline || 'N/A'}</p>
-                                <p>Resume: {user.LinkedIn?.resume || 'N/A'}</p>
-                                <p>Remark: {user.LinkedIn?.remark || 'N/A'}</p>
-                                {/* Add more fields as necessary */}
-                                
-                                <button onClick={() => handleEditClick(user.userId, user.LinkedIn)}>Edit</button>
-                            </div>
-                        )}
+        <div className='linkedIn-container'>
+            <h1>LinkedIn</h1>
+            {userDetails.map((user) => (
+                <div key={user.userId} className='flex-column'>
+                    <div className='user-details'>
+                        <h4>{user.firstname}</h4>
+                        <h4>{user.emailId}</h4>
                     </div>
-                ))}
-            </div>
+
+                    {isEditing === user.userId ? (
+                        <div>
+                            <label>Headline:</label>
+                            <input
+                                type='text'
+                                name='headline'
+                                value={linkedInData.headline}
+                                onChange={handleInputChange}
+                            />
+
+                            <label>Current Company:</label>
+                            <input
+                                type='text'
+                                name='currentCompany'
+                                value={linkedInData.currentCompany}
+                                onChange={handleInputChange}
+                            />
+
+                            <label>Job Description:</label>
+                            <input
+                                type='text'
+                                name='jobDescription'
+                                value={linkedInData.jobDescription}
+                                onChange={handleInputChange}
+                            />
+
+                            <label>Resume:</label>
+                            <input
+                                type='text'
+                                name='resume'
+                                value={linkedInData.resume}
+                                onChange={handleInputChange}
+                            />
+
+                            <label>Portfolio:</label>
+                            <input
+                                type='text'
+                                name='portfolio'
+                                value={linkedInData.portfolio}
+                                onChange={handleInputChange}
+                            />
+
+                            <label>Active:</label>
+                            <input
+                                type='text'
+                                name='Active'
+                                value={linkedInData.Active}
+                                onChange={handleInputChange}
+                            />
+
+                            <label>License & Certifications:</label>
+                            <input
+                                type='text'
+                                name='liceneAndCertifications'
+                                value={linkedInData.liceneAndCertifications}
+                                onChange={handleInputChange}
+                            />
+
+                            <label>Endorsement:</label>
+                            <input
+                                type='text'
+                                name='endorsement'
+                                value={linkedInData.endorsement}
+                                onChange={handleInputChange}
+                            />
+
+                            <label>Post:</label>
+                            <input
+                                type='text'
+                                name='post'
+                                value={linkedInData.post}
+                                onChange={handleInputChange}
+                            />
+
+                            <label>Comments:</label>
+                            <input
+                                type='text'
+                                name='comments'
+                                value={linkedInData.comments}
+                                onChange={handleInputChange}
+                            />
+                            <button onClick={() => handleSave(user.userId)}>Save</button>
+                            <button onClick={() => setIsEditing(null)}>Cancel</button>
+                        </div>
+                    ) : (
+                        <div className='user-linkedIn-details'>
+                            <p>Headline: {user.LinkedIn?.headline || 'N/A'}</p>
+                            <p>Current Company: {user.LinkedIn?.currentCompany || 'N/A'}</p>
+                            <p>Job Description: {user.LinkedIn?.jobDescription || 'N/A'}</p>
+                            <p>Resume: {user.LinkedIn?.resume || 'N/A'}</p>
+                            <p>Portfolio: {user.LinkedIn?.porfolio || 'N/A'}</p>
+                            <p>Active: {user.LinkedIn?.Active || 'N/A'}</p>
+                            <p>License & Certifications: {user.LinkedIn?.liceneAndCertifications || 'N/A'}</p>
+                            <p>Endorsement: {user.LinkedIn?.endorsement || 'N/A'}</p>
+                            <p>Post: {user.LinkedIn?.resume || 'N/A'}</p>
+                            <p>Comments: {user.LinkedIn?.comments || 'N/A'}</p>
+                            <button onClick={() => handleEditClick(user.userId, user.LinkedIn)}>Edit</button>
+                        </div>
+                    )}
+                </div>
+            ))}
         </div>
     );
 }
