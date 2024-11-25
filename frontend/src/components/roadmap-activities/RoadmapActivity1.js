@@ -20,9 +20,8 @@ function RoadmapActivity1({ userId }) {
             try {
                 const response = await axios.get(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/roadmapactivity/${userId}/${activityId}`);
                 if (response.data) {
-                    console.log("Comes here");
-                    setAnswers(response.data);
-                    setCompleted(true);
+                    setAnswers(response.data[0]);
+                    setCompleted(response.data[1]);
                 }
             } catch (error) {
                 console.error('Activity not completed', error);
@@ -33,19 +32,21 @@ function RoadmapActivity1({ userId }) {
         }
     }, [userId]);
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (completed) => {
         try {
             const payload = {
                 userId: userId,
                 roadmapActivityId: 1,
-                completed: true,
+                completed: completed,
                 answers: answers,
                 stars: starCount,
             };
             const response = await axios.post(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/roadmapactivity/${userId}/${activityId}`, payload);
             if (response.status === 200) {
                 console.log(response.data.message);
-                setCompleted(true);
+                if (completed) {
+                    setCompleted(true);
+                }
                 toggleDescriptionVisibility();
                 window.location.reload();
             }
@@ -111,8 +112,8 @@ function RoadmapActivity1({ userId }) {
                             <img src={hotTip1} alt='hot-tip-1' />
                         </div>
                         <div className='activity-buttons'>
-                            <div className='activity-button-draft'>Save as Draft</div>
-                            <div className='activity-button-save' onClick={handleSubmit}>Mark as completed!</div>
+                            <div className='activity-button-draft' onClick={() => handleSubmit(false)}>Save as Draft</div>
+                            <div className='activity-button-save' onClick={() => handleSubmit(true)}>Mark as completed!</div>
                         </div>
                     </div>
                 </div>
