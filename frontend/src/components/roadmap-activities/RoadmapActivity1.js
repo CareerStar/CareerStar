@@ -96,16 +96,24 @@ function RoadmapActivity1({ userId }) {
             {isDescriptionVisible && (
                 <div className='activity-description-container'>
                     <div className='activity-description-content'>
-                        <h1>🔥</h1>
-                        <h2>Did you know that it takes someone less than a second to decide if you are a confident person?</h2>
-                        <p> Mastering video chats is key in today’s job market!
-                            In this activity, you'll learn two quick tips to boost your confidence on video calls. Whether it’s
-                            for interviews or virtual meetings, feeling comfortable on camera can make a big difference.
-                        </p>
-                        <h2>Hot Tip #1</h2>
-                        <img src={hotTip1} alt='hot-tip-1' />
-                        <br />
-                        <button onClick={handleSubmit}>Mark as completed</button>
+                        <div className='activity-box flex-row'>
+                            <div className='activity-emoji'>🔥</div>
+                            <div className='flex-col'>
+                                <h2>Did you know that it takes someone less than a second to decide if you are a confident person?</h2>
+                                <p> Mastering video chats is key in today’s job market!
+                                    In this activity, you'll learn two quick tips to boost your confidence on video calls. Whether it’s
+                                    for interviews or virtual meetings, feeling comfortable on camera can make a big difference.
+                                </p>
+                            </div>
+                        </div>
+                        <div className='activity-box flex-col'>
+                            <h2>Hot Tip #1</h2>
+                            <img src={hotTip1} alt='hot-tip-1' />
+                        </div>
+                        <div className='activity-buttons'>
+                            <div className='activity-button-draft'>Save as Draft</div>
+                            <div className='activity-button-save' onClick={handleSubmit}>Mark as completed!</div>
+                        </div>
                     </div>
                 </div>
             )}
