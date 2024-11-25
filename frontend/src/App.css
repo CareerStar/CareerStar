@@ -708,7 +708,74 @@
   flex: 1;
   background-color: #F9F8FF;
   /* margin-bottom: 20px; */
-  height: initial;
+  height: max-content;
+}
+
+.activity-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 24px;
+}
+
+.activity-button-draft {
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 32px;
+  gap: 10px;
+
+  border: 1px solid #581AD1;
+  border-radius: 40px;
+  flex: none;
+  order: 1;
+  flex-grow: 1;
+
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+
+  color: #581AD1;
+}
+
+.activity-button-draft:hover {
+  cursor: pointer;
+}
+
+.activity-button-save {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 32px;
+  gap: 10px;
+
+  background: #581AD1;
+  border-radius: 40px;
+  color: #FFFFFF;
+  flex: none;
+  order: 1;
+  flex-grow: 1;
+
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+
+  color: #FFFFFF;
+}
+
+.activity-button-save:hover{
+  cursor: pointer;
 }
 
 /* Home page styles */
@@ -1523,6 +1590,12 @@ button:hover {
 }
 
 .roadmap-phase-card p {
+  font-family: 'Sora';
+  font-style: normal;
+  font-size: 18px;
+  line-height: 27px;
+
+  color: #2E2E2E;
   flex-grow: 1;
   margin: 0;
   padding: 0;
@@ -1557,18 +1630,40 @@ button:hover {
 
   width: 100%;
   height: auto;
-  background: #FFFFFF;
+  /* background: #FFFFFF; */
   border-radius: 12px;
   margin-bottom: 20px;
   padding-bottom: 20px;
 }
 
 .activity-description-content {
-  padding: 0px 20px;
+  padding: 20px 40px;
 }
 
 .activity-description-content img {
   max-width: 700px;
+}
+
+.activity-box {
+  align-items: center;
+  padding: 20px 24px;
+  gap: 12px;
+  margin-bottom: 20px;
+
+  background: #FFFFFF;
+  border-radius: 12px;
+
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 27px;
+
+  color: #2E2E2E;
+}
+
+.activity-emoji {
+  font-size: 75px;
 }
 
 .activity-description-content input {
@@ -1613,6 +1708,8 @@ button:hover {
   background-color: darkred;
 }
 
+/* Spinner styles */
+
 .spinner-overlay {
   position: fixed;
   top: 0;
@@ -1639,4 +1736,28 @@ button:hover {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* LinkedIn page styles */
+
+.linkedIn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 32px;
+  height: 100%;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-linkedIn-details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
 }
