@@ -33,9 +33,8 @@ function RoadmapActivity2({ userId }) {
             try {
                 const response = await axios.get(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/roadmapactivity/${userId}/${activityId}`);
                 if (response.data) {
-                    // Handle response
-                    setAnswers(response.data);
-                    setCompleted(true);
+                    setAnswers(response.data[0]);
+                    setCompleted(response.data[1]);
                 }
             } catch (error) {
                 console.error('Activity not completed', error);
@@ -50,19 +49,21 @@ function RoadmapActivity2({ userId }) {
         setIsDescriptionVisible(!isDescriptionVisible);
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (completed) => {
         try {
             const payload = {
                 userId: userId,
                 roadmapActivityId: 1,
-                completed: true,
+                completed: completed,
                 answers: answers,
                 stars: starCount,
             }; 
             const response = await axios.post(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/roadmapactivity/${userId}/${activityId}`, payload);
             if (response.status === 200) {
                 console.log(response.data.message);
-                setCompleted(true);
+                if (completed) {
+                    setCompleted(true);
+                }
                 toggleDescriptionVisibility();
                 window.location.reload();
             }
@@ -76,7 +77,7 @@ function RoadmapActivity2({ userId }) {
             <div className='roadmap-sub-phase flex-row'>
                 <div className='roadmap-phase-card'>
                     <input 
-                        type="checkbox" 
+                        type='checkbox' 
                         checked={completed}
                     />
                     <p>Where you’re at 📍</p>
@@ -108,86 +109,112 @@ function RoadmapActivity2({ userId }) {
             {isDescriptionVisible && (
                 <div className='activity-description-container'>
                     <div className='activity-description-content'>
-                        <h1>📍</h1>
-                        <h2>Let’s dive into understanding where you’re at at and uncover what might be holding you back. Take a moment to reflect and answer the following questions.
-                            The more honest you are, the clearer your path forward will be.</h2>
+                        <div className='activity-box flex-row'>
+                            <div className='activity-emoji'>📍</div>
+                            <p>Let’s dive into understanding where you’re at at and uncover what might be holding you back. Take a moment to reflect and answer the following questions.
+                                The more honest you are, the clearer your path forward will be.</p>
+                        </div>
 
-                        <h2> Describe your current situation: Where are you in your job hunt journey? (1)</h2>
-                        <p> Are you just starting, applying but not hearing back, or maybe you’re getting interviews but no offers?
-                            <br />
-                            Example: "I’ve sent out 20 applications but haven’t received any interviews yet.”
-                        </p>
-                        <input
-                            type="text"
-                            name="currentSituation1"
-                            value={answers.currentSituation1}
-                            onChange={handleInputChange}
-                        />
+                        <div className='activity-box'>
+                            <h3> Describe your current situation: Where are you in your job hunt journey? (1)</h3>
+                            <p> Are you just starting, applying but not hearing back, or maybe you’re getting interviews but no offers?
+                                <br />
+                                Example: 'I’ve sent out 20 applications but haven’t received any interviews yet.”
+                            </p>
+                            <input
+                                type='text'
+                                name='currentSituation1'
+                                placeholder='Add yours here'
+                                value={answers.currentSituation1}
+                                onChange={handleInputChange}
+                            />
+                        </div>
 
-                        <h2> Describe your current situation: Where are you in your job hunt journey? (2) </h2>
-                        <p>Are you following up with people about these jobs, but not hearing back?
-                            <br />
-                            Example: "I’ve sent some emails, but not for every job, and only to a few people.”</p>
-                        <input
-                            type="text"
-                            name="currentSituation2"
-                            value={answers.currentSituation2}
-                            onChange={handleInputChange}
-                        />
+                        <div className='activity-box'>
+                            <h3> Describe your current situation: Where are you in your job hunt journey? (2) </h3>
+                            <p>Are you following up with people about these jobs, but not hearing back?
+                                <br />
+                                Example: 'I’ve sent some emails, but not for every job, and only to a few people.”</p>
+                            <input
+                                type='text'
+                                name='currentSituation2'
+                                placeholder='Add yours here'
+                                value={answers.currentSituation2}
+                                onChange={handleInputChange}
+                            />
+                        </div>
 
-                        <h2>What do you think is holding you back or why is this happening? </h2>
-                        <p>Reflect on any obstacles, like lack of experience, unclear goals, or feeling unsure about how to market yourself.
-                            <br />
-                            Example: "I think my resume doesn’t reflect my strengths well, and I’m not sure how to improve it.”</p>
-                        <input
-                            type="text"
-                            name="obstacles"
-                            value={answers.obstacles}
-                            onChange={handleInputChange}
-                        />
+                        <div className='activity-box'>
+                            <h3>What do you think is holding you back or why is this happening? </h3>
+                            <p>Reflect on any obstacles, like lack of experience, unclear goals, or feeling unsure about how to market yourself.
+                                <br />
+                                Example: 'I think my resume doesn’t reflect my strengths well, and I’m not sure how to improve it.”</p>
+                            <input
+                                type='text'
+                                name='obstacles'
+                                placeholder='Add yours here'
+                                value={answers.obstacles}
+                                onChange={handleInputChange}
+                            />
+                        </div>
 
-                        <h1> On a scale from 1-10, how confident do you feel about the following? </h1>
+                        {/* <h1> On a scale from 1-10, how confident do you feel about the following? </h1> */}
 
-                        <h2> Messaging someone you do not know on LinkedIn that you found through a job listing. </h2>
-                        <p> Example: "I’d say a 5. I feel nervous about reaching out because I don’t know what to say.”</p>
-                        <input
-                            type="text"
-                            name="confidenceLinkedIn"
-                            value={answers.confidenceLinkedIn}
-                            onChange={handleInputChange}
-                        />
+                        <div className='activity-box'>
+                            <h3> Messaging someone you do not know on LinkedIn that you found through a job listing. </h3>
+                            <p> Example: 'I’d say a 5. I feel nervous about reaching out because I don’t know what to say.”</p>
+                            <input
+                                type='text'
+                                name='confidenceLinkedIn'
+                                placeholder='Add yours here'
+                                value={answers.confidenceLinkedIn}
+                                onChange={handleInputChange}
+                            />
+                        </div>
 
-                        <h2>Messaging someone at a company you would like to work for, that has no affiliation with a job posting. </h2>
-                        <p> Example: "I’d say a 5. I feel nervous about reaching out because I don’t know what to say.”</p>
-                        <input
-                            type="text"
-                            name="confidenceMessaging"
-                            value={answers.confidenceMessaging}
-                            onChange={handleInputChange}
-                        />
+                        <div className='activity-box'>
+                            <h3>Messaging someone at a company you would like to work for, that has no affiliation with a job posting. </h3>
+                            <p> Example: 'I’d say a 5. I feel nervous about reaching out because I don’t know what to say.”</p>
+                            <input
+                                type='text'
+                                name='confidenceMessaging'
+                                placeholder='Add yours here'
+                                value={answers.confidenceMessaging}
+                                onChange={handleInputChange}
+                            />
+                        </div>
 
-                        <h2>Going to a neworking event alone and chatting with new people (1-10)</h2>
-                        <p>How confident do you feel in putting yourself out there IRL?</p>
-                        <input
-                            type="text"
-                            name="confidenceNetworking"
-                            value={answers.confidenceNetworking}
-                            onChange={handleInputChange}
-                        />
+                        <div className='activity-box'>
+                            <h3>Going to a neworking event alone and chatting with new people (1-10)</h3>
+                            <p>How confident do you feel in putting yourself out there IRL?</p>
+                            <input
+                                type='text'
+                                name='confidenceNetworking'
+                                placeholder='Add yours here'
+                                value={answers.confidenceNetworking}
+                                onChange={handleInputChange}
+                            />
+                        </div>
 
-                        <h2>Behavioural interviews (1-10)</h2>
-                        <p>How confident do you feel in handling behavioral interview questions (like "Tell me about a time when…")?
-                            <br />
-                            Example: "Probably a 4. I struggle to come up with examples quickly in interviews.”</p>
-                        <input
-                            type="text"
-                            name="confidenceBehavioral"
-                            value={answers.confidenceBehavioral}
-                            onChange={handleInputChange}
-                        />
+                        <div className='activity-box'>
+                            <h3>Behavioural interviews (1-10)</h3>
+                            <p>How confident do you feel in handling behavioral interview questions (like 'Tell me about a time when…')?
+                                <br />
+                                Example: 'Probably a 4. I struggle to come up with examples quickly in interviews.”</p>
+                            <input
+                                type='text'
+                                name='confidenceBehavioral'
+                                placeholder='Add yours here'
+                                value={answers.confidenceBehavioral}
+                                onChange={handleInputChange}
+                            />
+                        </div>
 
                         <br />
-                        <button onClick={handleSubmit}>Save Answers</button>
+                        <div className='activity-buttons'>
+                            <div className='activity-button-draft' onClick={() => handleSubmit(false)}>Save as Draft</div>
+                            <div className='activity-button-save' onClick={() => handleSubmit(true)}>Mark as completed!</div>
+                        </div>
                     </div>
                 </div>
             )}
