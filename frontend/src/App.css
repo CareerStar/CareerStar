@@ -1662,13 +1662,39 @@ button:hover {
   color: #2E2E2E;
 }
 
+.activity-box p {
+  margin: 0px;
+}
+
 .activity-emoji {
   font-size: 75px;
 }
 
 .activity-description-content input {
-  width: 600px;
-  height: 30px;
+  margin-top: 10px;
+  box-sizing: border-box;
+
+  display: block;
+  width: 100%;
+  padding: 16px;
+  gap: 10px;
+  border: none;
+  background: #F5F5F5;
+  border-radius: 4px;
+}
+
+.activity-description-content input::placeholder {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 23px;
+
+  color: #343C65;
+}
+
+.activity-description-content h3 {
+  margin-top: 0px
 }
 
 /* Admin page styles */
