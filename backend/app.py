@@ -505,15 +505,17 @@ def roadmapactivityget(userId, roadmapActivityId):
         cursor = connection.cursor()
 
         get_roadmapactivity_query="""
-        SELECT answer FROM user_roadmap_activities
+        SELECT answer, completed FROM user_roadmap_activities
         WHERE userId = %s AND roadmapActivityId = %s;
         """
 
         cursor.execute(get_roadmapactivity_query, (userId, roadmapActivityId))
-        answer = cursor.fetchone()[0]
+        answer = cursor.fetchone()
 
         if answer:
             return jsonify(answer)
+        else:
+            return jsonify({"error": str(error)}), 404
     except Exception as error:
         return jsonify({"error": str(error)}), 500
     finally:
@@ -529,7 +531,6 @@ def roadmapactivitypost(userId, roadmapActivityId):
         answer = activity_data.get('answers')
         completed = activity_data.get('completed')
         stars = activity_data.get('stars')
-        print(userId, roadmapActivityId, completed, answer)
 
         if answer:
             answer_json = json.dumps(answer)
@@ -540,20 +541,35 @@ def roadmapactivitypost(userId, roadmapActivityId):
         cursor = connection.cursor()
 
         check_query = """
-        SELECT COUNT(*) FROM user_roadmap_activities
+        SELECT userId, completed FROM user_roadmap_activities
         WHERE userId = %s AND roadmapActivityId = %s;
         """
 
         cursor.execute(check_query, (userId, roadmapActivityId,))
-        record_exists = cursor.fetchone()[0]
+        record = cursor.fetchone()
+        
+        if record:
+            record_exists = record[0]
+            previously_completed = record[1]
+        else:
+            record_exists = previously_completed = False
+
+        if not previously_completed and completed:
+            update_user_star_query = """
+            UPDATE Users
+            SET stars = stars + %s
+            WHERE userId=%s
+            """
+            cursor.execute(update_user_star_query, (stars, userId))
+            connection.commit()
 
         if record_exists:
             update_query = """
-            UPDATE user_roadmap_activities SET answer = %s
+            UPDATE user_roadmap_activities SET answer = %s, completed = %s
             WHERE userId = %s AND roadmapActivityId = %s;
             """
 
-            cursor.execute(update_query, (answer_json, userId, roadmapActivityId,))
+            cursor.execute(update_query, (answer_json, completed, userId, roadmapActivityId,))
             connection.commit()
 
             return jsonify({"message": "Data update successful", "userId": userId, "roadmapActivityId": roadmapActivityId}), 200
@@ -565,14 +581,6 @@ def roadmapactivitypost(userId, roadmapActivityId):
 
             cursor.execute(insert_query, (userId, roadmapActivityId, completed, answer_json, ))
 
-            connection.commit()
-
-            update_user_star_query = """
-            UPDATE Users
-            SET stars = stars + %s
-            WHERE userId=%s
-            """
-            cursor.execute(update_user_star_query, (stars, userId))
             connection.commit()
 
             return jsonify({"message": "Data added successful", "userId": userId, "roadmapActivityId": roadmapActivityId}), 200
@@ -677,6 +685,72 @@ def update_user_activity(userId, activityId):
         if connection:
             return_db_connection(connection)
 
+@app.route('/linkedin', methods=['GET'])
+@jwt_required()
+def get_users_linkedin_details():
+    current_user = get_jwt_identity()
+    if current_user['role'] != 'admin':
+        return jsonify({"error": "Unauthorized"}), 401
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        get_users_linkedin_details_query = """
+        SELECT p.userId, p.LinkedIn, u.firstname, u.emailId FROM Users u JOIN user_personalization p ON u.userId = p.userId;
+        """
+        cursor.execute(get_users_linkedin_details_query, ())
+        users = cursor.fetchall()
+        user_linkedIn_list = []
+        if users:
+            for user in users:
+                user_dict = {
+                    "userId": user[0],
+                    "LinkedIn": user[1],
+                    "firstname": user[2],
+                    "emailId": user[3]
+                }
+                user_linkedIn_list.append(user_dict)
+            return jsonify(user_linkedIn_list)
+        else:
+            return jsonify({"error": "User has not onboarded yet"}), 404
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
+
+@app.route('/linkedin/<int:userId>', methods=['PUT'])
+@jwt_required()
+def post_users_linkedin_details(userId):
+    current_user = get_jwt_identity()
+    if current_user['role'] != 'admin':
+        return jsonify({"error": "Unauthorized"}), 401
+    try:
+        data = request.json
+        linkedInData = data.get('LinkedIn')
+        linkedInData = json.dumps(linkedInData)
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        put_users_linkedin_details_query = """
+        UPDATE user_personalization 
+        SET LinkedIn = %s 
+        WHERE userId = %s;
+        """
+        cursor.execute(put_users_linkedin_details_query, (linkedInData, userId,))
+        connection.commit()
+        return jsonify({"message": "Data update successful", "userId": userId}), 200
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
+
 @app.route('/adminlogin', methods=['POST'])
 def admin_login():
     username = request.json.get("username")
@@ -694,3 +768,4 @@ def home():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, ssl_context=('cert.pem', 'key.pem'))
+    # app.run(host='0.0.0.0', port=5000)
