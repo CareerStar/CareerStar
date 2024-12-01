@@ -6,11 +6,16 @@ import starEmpty from '../../assets/images/star-empty.png';
 import downArrow from '../../assets/images/down-arrow-roadmap.png';
 import upArrow from '../../assets/images/up-arrow-roadmap.png';
 import hotTip1 from '../../assets/images/roadmap-activities/hot-tip-1.webp';
-import RoadmapActivity1 from '../roadmap-activities/RoadmapActivity1';
+import RoadmapActivity11 from '../roadmap-activities/RoadmapActivity11';
+import RoadmapActivity12 from '../roadmap-activities/RoadmapActivity12';
+import RoadmapActivity13 from '../roadmap-activities/RoadmapActivity13';
 import RoadmapActivity2 from '../roadmap-activities/RoadmapActivity2';
 import RoadmapActivity3 from '../roadmap-activities/RoadmapActivity3';
 import RoadmapActivity4 from '../roadmap-activities/RoadmapActivity4';
 import RoadmapActivity5 from '../roadmap-activities/RoadmapActivity5';
+import RoadmapActivity21 from '../roadmap-activities/RoadmapActivity21';
+import RoadmapActivity22 from '../roadmap-activities/RoadmapActivity22';
+import RoadmapActivity23 from '../roadmap-activities/RoadmapActivity23';
 
 function Roadmap({ userId }) {
     const [currentSituation, setCurrentSituation] = useState('I’m a recent grad');
@@ -157,11 +162,17 @@ function Roadmap({ userId }) {
             <div className='roadmap-phases-container'>
                 <div className='roadmap-phase flex-column'>
                     <p className='roadmap-phase-title'>Phase 1: Values & Goals</p>
-                    <RoadmapActivity1 userId={userId}/>
-                    <RoadmapActivity2 userId={userId}/>
+                    <RoadmapActivity11 userId={userId}/>
+                    <RoadmapActivity12 userId={userId}/>
+                    <RoadmapActivity13 userId={userId}/>
+                    <p className='roadmap-phase-title'>Phase 2: Values & Goals</p>
+                    <RoadmapActivity21 userId={userId}/>
+                    <RoadmapActivity22 userId={userId}/>
+                    <RoadmapActivity23 userId={userId}/>
+                    {/* <RoadmapActivity2 userId={userId}/>
                     <RoadmapActivity3 userId={userId}/>
                     <RoadmapActivity4 userId={userId}/>
-                    <RoadmapActivity5 userId={userId}/>
+                    <RoadmapActivity5 userId={userId}/> */}
                     {/* <p className='roadmap-phase-title'>Phase 2: Career & Guidance</p> */}
                 </div>
             </div>
