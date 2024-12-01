@@ -708,7 +708,11 @@
   flex: 1;
   background-color: #F9F8FF;
   /* margin-bottom: 20px; */
-  height: max-content;
+  height: 100%;
+}
+
+.dashboard-content {
+  background-color: #F9F8FF;
 }
 
 .activity-buttons {
@@ -1662,8 +1666,13 @@ button:hover {
   color: #2E2E2E;
 }
 
-.activity-box p {
+.activity-box p, h3 {
   margin: 0px;
+}
+
+.activity-box h2 {
+  margin: 0px;
+  margin-bottom: 10px;
 }
 
 .activity-emoji {
@@ -1681,6 +1690,11 @@ button:hover {
   border: none;
   background: #F5F5F5;
   border-radius: 4px;
+
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
 }
 
 .activity-description-content input::placeholder {
@@ -1745,7 +1759,7 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 1);
   z-index: 1000;
 }
 
