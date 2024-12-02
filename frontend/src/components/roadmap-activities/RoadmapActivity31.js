@@ -5,15 +5,15 @@ import star from '../../assets/images/star.png';
 import downArrow from '../../assets/images/down-arrow-roadmap.png';
 import upArrow from '../../assets/images/up-arrow-roadmap.png';
 
-function RoadmapActivity13({ userId }) {
-    const activityId = 13;
+function RoadmapActivity31({ userId }) {
+    const activityId = 31;
     const [completed, setCompleted] = useState(false);
     const [starCount, setStarCount] = useState(3);
     const [answers, setAnswers] = useState({
-        volunteerEvent: '',
-        coreValue1: '',
-        coreValue2: '',
-        coreValue3: '',
+        interviewerName: '',
+        linkedInURL: '',
+        talkingPoint1: '',
+        talkingPoint2: '',
     });
     const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
 
@@ -38,7 +38,7 @@ function RoadmapActivity13({ userId }) {
         try {
             const payload = {
                 userId: userId,
-                roadmapActivityId: 13,
+                roadmapActivityId: 31,
                 completed: completed,
                 answers: answers,
                 stars: starCount,
@@ -70,7 +70,7 @@ function RoadmapActivity13({ userId }) {
                         type="checkbox"
                         checked={completed}
                     />
-                    <p>Your Core Values 🥰</p>
+                    <p>Get to Know Your Interviewer 😏</p>
                     {isDescriptionVisible ? (
                         <img
                             src={upArrow}
@@ -100,94 +100,97 @@ function RoadmapActivity13({ userId }) {
                 <div className='activity-description-container'>
                     <div className='activity-description-content'>
                         <div className='activity-box flex-row'>
-                            <div className='activity-emoji'>🥰</div>
+                            <div className='activity-emoji'>🚀</div>
                             <div className='flex-col'>
-                                <h2>Defining your core values is crucial for career satisfaction and decision-making. It is also a common interview question! </h2>
-                                <p>This activity will help you identify and prioritize your top 3 core values, which will serve as a compass for your career choices and personal growth. 🧭</p>
+                                <h2>Get to Know Your Interviewer - Ahead of Time</h2>
+                                <p>Researching your interviewer before a job interview can give you a significant advantage It helps you establish rapport, find common ground, and tailor your responses to their background and interests.</p>
                             </div>
                         </div>
                         <div className='activity-box flex-col'>
                             <h2>In this activity we will:</h2>
                             <ul>
-                                <li>Brainstorm personal values</li>
-                                <li>Reflect on past experiences</li>
-                                <li>Prioritize values</li>
-                                <li>Define top 3 core values</li>
+                                <li>Identify Interviewers</li>
+                                <li>Research the interviewer(s) on LinkedIn</li>
+                                <li>Identify Common Ground</li>
+                                <li>Practice Talking Points</li>
                             </ul>
                         </div>
                         <div className='activity-box flex-col'>
                             <h2>Activity Steps:</h2>
-                            <h2>1️⃣ Brainstorm Personal Values</h2>
+                            <h2>1️⃣ Identify Your Interviewer</h2>
                             <ul>
-                                <li>List out as many values as you can think of that are important to you</li>
-                                <li>Consider areas like work, relationships, personal growth, and lifestyle</li>
-                                <li>Examples: integrity, creativity, family, adventure, learning, etc.</li>
+                                <li>Check the email/meeting invite! 💌</li>
+                                <li>If the interviewer isn't mentioned in the posting, you can politely ask the HR contact for this information, or check the calendar invite!</li>
                             </ul>
                         </div>
                         <div className='activity-box flex-col'>
-                            <h2>2️⃣ Reflect on Past Experiences</h2>
+                            <h2>2️⃣ Research Your Interviewer on LinkedIn:</h2>
                             <ul>
-                                <li>Think about times when you felt most fulfilled or proud</li>
-                                <li>Identify the values that were present in those moments</li>
+                                <li>Current and past positions - especially how long they have worked at current role and for which departments</li>
+                                <li>Articles/posts they have shared</li>
+                                <li>Professional associations, groups, volunteering</li>
+                            </ul>
+                            <p>Be sure to look for any mutual connections you might have!</p>
+                        </div>
+                        <div className='activity-box flex-col'>
+                            <h2>3️⃣ Look For Common Ground</h2>
+                            <p>Identify any shared experiences, interests, or connections you have with the interviewer. This could include:</p>
+                            <ul>
+                                <li>Alma mater</li>
+                                <li>Previous employers</li>
+                                <li>Professional associations</li>
+                                <li>Volunteer work</li>
+                                <li>Shared connections</li>
                             </ul>
                         </div>
                         <div className='activity-box flex-col'>
-                            <h2>3️⃣ Prioritize Your Values</h2>
+                            <h2>4️⃣ Prepare Talking Points</h2>
                             <ul>
-                                <li>Review your list and group similar values together</li>
-                                <li>Rank the values based on their importance to you</li>
-                            </ul>
-                        </div>
-                        <div className='activity-box flex-col'>
-                            <h2>4️⃣ Define Your Top 3 Core Values</h2>
-                            <ul>
-                                <li>Select the three values that resonate most strongly with you</li>
-                                <li>Write a brief description of what each value means to you personally</li>
-                                <li>Consider how these values align with your career goals and aspirations</li>
+                                <li>Based on your research, prepare 2-3 talking points or questions that demonstrate your interest and knowledge.</li>
                             </ul>
                         </div>
                         <div className='activity-box flex-row'>
-                            <h3>🔥 Hot Tip! Your core values may evolve over time. It's a good idea to revisit this exercise periodically to ensure your values still align with your current goals and life stage</h3>
+                            <h3>🔥 Hot Tip! Practice saying these talking points aloud, and practice transitioning them in different orders! This will make it seem much more natural on the call!</h3>
                         </div>
                         <div className='activity-box flex-col'>
                             <h2>Your Turn!</h2>
-                            <p>Copy the link to your volunteer event here!</p>
+                            <p>❓ Interviewer Name</p>
                             <input
                                 type="text"
-                                name="volunteerEvent"
-                                value={answers.volunteerEvent}
+                                name="interviewerName"
+                                value={answers.interviewerName}
                                 placeholder='Paste the link here'
-                                onChange={(e) => setAnswers({ ...answers, volunteerEvent: e.target.value })}
+                                onChange={(e) => setAnswers({ ...answers, interviewerName: e.target.value })}
                             />
                         </div>
                         <div className='activity-box flex-col'>
-                            <p>Your Core Value 1:</p>
+                            <p>💿 LinkedIn profile URL:</p>
                             <input
                                 type="text"
-                                name="coreValue1"
-                                value={answers.coreValue1}
+                                name="linkedInURL"
+                                value={answers.linkedInURL}
                                 placeholder='Type first certification here'
-                                onChange={(e) => setAnswers({ ...answers, coreValue1: e.target.value })}
+                                onChange={(e) => setAnswers({ ...answers, linkedInURL: e.target.value })}
                             />
                         </div>
                         <div className='activity-box flex-col'>
-                            <p>Your Core Value 2:</p>
+                            <p>1️⃣ Talking Point 1:</p>
                             <input
                                 type="text"
-                                name="coreValue2"
-                                value={answers.coreValue2}
+                                name="talkingPoint1"
+                                value={answers.talkingPoint1}
                                 placeholder='Type second certification here'
-                                onChange={(e) => setAnswers({ ...answers, coreValue2: e.target.value })}
+                                onChange={(e) => setAnswers({ ...answers, talkingPoint1: e.target.value })}
                             />
                         </div>
                         <div className='activity-box flex-col'>
-                            <p>Your Core Value 3:</p>
+                            <p>2️⃣ Talking Point 2:</p>
                             <input
                                 type="text"
-                                name="coreValue3"
-                                value={answers.coreValue3}
+                                name="talkingPoint2"
+                                value={answers.talkingPoint2}
                                 placeholder='Type your timeline here'
-                                onChange={(e) => setAnswers({ ...answers, coreValue3: e.target.value })}
+                                onChange={(e) => setAnswers({ ...answers, talkingPoint2: e.target.value })}
                             />
                         </div>
                         <div className='activity-buttons'>
@@ -201,4 +204,4 @@ function RoadmapActivity13({ userId }) {
     );
 }
 
-export default RoadmapActivity13;
+export default RoadmapActivity31;

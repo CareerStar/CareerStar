@@ -16,6 +16,9 @@ import RoadmapActivity5 from '../roadmap-activities/RoadmapActivity5';
 import RoadmapActivity21 from '../roadmap-activities/RoadmapActivity21';
 import RoadmapActivity22 from '../roadmap-activities/RoadmapActivity22';
 import RoadmapActivity23 from '../roadmap-activities/RoadmapActivity23';
+import RoadmapActivity31 from '../roadmap-activities/RoadmapActivity31';
+import RoadmapActivity32 from '../roadmap-activities/RoadmapActivity32';
+import RoadmapActivity33 from '../roadmap-activities/RoadmapActivity33';
 
 function Roadmap({ userId }) {
     const [currentSituation, setCurrentSituation] = useState('I’m a recent grad');
@@ -161,14 +164,18 @@ function Roadmap({ userId }) {
 
             <div className='roadmap-phases-container'>
                 <div className='roadmap-phase flex-column'>
-                    <p className='roadmap-phase-title'>Phase 1: Values & Goals</p>
+                    <p className='roadmap-phase-title'>Phase 1</p>
                     <RoadmapActivity11 userId={userId}/>
                     <RoadmapActivity12 userId={userId}/>
                     <RoadmapActivity13 userId={userId}/>
-                    <p className='roadmap-phase-title'>Phase 2: Values & Goals</p>
+                    <p className='roadmap-phase-title'>Phase 2</p>
                     <RoadmapActivity21 userId={userId}/>
                     <RoadmapActivity22 userId={userId}/>
                     <RoadmapActivity23 userId={userId}/>
+                    <p className='roadmap-phase-title'>Phase 3</p>
+                    <RoadmapActivity31 userId={userId}/>
+                    <RoadmapActivity32 userId={userId}/>
+                    <RoadmapActivity33 userId={userId}/>
                     {/* <RoadmapActivity2 userId={userId}/>
                     <RoadmapActivity3 userId={userId}/>
                     <RoadmapActivity4 userId={userId}/>

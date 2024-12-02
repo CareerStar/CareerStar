@@ -1677,6 +1677,7 @@ button:hover {
 
 .activity-emoji {
   font-size: 75px;
+  padding: 40px 0px;
 }
 
 .activity-description-content input {

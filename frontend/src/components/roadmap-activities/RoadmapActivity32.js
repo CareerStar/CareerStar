@@ -4,16 +4,16 @@ import starEmpty from '../../assets/images/star-empty.png';
 import star from '../../assets/images/star.png';
 import downArrow from '../../assets/images/down-arrow-roadmap.png';
 import upArrow from '../../assets/images/up-arrow-roadmap.png';
+import activityImage1 from '../../assets/images/roadmap-activity-32-1.png';
+import activityImage2 from '../../assets/images/roadmap-activity-32-2.png';
+import activityImage3 from '../../assets/images/roadmap-activity-32-3.png';
 
-function RoadmapActivity13({ userId }) {
-    const activityId = 13;
+function RoadmapActivity32({ userId }) {
+    const activityId = 32;
     const [completed, setCompleted] = useState(false);
-    const [starCount, setStarCount] = useState(3);
+    const [starCount, setStarCount] = useState(10);
     const [answers, setAnswers] = useState({
-        volunteerEvent: '',
-        coreValue1: '',
-        coreValue2: '',
-        coreValue3: '',
+        answer1: '',
     });
     const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
 
@@ -38,7 +38,7 @@ function RoadmapActivity13({ userId }) {
         try {
             const payload = {
                 userId: userId,
-                roadmapActivityId: 13,
+                roadmapActivityId: 32,
                 completed: completed,
                 answers: answers,
                 stars: starCount,
@@ -70,7 +70,7 @@ function RoadmapActivity13({ userId }) {
                         type="checkbox"
                         checked={completed}
                     />
-                    <p>Your Core Values 🥰</p>
+                    <p>Reaching Out to More Than Recruiters 🦩</p>
                     {isDescriptionVisible ? (
                         <img
                             src={upArrow}
@@ -100,95 +100,59 @@ function RoadmapActivity13({ userId }) {
                 <div className='activity-description-container'>
                     <div className='activity-description-content'>
                         <div className='activity-box flex-row'>
-                            <div className='activity-emoji'>🥰</div>
+                            <div className='activity-emoji'>🚀</div>
                             <div className='flex-col'>
-                                <h2>Defining your core values is crucial for career satisfaction and decision-making. It is also a common interview question! </h2>
-                                <p>This activity will help you identify and prioritize your top 3 core values, which will serve as a compass for your career choices and personal growth. 🧭</p>
+                                <h2>It’s important to reach out to more than recruiters and people that have posted the job! Reaching out to the people you could actually be working with is often be much more effective. </h2>
                             </div>
                         </div>
                         <div className='activity-box flex-col'>
-                            <h2>In this activity we will:</h2>
+                            <h2>Let’s Find Some People to Message! </h2>
                             <ul>
-                                <li>Brainstorm personal values</li>
-                                <li>Reflect on past experiences</li>
-                                <li>Prioritize values</li>
-                                <li>Define top 3 core values</li>
+                                <li>How to find people to contact</li>
+                                <li>Checklist for companies on LinkedIn</li>
+                                <li>Outreach sheet to organize and optimize this process!</li>
                             </ul>
                         </div>
                         <div className='activity-box flex-col'>
-                            <h2>Activity Steps:</h2>
-                            <h2>1️⃣ Brainstorm Personal Values</h2>
+                            <h2>Process for Finding Contacts:</h2>
+                        </div>
+                        <div className='activity-box flex-col'>
+                            <h2>1️⃣ Pull up an active job of interest and look for information about the company division, group or team that you would be working for.</h2>
                             <ul>
-                                <li>List out as many values as you can think of that are important to you</li>
-                                <li>Consider areas like work, relationships, personal growth, and lifestyle</li>
-                                <li>Examples: integrity, creativity, family, adventure, learning, etc.</li>
+                                <li>Hot Tip! Look for things that are in capital letters, they usually signify a specific department or division within a company!</li>
                             </ul>
+                            <img src={activityImage1} alt='Activity 1' />
                         </div>
                         <div className='activity-box flex-col'>
-                            <h2>2️⃣ Reflect on Past Experiences</h2>
+                            <h2>2️⃣ Look for information online about this department</h2>
                             <ul>
-                                <li>Think about times when you felt most fulfilled or proud</li>
-                                <li>Identify the values that were present in those moments</li>
+                                <li>What other division/department does this roll up to? </li>
+                                <li>What person is ultimately responsible for this department’s KPIs and Lines of Business? 💯</li>
+                                <li>What type of division/department would you be working for?</li>
                             </ul>
+                            <img src={activityImage2} alt='Activity 2' />
                         </div>
                         <div className='activity-box flex-col'>
-                            <h2>3️⃣ Prioritize Your Values</h2>
+                            <h2>3️⃣ Go to the main company page LinkedIn page. First things first - follow the company! Now you will see company updates and jobs as they are posted on your LinkedIn feed!</h2>
+                        </div>
+                        <div className='activity-box flex-col'>
+                            <h2>4️⃣ You are now going to search people based on parameters from the job posting!</h2>
                             <ul>
-                                <li>Review your list and group similar values together</li>
-                                <li>Rank the values based on their importance to you</li>
+                                <li>Location - Filter by people that are based in the same city from the job posting 🌎</li>
+                                <li>Department Type - See point 2c above! 👔</li>
                             </ul>
+                            <img src={activityImage3} alt='Activity 3' />
+                        </div>
+                        <div className='activity-box'>
+                            <h2>5️⃣ Here comes the magic  - Now that you have filtered down the results, look for the team and department that you would be working with among the people results.</h2>
                         </div>
                         <div className='activity-box flex-col'>
-                            <h2>4️⃣ Define Your Top 3 Core Values</h2>
+                            <h2>6️⃣ Click on a person and take note of the following:</h2>
                             <ul>
-                                <li>Select the three values that resonate most strongly with you</li>
-                                <li>Write a brief description of what each value means to you personally</li>
-                                <li>Consider how these values align with your career goals and aspirations</li>
+                                <li>Team Name</li>
+                                <li>Time at Company</li>
+                                <li>Have they already posted the role you are looking for or a similar role?</li>
                             </ul>
-                        </div>
-                        <div className='activity-box flex-row'>
-                            <h3>🔥 Hot Tip! Your core values may evolve over time. It's a good idea to revisit this exercise periodically to ensure your values still align with your current goals and life stage</h3>
-                        </div>
-                        <div className='activity-box flex-col'>
-                            <h2>Your Turn!</h2>
-                            <p>Copy the link to your volunteer event here!</p>
-                            <input
-                                type="text"
-                                name="volunteerEvent"
-                                value={answers.volunteerEvent}
-                                placeholder='Paste the link here'
-                                onChange={(e) => setAnswers({ ...answers, volunteerEvent: e.target.value })}
-                            />
-                        </div>
-                        <div className='activity-box flex-col'>
-                            <p>Your Core Value 1:</p>
-                            <input
-                                type="text"
-                                name="coreValue1"
-                                value={answers.coreValue1}
-                                placeholder='Type first certification here'
-                                onChange={(e) => setAnswers({ ...answers, coreValue1: e.target.value })}
-                            />
-                        </div>
-                        <div className='activity-box flex-col'>
-                            <p>Your Core Value 2:</p>
-                            <input
-                                type="text"
-                                name="coreValue2"
-                                value={answers.coreValue2}
-                                placeholder='Type second certification here'
-                                onChange={(e) => setAnswers({ ...answers, coreValue2: e.target.value })}
-                            />
-                        </div>
-                        <div className='activity-box flex-col'>
-                            <p>Your Core Value 3:</p>
-                            <input
-                                type="text"
-                                name="coreValue3"
-                                value={answers.coreValue3}
-                                placeholder='Type your timeline here'
-                                onChange={(e) => setAnswers({ ...answers, coreValue3: e.target.value })}
-                            />
                         </div>
                         <div className='activity-buttons'>
                             <div className='activity-button-draft' onClick={() => handleSubmit(false)}>Save as Draft</div>
@@ -201,4 +165,4 @@ function RoadmapActivity13({ userId }) {
     );
 }
 
-export default RoadmapActivity13;
+export default RoadmapActivity32;
