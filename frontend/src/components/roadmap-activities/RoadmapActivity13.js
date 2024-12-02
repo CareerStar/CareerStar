@@ -10,6 +10,7 @@ function RoadmapActivity13({ userId }) {
     const [completed, setCompleted] = useState(false);
     const [starCount, setStarCount] = useState(3);
     const [answers, setAnswers] = useState({
+        volunteerEvent: '',
         coreValue1: '',
         coreValue2: '',
         coreValue3: '',
@@ -153,10 +154,10 @@ function RoadmapActivity13({ userId }) {
                             <p>Copy the link to your volunteer event here!</p>
                             <input
                                 type="text"
-                                name="answer1"
-                                value={answers.answer1}
+                                name="volunteerEvent"
+                                value={answers.volunteerEvent}
                                 placeholder='Paste the link here'
-                                onChange={(e) => setAnswers({ ...answers, answer1: e.target.value })}
+                                onChange={(e) => setAnswers({ ...answers, volunteerEvent: e.target.value })}
                             />
                         </div>
                         <div className='activity-box flex-col'>
