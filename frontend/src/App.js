@@ -50,7 +50,14 @@ function App() {
             exact
             path='/dashboard'
             element={<Dashboard />}
-          />
+          >
+            <Route path="home" element={<Dashboard />} />
+            <Route path="profile" element={<Dashboard />} />
+            <Route path="roadmap" element={<Dashboard />} />
+            <Route path="events" element={<Dashboard />} />
+            <Route path="network" element={<Dashboard />} />
+            <Route path="support" element={<Dashboard />} />
+          </Route>
 
           <Route
             exact
