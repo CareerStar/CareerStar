@@ -10,7 +10,15 @@ function Dashboard() {
     const [firstname, setFirstname] = useState(location.state?.firstname || '');
     const [userId, setUserId] = useState(location.state?.userId || '');
     const [userDetails, setUserDetails] = useState({});
-    const [selectedPage, setSelectedPage] = useState('Home');
+    const [selectedPage, setSelectedPage] = useState(() => {
+        const pathParts = location.pathname.split('/');
+        const page = pathParts[pathParts.length - 1];
+
+        const validPages = ['Home', 'Profile', 'Roadmap', 'Events', 'Network', 'Support'];
+
+        const normalizedPage = page ? page.charAt(0).toUpperCase() + page.slice(1) : null;
+        return validPages.includes(normalizedPage) ? normalizedPage : localStorage.getItem('selectedPage') || 'Home';
+    });
     const [onboarded, setOnboarded] = useState(false);
     const pages = ['Home', 'Profile', 'Roadmap', 'Events', 'Network','Support'];
 
@@ -48,6 +56,10 @@ function Dashboard() {
             fetchUserDetails();
         }
     }, [userId]);
+
+    useEffect(() => {
+        localStorage.setItem('selectedPage', selectedPage);
+    }, [selectedPage]);
 
     const handlePageChange = (page) => {
         setSelectedPage(page);
