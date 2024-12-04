@@ -38,16 +38,15 @@ function Home({ onComplete, userId }) {
         major: '',
     });
 
-    const totalSteps = 5;
+    const totalSteps = 4;
 
     const buttonVisibility = {
         1: true,
         2: true,
         3: true,
         4: true,
-        5: false,
-        6: true,
-        7: false
+        5: true,
+        6: false
     };
 
     useEffect(() => {
@@ -74,11 +73,7 @@ function Home({ onComplete, userId }) {
                 const data = await response.json();
                 if (response.ok) {
                     if (data.onboarded) {
-                        if (data.choice === 'roadmap') {
-                            onComplete('Roadmap');
-                        } else if (data.choice === 'activities') {
-                            setCurrentStep(7);
-                        }
+                        setCurrentStep(6);
                     }
                     setAnswers((prevAnswers) => ({
                         ...prevAnswers,
@@ -225,10 +220,8 @@ function Home({ onComplete, userId }) {
                     </>
                 );
             case 5:
-                return <HomepageChoiceQuestion onOptionSelect={handleOptionSelect} />;
-            case 6:
                 return <HomepageQuestion5 onActivityChoicesSelect={handleActivityChoicesSelect} />;
-            case 7:
+            case 6:
                 return <Activities userId={userId} />;
             default:
                 return <HomepageQuestion1 />;
@@ -259,9 +252,6 @@ function Home({ onComplete, userId }) {
     const handleClick = () => {
         if (validateStep()) {
             setCurrentStep(currentStep + 1);
-            if (currentStep === totalSteps) {
-                onComplete('Roadmap');
-            }
         }
     };
 
