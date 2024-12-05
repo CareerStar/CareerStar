@@ -205,12 +205,17 @@ def refresh():
         current_user = get_jwt_identity()
         new_access_token = create_access_token(identity=current_user, expires_delta=timedelta(days=7))
         return jsonify({"access_token": new_access_token}), 200
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
 
 @app.route('/protected', methods=['GET'])
 @jwt_required()
 def protected():
-    current_user = get_jwt_identity()
-    return jsonify({"user_id": current_user}), 200
+    try:
+        current_user = get_jwt_identity()
+        return jsonify({"user_id": current_user}), 200
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
 
 def addActivityToUserActivitiesTable(user_id, activityId):
     try:
