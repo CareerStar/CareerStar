@@ -66,11 +66,14 @@ function LogIn() {
             const response = await axios.post('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/login', requestBody);
             // const response = await axios.post('http://localhost:8080/users/login', requestBody);
             if (response.status === 200) {
-                const {userId, firstname, token} = response.data;
-                console.log('User logged in successfully!', userId, firstname, token);
-                localStorage.setItem('userId', userId);
-                localStorage.setItem('token', token);
-                navigate('/dashboard', { state: { userId: userId, firstname: firstname  } });
+                const data = await response.data;
+                localStorage.setItem('access_token', data.access_token);
+                localStorage.setItem('refresh_token', data.refresh_token);
+                localStorage.setItem('userId', data.userId);
+                localStorage.setItem('firstname', data.firstname);
+                localStorage.setItem('login_timestamp', Date.now());
+
+                navigate('/dashboard', { state: { userId: data.userId, firstname: data.firstname  } });
             }
         } catch (error) {
             if (error.status === 400) {
