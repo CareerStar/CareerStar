@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import ProgressBar from './ProgressBar';
@@ -45,10 +45,30 @@ function LogIn() {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const access_token = localStorage.getItem('access_token');
+        if (access_token) {
+            verifyToken(access_token);
+        }
+    }, []);
+
+    const verifyToken = async (access_token) => {
+        try {
+            const response = await axios.get('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/protected', {
+                headers: {
+                    Authorization: `Bearer ${access_token}`,
+                },
+            });
+            if (response.status === 200) {
+                navigate('/dashboard');
+            }
+        } catch (error) {
+            console.error('Token verification failed:', error);
+            localStorage.removeItem('access_token');
+        }
+    };
+
     const handleLogIn = async () => {
-        console.log('Div clicked!');
-        console.log('Email ID:', emailID);
-        console.log('Password', password);
         if (emailID.trim() === '') {
             setErrorEmail('Email ID cannot be empty*');
             return;
