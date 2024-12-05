@@ -7,11 +7,15 @@ from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from datetime import timedelta
+
 
 load_dotenv()
 
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=7)
+app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=30)
 jwt = JWTManager(app)
 CORS(app)
 
@@ -171,7 +175,17 @@ def login():
             user_id, hashed_password, firstname = user
 
             if check_password_hash(hashed_password, password):
-                return jsonify({"message": "Login successful", "userId": user_id, "firstname": firstname}), 200
+                access_token = create_access_token(identity=user_id, expires_delta=timedelta(days=7))
+                
+                refresh_token = create_access_token(identity=user_id, expires_delta=timedelta(days=30))
+
+                return jsonify({
+                    "message": "Login successful",
+                    "userId": user_id,
+                    "firstname": firstname,
+                    "access_token": access_token,
+                    "refresh_token": refresh_token
+                }), 200
             else:
                 return jsonify({"error": "Invalid email or password"}), 400
         else:
