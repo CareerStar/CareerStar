@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import ProgressBar from './ProgressBar';
@@ -45,10 +45,30 @@ function LogIn() {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const access_token = localStorage.getItem('access_token');
+        if (access_token) {
+            verifyToken(access_token);
+        }
+    }, []);
+
+    const verifyToken = async (access_token) => {
+        try {
+            const response = await axios.get('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/protected', {
+                headers: {
+                    Authorization: `Bearer ${access_token}`,
+                },
+            });
+            if (response.status === 200) {
+                navigate('/dashboard');
+            }
+        } catch (error) {
+            console.error('Token verification failed:', error);
+            localStorage.removeItem('access_token');
+        }
+    };
+
     const handleLogIn = async () => {
-        console.log('Div clicked!');
-        console.log('Email ID:', emailID);
-        console.log('Password', password);
         if (emailID.trim() === '') {
             setErrorEmail('Email ID cannot be empty*');
             return;
@@ -66,11 +86,14 @@ function LogIn() {
             const response = await axios.post('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/login', requestBody);
             // const response = await axios.post('http://localhost:8080/users/login', requestBody);
             if (response.status === 200) {
-                const {userId, firstname, token} = response.data;
-                console.log('User logged in successfully!', userId, firstname, token);
-                localStorage.setItem('userId', userId);
-                localStorage.setItem('token', token);
-                navigate('/dashboard', { state: { userId: userId, firstname: firstname  } });
+                const data = await response.data;
+                localStorage.setItem('access_token', data.access_token);
+                localStorage.setItem('refresh_token', data.refresh_token);
+                localStorage.setItem('userId', data.userId);
+                localStorage.setItem('firstname', data.firstname);
+                localStorage.setItem('login_timestamp', Date.now());
+
+                navigate('/dashboard', { state: { userId: data.userId, firstname: data.firstname  } });
             }
         } catch (error) {
             if (error.status === 400) {

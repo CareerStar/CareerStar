@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import displayPicture from '../../assets/images/display-picture.png';
 import star from '../../assets/images/star.png';
 
@@ -7,6 +8,7 @@ function Profile({userId}) {
     const [summary, setSummary] = useState('');
     const [stars, setStars] = useState(0);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleSummaryChange = (event) => {
         setSummary(event.target.value);
@@ -82,6 +84,11 @@ function Profile({userId}) {
         }
     };
 
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate('/');
+    }
+
     return (
         <div className='profile-container'>
             {loading && (
@@ -111,6 +118,9 @@ function Profile({userId}) {
                     <div className='summary-buttons flex-row'>
                         <button className='help-me-button' onClick={handleHelp}>Help me</button>
                         <button className='save-button' onClick={handleSave}>Save</button>
+                    </div>
+                    <div className='summary-buttons flex-row'>
+                        <button className='save-button' onClick={handleLogout}>Log Out</button>
                     </div>
                 </div>
             </div>

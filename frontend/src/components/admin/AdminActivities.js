@@ -21,10 +21,10 @@ function AdminActivities() {
     useEffect(() => {
         const fetchUserActivitiesDetails = async () => {
             try {
-                const token = localStorage.getItem('token');
+                const admin_token = localStorage.getItem('admin_token');
                 const response = await axios.get('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/activities', {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${admin_token}`
                     }
                 });
                 if (response.status === 200) {
@@ -43,8 +43,8 @@ function AdminActivities() {
     const handleAddNewActivity = async () => {
         console.log('Adding new activity:', newActivity);
         try {
-            const token = localStorage.getItem('token');
-            if (!token) {
+            const admin_token = localStorage.getItem('admin_token');
+            if (!admin_token) {
                 console.error('No token found');
                 return;
             }
@@ -57,7 +57,7 @@ function AdminActivities() {
             };
             const response = await axios.post('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/activities', newActivity, {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${admin_token}`,
                     'Content-Type': 'application/json',
                 },
             });
@@ -104,10 +104,10 @@ function AdminActivities() {
 
     const handleDelete = async (activityId) => {
         try {
-            const token = localStorage.getItem('token');
+            const admin_token = localStorage.getItem('admin_token');
             const response = await axios.delete(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/activities/${activityId}`, {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${admin_token}`
                 }
             });
             if (response.status === 200) {
@@ -134,7 +134,7 @@ function AdminActivities() {
 
     const handleSave = async (activity) => {
         try {
-            const token = localStorage.getItem('token');
+            const admin_token = localStorage.getItem('admin_token');
             // Convert tags back into an array
             // activity.tags = activity.tags.split(',').map(tag => tag.trim());
             console.log('Saving activity:', activity);
@@ -143,7 +143,7 @@ function AdminActivities() {
                 activity,
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`,
+                        Authorization: `Bearer ${admin_token}`,
                         'Content-Type': 'application/json',
                     },
                 }
