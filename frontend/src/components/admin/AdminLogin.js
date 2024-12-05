@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import careerStarLogo from '../../assets/images/career-star-logo-black.png';
@@ -27,6 +27,29 @@ const AdminLogin = () => {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const admin_token = localStorage.getItem('admin_token');
+        if (admin_token) {
+            verifyToken(admin_token);
+        }
+    }, []);
+
+    const verifyToken = async (admin_token) => {
+        try {
+            const response = await axios.get('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/verifyAdminToken', {
+                headers: {
+                    Authorization: `Bearer ${admin_token}`,
+                },
+            });
+            if (response.status === 200) {
+                navigate('/admin/dashboard');
+            }
+        } catch (error) {
+            console.error('Token verification failed:', error);
+            localStorage.removeItem('admin_token');
+        }
+    };
+
     const handleLogIn = async () => {
         if (username.trim() === '') {
             seterrorusername('Username cannot be empty*');
@@ -44,9 +67,9 @@ const AdminLogin = () => {
 
             const response = await axios.post('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/adminlogin', requestBody);
             if (response.status === 200) {
-                const token = response.data.access_token;
-                localStorage.setItem('token', token);
-                console.log(localStorage.getItem('token'));
+                const admin_token = response.data.access_token;
+                localStorage.setItem('admin_token', admin_token);
+                console.log(localStorage.getItem('admin_token'));
                 navigate('/admin/dashboard');
                 // console.log('Token:', token);
                 // const response2 = await axios.get('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/activities',{
