@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 
 import careerStarLogo from '../assets/images/main-page-career-star-logo-white.png';
@@ -16,6 +16,10 @@ function StartPage() {
     const logInPageNavigation = () => {
         navigate('/login');
     }
+
+    useEffect(() => {
+        localStorage.removeItem('selectedPage');
+    }, []);
 
     return (
         <div className='main-page'>
