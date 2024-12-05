@@ -15,6 +15,10 @@ import Dashboard from './components/Dashboard';
 import LogIn from './components/LogIn';
 import AdminLogin from './components/admin/AdminLogin';
 import AdminDashboard from './components/admin/AdminDashboard';
+import withAuth from './utils/withAuth';
+
+const AuthProtectedDashboard = withAuth(Dashboard);
+const AuthProtectedAdminDashboard = withAuth(AdminDashboard);
 
 function App() {
   return (
@@ -49,14 +53,14 @@ function App() {
           <Route
             exact
             path='/dashboard'
-            element={<Dashboard />}
+            element={<AuthProtectedDashboard />}
           >
-            <Route path="home" element={<Dashboard />} />
-            <Route path="profile" element={<Dashboard />} />
-            <Route path="roadmap" element={<Dashboard />} />
-            <Route path="events" element={<Dashboard />} />
-            <Route path="network" element={<Dashboard />} />
-            <Route path="support" element={<Dashboard />} />
+            <Route path="home" element={<AuthProtectedDashboard />} />
+            <Route path="profile" element={<AuthProtectedDashboard />} />
+            <Route path="roadmap" element={<AuthProtectedDashboard />} />
+            <Route path="events" element={<AuthProtectedDashboard />} />
+            <Route path="network" element={<AuthProtectedDashboard />} />
+            <Route path="support" element={<AuthProtectedDashboard />} />
           </Route>
 
           <Route
@@ -74,7 +78,7 @@ function App() {
           <Route
             exact
             path='/admin/dashboard'
-            element={<AdminDashboard />}
+            element={<AuthProtectedAdminDashboard />}
           />
         </Routes>
       </Router>
