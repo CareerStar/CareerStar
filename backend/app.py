@@ -789,7 +789,7 @@ def admin_login():
     username = request.json.get("username")
     password = request.json.get("password")
     if username == os.getenv('ADMIN_USERNAME') and password == os.getenv('ADMIN_PASSWORD'):
-        access_token = create_access_token(identity={"username":username, "role":"admin"})
+        access_token = create_access_token(identity={"username":username, "role":"admin", expires_delta=timedelta(days=7)})
         return jsonify(access_token=access_token), 200
     else:
         return jsonify({"error": "Invalid credentials"}), 401
