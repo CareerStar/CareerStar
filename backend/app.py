@@ -198,6 +198,20 @@ def login():
             # cursor.close()
             # connection.close()
 
+@app.route('/refresh', methods=['POST'])
+@jwt_required(refresh=True)
+def refresh():
+    try:
+        current_user = get_jwt_identity()
+        new_access_token = create_access_token(identity=current_user, expires_delta=timedelta(days=7))
+        return jsonify({"access_token": new_access_token}), 200
+
+@app.route('/protected', methods=['GET'])
+@jwt_required()
+def protected():
+    current_user = get_jwt_identity()
+    return jsonify({"user_id": current_user}), 200
+
 def addActivityToUserActivitiesTable(user_id, activityId):
     try:
         connection = get_db_connection()
