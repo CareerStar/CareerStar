@@ -794,6 +794,20 @@ def admin_login():
     else:
         return jsonify({"error": "Invalid credentials"}), 401
 
+@app.route('/verifyAdminToken', methods=['GET'])
+@jwt_required()
+def verifyAdminToken():
+    try:
+        current_user = get_jwt_identity()
+        
+        if current_user.get('role') != 'admin':
+            return jsonify({"error": "Unauthorized"}), 401
+        
+        return jsonify({"message": "Token is valid", "user": current_user}), 200
+    
+    except Exception as e:
+        return jsonify({"error": "An error occurred", "details": str(e)}), 500
+
 @app.route('/', methods=['GET'])
 def home():
     return 'Hello world'
