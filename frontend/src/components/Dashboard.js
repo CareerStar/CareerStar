@@ -7,8 +7,8 @@ import DashboardContent from './DashboardContent';
 function Dashboard() {
 
     const location = useLocation();
-    const [firstname, setFirstname] = useState(location.state?.firstname || '');
-    const [userId, setUserId] = useState(location.state?.userId || '');
+    const [firstname, setFirstname] = useState(location.state?.firstname || localStorage.getItem('firstname') || '');
+    const [userId, setUserId] = useState(location.state?.userId || localStorage.getItem('userId') || '');
     const [userDetails, setUserDetails] = useState({});
     const [selectedPage, setSelectedPage] = useState(() => {
         const pathParts = location.pathname.split('/');
