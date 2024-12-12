@@ -86,7 +86,7 @@ function EmailCredentialPage() {
             }
             setUserID(response.data.userId);
             setShowPopup(true);
-            // navigate('/dashboard');
+            navigate('/dashboard');
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 console.log('User already exists!');
