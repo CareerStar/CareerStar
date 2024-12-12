@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 import os
 import psycopg2
 import json
+import boto3
 from psycopg2 import pool
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -33,6 +34,13 @@ connection_pool = psycopg2.pool.SimpleConnectionPool(
     user=db_user,
     password=db_password
 )
+
+S3_BUCKET = os.getenv('AWS_BUCKET')
+S3_KEY = os.getenv('AWS_ACCESS_KEY')
+S3_SECRET = os.getenv('AWS_SECRET_KEY')
+S3_REGION = os.getenv('AWS_REGION')
+
+s3 = boto3.client('s3', aws_access_key_id=S3_KEY, aws_secret_access_key=S3_SECRET, region_name=S3_REGION)
 
 def get_db_connection():
     # connection = psycopg2.connect(
@@ -531,6 +539,25 @@ def add_new_activities():
             # cursor.close()
             # connection.close()
 
+@app.route('/upload-image', methods=['POST'])
+def upload_image():
+    user_id = request.form.get('userId')
+    activity_id = request.form.get('activityId')
+    file = request.files['file']
+
+    if not file:
+        return jsonify({'error': 'No file uploaded'}), 400
+
+    try:
+        filename = f"{user_id}/{activity_id}/{file.filename}"
+        s3.upload_fileobj(file, S3_BUCKET, filename, ExtraArgs={'ContentType': file.content_type})
+
+        file_url = f"https://{S3_BUCKET}.s3.{S3_REGION}.amazonaws.com/{filename}"
+
+        return jsonify({'message': 'Image uploaded successfully', 'imageURL': file_url}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/roadmapactivity/<int:userId>/<int:roadmapActivityId>', methods=['GET'])
 def roadmapactivityget(userId, roadmapActivityId):
     try:
@@ -789,7 +816,7 @@ def admin_login():
     username = request.json.get("username")
     password = request.json.get("password")
     if username == os.getenv('ADMIN_USERNAME') and password == os.getenv('ADMIN_PASSWORD'):
-        access_token = create_access_token(identity={"username":username, "role":"admin", expires_delta=timedelta(days=7)})
+        access_token = create_access_token(identity={"username":username, "role":"admin"}, expires_delta=timedelta(days=7))
         return jsonify(access_token=access_token), 200
     else:
         return jsonify({"error": "Invalid credentials"}), 401
@@ -799,7 +826,6 @@ def admin_login():
 def verifyAdminToken():
     try:
         current_user = get_jwt_identity()
-        
         if current_user.get('role') != 'admin':
             return jsonify({"error": "Unauthorized"}), 401
         
