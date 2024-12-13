@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import DashboardContent from './DashboardContent';
@@ -7,6 +8,7 @@ import DashboardContent from './DashboardContent';
 function Dashboard() {
 
     const location = useLocation();
+    const dispatch = useDispatch();
     const [firstname, setFirstname] = useState(location.state?.firstname || localStorage.getItem('firstname') || '');
     const [userId, setUserId] = useState(location.state?.userId || localStorage.getItem('userId') || '');
     const [userDetails, setUserDetails] = useState({});
@@ -29,7 +31,7 @@ function Dashboard() {
             const data = await response.json();
             if (response.ok) {
                 setUserDetails(data);
-                console.log('User details:', data);
+                dispatch({ type: "SET_STAR_COUNT", payload: data.stars });
             } else {
                 console.error('Error fetching user details:', data);
             }
@@ -67,7 +69,7 @@ function Dashboard() {
     }
     return (
         <div className='dashboard'>
-            <Header userName={firstname} starCount={userDetails.stars} onSelectPage={setSelectedPage} />
+            <Header userName={firstname} onSelectPage={setSelectedPage} />
             <div className='dashboard-container'>
                 <Sidebar pages={pages} onSelectPage={setSelectedPage} selectedPage={selectedPage} onboarded={onboarded}/>
                 <div className='content'>
