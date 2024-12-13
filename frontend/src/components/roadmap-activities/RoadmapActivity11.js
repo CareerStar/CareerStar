@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import starEmpty from '../../assets/images/star-empty.png';
 import star from '../../assets/images/star.png';
@@ -6,8 +7,10 @@ import downArrow from '../../assets/images/down-arrow-roadmap.png';
 import upArrow from '../../assets/images/up-arrow-roadmap.png';
 
 function RoadmapActivity11({ userId }) {
+    const dispatch = useDispatch();
     const activityId = 11;
     const [completed, setCompleted] = useState(false);
+    const [alreadyCompleted, setAlreadyCompleted] = useState(false);
     const [starCount, setStarCount] = useState(3);
     const [answers, setAnswers] = useState({
         answer1: '', //Answers can not be a null JSON object, it has to have at least one key-value pair
@@ -21,6 +24,7 @@ function RoadmapActivity11({ userId }) {
                 if (response.data) {
                     setAnswers(response.data[0]);
                     setCompleted(response.data[1]);
+                    setAlreadyCompleted(response.data[1]);
                 }
             } catch (error) {
                 console.error('Activity not completed', error);
@@ -46,8 +50,10 @@ function RoadmapActivity11({ userId }) {
                 if (completed) {
                     setCompleted(true);
                 }
+                if (completed && !alreadyCompleted) {
+                    dispatch({ type: "INCREMENT_STAR", payload: starCount });
+                }
                 toggleDescriptionVisibility();
-                window.location.reload();
             }
         } catch (error) {
             console.error('Error saving answers:', error);
