@@ -67,7 +67,7 @@ function Dashboard() {
     }
     return (
         <div className='dashboard'>
-            <Header userName={firstname} starCount={userDetails.stars} />
+            <Header userName={firstname} starCount={userDetails.stars} onSelectPage={setSelectedPage} />
             <div className='dashboard-container'>
                 <Sidebar pages={pages} onSelectPage={setSelectedPage} selectedPage={selectedPage} onboarded={onboarded}/>
                 <div className='content'>

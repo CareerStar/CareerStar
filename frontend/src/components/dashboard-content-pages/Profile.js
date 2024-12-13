@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import displayPicture from '../../assets/images/display-picture.png';
 import star from '../../assets/images/star.png';
 
-function Profile({userId}) {
+function Profile({ userId: propUserId }) {
+    const [userId, setUserId] = useState(propUserId || localStorage.getItem('userId') || '');
     const [firstname, setFirstname] = useState('');
     const [summary, setSummary] = useState('');
     const [stars, setStars] = useState(0);
