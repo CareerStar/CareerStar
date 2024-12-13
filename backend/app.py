@@ -56,37 +56,6 @@ def get_db_connection():
 def return_db_connection(conn):
     connection_pool.putconn(conn)
 
-@app.route('/users', methods=['GET'])
-def get_users():
-    try:
-        connection = get_db_connection()
-        cursor = connection.cursor()
-        cursor.execute("SELECT userId, firstname, lastname, emailID, created_at FROM Users;")
-
-        users = cursor.fetchall()
-
-        user_list = []
-        for user in users:
-            user_dict = {
-                "userId": user[0],
-                "firstname": user[1],
-                "lastname": user[2],
-                "emailID": user[3],
-                "created_at": user[4].isoformat()
-            }
-            user_list.append(user_dict)
-
-        return jsonify(user_list)
-
-    except Exception as error:
-        return jsonify({"error": str(error)}), 500
-
-    finally:
-        if connection:
-            return_db_connection(connection)
-            # cursor.close()
-            # connection.close()
-
 @app.route('/users', methods=['POST'])
 def add_user():
     try:
