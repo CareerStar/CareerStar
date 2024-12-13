@@ -78,6 +78,10 @@
   margin-right: 20px;
 }
 
+.user-info .display-picture:hover {
+  cursor: pointer;
+}
+
 .user-info .username {
   font-family: 'Open Sans';
   font-style: normal;
@@ -1644,10 +1648,6 @@ button:hover {
   padding: 20px 40px;
 }
 
-.activity-description-content img {
-  max-width: 700px;
-}
-
 .activity-box {
   align-items: center;
   padding: 20px 24px;
@@ -1712,6 +1712,12 @@ button:hover {
   margin-top: 0px
 }
 
+.uploaded-image {
+  display: block;
+  margin: 10px auto;
+  max-width: 100%;
+  max-height: 300px;
+}
 /* Admin page styles */
 
 .admin-activities {
