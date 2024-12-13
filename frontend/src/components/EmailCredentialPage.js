@@ -80,13 +80,20 @@ function EmailCredentialPage() {
                 stars: 3
             };
             const response = await axios.post('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/users', requestBody);
-            // const response = await axios.post('http://localhost:8080/users', requestBody);
-            if (response.status === 200) {
-                console.log('User created successfully!');
+
+            if (response.status === 201) {
+                const data = await response.data;
+                localStorage.clear();
+                localStorage.setItem('access_token', data.access_token);
+                localStorage.setItem('refresh_token', data.refresh_token);
+                localStorage.setItem('userId', data.userId);
+                localStorage.setItem('firstname', data.firstname);
+                localStorage.setItem('login_timestamp', Date.now());
+                
+                setUserID(response.data.userId);
+                setShowPopup(true);
             }
-            setUserID(response.data.userId);
-            setShowPopup(true);
-            navigate('/dashboard');
+
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 console.log('User already exists!');

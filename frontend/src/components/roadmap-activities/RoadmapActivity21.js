@@ -10,13 +10,34 @@ function RoadmapActivity21({ userId }) {
     const [completed, setCompleted] = useState(false);
     const [starCount, setStarCount] = useState(3);
     const [answers, setAnswers] = useState({
-        answer1: '',
+        imageURL: '',
     });
     const [uploadedImage, setUploadedImage] = useState(null);
     const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
-
-    const handleImageUpload = (e) => {
+    const handleImageUpload = async (e) => {
         setUploadedImage(URL.createObjectURL(e.target.files[0]));
+        const file = e.target.files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('userId', userId);
+        formData.append('activityId', activityId);
+
+        try {
+            const response = await axios.post('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/upload-image', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            const { imageURL } = response.data;
+            setUploadedImage(imageURL);
+    
+            setAnswers((prevAnswers) => ({
+                ...prevAnswers,
+                imageURL,
+            }));
+        } catch (error) {
+            console.error('Error uploading image:', error);
+        }
     }
 
     useEffect(() => {
@@ -26,6 +47,9 @@ function RoadmapActivity21({ userId }) {
                 if (response.data) {
                     setAnswers(response.data[0]);
                     setCompleted(response.data[1]);
+                    if (response.data[0].imageURL) {
+                        setUploadedImage(response.data[0].imageURL);
+                    }
                 }
             } catch (error) {
                 console.error('Activity not completed', error);
@@ -177,8 +201,8 @@ function RoadmapActivity21({ userId }) {
                         <div className='activity-box flex-col'>
                             <h2>Your Turn!</h2>
                             <p>Complete this activity and share your results here:</p>
-                            <input type="file" onChange={handleImageUpload} accept="image/*,.pdf" />
-                            {uploadedImage && (<img src={uploadedImage} alt='Uploaded' />)}
+                            <input type="file" onChange={handleImageUpload} accept="image/*" />
+                            {uploadedImage && (<img src={uploadedImage} alt='Uploaded' className='uploaded-image'/>)}
                         </div>
                         <div className='activity-buttons'>
                             <div className='activity-button-draft' onClick={() => handleSubmit(false)}>Save as Draft</div>
