@@ -117,9 +117,17 @@ def add_user():
         user_id = 0
         user_id = cursor.fetchone()[0]
 
+        access_token = create_access_token(identity=user_id, expires_delta=timedelta(days=7))
+        refresh_token = create_access_token(identity=user_id, expires_delta=timedelta(days=30))
         connection.commit()
 
-        return jsonify({"message": "User added successfully", "userId": user_id}), 201
+        return jsonify({
+                    "message": "User added successfully",
+                    "userId": user_id,
+                    "firstname": firstname,
+                    "access_token": access_token,
+                    "refresh_token": refresh_token
+                }), 201
 
     except psycopg2.IntegrityError as e:
         return jsonify({"error": "Email already exists"}), 400
