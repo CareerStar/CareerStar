@@ -360,6 +360,74 @@ def update_user_onboarding_details(userId):
             # cursor.close()
             # connection.close()
 
+@app.route('/interviewschedule/<int:userId>', methods=['PUT'])
+def update_interviewschedule(userId):
+    try:
+        data = request.get_json()
+        interviewSchedule = data.get('interviewSchedule')
+
+        if interviewSchedule:
+            interviewSchedule_json = json.dumps(interviewSchedule)
+        else:
+            return jsonify({"error": "Interview Schedule details not available"}), 400
+
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        update_user_interviewschedule_query = """
+        UPDATE user_personalization
+        SET interviewSchedule = %s
+        WHERE userId = %s;
+        """
+        cursor.execute(update_user_interviewschedule_query, (interviewSchedule_json, userId))
+
+        connection.commit()
+
+        if cursor.rowcount > 0:
+            return jsonify({"message": "User interview schedule updated successfully"}), 200
+        else:
+            return jsonify({"error": "User not found or no changes made"}), 404
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
+
+@app.route('/interviewschedule/<int:userId>', methods=['GET'])
+def get_interviewschedule(userId):
+    try:
+        print("user id", userId)
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        get_user_interviewschedule_query = """
+        SELECT interviewSchedule FROM user_personalization
+        WHERE userId = %s;
+        """
+        cursor.execute(get_user_interviewschedule_query, (userId, ))
+        interviewSchedule = cursor.fetchone()[0]
+        print(interviewSchedule)
+        if interviewSchedule:
+            data = {
+                "interviewSchedule": interviewSchedule
+            }
+            return jsonify(data)
+
+        return jsonify({"error": "User not found or no changes made"}), 404
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
+
 @app.route('/update_profile/<int:userId>', methods=['PUT'])
 def update_user_profile_details(userId):
     try:
