@@ -1,0 +1,153 @@
+import React, { useEffect, useState } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+
+const CalendarComponent = () => {
+    const [userId, setUserId] = useState(localStorage.getItem('userId'));
+    const [date, setDate] = useState(new Date());
+    const [events, setEvents] = useState([]);
+    const [interviewDetails, setInterviewDetails] = useState({
+        company: "",
+        time: "",
+    });
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [showForm, setShowForm] = useState(true);
+
+    useEffect(() => {
+        const fetchInterviewSchedule = async () => {
+            try {
+                const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/interviewschedule/${userId}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+
+                    const updatedEvents = data.interviewSchedule.map(event => ({
+                        ...event,
+                        date: new Date(event.date),
+                    }));
+
+                    setEvents(updatedEvents);
+                } else {
+                    console.error('Error fetching interview details');
+                }
+            } catch (error) {
+                console.error("Error fetching interview details:", error);
+            }
+        };
+        fetchInterviewSchedule();
+    }, [userId]);
+
+    const onDateChange = (selectedDate) => {
+        setSelectedDate(selectedDate);
+        const event = events.find(
+            (event) => event.date.toDateString() === selectedDate.toDateString()
+        );
+        if (event) {
+            setInterviewDetails({ company: event.company, time: event.time });
+            setShowForm(false);
+        } else {
+            setInterviewDetails({ company: "", time: "" });
+            setShowForm(true);
+        }
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setInterviewDetails({
+            ...interviewDetails,
+            [name]: value,
+        });
+    };
+
+    const handleSubmit = async () => {
+        if (!interviewDetails.company || !interviewDetails.time) {
+            alert("Please fill in all fields");
+            return;
+        }
+
+        const newEvent = { date: selectedDate, ...interviewDetails };
+
+        try {
+            const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/interviewschedule/${userId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    interviewSchedule: [...events, newEvent],
+                    newInterviewSchedule: newEvent,
+                }),
+            });
+
+            if (response.ok) {
+                alert("Interview details saved successfully!");
+                setEvents((prev) => [...prev, newEvent]);
+                setShowForm(false);
+            } else {
+                console.error('Error updating interview details');
+                alert("Failed to save interview details.");
+            }
+        } catch (error) {
+            console.error("Error adding interview date:", error);
+            alert("Failed to add interview date.");
+        }
+    };
+
+    return (
+        <div>
+            <h1>Schedule Your Interviews</h1>
+            <Calendar
+                onChange={onDateChange}
+                value={date}
+                tileClassName={({ date }) =>
+                    events.find(
+                        (event) => event.date.toDateString() === date.toDateString()
+                    )
+                        ? "highlight"
+                        : null
+                }
+            />
+
+            {selectedDate && showForm && (
+                <div className="interview-form">
+                    <h2>Add Interview Details for {selectedDate.toDateString()}</h2>
+                    <form>
+                        <div>
+                            <label>Company Name:</label>
+                            <input
+                                type="text"
+                                name="company"
+                                value={interviewDetails.company}
+                                onChange={handleInputChange}
+                                placeholder="Enter company name"
+                            />
+                        </div>
+                        <div>
+                            <label>Interview Time:</label>
+                            <input
+                                type="time"
+                                name="time"
+                                value={interviewDetails.time}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <button type="button" onClick={handleSubmit}>
+                            Save Interview
+                        </button>
+                    </form>
+                </div>
+            )}
+
+            {selectedDate && !showForm && (
+                <div className="interview-details">
+                    <h2>Interview Scheduled for {selectedDate.toDateString()}</h2>
+                    <p><strong>Company:</strong> {interviewDetails.company}</p>
+                    <p><strong>Time:</strong> {interviewDetails.time}</p>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default CalendarComponent;

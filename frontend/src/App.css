@@ -782,7 +782,7 @@
   color: #FFFFFF;
 }
 
-.activity-button-save:hover{
+.activity-button-save:hover {
   cursor: pointer;
 }
 
@@ -1666,7 +1666,8 @@ button:hover {
   color: #2E2E2E;
 }
 
-.activity-box p, h3 {
+.activity-box p,
+h3 {
   margin: 0px;
 }
 
@@ -1718,6 +1719,7 @@ button:hover {
   max-width: 100%;
   max-height: 300px;
 }
+
 /* Admin page styles */
 
 .admin-activities {
@@ -1807,4 +1809,68 @@ button:hover {
   flex-direction: row;
   align-items: center;
   gap: 20px;
+}
+
+/* Calendar Component*/
+.highlight {
+  background-color: #90ee90 !important;
+  color: white;
+  border-radius: 50%;
+}
+
+.interview-form {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.interview-form h2 {
+  margin-bottom: 15px;
+}
+
+.interview-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.interview-form label {
+  margin: 5px 0;
+}
+
+.interview-form input {
+  margin: 5px 0;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.interview-form button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.interview-form button:hover {
+  background-color: #45a049;
+}
+
+.interview-details {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.interview-details h2 {
+  margin-bottom: 15px;
+}
+
+.interview-details p {
+  margin: 5px 0;
 }
