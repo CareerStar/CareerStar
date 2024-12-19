@@ -5,6 +5,7 @@ import "react-calendar/dist/Calendar.css";
 const CalendarComponent = () => {
     const [userId, setUserId] = useState(localStorage.getItem('userId'));
     const [firstname, setFirstname] = useState(localStorage.getItem('firstname'));
+    const [emailID, setEmailID] = useState('');
     const [date, setDate] = useState(new Date());
     const [events, setEvents] = useState([]);
     const [interviewDetails, setInterviewDetails] = useState({
@@ -44,6 +45,18 @@ const CalendarComponent = () => {
                 }
             } catch (error) {
                 console.error("Error fetching interview details:", error);
+            }
+
+            try {
+                const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/user/${userId}`);
+                const data = await response.json();
+                if (response.ok) {
+                    setEmailID(data.emailID);
+                } else {
+                    console.error('Error fetching user details:', data);
+                }
+            } catch (error) {
+                console.error('Error fetching user details:', error);
             }
         };
         fetchUserDetails();
@@ -87,6 +100,7 @@ const CalendarComponent = () => {
                     interviewSchedule: [...events, newEvent],
                     newInterviewSchedule: newEvent,
                     firstname: firstname,
+                    emailID: emailID,
                 }),
             });
 
