@@ -68,7 +68,7 @@ const CalendarComponent = () => {
             (event) => event.date.toDateString() === selectedDate.toDateString()
         );
         if (event) {
-            setInterviewDetails({ company: event.company, time: convertTo12HourFormat(event.time), note: event.note });
+            setInterviewDetails({ company: event.company, time: event.time, note: event.note });
             setShowForm(false);
         } else {
             setInterviewDetails({ company: "", time: "", note: "" });
@@ -176,7 +176,7 @@ const CalendarComponent = () => {
                 <div className="interview-details">
                     <h2>Interview Scheduled for {selectedDate.toDateString()}</h2>
                     <p><strong>Company:</strong> {interviewDetails.company}</p>
-                    <p><strong>Time:</strong> {interviewDetails.time}</p>
+                    <p><strong>Time:</strong> {convertTo12HourFormat(interviewDetails.time)}</p>
                     <p><strong>Notes:</strong> {interviewDetails.note}</p>
                 </div>
             )}
