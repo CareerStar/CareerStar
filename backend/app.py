@@ -8,7 +8,10 @@ from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
-from datetime import timedelta
+from datetime import timedelta, datetime
+import mailchimp_marketing as MailchimpMarketing
+from mailchimp_marketing import Client
+from mailchimp_marketing.api_client import ApiClientError
 
 
 load_dotenv()
@@ -25,6 +28,9 @@ db_port = os.getenv('DB_PORT')
 db_name = os.getenv('DB_NAME')
 db_user = os.getenv('DB_USER')
 db_password = os.getenv('DB_PASSWORD')
+
+mailchimp_api_key = os.getenv('MAILCHIMP_API_KEY')
+mailchimp_server = os.getenv('MAILCHIMP_SERVER')
 
 connection_pool = psycopg2.pool.SimpleConnectionPool(
     1, 20,  # Min and max connections
@@ -55,6 +61,35 @@ def get_db_connection():
 
 def return_db_connection(conn):
     connection_pool.putconn(conn)
+
+def add_contact_to_mailchimp(audience_id, email, firstname, interview_date):
+    mailchimp = Client()
+    mailchimp.set_config({
+        "api_key": mailchimp_api_key,
+        "server": mailchimp_server
+    })
+
+    try:
+        # Add or update a contact in the audience
+        response = mailchimp.lists.add_list_member(audience_id, {
+            "email_address": email,
+            "status": "subscribed",
+            "merge_fields": {
+                "FNAME": firstname,
+                "INTERVIEWD": interview_date
+            }
+        })
+
+        # Add a tag to the contact
+        mailchimp.lists.update_list_member_tags(
+            audience_id,
+            response["id"],
+            {"tags": [{"name": "interview-yes", "status": "active"}]}
+        )
+
+        print("Contact added successfully:")
+    except ApiClientError as error:
+        print("An error occurred:", error.text)
 
 @app.route('/users', methods=['POST'])
 def add_user():
@@ -246,7 +281,6 @@ def assignActivitiesToUser(user_id, activitychoices):
 def onboarding():
     try:
         user_data = request.json
-        print(user_data)
         userId = user_data.get('userId')
         describeMe = user_data.get('describeMe')
         currentSituation = user_data.get('currentSituation')
@@ -365,6 +399,9 @@ def update_interviewschedule(userId):
     try:
         data = request.get_json()
         interviewSchedule = data.get('interviewSchedule')
+        newInterviewSchedule = data.get('newInterviewSchedule')
+
+        interview_date = datetime.strptime(newInterviewSchedule.get('date'), "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%m/%d/%y")
 
         if interviewSchedule:
             interviewSchedule_json = json.dumps(interviewSchedule)
@@ -383,6 +420,8 @@ def update_interviewschedule(userId):
 
         connection.commit()
 
+        add_contact_to_mailchimp('7eb7ef0bc3', "trial1234@nyu.edu", "Trial", interview_date)
+
         if cursor.rowcount > 0:
             return jsonify({"message": "User interview schedule updated successfully"}), 200
         else:
@@ -400,7 +439,6 @@ def update_interviewschedule(userId):
 @app.route('/interviewschedule/<int:userId>', methods=['GET'])
 def get_interviewschedule(userId):
     try:
-        print("user id", userId)
         connection = get_db_connection()
         cursor = connection.cursor()
 
@@ -410,7 +448,6 @@ def get_interviewschedule(userId):
         """
         cursor.execute(get_user_interviewschedule_query, (userId, ))
         interviewSchedule = cursor.fetchone()[0]
-        print(interviewSchedule)
         if interviewSchedule:
             data = {
                 "interviewSchedule": interviewSchedule
