@@ -50,11 +50,6 @@ function EmailCredentialPage() {
     };
 
     const nextPageNavigation = async () => {
-        console.log('Div clicked!');
-        console.log('First name:', firstname);
-        console.log('Last name:', lastname);
-        console.log('Email ID:', emailID);
-        console.log('Password', password);
 
         if (emailID.trim() === '') {
             setErrorEmail('Email ID cannot be empty*');
@@ -99,7 +94,6 @@ function EmailCredentialPage() {
 
         } catch (error) {
             if (error.response && error.response.status === 400) {
-                console.log('User already exists!');
                 alert('User already exists.');
             }
             console.error("Error fetching data:", error);

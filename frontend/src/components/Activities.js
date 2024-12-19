@@ -19,7 +19,6 @@ function Activities({ userId }) {
                     if (data) {
                         setActivities(data);
                     }
-                    console.log('User activities details:', data);
                 } else {
                     console.error('Error fetching user details:', data);
                 }
@@ -132,7 +131,6 @@ function Activities({ userId }) {
 
             const data = await response.json();
             if (response.ok) {
-                console.log('User activity updated:', data);
                 updateActivity(currentCard.activityId, { completed: true });
                 closePopUp();
                 window.location.reload();

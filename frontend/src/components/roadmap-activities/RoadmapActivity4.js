@@ -60,7 +60,6 @@ function RoadmapActivity4({ userId }) {
             };
             const response = await axios.post(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/roadmapactivity/${userId}/${activityId}`, payload);
             if (response.status === 200) {
-                console.log(response.data.message);
                 setCompleted(true);
                 toggleDescriptionVisibility();
                 window.location.reload();

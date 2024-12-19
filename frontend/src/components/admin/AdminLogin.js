@@ -69,9 +69,7 @@ const AdminLogin = () => {
             if (response.status === 200) {
                 const admin_token = response.data.access_token;
                 localStorage.setItem('admin_token', admin_token);
-                console.log(localStorage.getItem('admin_token'));
                 navigate('/admin/dashboard');
-                // console.log('Token:', token);
                 // const response2 = await axios.get('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/activities',{
                 //     headers: {
                 //         Authorization: `Bearer ${token}`

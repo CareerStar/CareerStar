@@ -8,7 +8,6 @@ function withAuth(WrappedComponent) {
         useEffect(() => {
             const checkAuth = async () => {
                 if (WrappedComponent.name === 'AdminDashboard') {
-                    console.log('Admin dashboard');
                     const admin_token = localStorage.getItem('admin_token');
                     if (!admin_token) {
                         navigate('/admin/login');
@@ -20,9 +19,6 @@ function withAuth(WrappedComponent) {
                                     'Authorization': `Bearer ${admin_token}`
                                 }
                             });
-
-                            console.log('Response:', response);
-                            console.log("Comes here");
 
                             if (!response.ok) {
                                 localStorage.removeItem('admin_token');
