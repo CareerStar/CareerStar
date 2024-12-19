@@ -4,17 +4,26 @@ import "react-calendar/dist/Calendar.css";
 
 const CalendarComponent = () => {
     const [userId, setUserId] = useState(localStorage.getItem('userId'));
+    const [firstname, setFirstname] = useState(localStorage.getItem('firstname'));
     const [date, setDate] = useState(new Date());
     const [events, setEvents] = useState([]);
     const [interviewDetails, setInterviewDetails] = useState({
         company: "",
         time: "",
+        note: ""
     });
     const [selectedDate, setSelectedDate] = useState(null);
     const [showForm, setShowForm] = useState(true);
 
+    const convertTo12HourFormat = (time) => {
+        const [hours, minutes] = time.split(":").map(Number);
+        const period = hours >= 12 ? "PM" : "AM";
+        const adjustedHours = hours % 12 || 12;
+        return `${adjustedHours}:${minutes.toString().padStart(2, "0")} ${period}`;
+    };
+
     useEffect(() => {
-        const fetchInterviewSchedule = async () => {
+        const fetchUserDetails = async () => {
             try {
                 const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/interviewschedule/${userId}`, {
                     method: 'GET',
@@ -37,7 +46,7 @@ const CalendarComponent = () => {
                 console.error("Error fetching interview details:", error);
             }
         };
-        fetchInterviewSchedule();
+        fetchUserDetails();
     }, [userId]);
 
     const onDateChange = (selectedDate) => {
@@ -46,10 +55,10 @@ const CalendarComponent = () => {
             (event) => event.date.toDateString() === selectedDate.toDateString()
         );
         if (event) {
-            setInterviewDetails({ company: event.company, time: event.time });
+            setInterviewDetails({ company: event.company, time: convertTo12HourFormat(event.time), note: event.note });
             setShowForm(false);
         } else {
-            setInterviewDetails({ company: "", time: "" });
+            setInterviewDetails({ company: "", time: "", note: "" });
             setShowForm(true);
         }
     };
@@ -77,6 +86,7 @@ const CalendarComponent = () => {
                 body: JSON.stringify({
                     interviewSchedule: [...events, newEvent],
                     newInterviewSchedule: newEvent,
+                    firstname: firstname,
                 }),
             });
 
@@ -96,7 +106,7 @@ const CalendarComponent = () => {
 
     return (
         <div>
-            <h1>Schedule Your Interviews</h1>
+            <h1>Your schedule</h1>
             <Calendar
                 onChange={onDateChange}
                 value={date}
@@ -132,6 +142,15 @@ const CalendarComponent = () => {
                                 onChange={handleInputChange}
                             />
                         </div>
+                        <div>
+                            <label>Notes:</label>
+                            <textarea
+                                name="note"
+                                value={interviewDetails.note}
+                                onChange={handleInputChange}
+                                placeholder="Enter notes"
+                            />
+                        </div>
                         <button type="button" onClick={handleSubmit}>
                             Save Interview
                         </button>
@@ -144,6 +163,7 @@ const CalendarComponent = () => {
                     <h2>Interview Scheduled for {selectedDate.toDateString()}</h2>
                     <p><strong>Company:</strong> {interviewDetails.company}</p>
                     <p><strong>Time:</strong> {interviewDetails.time}</p>
+                    <p><strong>Notes:</strong> {interviewDetails.note}</p>
                 </div>
             )}
         </div>
