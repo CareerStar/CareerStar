@@ -12,7 +12,6 @@ function UserIntent() {
 
     const location = useLocation();
     const { firstname } = location.state || {};
-    console.log('First name:', firstname);
 
     const handleChange = (event) => {
         setSelectedOption(event.target.value);

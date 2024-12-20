@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch } from "react-redux";
 import axios from 'axios';
 import ProgressBar from './ProgressBar';
 import careerStarLogo from '../assets/images/career-star-logo-black.png';
@@ -8,6 +9,7 @@ import eye from '../assets/images/eye.svg';
 import eyeOff from '../assets/images/eye-off.svg';
 
 function EmailCredentialPage() {
+    const dispatch = useDispatch();
     const currentStep = 3;
     const totalSteps = 3;
 
@@ -48,11 +50,6 @@ function EmailCredentialPage() {
     };
 
     const nextPageNavigation = async () => {
-        console.log('Div clicked!');
-        console.log('First name:', firstname);
-        console.log('Last name:', lastname);
-        console.log('Email ID:', emailID);
-        console.log('Password', password);
 
         if (emailID.trim() === '') {
             setErrorEmail('Email ID cannot be empty*');
@@ -91,12 +88,12 @@ function EmailCredentialPage() {
                 localStorage.setItem('login_timestamp', Date.now());
                 
                 setUserID(response.data.userId);
+                dispatch({ type: "SET_STAR_COUNT", payload: 3 });
                 setShowPopup(true);
             }
 
         } catch (error) {
             if (error.response && error.response.status === 400) {
-                console.log('User already exists!');
                 alert('User already exists.');
             }
             console.error("Error fetching data:", error);

@@ -1,10 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
 import careerStarLogo from '../assets/images/career-star-logo-black.png';
 import star from '../assets/images/star.png';
 import displayPicture from '../assets/images/display-picture.png';
 
-function Header({ userName, starCount, onSelectPage }) {
+function Header({ userName, onSelectPage }) {
+    const starCount = useSelector(state => state.starCount);
     const navigate = useNavigate();
     const handleProfilePictureClick = () => {
         onSelectPage('Profile');

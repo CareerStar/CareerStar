@@ -9,7 +9,6 @@ function StartPage() {
     const navigate = useNavigate(); 
 
     const handleClick = () => {
-        console.log('Div clicked!');
         navigate('/signup');
     };
 

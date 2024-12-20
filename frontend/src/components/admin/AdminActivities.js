@@ -41,7 +41,6 @@ function AdminActivities() {
     }, []);
 
     const handleAddNewActivity = async () => {
-        console.log('Adding new activity:', newActivity);
         try {
             const admin_token = localStorage.getItem('admin_token');
             if (!admin_token) {
@@ -61,12 +60,8 @@ function AdminActivities() {
                     'Content-Type': 'application/json',
                 },
             });
-            console.log('Response:', response);
             if (response.status === 201) {
-                console.log('Activity added successfully:', response.data);
                 alert('Activity added successfully');
-                console.log(response.data);
-                console.log(response.data.activity.activityId);
                 newActivity.activityId = response.data.activity.activityId;
                 setActivities([...activities, newActivity]);
                 setNewActivity({
@@ -98,7 +93,6 @@ function AdminActivities() {
         const index = activities.findIndex(activity => activity.activityId === activityId);
         if (index !== -1) {
             setIsEditing(index);
-            console.log('Editing:', activityId);
         }
     };
 
@@ -111,7 +105,6 @@ function AdminActivities() {
                 }
             });
             if (response.status === 200) {
-                console.log('Activity deleted successfully:', response.data);
                 const updatedActivities = activities.filter(activity => activity.activityId !== activityId);
                 setActivities(updatedActivities);
             } else {
@@ -137,7 +130,6 @@ function AdminActivities() {
             const admin_token = localStorage.getItem('admin_token');
             // Convert tags back into an array
             // activity.tags = activity.tags.split(',').map(tag => tag.trim());
-            console.log('Saving activity:', activity);
             const response = await axios.put(
                 `https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/activities/${activity.activityId}`,
                 activity,
@@ -150,7 +142,6 @@ function AdminActivities() {
             );
 
             if (response.status === 200) {
-                console.log('Activity updated successfully:', response.data);
                 setIsEditing(null);
             } else {
                 console.error('Error updating activity:', response.data);

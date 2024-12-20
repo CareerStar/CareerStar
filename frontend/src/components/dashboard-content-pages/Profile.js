@@ -31,7 +31,6 @@ function Profile({ userId: propUserId }) {
                         setFirstname(data.firstname);
                         setStars(data.stars);
                     }
-                    console.log('User details:', data);
                 } else {
                     console.error('Error fetching user details:', data);
                 }
@@ -46,7 +45,6 @@ function Profile({ userId: propUserId }) {
                     if (data.summary) {
                         setSummary(data.summary);
                     }
-                    console.log('User details:', data);
                 } else {
                     console.error('Error fetching user details:', data);
                 }
@@ -63,7 +61,6 @@ function Profile({ userId: propUserId }) {
     }, [userId]);
 
     const handleSave = async () => {
-        console.log("Summary saved:", summary);
         try {
             const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/update_profile/${userId}`, {
                 method: 'PUT',

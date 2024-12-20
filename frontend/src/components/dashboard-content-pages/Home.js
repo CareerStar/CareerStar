@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import astronaut from '../../assets/images/home-page-astronaut.png'
@@ -7,12 +8,12 @@ import HomepageQuestion1 from "../homepage-questionnaires/HomepageQuestion1";
 import HomepageQuestion2 from "../homepage-questionnaires/HomepageQuestion2";
 import HomepageQuestion3 from "../homepage-questionnaires/HomepageQuestion3";
 import HomepageQuestion4 from "../homepage-questionnaires/HomepageQuestion4";
-import HomepageChoiceQuestion from "../homepage-questionnaires/HomepageChoiceQuestion";
 import HomepageQuestion5 from "../homepage-questionnaires/HomepageQuestion5";
 import ProgressBar from "../ProgressBar";
 import Activities from "../Activities";
 
 function Home({ onComplete, userId }) {
+    const stars = useSelector(state => state.starCount);
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(0);
     const [videoEnded, setVideoEnded] = useState(false);
@@ -278,7 +279,7 @@ function Home({ onComplete, userId }) {
                         <p>It's great day to be a career star!</p>
                     </div>
                 </div>
-                <div className="home-welcome-right"><span className="star-count"> {userDetails.stars} </span>  <img src={star} className='star' /></div>
+                <div className="home-welcome-right"><span className="star-count"> {stars} </span>  <img src={star} className='star' /></div>
             </div>
             {currentStep >= 1 && currentStep <= totalSteps ? (
                 <div className="home-questions">
