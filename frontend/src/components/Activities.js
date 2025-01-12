@@ -110,7 +110,7 @@ function Activities({ userId }) {
             )
         );
     };
-    
+
 
     const updateUserActivity = async () => {
         if (currentCard.completed) {
@@ -152,7 +152,7 @@ function Activities({ userId }) {
                 ) : (
                     cards.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
                 )} */}
-                {activites.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} completed={card.completed} /></div>)            }
+                {activites.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} completed={card.completed} /></div>)}
             </div>
             {showPopup && (
                 <div className='activity-popup'>
