@@ -2,7 +2,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { thunk } from "redux-thunk";
 
 const initialState = {
-    starCount: 0
+    starCount: 0,
+    avatar: 'avatar1'
 };
 
 const starReducer = (state = initialState, action) => {
@@ -15,6 +16,9 @@ const starReducer = (state = initialState, action) => {
         case "SET_STAR_COUNT":
             return { ...state, 
                 starCount: action.payload };
+        case "SET_AVATAR":
+            return { ...state, 
+                avatar: action.payload };
         default:
             return state;
     }
