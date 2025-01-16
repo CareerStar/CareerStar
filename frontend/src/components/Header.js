@@ -7,6 +7,7 @@ import displayPicture from '../assets/images/display-picture.png';
 
 function Header({ userName, onSelectPage }) {
     const starCount = useSelector(state => state.starCount);
+    const avatar = useSelector(state => state.avatar);
     const navigate = useNavigate();
     const handleProfilePictureClick = () => {
         onSelectPage('Profile');
@@ -18,7 +19,7 @@ function Header({ userName, onSelectPage }) {
             </div>
             <div className='user-info'>
                 <span className="star-count">{starCount}</span>  <img src={star} className='star' />
-                <p className='username'>{userName}</p>  <img src={displayPicture} className='display-picture' onClick={handleProfilePictureClick}/>
+                <p className='username'>{userName}</p>  <img src={require(`../assets/images/avatars/${avatar}.png`)} className='display-picture' onClick={handleProfilePictureClick}/>
             </div>
         </div>
     );

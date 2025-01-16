@@ -1,15 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import displayPicture from '../../assets/images/display-picture.png';
+import { useDispatch } from "react-redux";
 import star from '../../assets/images/star.png';
 
 function Profile({ userId: propUserId }) {
+    const dispatch = useDispatch();
     const [userId, setUserId] = useState(propUserId || localStorage.getItem('userId') || '');
     const [firstname, setFirstname] = useState('');
     const [summary, setSummary] = useState('');
     const [stars, setStars] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [showAvatarModal, setShowavatarModal] = useState(false);
+    const [avatar, setAvatar] = useState('avatar1');
     const navigate = useNavigate();
+
+    const avatarURL = '../../assets/images/avatars/';
+
+    const avatars = [
+        'avatar1',
+        'avatar2',
+        'avatar3',
+        'avatar4',
+        'avatar5',
+        'avatar6',
+        'avatar7',
+        'avatar8',
+    ]
 
     const handleSummaryChange = (event) => {
         setSummary(event.target.value);
@@ -95,7 +111,8 @@ function Profile({ userId: propUserId }) {
                 </div>
             )}
             <div className='profile-informtation'>
-                <img src={displayPicture} alt='Profile icon' />
+                <img src={require(`../../assets/images/avatars/${avatar}.png`)} alt='Profile icon' />
+                <span className='change-avatar material-icons' onClick={() => setShowavatarModal(true)}>edit</span>
                 <div className='profile-user-info flex-row'>
                     <p className='profile-user-name'>{firstname}</p>
                     <p className='star-count'>{stars}</p>
@@ -122,6 +139,29 @@ function Profile({ userId: propUserId }) {
                     </div>
                 </div>
             </div>
+            {showAvatarModal && (
+                <div className='avatar-modal'>
+                    <div className='avatar-modal-content'>
+                        <span className="close material-icons" onClick={() => setShowavatarModal(false)}>close</span>
+                        <p>Choose an avatar</p>
+                        <div className='avatar-list'>
+                            {avatars.map((avatar, index) => (
+                                <img
+                                    key={index}
+                                    src={require(`../../assets/images/avatars/${avatar}.png`)}
+                                    alt="Avatar"
+                                    onClick={() => {
+                                        setAvatar(avatar);
+                                        setShowavatarModal(false);
+                                        dispatch({ type: "SET_AVATAR", payload: avatar });
+                                    }}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )}
+                
         </div>
     );
 };
