@@ -31,6 +31,7 @@ db_password = os.getenv('DB_PASSWORD')
 
 mailchimp_api_key = os.getenv('MAILCHIMP_API_KEY')
 mailchimp_server = os.getenv('MAILCHIMP_SERVER')
+mailchimp_audience_id = os.getenv('MAILCHIMP_AUDIENCE_ID')
 
 connection_pool = psycopg2.pool.SimpleConnectionPool(
     1, 20,  # Min and max connections
@@ -400,6 +401,8 @@ def update_interviewschedule(userId):
         data = request.get_json()
         interviewSchedule = data.get('interviewSchedule')
         newInterviewSchedule = data.get('newInterviewSchedule')
+        firstname = data.get('firstname')
+        emailID = data.get('emailID')
 
         interview_date = datetime.strptime(newInterviewSchedule.get('date'), "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%m/%d/%y")
 
@@ -420,7 +423,7 @@ def update_interviewschedule(userId):
 
         connection.commit()
 
-        add_contact_to_mailchimp('7eb7ef0bc3', "trial1234@nyu.edu", "Trial", interview_date)
+        add_contact_to_mailchimp(mailchimp_audience_id, emailID, firstname, interview_date)
 
         if cursor.rowcount > 0:
             return jsonify({"message": "User interview schedule updated successfully"}), 200
