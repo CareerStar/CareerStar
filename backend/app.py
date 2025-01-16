@@ -31,6 +31,7 @@ db_password = os.getenv('DB_PASSWORD')
 
 mailchimp_api_key = os.getenv('MAILCHIMP_API_KEY')
 mailchimp_server = os.getenv('MAILCHIMP_SERVER')
+mailchimp_audience_id = os.getenv('MAILCHIMP_AUDIENCE_ID')
 
 connection_pool = psycopg2.pool.SimpleConnectionPool(
     1, 20,  # Min and max connections
@@ -394,12 +395,79 @@ def update_user_onboarding_details(userId):
             # cursor.close()
             # connection.close()
 
+@app.route('/profile_picture/<int:userId>', methods=['GET'])
+def get_profile_picture(userId):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        get_user_profilepicture_query = """
+        SELECT profilepicture FROM user_personalization WHERE userId = %s;
+        """
+        cursor.execute(get_user_profilepicture_query, (userId, ))
+        profilepicture = cursor.fetchone()[0]
+        print(profilepicture)
+        if profilepicture:
+            data = {
+                "profilepicture": profilepicture
+            }
+            return jsonify(data)
+
+        return jsonify({"error": "User not found"}), 404
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+
+@app.route('/profile_picture/<int:userId>', methods=['PUT'])
+def update_profile_picture(userId):
+    try:
+        print("COmes here", userId)
+        data = request.get_json()
+        print(data)
+        profilepicture = data.get('profilepicture')
+        print(profilepicture)
+
+        if not profilepicture:
+            return jsonify({"error": "Profile picture is required"}), 400
+
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        update_profilepicture_query = """
+        UPDATE user_personalization
+        SET profilepicture = %s
+        WHERE userId = %s;
+        """
+        cursor.execute(update_profilepicture_query, (profilepicture, userId, ))
+
+        connection.commit()
+
+        if cursor.rowcount > 0:
+            return jsonify({"message": "User profile picture details updated successfully"}), 200
+        else:
+            return jsonify({"error": "User not found or no changes made"}), 404
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
+
 @app.route('/interviewschedule/<int:userId>', methods=['PUT'])
 def update_interviewschedule(userId):
     try:
         data = request.get_json()
         interviewSchedule = data.get('interviewSchedule')
         newInterviewSchedule = data.get('newInterviewSchedule')
+        firstname = data.get('firstname')
+        emailID = data.get('emailID')
 
         interview_date = datetime.strptime(newInterviewSchedule.get('date'), "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%m/%d/%y")
 
@@ -420,7 +488,7 @@ def update_interviewschedule(userId):
 
         connection.commit()
 
-        add_contact_to_mailchimp('7eb7ef0bc3', "trial1234@nyu.edu", "Trial", interview_date)
+        add_contact_to_mailchimp(mailchimp_audience_id, emailID, firstname, interview_date)
 
         if cursor.rowcount > 0:
             return jsonify({"message": "User interview schedule updated successfully"}), 200
