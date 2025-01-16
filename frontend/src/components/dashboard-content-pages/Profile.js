@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import star from '../../assets/images/star.png';
 
 function Profile({ userId: propUserId }) {
@@ -11,7 +11,7 @@ function Profile({ userId: propUserId }) {
     const [stars, setStars] = useState(0);
     const [loading, setLoading] = useState(false);
     const [showAvatarModal, setShowavatarModal] = useState(false);
-    const [avatar, setAvatar] = useState('avatar1');
+    const avatar = useSelector(state => state.avatar) || 'avatar1';
     const navigate = useNavigate();
 
     const avatarURL = '../../assets/images/avatars/';
@@ -35,7 +35,7 @@ function Profile({ userId: propUserId }) {
         setSummary('Software Engineer with 3 years of experience in building web applications.');
     };
 
-    useEffect(() => {  
+    useEffect(() => {
         const fetchUserDetails = async () => {
             setLoading(true);
             try {
@@ -98,6 +98,33 @@ function Profile({ userId: propUserId }) {
         }
     };
 
+    const handleProfilePictureClick = async (avatar) => {
+        console.log('Avatar clicked', avatar);
+        setShowavatarModal(false);
+        dispatch({ type: "SET_AVATAR", payload: avatar });
+        console.log('Avatar:', avatar);
+        try {
+            const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/profile_picture/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "profilepicture": avatar,
+                }),
+            });
+
+            if (response.ok) {
+                console.log('User details updated successfully');
+            } else {
+                console.error('Error updating user details');
+            }
+        } catch (error) {
+            console.error('Error updating user details:', error);
+        }
+        dispatch({ type: "SET_AVATAR", payload: avatar });
+    };
+
     const handleLogout = () => {
         localStorage.clear();
         navigate('/');
@@ -119,7 +146,7 @@ function Profile({ userId: propUserId }) {
                     <img src={star} className='star' />
                 </div>
                 <p className='profile-role'>Software Engineer</p>
-        
+
                 <div className='profile-summary flex-column'>
                     <p>My Summary</p>
                     <textarea
@@ -150,18 +177,14 @@ function Profile({ userId: propUserId }) {
                                     key={index}
                                     src={require(`../../assets/images/avatars/${avatar}.png`)}
                                     alt="Avatar"
-                                    onClick={() => {
-                                        setAvatar(avatar);
-                                        setShowavatarModal(false);
-                                        dispatch({ type: "SET_AVATAR", payload: avatar });
-                                    }}
+                                    onClick={() => handleProfilePictureClick(avatar)}
                                 />
                             ))}
                         </div>
                     </div>
                 </div>
             )}
-                
+
         </div>
     );
 };
