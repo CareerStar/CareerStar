@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import homeIcon from '../assets/images/home-icon.png';
 import profileIcon from '../assets/images/profile-icon.png';
 import roadmapIcon from '../assets/images/roadmap-icon.png';
@@ -6,7 +7,8 @@ import supportIcon from '../assets/images/support-icon.png';
 import networkIcon from '../assets/images/network-icon.png';
 import eventsIcon from '../assets/images/events-icon.png';
 
-function Sidebar({pages, onSelectPage, selectedPage, onboarded}) {
+function Sidebar({pages, selectedPage, onboarded}) {
+    const navigate = useNavigate();
     const getIcon = (page) => {
         switch(page) {
             case 'Home':
@@ -32,7 +34,7 @@ function Sidebar({pages, onSelectPage, selectedPage, onboarded}) {
 
     const handleClick = (page) => {
         if (onboarded || page === 'Home') {
-            onSelectPage(page);
+            navigate(`/dashboard/${page.toLowerCase()}`);
         }
     }
 
