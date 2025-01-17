@@ -7,8 +7,9 @@ import Network from './dashboard-content-pages/Network';
 import Support from './dashboard-content-pages/Support';
 import AdminActivities from './admin/AdminActivities';
 import LinkedIn from './admin/LinkedIn';
+import ActivityAggregator from './activities/ActivityAggregator';
 
-function DashboardContent({selectedPage, onComplete, userId}) {
+function DashboardContent({selectedPage, activityName, onComplete, userId}) {
     const renderPage = () => {
         switch (selectedPage) {
             case 'Home':
