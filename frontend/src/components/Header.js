@@ -4,14 +4,14 @@ import { useSelector, useDispatch } from "react-redux";
 import careerStarLogo from '../assets/images/career-star-logo-black.png';
 import star from '../assets/images/star.png';
 
-function Header({ userName, onSelectPage }) {
+function Header({ userName }) {
     const dispatch = useDispatch();
     const userId = localStorage.getItem('userId');
     const starCount = useSelector(state => state.starCount);
     const avatar = useSelector(state => state.avatar);
     const navigate = useNavigate();
     const handleProfilePictureClick = () => {
-        onSelectPage('Profile');
+        navigate('/dashboard/profile');
     };
 
     useEffect(() => {
