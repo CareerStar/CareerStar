@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import { Navigate, useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Header from './Header';
 import Sidebar from './Sidebar';
@@ -12,17 +12,26 @@ function Dashboard() {
     const [firstname, setFirstname] = useState(location.state?.firstname || localStorage.getItem('firstname') || '');
     const [userId, setUserId] = useState(location.state?.userId || localStorage.getItem('userId') || '');
     const [userDetails, setUserDetails] = useState({});
-    const [selectedPage, setSelectedPage] = useState(() => {
+    const [selectedPage, setSelectedPage] = useState('Home');
+    const validPages = ['Home', 'Profile', 'Roadmap', 'Events', 'Network', 'Support', 'Activity'];
+    useEffect(() => {
+        console.log('location.pathname', location.pathname);
         const pathParts = location.pathname.split('/');
-        const page = pathParts[pathParts.length - 1];
-
-        const validPages = ['Home', 'Profile', 'Roadmap', 'Events', 'Network', 'Support'];
+        const page = pathParts.length > 3
+            ? pathParts[pathParts.length - 2]
+            : pathParts[pathParts.length - 1];
 
         const normalizedPage = page ? page.charAt(0).toUpperCase() + page.slice(1) : null;
-        return validPages.includes(normalizedPage) ? normalizedPage : localStorage.getItem('selectedPage') || 'Home';
-    });
+
+        if (validPages.includes(normalizedPage)) {
+            setSelectedPage(normalizedPage);
+        } else {
+            setSelectedPage(localStorage.getItem('selectedPage') || 'Home');
+        }
+    }, [location.pathname]);
+    const activityName = location.pathname.split('/')[3];
     const [onboarded, setOnboarded] = useState(false);
-    const pages = ['Home', 'Profile', 'Roadmap', 'Events', 'Network','Support'];
+    const pages = ['Home', 'Profile', 'Roadmap', 'Events'];
 
     const fetchUserDetails = async () => {
         try {
@@ -47,12 +56,12 @@ function Dashboard() {
                 if (data.onboarded) {
                     setOnboarded(true);
                 }
-            } 
+            }
         } catch (error) {
             console.error('Error fetching user onboarding details:', error);
         }
     };
-    
+
     useEffect(() => {
         if (userId) {
             fetchUserDetails();
@@ -69,11 +78,11 @@ function Dashboard() {
     }
     return (
         <div className='dashboard'>
-            <Header userName={firstname} onSelectPage={setSelectedPage} />
+            <Header userName={firstname} />
             <div className='dashboard-container'>
-                <Sidebar pages={pages} onSelectPage={setSelectedPage} selectedPage={selectedPage} onboarded={onboarded}/>
+                <Sidebar pages={pages} selectedPage={selectedPage} onboarded={onboarded} />
                 <div className='content'>
-                    <DashboardContent selectedPage={selectedPage} onComplete={(page) => handlePageChange(page)} userId={userId}/>
+                    <DashboardContent selectedPage={selectedPage} activityName={activityName} onComplete={(page) => handlePageChange(page)} userId={userId} />
                 </div>
             </div>
         </div>

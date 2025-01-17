@@ -52,15 +52,9 @@ function App() {
 
           <Route
             exact
-            path='/dashboard'
+            path='/dashboard/*'
             element={<AuthProtectedDashboard />}
           >
-            <Route path="home" element={<AuthProtectedDashboard />} />
-            <Route path="profile" element={<AuthProtectedDashboard />} />
-            <Route path="roadmap" element={<AuthProtectedDashboard />} />
-            <Route path="events" element={<AuthProtectedDashboard />} />
-            <Route path="network" element={<AuthProtectedDashboard />} />
-            <Route path="support" element={<AuthProtectedDashboard />} />
           </Route>
 
           <Route
