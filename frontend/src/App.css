@@ -2058,3 +2058,284 @@ h3 {
   justify-content: center;
   flex-wrap: wrap;
 }
+
+/* New Activity page styles */
+
+.activity-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.activity-container-left-element {
+  position: sticky;
+  flex: 1;
+  border-right: 1px solid #ddd;
+  background-color: #581AD1;
+  /* background: linear-gradient(180deg, #b33939 0%, #732dff 0%, #4e15be 100%); */
+  padding: 60px;
+  top: 0;
+  max-height: 100vh;
+  flex-shrink: 0;
+}
+
+.activity-container-right-element {
+  flex: 2;
+  padding: 0px 20px;
+  background-color: #FFFFFF;
+  text-align: left;
+  width: 100%;
+  overflow-y: auto;
+  position: relative;
+  min-height: 100vh;
+}
+
+.activity-description {
+  flex-grow: 1;
+}
+
+.activity-description h2 {
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+}
+
+.activity-description h3 {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 27px;
+}
+
+.activity-description p {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 23px;
+  letter-spacing: 0.3px;
+  color: #313131;
+}
+
+.activity-image {
+  /* width: 100%; */
+  height: auto;
+  max-height: 500px;
+}
+
+.activity-image img {
+  box-sizing: border-box;
+  /* max-width: -webkit-fill-available; */
+  width: 648px;
+  border: 1px solid #000000;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 0px;
+}
+
+.activity-hot-tip {
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+  gap: 10px;
+  width: 80%;
+}
+
+.activity-hot-tip p {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: left;
+  color: #FFFFFF;
+  margin: 0px;
+
+  padding: 10px 20px;
+  background: #FF8A00;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 18.2308px;
+}
+
+.activity-description .inline-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.activity-description .inline-container img {
+  width: 18px;
+  height: 18px;
+}
+
+.activity-description .inline-container p {
+  margin: 0;
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  color: #000000;
+}
+
+.scroll-top {
+  position: fixed;
+  top: 60px;
+  right: 5px;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.activity-navigation-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 40px 0px;
+}
+
+.activity-navigation-back-button {
+  justify-content: center;
+  align-items: center;
+  padding: 16px 32px;
+
+  /* Primary/Purple/800 */
+  background: #999999;
+  border-radius: 10px;
+
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+
+  color: #FFFFFF;
+}
+
+.activity-navigation-back-button:hover {
+  cursor: pointer;
+}
+
+.activity-navigation-next-button {
+  justify-content: center;
+  align-items: center;
+  padding: 16px 32px;
+
+  background: #581AD1;
+  border-radius: 10px;
+
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+
+  color: #FFFFFF;
+
+}
+
+.activity-navigation-next-button:hover {
+  cursor: pointer;
+}
+
+.activity-header {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+
+.activity-header img:hover {
+  cursor: pointer;
+}
+
+.activity-header h3 {
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  color: #FFFFFF;
+}
+
+.activity-step-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 32px;
+  height: 100%;
+}
+
+.activity-step {
+  box-sizing: border-box;
+  width: 425px;
+  padding: 10px 40px;
+  background: #FFFFFF;
+  border-radius: 28px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 30px;
+}
+
+.activity-step .activity-step-left-element {
+  flex: 0;
+}
+
+.activity-step .activity-step-right-element {
+  flex: 1;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.activity-step-number {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 27px;
+  color: #000000;
+}
+
+.activity-step-title {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 27px;
+  color: #000000;
+}
+
+.activity-step-button {
+  justify-content: center;
+  align-items: center;
+  padding: 4px 15px;
+
+  background: #581AD1;
+  border-radius: 40px;
+
+  width: auto;
+  align-self: flex-start;
+  display: inline-flex;
+
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 23px;
+  text-align: center;
+  letter-spacing: 0.3px;
+
+  color: #FFFFFF;
+}
+
+.activity-step-button.selected {
+  background: #57C542;
+}
+
+.activity-step-button:hover {
+  cursor: pointer;
+}
