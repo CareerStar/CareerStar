@@ -13,6 +13,8 @@ import step1Image1 from '../../assets/images/activities/activity1/step1-image1.p
 import step2Image1 from '../../assets/images/activities/activity1/step2-image1.png';
 import step3Image1 from '../../assets/images/activities/activity1/step3-image1.png';
 import fireFlameIcon from '../../assets/images/fire-flame-icon.png';
+import likeIcon from '../../assets/images/like-icon.png';
+import dislikeIcon from '../../assets/images/dislike-icon.png';
 
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
@@ -49,10 +51,10 @@ const Step2 = () => (
                 <ul>
                     <li><p>Ex: Engineering, Operations, Customer Applications, Research & Development</p></li>
                 </ul>
-                <div className="activity-image">
-                    <img src={step2Image1} alt="Step 1" />
-                </div>
             </ul>
+            <div className="activity-image">
+                <img src={step2Image1} alt="Step 1" />
+            </div>
         </ol>
     </div>
 );
@@ -119,7 +121,7 @@ const Activity1 = () => {
     const [answers, setAnswers] = useState({
         answer1: '', //Answers can not be a null JSON object, it has to have at least one key-value pair
     });
-    // const [isDescriptionVisible, setIsDescriptionVisible] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -156,6 +158,11 @@ const Activity1 = () => {
                     dispatch({ type: "INCREMENT_STAR", payload: starCount });
                 }
             }
+            if (prevPage === 'roadmap') {
+                navigate('/dashboard/roadmap');
+            } else {
+                navigate('/dashboard/home');
+            }
         } catch (error) {
             console.error('Error saving answers:', error);
         }
@@ -165,13 +172,7 @@ const Activity1 = () => {
         if (currentStep === null) {
             setCurrentStep(1);
         } else if (currentStep === 4) {
-            handleSubmit(true);
-            if (prevPage === 'roadmap') {
-                navigate('/dashboard/roadmap');
-            } else {
-                navigate('/dashboard/home');
-            }
-            // navigate('/dashboard/roadmap');
+            setShowPopup(true);
         } else if (currentStep < stepsData.length) {
             setCurrentStep(currentStep + 1);
         }
@@ -257,6 +258,21 @@ const Activity1 = () => {
                 </div>
             </div>
 
+            {showPopup && (
+                <div className='activity-like-dislike-popup'>
+                    <div className='activity-like-dislike-popup-content'>
+                        <p>How did you find this activity?</p>
+                        <div className='activity-like-dislike-buttons'>
+                            <div className='activity-like-button' onClick={() => handleSubmit(true)}>
+                                <img src={likeIcon} alt="Like" />
+                            </div>
+                            <div className='activity-dislike-button' onClick={() => handleSubmit(true)}>
+                                <img src={dislikeIcon} alt="Dislike" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

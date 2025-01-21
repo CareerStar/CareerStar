@@ -2138,7 +2138,6 @@ h3 {
   flex-direction: row;
   margin-top: 30px;
   gap: 10px;
-  width: 80%;
 }
 
 .activity-hot-tip p {
@@ -2337,5 +2336,68 @@ h3 {
 }
 
 .activity-step-button:hover {
+  cursor: pointer;
+}
+
+.activity-like-dislike-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.activity-like-dislike-popup-content {
+  background: white;
+  padding: 10px 20px 30px;
+  border-radius: 15px;
+  text-align: center;
+  position: relative;
+}
+
+.activity-like-dislike-popup-content p {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 23px;
+  text-align: center;
+  letter-spacing: 0.3px;
+  color: #171717;
+  margin: 10px 0px;
+}
+
+.activity-like-dislike-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.activity-like-button {
+  padding: 20px 30px;
+  background: #FFFFFF;
+  box-shadow: 0px 30px 40px #4589F0;
+  border-radius: 42px;
+}
+
+.activity-like-button:hover {
+  cursor: pointer;
+}
+
+.activity-dislike-button {
+  padding: 20px 30px;
+  background: #FFFFFF;
+  box-shadow: 0px 30px 40px #FF2A60;
+  border-radius: 42px;
+}
+
+.activity-dislike-button:hover {
   cursor: pointer;
 }
