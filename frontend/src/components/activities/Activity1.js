@@ -168,7 +168,12 @@ const Activity1 = () => {
         }
     };
 
+    const scrollToTop = () => {
+        window.scrollTo(0, 0);
+    };
+
     const handleNext = () => {
+        scrollToTop();
         if (currentStep === null) {
             setCurrentStep(1);
         } else if (currentStep === 4) {
@@ -179,6 +184,7 @@ const Activity1 = () => {
     };
 
     const handleBack = () => {
+        scrollToTop();
         if (currentStep === 1) {
             setCurrentStep(null); // Go back to activity description
         } else if (currentStep > 1) {
@@ -226,7 +232,7 @@ const Activity1 = () => {
 
             {/* Right Section */}
             <div className="activity-container-right-element">
-                <img src={upArrowScroll} alt="Scroll to Top" className="scroll-top" onClick={() => window.scrollTo(0, 0)} />
+                <img src={upArrowScroll} alt="Scroll to Top" className="scroll-top" onClick={scrollToTop} />
                 {currentStep === null ? (
                     <div className="activity-description">
                         <div className="activity-image">
