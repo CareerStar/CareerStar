@@ -10,11 +10,11 @@ function HomepageQuestion3({onChange}) {
 
     return (
         <div className='home-page-question'>
-            <h2>What's your goal right now?</h2>
-            <p>Write in one sentence</p>
+            <h2>What's your dream job?</h2>
+            {/* <p>Write in one sentence</p> */}
             <input 
                 type='text' 
-                placeholder="To land my first full-time role as a software engineer" 
+                placeholder="Chief Technology Officer" 
                 onChange={handleChange}
             />
         </div>
