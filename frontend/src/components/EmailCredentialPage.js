@@ -10,8 +10,8 @@ import eyeOff from '../assets/images/eye-off.svg';
 
 function EmailCredentialPage() {
     const dispatch = useDispatch();
-    const currentStep = 3;
-    const totalSteps = 3;
+    const currentStep = 2;
+    const totalSteps = 2;
 
     const location = useLocation();
 
@@ -186,9 +186,9 @@ function EmailCredentialPage() {
                     <div className='popup-content'>
                         <img src={Stars3} alt='3 stars' />
                         <div className='earned-star'>You earned 3 stars!</div>
-                        <div className='popup-text'>
+                        {/* <div className='popup-text'>
                             <p>You took the first step to owning your professional journey - let’s celebrate that small win!</p>
-                        </div>
+                        </div> */}
                         <div className='popup-submit-button' onClick={navigateToDashboard} onKeyDown={handleKeyPress}>
                             <p>Let's get started</p>
                         </div>
