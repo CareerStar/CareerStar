@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import careerStarLogo from '../assets/images/career-star-logo-black.png';
-import star from '../assets/images/star.png';
+import star from '../assets/images/star-yellow.png';
 
 function Header({ userName }) {
     const dispatch = useDispatch();
