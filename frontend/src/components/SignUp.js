@@ -7,7 +7,7 @@ function SignUp() {
     const [firstname, setFirstname] = useState('');
     const [error, setError] = useState('');
     const currentStep = 1;
-    const totalSteps = 3;
+    const totalSteps = 2;
 
     const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ function SignUp() {
         if (firstname.trim() === '') {
             setError('First name cannot be empty*');
         } else {
-            navigate('/userIntent', { state: { firstname } });
+            navigate('/emalCredential', { state: { firstname } });
         }
     };
 

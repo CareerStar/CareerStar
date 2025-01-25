@@ -128,7 +128,7 @@ const CalendarComponent = () => {
                     events.find(
                         (event) => event.date.toDateString() === date.toDateString()
                     )
-                        ? "highlight"
+                        ? "calender-highlight"
                         : null
                 }
             />

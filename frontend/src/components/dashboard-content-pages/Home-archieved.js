@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import astronaut from '../../assets/images/home-page-astronaut.png'
-import star from '../../assets/images/star-yellow.png'
+import star from '../../assets/images/star.png'
 import HomepageQuestion1 from "../homepage-questionnaires/HomepageQuestion1";
 import HomepageQuestion2 from "../homepage-questionnaires/HomepageQuestion2";
 import HomepageQuestion3 from "../homepage-questionnaires/HomepageQuestion3";
@@ -11,6 +11,7 @@ import HomepageQuestion4 from "../homepage-questionnaires/HomepageQuestion4";
 import HomepageQuestion5 from "../homepage-questionnaires/HomepageQuestion5";
 import ProgressBar from "../ProgressBar";
 import Activities from "../Activities";
+import CalendarComponent from "./CalendarComponent";
 import QoD from "../question-of-the-day/QoD";
 
 function Home({ onComplete, userId }) {
@@ -22,8 +23,8 @@ function Home({ onComplete, userId }) {
     const [userDetails, setUserDetails] = useState({});
     const [activityChoices, setActivityChoices] = useState([]);
     const [answers, setAnswers] = useState({
-        describeMe: 'NA',
-        currentSituation: 'A student at NYIT',
+        describeMe: '',
+        currentSituation: '',
         goal: '',
         onboarded: false,
         choice: '',
@@ -40,7 +41,7 @@ function Home({ onComplete, userId }) {
         major: '',
     });
 
-    const totalSteps = 2;
+    const totalSteps = 4;
 
     const buttonVisibility = {
         1: true,
@@ -60,7 +61,6 @@ function Home({ onComplete, userId }) {
                 const data = await response.json();
                 if (response.ok) {
                     setUserDetails(data);
-                    console.log('User details:', data);
                 } else {
                     console.error('Error fetching user details:', data);
                 }
@@ -74,7 +74,7 @@ function Home({ onComplete, userId }) {
                 const data = await response.json();
                 if (response.ok) {
                     if (data.onboarded) {
-                        setCurrentStep(4);
+                        setCurrentStep(6);
                     }
                     setAnswers((prevAnswers) => ({
                         ...prevAnswers,
@@ -190,11 +190,25 @@ function Home({ onComplete, userId }) {
             case 1:
                 return (
                     <>
+                        <HomepageQuestion1 onChange={(value) => handleAnswerChange('describeMe', value)} />
+                        {errors.describeMe && <div className='error-text'><p>{errors.describeMe}</p></div>}
+                    </>
+                );
+            case 2:
+                return (
+                    <>
+                        <HomepageQuestion2 onChange={(value) => handleAnswerChange('currentSituation', value)} />
+                        {errors.currentSituation && <div className='error-text'><p>{errors.currentSituation}</p></div>}
+                    </>
+                );
+            case 3:
+                return (
+                    <>
                         <HomepageQuestion3 onChange={(value) => handleAnswerChange('goal', value)} />
                         {errors.goal && <div className='error-text'><p>{errors.goal}</p></div>}
                     </>
                 );
-            case 2:
+            case 4:
                 return (
                     <>
                         <HomepageQuestion4 onChangeDegree={(value) => handleAnswerChange('degree', value)} onChangeMajor={(value) => handleAnswerChange('major', value)} />
@@ -202,14 +216,11 @@ function Home({ onComplete, userId }) {
                         {errors.major && <div className='error-text'><p>{errors.major}</p></div>}
                     </>
                 );
-            case 3:
-                return (
-                    <HomepageQuestion5 onActivityChoicesSelect={handleActivityChoicesSelect} />
-                );
-            case 4:
-                return (
-                    <><Activities userId={userId} /><QoD /></>
-                );
+            case 5:
+                return <HomepageQuestion5 onActivityChoicesSelect={handleActivityChoicesSelect} />;
+            case 6:
+                return <><Activities userId={userId} /><QoD /></>;
+                // return <><CalendarComponent /><Activities userId={userId} /></>;
             default:
                 return <HomepageQuestion1 />;
         }
@@ -217,13 +228,19 @@ function Home({ onComplete, userId }) {
 
     const validateStep = () => {
         let stepErrors = {};
-        if (currentStep === 1 && !answers.goal.trim()) {
+        if (currentStep === 1 && !answers.describeMe.trim()) {
             stepErrors.describeMe = 'This field cannot be empty*';
         }
-        if (currentStep === 2 && !answers.degree.trim()) {
+        if (currentStep === 2 && !answers.currentSituation.trim()) {
+            stepErrors.currentSituation = 'This field cannot be empty*';
+        }
+        if (currentStep === 3 && !answers.goal.trim()) {
+            stepErrors.goal = 'This field cannot be empty*';
+        }
+        if (currentStep === 4 && !answers.degree.trim()) {
             stepErrors.degree = 'Please choose your degree*';
         }
-        if (currentStep === 2 && !answers.major.trim()) {
+        if (currentStep === 4 && !answers.major.trim()) {
             stepErrors.major = 'Please choose your major*';
         }
         setErrors(stepErrors);
