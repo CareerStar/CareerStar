@@ -29,6 +29,7 @@ function HomepageQuestion4({ onChangeDegree, onChangeMajor }) {
                     <option value="Doctor of Pharmacy (Pharm.D.)">Doctor of Pharmacy (Pharm.D.)</option>
                     <option value="Doctor of Veterinary Medicine (D.V.M.)">Doctor of Veterinary Medicine (D.V.M.)</option>
                     <option value="Doctor of Education (Ed.D.)">Doctor of Education (Ed.D.)</option>
+                    <option value="Doctorate of Physcial Therapy">Doctorate of Physcial Therapy (D.P.T)</option>
                     <option value="Juris Doctor (J.D.)">Juris Doctor (J.D.)</option>
                     <option value="Doctor of Engineering (D.Eng.)">Doctor of Engineering (D.Eng.)</option>
                     <option value="Postdoctoral">Postdoctoral</option>
@@ -56,6 +57,7 @@ function HomepageQuestion4({ onChangeDegree, onChangeMajor }) {
                     <option value="Marketing">Marketing</option>
                     <option value="Finance">Finance</option>
                     <option value="Psychology">Psychology</option>
+                    <option value="Physical Therapy">Physical Therapy</option>
                     <option value="Sociology">Sociology</option>
                     <option value="History">History</option>
                     <option value="English">English</option>
