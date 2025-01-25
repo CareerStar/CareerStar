@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import astronaut from '../../assets/images/home-page-astronaut.png'
-import star from '../../assets/images/star.png'
+import star from '../../assets/images/star-yellow.png'
 import HomepageQuestion1 from "../homepage-questionnaires/HomepageQuestion1";
 import HomepageQuestion2 from "../homepage-questionnaires/HomepageQuestion2";
 import HomepageQuestion3 from "../homepage-questionnaires/HomepageQuestion3";
@@ -11,6 +11,7 @@ import HomepageQuestion4 from "../homepage-questionnaires/HomepageQuestion4";
 import HomepageQuestion5 from "../homepage-questionnaires/HomepageQuestion5";
 import ProgressBar from "../ProgressBar";
 import Activities from "../Activities";
+import QoD from "../question-of-the-day/QoD";
 
 function Home({ onComplete, userId }) {
     const stars = useSelector(state => state.starCount);
@@ -21,8 +22,8 @@ function Home({ onComplete, userId }) {
     const [userDetails, setUserDetails] = useState({});
     const [activityChoices, setActivityChoices] = useState([]);
     const [answers, setAnswers] = useState({
-        describeMe: '',
-        currentSituation: '',
+        describeMe: 'NA',
+        currentSituation: 'A student at NYIT',
         goal: '',
         onboarded: false,
         choice: '',
@@ -39,7 +40,7 @@ function Home({ onComplete, userId }) {
         major: '',
     });
 
-    const totalSteps = 4;
+    const totalSteps = 2;
 
     const buttonVisibility = {
         1: true,
@@ -56,7 +57,6 @@ function Home({ onComplete, userId }) {
             try {
                 const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/user/${userId}`);
                 // const response = await fetch(`http://localhost:8080/users/${userId}`);
-                // console.log('Response:', response, "User ID:", userId);
                 const data = await response.json();
                 if (response.ok) {
                     setUserDetails(data);
@@ -74,7 +74,7 @@ function Home({ onComplete, userId }) {
                 const data = await response.json();
                 if (response.ok) {
                     if (data.onboarded) {
-                        setCurrentStep(6);
+                        setCurrentStep(4);
                     }
                     setAnswers((prevAnswers) => ({
                         ...prevAnswers,
@@ -83,7 +83,6 @@ function Home({ onComplete, userId }) {
                         ["goal"]: data.goal,
                         ["onboarded"]: data.onboarded,
                     }));
-                    console.log('User onboarding details:', data);
                 } else {
                     console.error('Error fetching user details:', data);
                 }
@@ -114,7 +113,6 @@ function Home({ onComplete, userId }) {
     }, [currentStep, answers]);
 
     const handleOptionSelect = async (selectedOption) => {
-        console.log(`Option selected: ${selectedOption}`);
         if (selectedOption === 'roadmap') {
             answers.onboarded = true;
             answers.choice = 'roadmap';
@@ -164,12 +162,10 @@ function Home({ onComplete, userId }) {
                 "major": answers.major,
                 "activityChoices": answers.activityChoices,
             };
-            // console.log('Request body:', requestBody);
             const response = await axios.post('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/onboarding', requestBody);
             // const response = await axios.post('http://localhost:8080/onboarding', requestBody);
             if (response.status === 200) {
                 const { responseUserId } = response.data;
-                console.log('User onboarding details added successfully!-----', responseUserId);
                 return true;
             } else {
                 console.error('Error adding user onboarding details:', response);
@@ -194,25 +190,11 @@ function Home({ onComplete, userId }) {
             case 1:
                 return (
                     <>
-                        <HomepageQuestion1 onChange={(value) => handleAnswerChange('describeMe', value)} />
-                        {errors.describeMe && <div className='error-text'><p>{errors.describeMe}</p></div>}
-                    </>
-                );
-            case 2:
-                return (
-                    <>
-                        <HomepageQuestion2 onChange={(value) => handleAnswerChange('currentSituation', value)} />
-                        {errors.currentSituation && <div className='error-text'><p>{errors.currentSituation}</p></div>}
-                    </>
-                );
-            case 3:
-                return (
-                    <>
                         <HomepageQuestion3 onChange={(value) => handleAnswerChange('goal', value)} />
                         {errors.goal && <div className='error-text'><p>{errors.goal}</p></div>}
                     </>
                 );
-            case 4:
+            case 2:
                 return (
                     <>
                         <HomepageQuestion4 onChangeDegree={(value) => handleAnswerChange('degree', value)} onChangeMajor={(value) => handleAnswerChange('major', value)} />
@@ -220,10 +202,14 @@ function Home({ onComplete, userId }) {
                         {errors.major && <div className='error-text'><p>{errors.major}</p></div>}
                     </>
                 );
-            case 5:
-                return <HomepageQuestion5 onActivityChoicesSelect={handleActivityChoicesSelect} />;
-            case 6:
-                return <Activities userId={userId} />;
+            case 3:
+                return (
+                    <HomepageQuestion5 onActivityChoicesSelect={handleActivityChoicesSelect} />
+                );
+            case 4:
+                return (
+                    <><Activities userId={userId} /><QoD /></>
+                );
             default:
                 return <HomepageQuestion1 />;
         }
@@ -231,19 +217,13 @@ function Home({ onComplete, userId }) {
 
     const validateStep = () => {
         let stepErrors = {};
-        if (currentStep === 1 && !answers.describeMe.trim()) {
+        if (currentStep === 1 && !answers.goal.trim()) {
             stepErrors.describeMe = 'This field cannot be empty*';
         }
-        if (currentStep === 2 && !answers.currentSituation.trim()) {
-            stepErrors.currentSituation = 'This field cannot be empty*';
-        }
-        if (currentStep === 3 && !answers.goal.trim()) {
-            stepErrors.goal = 'This field cannot be empty*';
-        }
-        if (currentStep === 4 && !answers.degree.trim()) {
+        if (currentStep === 2 && !answers.degree.trim()) {
             stepErrors.degree = 'Please choose your degree*';
         }
-        if (currentStep === 4 && !answers.major.trim()) {
+        if (currentStep === 2 && !answers.major.trim()) {
             stepErrors.major = 'Please choose your major*';
         }
         setErrors(stepErrors);
