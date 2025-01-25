@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-import careerStarLogo from '../assets/images/main-page-career-star-logo-white.png';
+import careerStarLogo from '../assets/images/career-star-logo-black.png';
 import astroaut from '../assets/images/main-page-astronaut.png';
 
 function StartPage() {
@@ -32,11 +32,11 @@ function StartPage() {
 
                 <div className='main-page-header'>
                     <h1>Your LaunchPad to Success</h1>
-                    <p>Own your career and land your next role with a personalized roadmap and the support of our AllStar community. Built with love. 💜</p>
+                    {/* <p>Own your career and land your next role with a personalized roadmap and the support of our AllStar community. Built with love. 💜</p> */}
                 </div>
 
                 <div className='main-page-button' onClick={handleClick}>
-                    <p>Get Started Free &rarr;</p>
+                    <p>Get Started &rarr;</p>
                 </div>
 
                 <div className='main-page-footer'>
