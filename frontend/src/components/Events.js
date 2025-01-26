@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import ActivityCard from './ActivityCard';
+import { useNavigate } from 'react-router-dom';
+import EventCard from './EventCard';
 import activity1 from '../assets/images/activity-1.png';
 import activity2 from '../assets/images/activity-2.png';
 import activity3 from '../assets/images/activity-3.png';
@@ -7,29 +8,31 @@ import activity4 from '../assets/images/activity-4.png';
 import starEmpty from '../assets/images/star-empty.png';
 import star from '../assets/images/star.png';
 
-function Activities({ userId }) {
-    const [activites, setActivities] = useState([]);
+function Events({ userId }) {
+    const [events, setEvents] = useState([]);
+    const [firstname, setFirstname] = useState(localStorage.getItem('firstname') || '');
+    const navigate = useNavigate();
     useEffect(() => {
-        const fetchUserActivitiesDetails = async () => {
+        const fetchUserEventsDetails = async () => {
             try {
-                const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/activities/${userId}`);
+                const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/events/${userId}`);
 
                 const data = await response.json();
                 if (response.ok) {
                     if (data) {
-                        setActivities(data);
+                        setEvents(data);
                     }
                 } else {
                     console.error('Error fetching user details:', data);
                 }
 
                 // if (data.length === 0) {
-                //     const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/activities`);
+                //     const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/events`);
                 //     const data = await response.json();
                 //     console.log('All activities:', data);
                 //     if (response.ok) {
                 //         if (data) {
-                //             setActivities(data);
+                //             setEvents(data);
                 //         }
                 //         console.log('User activities details:', data);
                 //     }
@@ -40,7 +43,7 @@ function Activities({ userId }) {
             }
         }
         if (userId) {
-            fetchUserActivitiesDetails();
+            fetchUserEventsDetails();
         }
     }, [userId]);
 
@@ -101,8 +104,8 @@ function Activities({ userId }) {
         };
     }, [popupRef]);
 
-    const updateActivity = (activityId, updatedData) => {
-        setActivities((prevActivities) =>
+    const updateEvent = (activityId, updatedData) => {
+        setEvents((prevActivities) =>
             prevActivities.map((activity) =>
                 activity.activityId === activityId
                     ? { ...activity, ...updatedData }
@@ -112,7 +115,7 @@ function Activities({ userId }) {
     };
 
 
-    const updateUserActivity = async () => {
+    const updateUserEvent = async () => {
         if (currentCard.completed) {
             closePopUp();
             return;
@@ -131,7 +134,7 @@ function Activities({ userId }) {
 
             const data = await response.json();
             if (response.ok) {
-                updateActivity(currentCard.activityId, { completed: true });
+                updateEvent(currentCard.activityId, { completed: true });
                 closePopUp();
                 window.location.reload();
             } else {
@@ -143,20 +146,31 @@ function Activities({ userId }) {
         }
     }
 
+    const handleActivityClick = (activityId) => {
+        navigate(`/dashboard/activity/${activityId}`);
+    }
+
     return (
-        <div className='activities-container'>
-            <h1>Top Activities For You This Week</h1>
-            <div className='activity-cards'>
-                {/* {activites.length > 0 ? (
-                    activites.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
+        <div className='events-container'>
+            <h1>{firstname}'s Top Activities</h1>
+            <div className='temp-event-cards'>
+                <div className='temp-event-card' onClick={() => handleActivityClick(1)}>Activity 1</div>
+                <div className='temp-event-card' onClick={() => handleActivityClick(2)}>Activity 2</div>
+                <div className='temp-event-card' onClick={() => handleActivityClick(3)}>Activity 3</div>
+                <div className='temp-event-card' onClick={() => handleActivityClick(4)}>Activity 4</div>
+            </div>
+            <h1>Top Events For You This Week</h1>
+            <div className='event-cards'>
+                {/* {events.length > 0 ? (
+                    events.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
                 ) : (
                     cards.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
                 )} */}
-                {activites.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} completed={card.completed} /></div>)}
+                {events.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><EventCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} completed={card.completed} /></div>)}
             </div>
             {showPopup && (
-                <div className='activity-popup'>
-                    <div className='activity-popup-content' ref={popupRef}>
+                <div className='event-popup'>
+                    <div className='event-popup-content' ref={popupRef}>
                         {currentCard.videoURL ? (<iframe
                             width="754"
                             height="392"
@@ -166,22 +180,22 @@ function Activities({ userId }) {
                             allowFullScreen
                         >
                         </iframe>) : (<img src={currentCard.imageURL} className='popup-image' />)}
-                        <div className='activity-popuop-tags-stars'>
-                            <div className='activity-popup-tags'>
-                                <div className='activity-card-tags'>
-                                    {currentCard.tags.map(tag => <div className='activity-card-tag'><p>{tag}</p></div>)}
+                        <div className='event-popuop-tags-stars'>
+                            <div className='event-popup-tags'>
+                                <div className='event-card-tags'>
+                                    {currentCard.tags.map(tag => <div className='event-card-tag'><p>{tag}</p></div>)}
                                 </div>
-                                <div className='activity-popup-star-and-count'>
+                                <div className='event-popup-star-and-count'>
                                     <p>{currentCard.star}</p>
                                     {currentCard.completed ? <img src={star} alt='star' /> : <img src={starEmpty} alt='star' />}
                                 </div>
                             </div>
                         </div>
                         <h2>{currentCard.title}</h2>
-                        <div className='activity-popup-text'>
+                        <div className='event-popup-text'>
                             <p>{currentCard.description}</p>
                         </div>
-                        <div className='activity-popup-submit-button' onClick={updateUserActivity}>
+                        <div className='event-popup-submit-button' onClick={updateUserEvent}>
                             {currentCard.completed ? <p>Completed</p> : <p>Mark as completed</p>}
                             {/* <p>I watched this</p> */}
                         </div>
@@ -192,4 +206,4 @@ function Activities({ userId }) {
     );
 }
 
-export default Activities;
+export default Events;

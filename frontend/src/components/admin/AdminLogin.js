@@ -70,7 +70,7 @@ const AdminLogin = () => {
                 const admin_token = response.data.access_token;
                 localStorage.setItem('admin_token', admin_token);
                 navigate('/admin/dashboard');
-                // const response2 = await axios.get('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/activities',{
+                // const response2 = await axios.get('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/events',{
                 //     headers: {
                 //         Authorization: `Bearer ${token}`
                 //     }

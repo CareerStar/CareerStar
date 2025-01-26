@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Events() {
+function EventPage() {
     return (
         <div>
             <h1>Events Page</h1>
@@ -8,4 +8,4 @@ function Events() {
     );
 };
 
-export default Events;
+export default EventPage;

@@ -10,7 +10,7 @@ import HomepageQuestion3 from "../homepage-questionnaires/HomepageQuestion3";
 import HomepageQuestion4 from "../homepage-questionnaires/HomepageQuestion4";
 import HomepageQuestion5 from "../homepage-questionnaires/HomepageQuestion5";
 import ProgressBar from "../ProgressBar";
-import Activities from "../Activities";
+import Events from "../Events";
 import QoD from "../question-of-the-day/QoD";
 
 function Home({ onComplete, userId }) {
@@ -208,7 +208,7 @@ function Home({ onComplete, userId }) {
                 );
             case 4:
                 return (
-                    <><Activities userId={userId} /><QoD /></>
+                    <><Events userId={userId} /><QoD /></>
                 );
             default:
                 return <HomepageQuestion1 />;
