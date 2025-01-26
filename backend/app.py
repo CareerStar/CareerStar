@@ -568,7 +568,7 @@ def update_user_profile_details(userId):
             # cursor.close()
             # connection.close()
 
-@app.route('/activities/<int:userId>', methods=['GET'])
+@app.route('/events/<int:userId>', methods=['GET'])
 def get_user_activities_details(userId):
     try:
         connection = get_db_connection()
@@ -602,7 +602,7 @@ def get_user_activities_details(userId):
             # cursor.close()
             # connection.close()
 
-@app.route('/activities', methods=['GET'])
+@app.route('/events', methods=['GET'])
 @jwt_required()
 def get_all_activities_details():
     current_user = get_jwt_identity()
@@ -639,7 +639,7 @@ def get_all_activities_details():
             # cursor.close()
             # connection.close()
 
-@app.route('/activities', methods=['POST'])
+@app.route('/events', methods=['POST'])
 @jwt_required()
 def add_new_activities():
     current_user = get_jwt_identity()
@@ -803,7 +803,7 @@ def roadmapactivitypost(userId, roadmapActivityId):
             # connection.close()
 
 
-@app.route('/activities/<int:activityId>', methods=['PUT'])
+@app.route('/events/<int:activityId>', methods=['PUT'])
 def update_activity(activityId):
     try:
         connection = get_db_connection()
@@ -834,7 +834,7 @@ def update_activity(activityId):
         if connection:
             return_db_connection(connection)
 
-@app.route('/activities/<int:activityId>', methods=['DELETE'])
+@app.route('/events/<int:activityId>', methods=['DELETE'])
 @jwt_required()
 def delete_activity(activityId):
     current_user = get_jwt_identity()
