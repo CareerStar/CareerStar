@@ -12,6 +12,7 @@ import HomepageQuestion5 from "../homepage-questionnaires/HomepageQuestion5";
 import ProgressBar from "../ProgressBar";
 import Events from "../Events";
 import QoD from "../question-of-the-day/QoD";
+import TopActivities from "../TopActivities";
 
 function Home({ onComplete, userId }) {
     const stars = useSelector(state => state.starCount);
@@ -208,7 +209,11 @@ function Home({ onComplete, userId }) {
                 );
             case 4:
                 return (
-                    <><Events userId={userId} /><QoD /></>
+                    <div className="home-page-content">
+                        <TopActivities />
+                        <Events userId={userId} />
+                        <QoD />
+                    </div>
                 );
             default:
                 return <HomepageQuestion1 />;
