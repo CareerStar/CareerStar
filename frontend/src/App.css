@@ -1125,7 +1125,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 }
 
 /* Activities page styles */
-.activities-container {
+.events-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1134,7 +1134,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   max-width: 1300px;
 }
 
-.activities-container h1 {
+.events-container h1 {
   color: #171717;
   font-family: 'Sora';
   font-style: normal;
@@ -1142,7 +1142,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   font-size: 30px;
 }
 
-.activities-container .activity-cards {
+.events-container .event-cards {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -1152,7 +1152,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 }
 
 /* Activity card styles */
-.activity-card-container {
+.event-card-container {
   display: flex;
   flex-direction: column;
   /* align-items: flex-start; */
@@ -1166,17 +1166,17 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   text-align: left;
 }
 
-.activity-card-container:hover {
+.event-card-container:hover {
   cursor: pointer;
 }
 
-.activity-card-image img {
+.event-card-image img {
   width: 200px;
   margin: 0px;
   padding: 0px;
 }
 
-.activity-card-content {
+.event-card-content {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -1185,7 +1185,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   padding: 0px;
 }
 
-.activity-card-tags {
+.event-card-tags {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -1193,13 +1193,13 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   gap: 10px;
 }
 
-.activity-card-tags .activity-card-tag {
+.event-card-tags .event-card-tag {
   padding: 4px 12px;
   background: #EBE8FF;
   border-radius: 24px;
 }
 
-.activity-card-tags .activity-card-tag p {
+.event-card-tags .event-card-tag p {
   margin: 0;
   font-family: 'Nunito';
   font-style: normal;
@@ -1209,7 +1209,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   color: #000000;
 }
 
-.activity-card-content h2 {
+.event-card-content h2 {
   font-family: 'Nunito';
   font-style: normal;
   font-weight: 700;
@@ -1221,7 +1221,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   margin-top: 10px;
 }
 
-.activity-card-content .activity-card-description p {
+.event-card-content .event-card-description p {
   font-family: 'Nunito';
   font-style: normal;
   font-weight: 400;
@@ -1233,7 +1233,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   margin-bottom: 0px;
 }
 
-.activity-card-star {
+.event-card-star {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -1242,7 +1242,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   margin-left: 160px;
 }
 
-.activity-card-star p {
+.event-card-star p {
   font-family: 'Nunito';
   font-style: normal;
   font-weight: 400;
@@ -1253,7 +1253,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 }
 
 /* Activity card popup styles */
-.activity-popup {
+.event-popup {
   position: fixed;
   top: 0;
   left: 0;
@@ -1266,7 +1266,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   align-items: center;
 }
 
-.activity-popup-content {
+.event-popup-content {
   background: white;
   padding: 20px 20px;
   border-radius: 15px;
@@ -1274,7 +1274,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   position: relative;
 }
 
-.activity-popup-content h2 {
+.event-popup-content h2 {
   width: 335px;
   font-family: 'Nunito';
   font-style: normal;
@@ -1286,17 +1286,17 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   margin: 0 0;
 }
 
-.activity-popup-content img {
+.event-popup-content img {
   gap: 12px;
   width: 100%;
 }
 
-.activity-popup-content .popup-image {
+.event-popup-content .popup-image {
   max-width: 350px;
   max-height: 350px;
 }
 
-.activity-popup-content .activity-popup-text {
+.event-popup-content .event-popup-text {
 
   max-width: 350px;
   font-family: 'Nunito';
@@ -1311,7 +1311,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 
 }
 
-.activity-popup-content .activity-popup-submit-button {
+.event-popup-content .event-popup-submit-button {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -1329,11 +1329,11 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   color: #FFFFFF;
 }
 
-.activity-popup-content .activity-popup-submit-button:hover {
+.event-popup-content .event-popup-submit-button:hover {
   cursor: pointer !important;
 }
 
-.activity-popup-tags {
+.event-popup-tags {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -1341,7 +1341,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   gap: 10px;
 }
 
-.activity-popup-star-and-count {
+.event-popup-star-and-count {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -1835,7 +1835,7 @@ h3 {
 
 /* Admin page styles */
 
-.admin-activities {
+.admin-events {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1856,7 +1856,7 @@ h3 {
   border-radius: 8px;
 }
 
-.activity-delete-button {
+.event-delete-button {
   background-color: red;
   color: white;
   max-height: 40px;
@@ -1865,7 +1865,7 @@ h3 {
   width: 100%;
 }
 
-.activity-delete-button:hover {
+.event-delete-button:hover {
   cursor: pointer;
   background-color: darkred;
 }

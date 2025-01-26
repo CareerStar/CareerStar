@@ -23,7 +23,7 @@ function Sidebar({pages, selectedPage, onboarded}) {
                 return networkIcon;
             case 'Events':
                 return eventsIcon;
-            case 'AdminActivities':
+            case 'AdminEvents':
                 return eventsIcon;
             case 'LinkedIn':
                 return eventsIcon;

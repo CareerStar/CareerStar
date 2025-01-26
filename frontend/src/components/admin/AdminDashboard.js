@@ -7,9 +7,9 @@ import DashboardContent from '../DashboardContent';
 const AdminDashboard = () => {
     const location = useLocation();
     const [userId, setUserId] = useState(location.state?.userId || '');
-    const [selectedPage, setSelectedPage] = useState('AdminActivities');
+    const [selectedPage, setSelectedPage] = useState('AdminEvents');
     const [onboarded, setOnboarded] = useState(true);
-    const pages = ['AdminActivities', 'LinkedIn'];
+    const pages = ['AdminEvents', 'LinkedIn'];
 
     const handlePageChange = (page) => {
         setSelectedPage(page);
