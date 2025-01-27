@@ -2077,8 +2077,8 @@ h3 {
 }
 
 .qod-card-back {
-  background: #4caf50;
-  color: white;
+  background: #DCFCE7;
+  color: #000000;
   transform: rotateY(180deg);
 }
 
@@ -2099,7 +2099,7 @@ h3 {
   display: flex;
   flex-direction: row;
   gap: 32px;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
 }
 
@@ -2167,15 +2167,29 @@ h3 {
 }
 
 .activity-image {
-  /* width: 100%; */
+  width: 100%;
   height: auto;
   max-height: 500px;
 }
 
-.activity-image img {
+.activity-image img{
   box-sizing: border-box;
-  /* max-width: -webkit-fill-available; */
+  max-width: -webkit-fill-available;
   width: 648px;
+  border: 1px solid #000000;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 0px;
+}
+
+.activity-main-image {
+  width: 100%;
+  max-height: 500px;
+}
+
+.activity-main-image img {
+  box-sizing: border-box;
+  width: 100%;
+  max-height: 500px;
   border: 1px solid #000000;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   border-radius: 0px;
@@ -2484,7 +2498,7 @@ h3 {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 32px;
   height: 100%;
   width: 100%;
