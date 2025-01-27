@@ -235,8 +235,8 @@ const Activity1 = () => {
                 <img src={upArrowScroll} alt="Scroll to Top" className="scroll-top" onClick={scrollToTop} />
                 {currentStep === null ? (
                     <div className="activity-description">
-                        <div className="activity-image">
-                            <img className="activity-image" src={activityImage} alt="Activity" />
+                        <div className="activity-main-image">
+                            <img src={activityImage} alt="Activity" />
                         </div>
                         <h2>Reaching out to more than Recruiters</h2>
                         <div className="inline-container">
