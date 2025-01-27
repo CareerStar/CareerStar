@@ -12,15 +12,7 @@ function TopActivities() {
         <div className='top-activities'>
             <h1>{firstname}'s Top Activities</h1>
             <div className='top-activities-container'>
-                <TopActivityCard
-                    activityId={1}
-                    activityTitle='The Dreaded Salary Talk'
-                    activityDescription='Discussing Salary During Interviews'
-                    activityTags={['Interview']}
-                    activityStarCount={7}
-                    activityTime='15 min'
-                    moduleId={1}
-                />
+
                 <TopActivityCard
                     activityId={2}
                     activityTitle='Reaching out to more than Recruiters'
@@ -28,7 +20,7 @@ function TopActivities() {
                     activityTags={['Networking', 'LinkedIn']}
                     activityStarCount={7}
                     activityTime='15 min'
-                    moduleId={2}
+                    moduleId={1}
                 />
 
                 <TopActivityCard
@@ -39,6 +31,16 @@ function TopActivities() {
                     activityStarCount={7}
                     activityTime='15 min'
                     moduleId={3}
+                />
+
+                <TopActivityCard
+                    activityId={1}
+                    activityTitle='The Dreaded Salary Talk'
+                    activityDescription='Discussing Salary During Interviews'
+                    activityTags={['Interview']}
+                    activityStarCount={7}
+                    activityTime='15 min'
+                    moduleId={2}
                 />
 
                 <TopActivityCard
