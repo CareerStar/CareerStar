@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import caseStudy from '../../assets/images/activities/activity1/case-study.png';
 import changeUser from '../../assets/images/activities/activity1/change-user.png';
@@ -19,97 +19,12 @@ import dislikeIcon from '../../assets/images/dislike-icon.png';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 
-const Step1 = () => (
-    <div className="activity-description">
-        <h2>Step 1 : Understanding Recruiters & Teams</h2>
-        <ol>
-            <li>
-                <p> Pull up an active job of interest and look for information about the company division,
-                    group or team that you would be working for.</p>
-                <div className="activity-image">
-                    <img src={step1Image1} alt="Step 1" />
-                </div>
-                <div className="activity-hot-tip">
-                    <img src={fireFlameIcon} alt="Fire Flame Icon" />
-                    <p>Hot Tip! Look for things that are in capital letters,
-                        they usually signify a specific department or division within a company!</p>
-                </div>
-            </li>
-        </ol>
-    </div>
-);
-
-const Step2 = () => (
-    <div className="activity-description">
-        <h2>Step 2 : Contact Research & Outreach</h2>
-        <ol>
-            <li><p>Look for information online about this department</p></li>
-            <ul>
-                <li><p>What other division/department does this roll up to?</p></li>
-                <li><p>What person is ultimately responsible for this department’s KPIs and Lines of Business? 💯</p></li>
-                <li><p>What type of division/department would you be working for?</p></li>
-                <ul>
-                    <li><p>Ex: Engineering, Operations, Customer Applications, Research & Development</p></li>
-                </ul>
-            </ul>
-            <div className="activity-image">
-                <img src={step2Image1} alt="Step 1" />
-            </div>
-        </ol>
-    </div>
-);
-
-const Step3 = () => (
-    <div className="activity-description">
-        <h2>Step 3 : Tools for networking success</h2>
-        <ol>
-            <li><p>Go to the main company page LinkedIn page. First things first -
-                follow the company! Now you will see company updates and jobs as they are posted
-                on your LinkedIn feed!</p>
-            </li>
-            <li><p>You are now going to search people based on parameters from the job posting!
-                Location - Filter by people that are based in the same city as the job posted
-                Department Type - See point 2c above! 👔</p>
-            </li>
-            <div className="activity-image">
-                <img src={step3Image1} alt="Step 1" />
-            </div>
-        </ol>
-    </div>
-);
-
-const Step4 = () => (
-    <div className="activity-description">
-        <h2>Step 4 : Your Turn!</h2>
-        <ol>
-            <li><p>Here comes the magic  - Now that you have filtered down the results,
-                look for the team and department that you would be working with among the
-                people results.</p>
-            </li>
-            <li><p>Click on a person and take note of the following:</p></li>
-            <ul>
-                <li><p>Team Name</p></li>
-                <li><p>Time at Company</p></li>
-                <li><p>Have they already posted the role you are looking for or a similar role?</p></li>
-            </ul>
-        </ol>
-
-    </div>
-);
-
-const stepsData = [
-    { id: 1, number: "Step 1", title: "Understanding Recruiters and Teams", icon: lawyer, component: <Step1 /> },
-    { id: 2, number: "Step 2", title: "Contact Research & Outreach", icon: caseStudy, component: <Step2 /> },
-    { id: 3, number: "Step 3", title: "Tools for Networking Success", icon: collaboratingInCircle, component: <Step3 /> },
-    { id: 4, number: "Step 4", title: "Your Turn, go shine!", icon: changeUser, component: <Step4 /> },
-];
 
 const Activity1 = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const prevPage = location.state?.prevPage;
     const [currentStep, setCurrentStep] = useState(null); // null shows activity description by default
-
 
     const dispatch = useDispatch();
     const userId = localStorage.getItem('userId');
@@ -167,6 +82,130 @@ const Activity1 = () => {
             console.error('Error saving answers:', error);
         }
     };
+
+    const handleInputChange = (name, value) => {
+        setAnswers((prevAnswers) => ({
+            ...prevAnswers,
+            [name]: value,
+        }));
+    };
+
+    const Step1 = () => (
+        <div className="activity-description">
+            <h2>Step 1 : Understanding Recruiters & Teams</h2>
+            <ol>
+                <li>
+                    <p> Pull up an active job of interest and look for information about the company division,
+                        group or team that you would be working for.</p>
+                    <div className="activity-image">
+                        <img src={step1Image1} alt="Step 1" />
+                    </div>
+                    <div className="activity-hot-tip">
+                        <img src={fireFlameIcon} alt="Fire Flame Icon" />
+                        <p>Hot Tip! Look for things that are in capital letters,
+                            they usually signify a specific department or division within a company!</p>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    );
+
+    const Step2 = () => (
+        <div className="activity-description">
+            <h2>Step 2 : Contact Research & Outreach</h2>
+            <ol>
+                <li><p>Look for information online about this department</p></li>
+                <ul>
+                    <li><p>What other division/department does this roll up to?</p></li>
+                    <li><p>What person is ultimately responsible for this department’s KPIs and Lines of Business? 💯</p></li>
+                    <li><p>What type of division/department would you be working for?</p></li>
+                    <ul>
+                        <li><p>Ex: Engineering, Operations, Customer Applications, Research & Development</p></li>
+                    </ul>
+                </ul>
+                <div className="activity-image">
+                    <img src={step2Image1} alt="Step 1" />
+                </div>
+            </ol>
+        </div>
+    );
+
+    const Step3 = () => (
+        <div className="activity-description">
+            <h2>Step 3 : Tools for networking success</h2>
+            <ol>
+                <li><p>Go to the main company page LinkedIn page. First things first -
+                    follow the company! Now you will see company updates and jobs as they are posted
+                    on your LinkedIn feed!</p>
+                </li>
+                <li><p>You are now going to search people based on parameters from the job posting!
+                    Location - Filter by people that are based in the same city as the job posted
+                    Department Type - See point 2c above! 👔</p>
+                </li>
+                <div className="activity-image">
+                    <img src={step3Image1} alt="Step 1" />
+                </div>
+            </ol>
+        </div>
+    );
+
+    const Step4 = () => {
+        const textareaRef = useRef(null);
+
+        useEffect(() => {
+            textareaRef.current?.focus();
+            const textarea = textareaRef.current;
+            if (textarea) {
+                textarea.focus();
+                textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+            }
+        }, []);
+
+        return (
+            <div className="activity-description">
+                <h2>Step 4 : Your Turn!</h2>
+                <ol>
+                    <li>
+                        <p>Here comes the magic - Now that you have filtered down the results,
+                            look for the team and department that you would be working with among the
+                            people results.
+                        </p>
+                    </li>
+                    <li>
+                        <p>Click on a person and take note of the following:</p>
+                    </li>
+                    <ul>
+                        <li><p>Team Name</p></li>
+                        <li><p>Time at Company</p></li>
+                        <li><p>Have they already posted the role you are looking for or a similar role?</p></li>
+                    </ul>
+                    <textarea
+                        id="notes"
+                        rows="4"
+                        cols="50"
+                        ref={textareaRef}
+                        style={{
+                            width: '100%',
+                            height: '150px',
+                            padding: '10px',
+                            marginBottom: '10px',
+                            border: '1px solid #ccc',
+                            borderRadius: '4px'
+                        }}
+                        placeholder="Write your notes here..."
+                        onChange={(e) => handleInputChange('answer1', e.target.value)}
+                        value={answers.answer1}
+                    />
+                </ol>
+            </div>
+        );
+    };
+    const stepsData = [
+        { id: 1, number: "Step 1", title: "Understanding Recruiters and Teams", icon: lawyer, component: <Step1 /> },
+        { id: 2, number: "Step 2", title: "Contact Research & Outreach", icon: caseStudy, component: <Step2 /> },
+        { id: 3, number: "Step 3", title: "Tools for Networking Success", icon: collaboratingInCircle, component: <Step3 /> },
+        { id: 4, number: "Step 4", title: "Your Turn, go shine!", icon: changeUser, component: <Step4 /> },
+    ];
 
     const scrollToTop = () => {
         window.scrollTo(0, 0);
