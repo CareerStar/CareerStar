@@ -148,7 +148,7 @@ function Events({ userId }) {
 
     return (
         <div className='events-container'>
-            <h1>Top Events For You This Week</h1>
+            <h1>Top Picks For You This Week</h1>
             <div className='event-cards'>
                 {/* {events.length > 0 ? (
                     events.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
