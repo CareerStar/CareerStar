@@ -338,16 +338,17 @@ function Home({ onComplete, userId }) {
                                     padding: 0,
                                     margin: 0,
                                 }}
-                                src="https://www.canva.com/design/DAGcRiiwR3s/Jn5DB62piHwV26lYEo9dXg/watch?embed"
+                                src="https://www.canva.com/design/DAGda-KOPbc/GC-CM5QHez5oM-AlkYEpVg/watch?embed"
                                 allowFullScreen
+                                title="Canva Design Embed"
                             ></iframe>
                             <a
-                                href="https://www.canva.com/design/DAGcRiiwR3s/Jn5DB62piHwV26lYEo9dXg/watch?utm_content=DAGcRiiwR3s&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
+                                href="https://www.canva.com/design/DAGda-KOPbc/GC-CM5QHez5oM-AlkYEpVg/watch?utm_content=DAGda-KOPbc&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                style={{ display: 'block', textAlign: 'center', marginTop: '1em' }}
+                                style={{ display: 'block', marginTop: '1em', textAlign: 'center' }}
                             >
-                                Hot Tip
+                                Welome to CareerStar
                             </a>
                         </div>
                         <div className='home-page-button' onClick={handleSkipVideo}>
