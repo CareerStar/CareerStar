@@ -12,6 +12,7 @@ import HomepageQuestion5 from "../homepage-questionnaires/HomepageQuestion5";
 import ProgressBar from "../ProgressBar";
 import Events from "../Events";
 import QoD from "../question-of-the-day/QoD";
+import TopActivities from "../TopActivities";
 
 function Home({ onComplete, userId }) {
     const stars = useSelector(state => state.starCount);
@@ -208,7 +209,11 @@ function Home({ onComplete, userId }) {
                 );
             case 4:
                 return (
-                    <><Events userId={userId} /><QoD /></>
+                    <div className="home-page-content">
+                        <TopActivities />
+                        <Events userId={userId} />
+                        <QoD />
+                    </div>
                 );
             default:
                 return <HomepageQuestion1 />;
@@ -256,32 +261,36 @@ function Home({ onComplete, userId }) {
                     <img src={astronaut} alt="Astronaut" />
                     <div className="home-welcome-left-text">
                         <h1>Welcome, {userDetails.firstname}!</h1>
-                        <p>It's great day to be a career star!</p>
+                        <p>It's great day to be a Career Star!</p>
                     </div>
                 </div>
                 <div className="home-welcome-right"><span className="star-count"> {stars} </span>  <img src={star} className='star' /></div>
             </div>
             {currentStep >= 1 && currentStep <= totalSteps ? (
                 <div className="home-questions">
-                    <span className="personalize-text">LET'S PERSONALIZE YOUR CAREERSTAR JOURNEY</span>
-                    <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
-                    <div className="home-question-wrapper">
-                        {renderPage()}
-                    </div>
-                    {buttonVisibility[currentStep] && (
-                        <div className='home-page-button' onClick={handleClick}>
-                            <p>Continue</p>
+                    <div className="home-questions-border">
+                        <span className="personalize-text">LET'S PERSONALIZE YOUR CAREERSTAR JOURNEY</span>
+                        <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
+                        <div className="home-question-wrapper">
+                            {renderPage()}
                         </div>
-                    )}
+                        {buttonVisibility[currentStep] && (
+                            <div className='home-page-button' onClick={handleClick}>
+                                <p>Continue</p>
+                            </div>
+                        )}
+                    </div>
                 </div>
             ) : currentStep === (totalSteps + 1) ? (
                 <div className="home-questions">
-                    <span className="personalize-text">LET'S GET GOING THEN!</span>
-                    <div className="home-question-wrapper">
-                        {renderPage()}
-                    </div>
-                    <div className='home-page-button' onClick={() => { saveUserOnboardingDetailsWithActivities(); }}>
-                        <p>Continue</p>
+                    <div className="home-questions-border">
+                        <span className="personalize-text">LET'S GET GOING THEN!</span>
+                        <div className="home-question-wrapper">
+                            {renderPage()}
+                        </div>
+                        <div className='home-page-button' onClick={() => { saveUserOnboardingDetailsWithActivities(); }}>
+                            <p>Continue</p>
+                        </div>
                     </div>
                 </div>
             ) : currentStep === (totalSteps + 2) ? (
@@ -290,18 +299,20 @@ function Home({ onComplete, userId }) {
                 </div>
             ) : (
                 <div className="home-questions">
-                    <iframe
-                        width="754"
-                        height="392"
-                        src="https://www.youtube.com/embed/b7eMnAn_WhI?si=_JK_K37lxh5f7HI0"
-                        title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        onEnded={handleVideoEnd}
-                    >
-                    </iframe>
-                    <div className='home-page-skip-video-button' onClick={handleSkipVideo}>
-                        <p>{videoEnded ? "Next" : "Skip Video"}</p>
+                    <div className="home-questions-border">
+                        <iframe
+                            width="754"
+                            height="392"
+                            src="https://www.youtube.com/embed/b7eMnAn_WhI?si=_JK_K37lxh5f7HI0"
+                            title="YouTube video player"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            onEnded={handleVideoEnd}
+                        >
+                        </iframe>
+                        <div className='home-page-button' onClick={handleSkipVideo}>
+                            <p>{videoEnded ? "Next" : "Skip Video"}</p>
+                        </div>
                     </div>
                 </div>
             )}

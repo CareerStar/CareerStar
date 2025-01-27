@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function QuestionCard({ question, answer }) {
+function QuestionCard({ question, answer, id }) {
     const [isFlipped, setIsFlipped] = useState(false);
 
     const toggleFlip = () => {
@@ -8,7 +8,10 @@ function QuestionCard({ question, answer }) {
     };
 
     return (
-        <div className={`qod-card ${isFlipped ? "flipped" : ""}`} onClick={toggleFlip}>
+        <div
+            className={`qod-card ${isFlipped ? "flipped" : ""} id-${id}`}
+            onClick={toggleFlip}
+            title="Click to flip the card">
             <div className="qod-card-inner">
                 <div className="qod-card-front">
                     <h3>{question}</h3>

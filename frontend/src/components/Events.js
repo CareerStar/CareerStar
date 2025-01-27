@@ -146,20 +146,9 @@ function Events({ userId }) {
         }
     }
 
-    const handleActivityClick = (activityId) => {
-        navigate(`/dashboard/activity/${activityId}`);
-    }
-
     return (
         <div className='events-container'>
-            <h1>{firstname}'s Top Activities</h1>
-            <div className='temp-event-cards'>
-                <div className='temp-event-card' onClick={() => handleActivityClick(1)}>Activity 1</div>
-                <div className='temp-event-card' onClick={() => handleActivityClick(2)}>Activity 2</div>
-                <div className='temp-event-card' onClick={() => handleActivityClick(3)}>Activity 3</div>
-                <div className='temp-event-card' onClick={() => handleActivityClick(4)}>Activity 4</div>
-            </div>
-            <h1>Top Events For You This Week</h1>
+            <h1>Top Picks For You This Week</h1>
             <div className='event-cards'>
                 {/* {events.length > 0 ? (
                     events.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
