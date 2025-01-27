@@ -15,7 +15,7 @@ function TopActivities() {
 
                 <TopActivityCard
                     activityId={2}
-                    activityTitle='Reaching out to more than Recruiters'
+                    activityTitle='Reaching Out To More Than Recruiters'
                     activityDescription='Reaching out to the people you could actually be working with is often be much more effective.'
                     activityTags={['Networking', 'LinkedIn']}
                     activityStarCount={7}
@@ -25,11 +25,11 @@ function TopActivities() {
 
                 <TopActivityCard
                     activityId={3}
-                    activityTitle='Get to Know Your Interviewer'
+                    activityTitle='Get To Know Your Interviewer'
                     activityDescription='Researching your interviewer before a job interview can give you a significant advantage.'
                     activityTags={['Interview', 'LinkedIn']}
-                    activityStarCount={7}
-                    activityTime='15 min'
+                    activityStarCount={3}
+                    activityTime='10 min'
                     moduleId={3}
                 />
 
@@ -38,18 +38,18 @@ function TopActivities() {
                     activityTitle='The Dreaded Salary Talk'
                     activityDescription='Discussing Salary During Interviews'
                     activityTags={['Interview']}
-                    activityStarCount={7}
+                    activityStarCount={5}
                     activityTime='15 min'
                     moduleId={2}
                 />
 
                 <TopActivityCard
                     activityId={3}
-                    activityTitle='Get to Know Your Interviewer'
-                    activityDescription='Researching your interviewer before a job interview can give you a significant advantage.'
+                    activityTitle='Sending A Great Thank You Note - Immediately'
+                    activityDescription='Master the art of writing a professional and memorable thank-you note after your interview.'
                     activityTags={['Interview', 'LinkedIn']}
-                    activityStarCount={7}
-                    activityTime='15 min'
+                    activityStarCount={5}
+                    activityTime='10 min'
                     moduleId={3}
                 />
             </div>
