@@ -49,10 +49,10 @@ function SignUp() {
                 <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
                 <div className='signUp-page-question'>
                     <h2>What's your <span className="highlight">name?</span></h2>
-                    <p>First name</p>
+                    <p>Preferred name</p>
                     <input
                         type='text'
-                        placeholder='Your First name'
+                        placeholder='Your Preferred name'
                         value={firstname}
                         onChange={handleInputChange}
                         onKeyDown={handleKeyPress}
