@@ -2248,6 +2248,7 @@ h3 {
   border: none;
   padding: 10px;
   cursor: pointer;
+  z-index: 1000;
 }
 
 .activity-navigation-buttons {
