@@ -2243,6 +2243,10 @@ h3 {
   gap: 10px;
 }
 
+.activity-hot-tip:hover {
+  cursor: pointer;
+}
+
 .activity-hot-tip p {
   font-family: 'Nunito';
   font-style: normal;
