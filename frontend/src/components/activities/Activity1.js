@@ -7,7 +7,7 @@ import lawyer from '../../assets/images/activities/activity1/lawyer.png';
 import backArrow from '../../assets/images/back-arrow.png';
 import activityImage from '../../assets/images/activities/activity1/activity-image.png';
 import clock from '../../assets/images/activities/clock.png';
-import star from '../../assets/images/activities/star2.png';
+import star from '../../assets/images/activities/star.png';
 import upArrowScroll from '../../assets/images/up-arrow-scroll.png';
 import step1Image1 from '../../assets/images/activities/activity1/step1-image1.png';
 import step2Image1 from '../../assets/images/activities/activity1/step2-image1.png';
@@ -32,7 +32,7 @@ const Activity1 = () => {
     const activityId = 11;
     const [completed, setCompleted] = useState(false);
     const [alreadyCompleted, setAlreadyCompleted] = useState(false);
-    const [starCount, setStarCount] = useState(3);
+    const [starCount, setStarCount] = useState(7);
     const [answers, setAnswers] = useState({
         answer1: '', //Answers can not be a null JSON object, it has to have at least one key-value pair
         tableData: Array.from({ length: 4 }, () => Array(7).fill("")),
@@ -203,7 +203,7 @@ const Activity1 = () => {
                             </div>
                             <div className="inline-container">
                                 <img src={star} alt="Star" />
-                                <p>2 stars</p>
+                                <p>{starCount} stars</p>
                             </div>
                         </div>
                         <h3>Networking Strategies</h3>

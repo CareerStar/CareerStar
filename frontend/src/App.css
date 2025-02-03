@@ -2268,8 +2268,8 @@ h3 {
 }
 
 .activity-description .inline-container img {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
 }
 
 .activity-description .inline-container p {
@@ -2277,7 +2277,7 @@ h3 {
   font-family: 'Nunito';
   font-style: normal;
   font-weight: 400;
-  font-size: 15px;
+  font-size: 17px;
   color: #000000;
 }
 
