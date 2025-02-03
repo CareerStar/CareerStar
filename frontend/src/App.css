@@ -2159,6 +2159,7 @@ h3 {
   padding: 60px;
   top: 0;
   max-height: 100vh;
+  max-width: 475px;
   flex-shrink: 0;
 }
 
@@ -2169,6 +2170,7 @@ h3 {
   text-align: left;
   width: 100%;
   overflow-y: auto;
+  overflow-x: auto;
   position: relative;
   min-height: 100vh;
   display: flex;
@@ -2680,4 +2682,55 @@ h3 {
 
 .id-3 {
   border-color: #00ff59;
+}
+
+.recruiters-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.recruiters-table th {
+  background-color: #f2f2f2;
+  color: #000000;
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: left;
+  padding: 12px 12px;
+  border: 1px solid #ddd; 
+}
+
+.recruiters-table td {
+  font-family: 'Nunito';
+  font-style: normal;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.recruiters-table td input[type="text"] {
+  border: none;
+  padding: 12px 12px;
+  font-size: 17px;
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+}
+
+.recruiters-table td:last-child {
+  border-right: none;
+}
+
+.recruiters-table tr {
+  background-color: #f9f9f9;
+}
+
+.recruiters-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.recruiters-table input[type="text"]:focus {
+  border-color: #581AD1;
+  outline: none;
 }
