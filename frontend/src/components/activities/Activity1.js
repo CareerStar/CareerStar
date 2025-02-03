@@ -7,7 +7,7 @@ import lawyer from '../../assets/images/activities/activity1/lawyer.png';
 import backArrow from '../../assets/images/back-arrow.png';
 import activityImage from '../../assets/images/activities/activity1/activity-image.png';
 import clock from '../../assets/images/activities/clock.png';
-import star from '../../assets/images/activities/star.png';
+import star from '../../assets/images/activities/star2.png';
 import upArrowScroll from '../../assets/images/up-arrow-scroll.png';
 import step1Image1 from '../../assets/images/activities/activity1/step1-image1.png';
 import step2Image1 from '../../assets/images/activities/activity1/step2-image1.png';
@@ -197,12 +197,14 @@ const Activity1 = () => {
                         </div>
                         <h2>Reaching out to more than Recruiters</h2>
                         <div className="inline-container">
-                            <img src={clock} alt="Clock" />
-                            <p>15 minutes</p>
-                        </div>
-                        <div className="inline-container">
-                            <img src={star} alt="Star" />
-                            <p>2 stars</p>
+                            <div className="inline-container">
+                                <img src={clock} alt="Clock" />
+                                <p>15 minutes</p>
+                            </div>
+                            <div className="inline-container">
+                                <img src={star} alt="Star" />
+                                <p>2 stars</p>
+                            </div>
                         </div>
                         <h3>Networking Strategies</h3>
                         <p>It’s important to reach out to more than recruiters and people that have posted the job! Reaching out to the people you could actually be working with is often be much more effective.</p>
@@ -282,33 +284,35 @@ const Activity1 = () => {
 
                             <div>
                                 <button onClick={addRow}>+</button>
-                                <table className="recruiters-table">
-                                    <thead>
-                                        <tr>
-                                            {columnHeadings.map((heading, colIndex) => (
-                                                <th key={colIndex}>{heading}</th>
-                                            ))}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {answers.tableData.map((row, rowIndex) => (
-                                            <tr key={rowIndex}>
-                                                {row.map((cell, colIndex) => (
-                                                    <td key={colIndex}>
-                                                        <input
-                                                            type="text"
-                                                            value={cell}
-                                                            onChange={(e) =>
-                                                                handleTableChange(rowIndex, colIndex, e.target.value)
-                                                            }
-                                                        />
-                                                    </td>
+                                <div className="x-scrollable-table">
+                                    <table className="recruiters-table">
+                                        <thead>
+                                            <tr>
+                                                {columnHeadings.map((heading, colIndex) => (
+                                                    <th key={colIndex}>{heading}</th>
                                                 ))}
                                             </tr>
-                                        ))}
-                                    </tbody>
+                                        </thead>
+                                        <tbody>
+                                            {answers.tableData.map((row, rowIndex) => (
+                                                <tr key={rowIndex}>
+                                                    {row.map((cell, colIndex) => (
+                                                        <td key={colIndex}>
+                                                            <input
+                                                                type="text"
+                                                                value={cell}
+                                                                onChange={(e) =>
+                                                                    handleTableChange(rowIndex, colIndex, e.target.value)
+                                                                }
+                                                            />
+                                                        </td>
+                                                    ))}
+                                                </tr>
+                                            ))}
+                                        </tbody>
 
-                                </table>
+                                    </table>
+                                </div>
                             </div>
                         </ol>
                     </div>

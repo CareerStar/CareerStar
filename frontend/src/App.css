@@ -2158,8 +2158,7 @@ h3 {
   /* background: linear-gradient(180deg, #b33939 0%, #732dff 0%, #4e15be 100%); */
   padding: 60px;
   top: 0;
-  max-height: 100vh;
-  max-width: 475px;
+  max-height: 80vh;
   flex-shrink: 0;
 }
 
@@ -2172,7 +2171,7 @@ h3 {
   overflow-y: auto;
   overflow-x: auto;
   position: relative;
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -2297,7 +2296,6 @@ h3 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 40px 0px;
 }
 
 .activity-navigation-back-button {
@@ -2733,4 +2731,9 @@ h3 {
 .recruiters-table input[type="text"]:focus {
   border-color: #581AD1;
   outline: none;
+}
+
+.x-scrollable-table {
+  overflow-x: auto;
+  max-width: 800px;
 }
