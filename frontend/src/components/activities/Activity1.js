@@ -10,6 +10,7 @@ import clock from '../../assets/images/activities/clock.png';
 import star from '../../assets/images/activities/star.png';
 import upArrowScroll from '../../assets/images/up-arrow-scroll.png';
 import step1Image1 from '../../assets/images/activities/activity1/step1-image1.png';
+import step1Image2 from '../../assets/images/activities/activity1/step1-image2.png';
 import step2Image1 from '../../assets/images/activities/activity1/step2-image1.png';
 import step3Image1 from '../../assets/images/activities/activity1/step3-image1.png';
 import fireFlameIcon from '../../assets/images/fire-flame-icon.png';
@@ -37,7 +38,8 @@ const Activity1 = () => {
         answer1: '', //Answers can not be a null JSON object, it has to have at least one key-value pair
         tableData: Array.from({ length: 4 }, () => Array(7).fill("")),
     });
-    const [showPopup, setShowPopup] = useState(false);
+    const [showHotTipPopup, setShowHotTipPopup] = useState(false);
+    const [showLikeDislikePopup, setShowLikeDislikePopup] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const columnHeadings = [
@@ -49,6 +51,26 @@ const Activity1 = () => {
         "LinkedIn",
         "Role URL",
     ];
+
+    const popupRef = useRef(null);
+
+    const closePopUp = () => {
+        setShowHotTipPopup(false);
+    }
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (popupRef.current && !popupRef.current.contains(event.target)) {
+                closePopUp();
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [popupRef]);
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -129,7 +151,7 @@ const Activity1 = () => {
         if (currentStep === null) {
             setCurrentStep(1);
         } else if (currentStep === 4) {
-            setShowPopup(true);
+            setShowLikeDislikePopup(true);
         } else if (currentStep < stepsData.length) {
             setCurrentStep(currentStep + 1);
         }
@@ -220,7 +242,7 @@ const Activity1 = () => {
                                 <div className="activity-image">
                                     <img src={step1Image1} alt="Step 1" />
                                 </div>
-                                <div className="activity-hot-tip">
+                                <div className="activity-hot-tip" onClick={() => setShowHotTipPopup(true)}>
                                     <img src={fireFlameIcon} alt="Fire Flame Icon" />
                                     <p>Hot Tip! Look for things that are in capital letters,
                                         they usually signify a specific department or division within a company!</p>
@@ -327,7 +349,7 @@ const Activity1 = () => {
                 </div>
             </div>
 
-            {showPopup && (
+            {showLikeDislikePopup && (
                 <div className='activity-like-dislike-popup'>
                     <div className='activity-like-dislike-popup-content'>
                         <p>How did you find this activity?</p>
@@ -339,6 +361,14 @@ const Activity1 = () => {
                                 <img src={dislikeIcon} alt="Dislike" />
                             </div>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {showHotTipPopup && (
+                <div className='hot-tip-popup'>
+                    <div className='hot-tip-popup-content' ref={popupRef}>
+                        <img src={step1Image2} alt='3 stars' />
                     </div>
                 </div>
             )}

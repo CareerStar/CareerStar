@@ -2738,3 +2738,24 @@ h3 {
   overflow-x: auto;
   max-width: 800px;
 }
+
+.hot-tip-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.hot-tip-popup-content {
+  background: white;
+  padding: 10px 10px;
+  border-radius: 15px;
+  text-align: center;
+  position: relative;
+}
