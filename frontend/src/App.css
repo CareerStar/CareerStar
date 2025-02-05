@@ -2154,11 +2154,11 @@ h3 {
   flex: 1;
   border-right: 1px solid #ddd;
   /* background-color: #581AD1; */
-  background: linear-gradient(180deg, #581AD1 0%, #9B8AF7 74.43%, #F4F2FF 99.52%);;
+  background: linear-gradient(180deg, #581AD1 0%, #9B8AF7 74.43%, #F4F2FF 99.52%);
   /* background: linear-gradient(180deg, #b33939 0%, #732dff 0%, #4e15be 100%); */
   padding: 60px;
   top: 0;
-  max-height: 100vh;
+  /* max-height: 80vh; */
   flex-shrink: 0;
 }
 
@@ -2169,16 +2169,17 @@ h3 {
   text-align: left;
   width: 100%;
   overflow-y: auto;
+  overflow-x: auto;
   position: relative;
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   box-sizing: border-box;
 }
 
 .activity-description {
-  flex-grow: 1;
+  /* flex-grow: 1; */
 }
 
 .activity-description h2 {
@@ -2209,16 +2210,19 @@ h3 {
 .activity-image {
   width: 100%;
   height: auto;
-  max-height: 500px;
+  /* max-height: 500px; */
 }
 
-.activity-image img{
+.activity-image img {
   box-sizing: border-box;
   max-width: -webkit-fill-available;
   width: 648px;
   border: 1px solid #000000;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   border-radius: 0px;
+
+  /* float: right; */
+  margin: 0 0 10px 10px;
 }
 
 .activity-main-image {
@@ -2240,6 +2244,10 @@ h3 {
   flex-direction: row;
   margin-top: 30px;
   gap: 10px;
+}
+
+.activity-hot-tip:hover {
+  cursor: pointer;
 }
 
 .activity-hot-tip p {
@@ -2267,8 +2275,8 @@ h3 {
 }
 
 .activity-description .inline-container img {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
 }
 
 .activity-description .inline-container p {
@@ -2276,7 +2284,7 @@ h3 {
   font-family: 'Nunito';
   font-style: normal;
   font-weight: 400;
-  font-size: 15px;
+  font-size: 17px;
   color: #000000;
 }
 
@@ -2295,7 +2303,7 @@ h3 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 40px 0px;
+  margin-top: 60px;
 }
 
 .activity-navigation-back-button {
@@ -2516,6 +2524,7 @@ h3 {
   margin-top: 20px;
   margin-right: 40px;
 }
+
 /* Top Activities page styles */
 
 .top-activities {
@@ -2633,7 +2642,7 @@ h3 {
   font-size: 18px;
   line-height: 19px;
   color: #000000;
-  
+
 }
 
 .top-activity-card-bottom-container img {
@@ -2674,10 +2683,112 @@ h3 {
   border-color: #f38993;
 }
 
-.id-2  {
+.id-2 {
   border-color: #080877;
 }
 
 .id-3 {
   border-color: #00ff59;
+}
+
+.recruiters-table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 2px solid #000;
+}
+
+.recruiters-table th {
+  background-color: #f2f2f2;
+  color: #000000;
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: left;
+  padding: 12px 12px;
+  border: 1px solid #ddd;
+}
+
+.recruiters-table td {
+  font-family: 'Nunito';
+  font-style: normal;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.recruiters-table td input[type="text"] {
+  border: none;
+  padding: 12px 12px;
+  font-size: 17px;
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+}
+
+.recruiters-table td:last-child {
+  border-right: none;
+}
+
+.recruiters-table tr {
+  background-color: #f9f9f9;
+}
+
+.recruiters-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.recruiters-table input[type="text"]:focus {
+  border-color: #581AD1;
+  outline: none;
+}
+
+.x-scrollable-table {
+  overflow-x: auto;
+  max-width: 800px;
+}
+
+@media screen and (max-width: 1500px) {
+
+  /* MacBook Air 13" */
+  .x-scrollable-table {
+    max-width: 600px;
+  }
+}
+
+@media (min-width: 1500px) and (max-width: 1920px) {
+
+  /* Larger monitors */
+  .x-scrollable-table {
+    max-width: 900px;
+  }
+}
+
+@media screen and (min-width: 1921px) {
+
+  /* 2K, 4K Displays */
+  .x-scrollable-table {
+    max-width: 1000px;
+  }
+}
+
+.hot-tip-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.hot-tip-popup-content {
+  background: white;
+  padding: 10px 10px;
+  border-radius: 15px;
+  text-align: center;
+  position: relative;
 }
