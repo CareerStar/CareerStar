@@ -54,7 +54,7 @@ function LogIn() {
 
     const verifyToken = async (access_token) => {
         try {
-            const response = await axios.get('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/protected', {
+            const response = await axios.get('https://api.careerstar.co/protected', {
                 headers: {
                     Authorization: `Bearer ${access_token}`,
                 },
@@ -83,7 +83,7 @@ function LogIn() {
                 "password": password
             };
 
-            const response = await axios.post('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/login', requestBody);
+            const response = await axios.post('https://api.careerstar.co/login', requestBody);
             // const response = await axios.post('http://localhost:8080/users/login', requestBody);
             if (response.status === 200) {
                 const data = await response.data;

@@ -39,7 +39,7 @@ function Profile({ userId: propUserId }) {
         const fetchUserDetails = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/user/${userId}`);
+                const response = await fetch(`https://api.careerstar.co/user/${userId}`);
 
                 const data = await response.json();
                 if (response.ok) {
@@ -55,7 +55,7 @@ function Profile({ userId: propUserId }) {
                 console.error('Error fetching user details:', error);
             }
             try {
-                const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/onboarding/${userId}`);
+                const response = await fetch(`https://api.careerstar.co/onboarding/${userId}`);
                 const data = await response.json();
                 if (response.ok) {
                     if (data.summary) {
@@ -78,7 +78,7 @@ function Profile({ userId: propUserId }) {
 
     const handleSave = async () => {
         try {
-            const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/update_profile/${userId}`, {
+            const response = await fetch(`https://api.careerstar.co/update_profile/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ function Profile({ userId: propUserId }) {
         dispatch({ type: "SET_AVATAR", payload: avatar });
         console.log('Avatar:', avatar);
         try {
-            const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/profile_picture/${userId}`, {
+            const response = await fetch(`https://api.careerstar.co/profile_picture/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

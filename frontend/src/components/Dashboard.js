@@ -35,7 +35,7 @@ function Dashboard() {
 
     const fetchUserDetails = async () => {
         try {
-            const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/user/${userId}`);
+            const response = await fetch(`https://api.careerstar.co/user/${userId}`);
             // const response = await fetch(`http://localhost:8080/users/${userId}`);
             const data = await response.json();
             if (response.ok) {
@@ -49,7 +49,7 @@ function Dashboard() {
         }
 
         try {
-            const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/onboarding/${userId}`);
+            const response = await fetch(`https://api.careerstar.co/onboarding/${userId}`);
             // const response = await fetch(`http://localhost:8080/onboarding/${userId}`);
             const data = await response.json();
             if (response.ok) {

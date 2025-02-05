@@ -12,7 +12,7 @@ function LinkedIn() {
         const fetchUsersLinkedInDetails = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/linkedin', {
+                const response = await axios.get('https://api.careerstar.co/linkedin', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -55,7 +55,7 @@ function LinkedIn() {
                 LinkedIn: linkedInData,
             };
             const response = await axios.put(
-                `https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/linkedin/${userId}`,
+                `https://api.careerstar.co/linkedin/${userId}`,
                 payload,
                 {
                     headers: {

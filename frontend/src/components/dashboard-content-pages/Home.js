@@ -56,7 +56,7 @@ function Home({ onComplete, userId }) {
         const fetchUserDetails = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/user/${userId}`);
+                const response = await fetch(`https://api.careerstar.co/user/${userId}`);
                 // const response = await fetch(`http://localhost:8080/users/${userId}`);
                 const data = await response.json();
                 if (response.ok) {
@@ -70,7 +70,7 @@ function Home({ onComplete, userId }) {
             }
 
             try {
-                const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/onboarding/${userId}`);
+                const response = await fetch(`https://api.careerstar.co/onboarding/${userId}`);
                 // const response = await fetch(`http://localhost:8080/onboarding/${userId}`);
                 const data = await response.json();
                 if (response.ok) {
@@ -163,7 +163,7 @@ function Home({ onComplete, userId }) {
                 "major": answers.major,
                 "activityChoices": answers.activityChoices,
             };
-            const response = await axios.post('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/onboarding', requestBody);
+            const response = await axios.post('https://api.careerstar.co/onboarding', requestBody);
             // const response = await axios.post('http://localhost:8080/onboarding', requestBody);
             if (response.status === 200) {
                 const { responseUserId } = response.data;

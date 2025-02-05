@@ -36,7 +36,7 @@ const AdminLogin = () => {
 
     const verifyToken = async (admin_token) => {
         try {
-            const response = await axios.get('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/verifyAdminToken', {
+            const response = await axios.get('https://api.careerstar.co/verifyAdminToken', {
                 headers: {
                     Authorization: `Bearer ${admin_token}`,
                 },
@@ -65,12 +65,12 @@ const AdminLogin = () => {
                 "password": password
             };
 
-            const response = await axios.post('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/adminlogin', requestBody);
+            const response = await axios.post('https://api.careerstar.co/adminlogin', requestBody);
             if (response.status === 200) {
                 const admin_token = response.data.access_token;
                 localStorage.setItem('admin_token', admin_token);
                 navigate('/admin/dashboard');
-                // const response2 = await axios.get('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/events',{
+                // const response2 = await axios.get('https://api.careerstar.co/events',{
                 //     headers: {
                 //         Authorization: `Bearer ${token}`
                 //     }
