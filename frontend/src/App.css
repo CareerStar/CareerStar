@@ -2154,11 +2154,11 @@ h3 {
   flex: 1;
   border-right: 1px solid #ddd;
   /* background-color: #581AD1; */
-  background: linear-gradient(180deg, #581AD1 0%, #9B8AF7 74.43%, #F4F2FF 99.52%);;
+  background: linear-gradient(180deg, #581AD1 0%, #9B8AF7 74.43%, #F4F2FF 99.52%);
   /* background: linear-gradient(180deg, #b33939 0%, #732dff 0%, #4e15be 100%); */
   padding: 60px;
   top: 0;
-  max-height: 80vh;
+  /* max-height: 80vh; */
   flex-shrink: 0;
 }
 
@@ -2174,12 +2174,12 @@ h3 {
   min-height: 80vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   box-sizing: border-box;
 }
 
 .activity-description {
-  flex-grow: 1;
+  /* flex-grow: 1; */
 }
 
 .activity-description h2 {
@@ -2210,16 +2210,19 @@ h3 {
 .activity-image {
   width: 100%;
   height: auto;
-  max-height: 500px;
+  /* max-height: 500px; */
 }
 
-.activity-image img{
+.activity-image img {
   box-sizing: border-box;
   max-width: -webkit-fill-available;
   width: 648px;
   border: 1px solid #000000;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   border-radius: 0px;
+
+  /* float: right; */
+  margin: 0 0 10px 10px;
 }
 
 .activity-main-image {
@@ -2300,6 +2303,7 @@ h3 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-top: 60px;
 }
 
 .activity-navigation-back-button {
@@ -2520,6 +2524,7 @@ h3 {
   margin-top: 20px;
   margin-right: 40px;
 }
+
 /* Top Activities page styles */
 
 .top-activities {
@@ -2637,7 +2642,7 @@ h3 {
   font-size: 18px;
   line-height: 19px;
   color: #000000;
-  
+
 }
 
 .top-activity-card-bottom-container img {
@@ -2678,7 +2683,7 @@ h3 {
   border-color: #f38993;
 }
 
-.id-2  {
+.id-2 {
   border-color: #080877;
 }
 
@@ -2702,7 +2707,7 @@ h3 {
   line-height: 25px;
   text-align: left;
   padding: 12px 12px;
-  border: 1px solid #ddd; 
+  border: 1px solid #ddd;
 }
 
 .recruiters-table td {
@@ -2741,6 +2746,30 @@ h3 {
 .x-scrollable-table {
   overflow-x: auto;
   max-width: 800px;
+}
+
+@media screen and (max-width: 1500px) {
+
+  /* MacBook Air 13" */
+  .x-scrollable-table {
+    max-width: 600px;
+  }
+}
+
+@media (min-width: 1500px) and (max-width: 1920px) {
+
+  /* Larger monitors */
+  .x-scrollable-table {
+    max-width: 900px;
+  }
+}
+
+@media screen and (min-width: 1921px) {
+
+  /* 2K, 4K Displays */
+  .x-scrollable-table {
+    max-width: 1000px;
+  }
 }
 
 .hot-tip-popup {
