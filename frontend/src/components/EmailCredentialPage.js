@@ -76,7 +76,7 @@ function EmailCredentialPage() {
                 password: password,
                 stars: 3
             };
-            const response = await axios.post('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/users', requestBody);
+            const response = await axios.post('https://api.careerstar.co/users', requestBody);
 
             if (response.status === 201) {
                 const data = await response.data;

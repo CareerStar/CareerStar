@@ -14,7 +14,7 @@ function withAuth(WrappedComponent) {
                         return;
                     } else {
                         try {
-                            const response = await fetch('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/verifyAdminToken', {
+                            const response = await fetch('https://api.careerstar.co/verifyAdminToken', {
                                 headers: {
                                     'Authorization': `Bearer ${admin_token}`
                                 }
@@ -48,7 +48,7 @@ function withAuth(WrappedComponent) {
                     }
 
                     try {
-                        const response = await fetch('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/protected', {
+                        const response = await fetch('https://api.careerstar.co/protected', {
                             method: 'GET',
                             headers: {
                                 'Authorization': `Bearer ${accessToken}`
@@ -56,7 +56,7 @@ function withAuth(WrappedComponent) {
                         });
 
                         if (!response.ok) {
-                            const refreshResponse = await fetch('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/refresh', {
+                            const refreshResponse = await fetch('https://api.careerstar.co/refresh', {
                                 method: 'POST',
                                 headers: {
                                     'Authorization': `Bearer ${refreshToken}`

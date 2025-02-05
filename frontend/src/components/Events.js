@@ -15,7 +15,7 @@ function Events({ userId }) {
     useEffect(() => {
         const fetchUserEventsDetails = async () => {
             try {
-                const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/events/${userId}`);
+                const response = await fetch(`https://api.careerstar.co/events/${userId}`);
 
                 const data = await response.json();
                 if (response.ok) {
@@ -27,7 +27,7 @@ function Events({ userId }) {
                 }
 
                 // if (data.length === 0) {
-                //     const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/events`);
+                //     const response = await fetch(`https://api.careerstar.co/events`);
                 //     const data = await response.json();
                 //     console.log('All activities:', data);
                 //     if (response.ok) {
@@ -121,7 +121,7 @@ function Events({ userId }) {
             return;
         }
         try {
-            const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/user_activities/${userId}/${currentCard.activityId}`, {
+            const response = await fetch(`https://api.careerstar.co/user_activities/${userId}/${currentCard.activityId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

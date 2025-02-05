@@ -18,7 +18,7 @@ function Header({ userName }) {
         const fetchUserDetails = async () => {
             try {
                 console.log('fetching user detailsss', userId);
-                const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/profile_picture/${userId}`);
+                const response = await fetch(`https://api.careerstar.co/profile_picture/${userId}`);
                 const data = await response.json();
                 if (response.ok) {
                     if (data.profilepicture) {

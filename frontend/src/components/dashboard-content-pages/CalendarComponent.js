@@ -26,7 +26,7 @@ const CalendarComponent = () => {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/interviewschedule/${userId}`, {
+                const response = await fetch(`https://api.careerstar.co/interviewschedule/${userId}`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                 });
@@ -48,7 +48,7 @@ const CalendarComponent = () => {
             }
 
             try {
-                const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/user/${userId}`);
+                const response = await fetch(`https://api.careerstar.co/user/${userId}`);
                 const data = await response.json();
                 if (response.ok) {
                     setEmailID(data.emailID);
@@ -93,7 +93,7 @@ const CalendarComponent = () => {
         const newEvent = { date: selectedDate, ...interviewDetails };
 
         try {
-            const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/interviewschedule/${userId}`, {
+            const response = await fetch(`https://api.careerstar.co/interviewschedule/${userId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

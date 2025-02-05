@@ -30,7 +30,7 @@ function RoadmapActivity4({ userId }) {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/roadmapactivity/${userId}/${activityId}`);
+                const response = await axios.get(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`);
                 if (response.data) {
                     // Handle response
                     setAnswers(response.data);
@@ -58,7 +58,7 @@ function RoadmapActivity4({ userId }) {
                 answers: answers,
                 stars: starCount,
             };
-            const response = await axios.post(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/roadmapactivity/${userId}/${activityId}`, payload);
+            const response = await axios.post(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`, payload);
             if (response.status === 200) {
                 setCompleted(true);
                 toggleDescriptionVisibility();

@@ -20,7 +20,7 @@ import RoadmapActivity31 from '../roadmap-activities/RoadmapActivity31';
 import RoadmapActivity32 from '../roadmap-activities/RoadmapActivity32';
 import RoadmapActivity33 from '../roadmap-activities/RoadmapActivity33';
 
-function Roadmap({ userId }) {
+function Roadmap({ userId, activityName }) {
     const [currentSituation, setCurrentSituation] = useState('I’m a recent grad');
     const [goal, setGoal] = useState('To get my first full-time role as a software engineer');
     const [isEditingCurrentSituation, setIsEditingCurrentSituation] = useState(false);
@@ -34,7 +34,7 @@ function Roadmap({ userId }) {
         const fetchUserDetails = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/onboarding/${userId}`);
+                const response = await fetch(`https://api.careerstar.co/onboarding/${userId}`);
                 const data = await response.json();
                 if (response.ok) {
                     setCurrentSituation(data.currentSituation);
@@ -56,7 +56,7 @@ function Roadmap({ userId }) {
     const saveUserDetails = async () => {
         setLoading(true);
         try {
-            const response = await fetch(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/update_onboarding/${userId}`, {
+            const response = await fetch(`https://api.careerstar.co/update_onboarding/${userId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

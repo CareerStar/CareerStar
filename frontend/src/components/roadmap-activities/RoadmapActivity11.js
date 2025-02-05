@@ -1,13 +1,18 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Jeopardy from '../internal-components/Jeopardy';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import starEmpty from '../../assets/images/star-empty.png';
 import star from '../../assets/images/star.png';
 import downArrow from '../../assets/images/down-arrow-roadmap.png';
 import upArrow from '../../assets/images/up-arrow-roadmap.png';
+import rightArrow from '../../assets/images/right-arrow-roadmap.png';
 
 function RoadmapActivity11({ userId }) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    // const history = useHistory();
     const activityId = 11;
     const [completed, setCompleted] = useState(false);
     const [alreadyCompleted, setAlreadyCompleted] = useState(false);
@@ -20,7 +25,7 @@ function RoadmapActivity11({ userId }) {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/roadmapactivity/${userId}/${activityId}`);
+                const response = await axios.get(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`);
                 if (response.data) {
                     setAnswers(response.data[0]);
                     setCompleted(response.data[1]);
@@ -44,7 +49,7 @@ function RoadmapActivity11({ userId }) {
                 answers: answers,
                 stars: starCount,
             };
-            const response = await axios.post(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/roadmapactivity/${userId}/${activityId}`, payload);
+            const response = await axios.post(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`, payload);
             if (response.status === 200) {
                 if (completed) {
                     setCompleted(true);
@@ -60,7 +65,10 @@ function RoadmapActivity11({ userId }) {
     };
 
     const toggleDescriptionVisibility = () => {
-        setIsDescriptionVisible(!isDescriptionVisible);
+        // navigate('/dashboard/profile');
+        navigate('/dashboard/activity/11', { state: { prevPage: 'roadmap' } });
+        // history.push('dashboard/activity/11');
+        // setIsDescriptionVisible(!isDescriptionVisible);
     };
 
     return (
@@ -75,15 +83,15 @@ function RoadmapActivity11({ userId }) {
                     <p>Let’s Give Back! 🤝</p>
                     {isDescriptionVisible ? (
                         <img
-                            src={upArrow}
-                            alt='Up arrow icon'
+                            src={rightArrow}
+                            alt='Right arrow icon'
                             onClick={() => toggleDescriptionVisibility()}
                             style={{ cursor: 'pointer' }}
                         />
                     ) : (
                         <img
-                            src={downArrow}
-                            alt='Down arrow icon'
+                            src={rightArrow}
+                            alt='Right arrow icon'
                             onClick={() => toggleDescriptionVisibility()}
                             style={{ cursor: 'pointer' }}
                         />
@@ -101,6 +109,7 @@ function RoadmapActivity11({ userId }) {
             {isDescriptionVisible && (
                 <div className='activity-description-container'>
                     <div className='activity-description-content'>
+                    <Jeopardy />
                         <div className='activity-box flex-row'>
                             <div className='activity-emoji'>🌟</div>
                             <div className='flex-col'>

@@ -22,7 +22,7 @@ function AdminEvents() {
         const fetchUserEventsDetails = async () => {
             try {
                 const admin_token = localStorage.getItem('admin_token');
-                const response = await axios.get('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/events', {
+                const response = await axios.get('https://api.careerstar.co/events', {
                     headers: {
                         Authorization: `Bearer ${admin_token}`
                     }
@@ -54,7 +54,7 @@ function AdminEvents() {
             const requestBody = {
                 newEvents
             };
-            const response = await axios.post('https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/events', newEvents, {
+            const response = await axios.post('https://api.careerstar.co/events', newEvents, {
                 headers: {
                     Authorization: `Bearer ${admin_token}`,
                     'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ function AdminEvents() {
     const handleDelete = async (activityId) => {
         try {
             const admin_token = localStorage.getItem('admin_token');
-            const response = await axios.delete(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/events/${activityId}`, {
+            const response = await axios.delete(`https://api.careerstar.co/events/${activityId}`, {
                 headers: {
                     Authorization: `Bearer ${admin_token}`
                 }
@@ -131,7 +131,7 @@ function AdminEvents() {
             // Convert tags back into an array
             // activity.tags = activity.tags.split(',').map(tag => tag.trim());
             const response = await axios.put(
-                `https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/events/${activity.activityId}`,
+                `https://api.careerstar.co/events/${activity.activityId}`,
                 activity,
                 {
                     headers: {

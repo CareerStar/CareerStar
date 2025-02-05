@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import starEmpty from '../../assets/images/star-empty.png';
 import star from '../../assets/images/star.png';
 import downArrow from '../../assets/images/down-arrow-roadmap.png';
 import upArrow from '../../assets/images/up-arrow-roadmap.png';
+import rightArrow from '../../assets/images/right-arrow-roadmap.png';
 
 function RoadmapActivity13({ userId }) {
+    const navigate = useNavigate();
     const activityId = 13;
     const [completed, setCompleted] = useState(false);
     const [starCount, setStarCount] = useState(3);
@@ -20,7 +23,7 @@ function RoadmapActivity13({ userId }) {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/roadmapactivity/${userId}/${activityId}`);
+                const response = await axios.get(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`);
                 if (response.data) {
                     setAnswers(response.data[0]);
                     setCompleted(response.data[1]);
@@ -43,7 +46,7 @@ function RoadmapActivity13({ userId }) {
                 answers: answers,
                 stars: starCount,
             };
-            const response = await axios.post(`https://ec2-34-227-29-26.compute-1.amazonaws.com:5000/roadmapactivity/${userId}/${activityId}`, payload);
+            const response = await axios.post(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`, payload);
             if (response.status === 200) {
                 if (completed) {
                     setCompleted(true);
@@ -57,7 +60,8 @@ function RoadmapActivity13({ userId }) {
     };
 
     const toggleDescriptionVisibility = () => {
-        setIsDescriptionVisible(!isDescriptionVisible);
+        navigate('/dashboard/activity/13', { state: { prevPage: 'roadmap' } });
+        // setIsDescriptionVisible(!isDescriptionVisible);
     };
 
     return (
@@ -72,14 +76,14 @@ function RoadmapActivity13({ userId }) {
                     <p>Your Core Values 🥰</p>
                     {isDescriptionVisible ? (
                         <img
-                            src={upArrow}
+                            src={rightArrow}
                             alt='Up arrow icon'
                             onClick={() => toggleDescriptionVisibility()}
                             style={{ cursor: 'pointer' }}
                         />
                     ) : (
                         <img
-                            src={downArrow}
+                            src={rightArrow}
                             alt='Down arrow icon'
                             onClick={() => toggleDescriptionVisibility()}
                             style={{ cursor: 'pointer' }}
