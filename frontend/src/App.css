@@ -2380,6 +2380,7 @@ h3 {
 .activity-step {
   box-sizing: border-box;
   width: 425px;
+  height: 150px;
   padding: 10px 40px;
   background: #FFFFFF;
   border-radius: 28px;
@@ -2523,6 +2524,15 @@ h3 {
   margin-left: 40px;
   margin-top: 20px;
   margin-right: 40px;
+}
+
+.flip-cards-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: left;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 /* Top Activities page styles */
@@ -2791,4 +2801,80 @@ h3 {
   border-radius: 15px;
   text-align: center;
   position: relative;
+}
+
+/* Flippable card for the game */
+
+.card-container {
+  perspective: 1000px;
+  width: 200px;
+  height: 300px;
+  cursor: pointer;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+  border: 0px solid #000;
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  flex-direction: column;
+}
+
+.card-text {
+  font-family: 'Sora' !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  font-size: 20px !important;
+  text-align: center !important;
+
+  color: #FFFFFF !important;
+}
+
+.card-title {
+  font-family: 'Sora' !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  text-align: center !important;
+  margin: 0px;
+  color: #FFFFFF !important;
+}
+
+.card-duty {
+  margin-top: 4px;
+
+  font-family: 'Nunito' !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  text-align: center !important;
+
+  color: #FFFFFF !important;
 }
