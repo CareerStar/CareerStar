@@ -307,7 +307,7 @@ const Activity1 = () => {
                             </div>
                             <ul>
                                 <li>
-                                    <p>Salimat Solebo is the most likely Hiring Manager for this role.</p>
+                                    <h3>Salimat Solebo is the most likely Hiring Manager for this role.</h3>
                                 </li>
                             </ul>
                         </ol>
