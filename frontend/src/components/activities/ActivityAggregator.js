@@ -1,10 +1,17 @@
 import React from 'react';
-import StepsPage from './Activity1';
+import Activity1 from './Activity1';
+import Activity2 from './Activity2';
 
 function ActivityAggregator({activity}) {
+
+    const ActivityComponent = {
+        1: <Activity1 />,
+        2: <Activity2 />,
+    };
+
     return (
         <div>
-            <StepsPage />
+            {ActivityComponent[activity] || <Activity1 />}
         </div>
     );
 }
