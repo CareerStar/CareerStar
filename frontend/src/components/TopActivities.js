@@ -14,12 +14,22 @@ function TopActivities() {
             <div className='top-activities-container'>
 
                 <TopActivityCard
-                    activityId={2}
+                    activityId={1}
                     activityTitle='Reaching Out To More Than Recruiters'
                     activityDescription='Reaching out to the people you could actually be working with is often be much more effective.'
                     activityTags={['Networking', 'LinkedIn']}
                     activityStarCount={7}
                     activityTime='15 min'
+                    moduleId={1}
+                />
+
+                <TopActivityCard
+                    activityId={2}
+                    activityTitle='Career Acronym Challenge'
+                    activityDescription='Test your knowledge of industry acronyms and their meanings, perfect for anyone looking to strengthen their business and tech vocabulary.'
+                    activityTags={['Networking', 'Career']}
+                    activityStarCount={7}
+                    activityTime='20 min'
                     moduleId={1}
                 />
 
