@@ -12,6 +12,7 @@ from datetime import timedelta, datetime
 import mailchimp_marketing as MailchimpMarketing
 from mailchimp_marketing import Client
 from mailchimp_marketing.api_client import ApiClientError
+import requests
 
 
 load_dotenv()
@@ -32,6 +33,8 @@ db_password = os.getenv('DB_PASSWORD')
 mailchimp_api_key = os.getenv('MAILCHIMP_API_KEY')
 mailchimp_server = os.getenv('MAILCHIMP_SERVER')
 mailchimp_audience_id = os.getenv('MAILCHIMP_AUDIENCE_ID')
+
+openrouter_api_key = os.getenv('OPENROUTER_API_KEY')
 
 connection_pool = psycopg2.pool.SimpleConnectionPool(
     1, 20,  # Min and max connections
@@ -802,6 +805,38 @@ def roadmapactivitypost(userId, roadmapActivityId):
             # cursor.close()
             # connection.close()
 
+@app.route('/generate-ai-feedback', methods=['POST'])
+def generate_ai_feedback():
+    try:
+        data = request.json
+        prompt = data.get("prompt")
+
+        brearerToken = "Bearer " + openrouter_api_key
+
+        response = requests.post(
+            url="https://openrouter.ai/api/v1/chat/completions",
+            headers={
+                "Authorization": brearerToken,
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": "google/gemini-2.0-flash-thinking-exp:free",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ],
+                "temperature": 0.5,
+                "top_p": 1,
+            }
+        )
+
+        response_json = response.json()
+        return jsonify({"feedback": response_json["choices"][0]["message"]["content"]})
+
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
 
 @app.route('/events/<int:activityId>', methods=['PUT'])
 def update_activity(activityId):
