@@ -35,6 +35,16 @@ function TopActivities() {
 
                 <TopActivityCard
                     activityId={3}
+                    activityTitle='Better Cold Call LinkedIn Messages'
+                    activityDescription='Draft better Messages that actually get results, while learning something new at the same time!'
+                    activityTags={['Networking', 'LinkedIn']}
+                    activityStarCount={3}
+                    activityTime='10 min'
+                    moduleId={3}
+                />
+
+                <TopActivityCard
+                    activityId={3}
                     activityTitle='Get To Know Your Interviewer'
                     activityDescription='Researching your interviewer before a job interview can give you a significant advantage.'
                     activityTags={['Interview', 'LinkedIn']}
