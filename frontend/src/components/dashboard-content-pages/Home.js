@@ -210,7 +210,7 @@ function Home({ onComplete, userId }) {
             case 4:
                 return (
                     <div className="home-page-content">
-                        <TopActivities />
+                        <TopActivities userId={userId} />
                         <Events userId={userId} />
                         <QoD />
                     </div>
