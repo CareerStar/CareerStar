@@ -1,24 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import axios from 'axios';
-import DOMPurify from 'dompurify';
 import editIcon from '../../assets/images/edit-icon.png';
-import starEmpty from '../../assets/images/star-empty.png';
-import downArrow from '../../assets/images/down-arrow-roadmap.png';
-import upArrow from '../../assets/images/up-arrow-roadmap.png';
-import hotTip1 from '../../assets/images/roadmap-activities/hot-tip-1.webp';
-import RoadmapActivity11 from '../roadmap-activities/RoadmapActivity11';
-import RoadmapActivity12 from '../roadmap-activities/RoadmapActivity12';
-import RoadmapActivity13 from '../roadmap-activities/RoadmapActivity13';
-import RoadmapActivity2 from '../roadmap-activities/RoadmapActivity2';
-import RoadmapActivity3 from '../roadmap-activities/RoadmapActivity3';
-import RoadmapActivity4 from '../roadmap-activities/RoadmapActivity4';
-import RoadmapActivity5 from '../roadmap-activities/RoadmapActivity5';
-import RoadmapActivity21 from '../roadmap-activities/RoadmapActivity21';
-import RoadmapActivity22 from '../roadmap-activities/RoadmapActivity22';
-import RoadmapActivity23 from '../roadmap-activities/RoadmapActivity23';
-import RoadmapActivity31 from '../roadmap-activities/RoadmapActivity31';
-import RoadmapActivity32 from '../roadmap-activities/RoadmapActivity32';
-import RoadmapActivity33 from '../roadmap-activities/RoadmapActivity33';
+import RoadmapActivityBar from '../../components/dashboard-content-pages/RoadmapActivityBar';
 
 function Roadmap({ userId, activityName }) {
     const [currentSituation, setCurrentSituation] = useState('I’m a recent grad');
@@ -29,6 +11,7 @@ function Roadmap({ userId, activityName }) {
     const [uploadedImage, setUploadedImage] = useState(null);
     const inputGoalRef = useRef(null);
     const inputSituationRef = useRef(null);
+    const [activityStatuses, setActivityStatuses] = useState({});
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -44,6 +27,23 @@ function Roadmap({ userId, activityName }) {
                 }
             } catch (error) {
                 console.error('Error fetching user details:', error);
+            } finally {
+                setLoading(false);
+            }
+
+            try {
+                const response = await fetch(`https://api.careerstar.co/roadmapactivity/${userId}`);
+                const data = await response.json();
+                if (response.ok) {
+                    setActivityStatuses(data);
+                    console.log('Activity Statuses:', setActivityStatuses);
+
+                    console.log(activityStatuses[1]);
+                } else {
+                    console.error('Error fetching Activity Status details:', data);
+                }
+            } catch (error) {
+                console.error('Error fetching Activity Status details:', error);
             } finally {
                 setLoading(false);
             }
@@ -164,23 +164,11 @@ function Roadmap({ userId, activityName }) {
 
             <div className='roadmap-phases-container'>
                 <div className='roadmap-phase flex-column'>
-                    <p className='roadmap-phase-title'>Phase 1</p>
-                    <RoadmapActivity11 userId={userId}/>
-                    <RoadmapActivity12 userId={userId}/>
-                    <RoadmapActivity13 userId={userId}/>
-                    <p className='roadmap-phase-title'>Phase 2</p>
-                    <RoadmapActivity21 userId={userId}/>
-                    <RoadmapActivity22 userId={userId}/>
-                    <RoadmapActivity23 userId={userId}/>
-                    <p className='roadmap-phase-title'>Phase 3</p>
-                    <RoadmapActivity31 userId={userId}/>
-                    <RoadmapActivity32 userId={userId}/>
-                    <RoadmapActivity33 userId={userId}/>
-                    {/* <RoadmapActivity2 userId={userId}/>
-                    <RoadmapActivity3 userId={userId}/>
-                    <RoadmapActivity4 userId={userId}/>
-                    <RoadmapActivity5 userId={userId}/> */}
-                    {/* <p className='roadmap-phase-title'>Phase 2: Career & Guidance</p> */}
+                    <p className='roadmap-phase-title'>Module 1</p>
+                    <RoadmapActivityBar activityName='Reaching Out To More Than Recruiters' activityId='1' completed={!!activityStatuses?.[1]} starCount={7} />
+                    <RoadmapActivityBar activityName='Career Acronym Challenge' activityId='2' completed={!!activityStatuses?.[2]} starCount={7} />
+                    <RoadmapActivityBar activityName='Better Cold Call LinkedIn Messages' activityId='3' completed={!!activityStatuses?.[3]} starCount={3} />
+                    <p className='roadmap-phase-title'>Module 2 (Coming Soon)</p>
                 </div>
             </div>
         </div>
