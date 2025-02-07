@@ -25,13 +25,12 @@ const Activity2 = () => {
     const dispatch = useDispatch();
     const userId = localStorage.getItem('userId');
     // const history = useHistory();
-    const activityId = 11;
+    const activityId = 12;
     const [completed, setCompleted] = useState(false);
     const [alreadyCompleted, setAlreadyCompleted] = useState(false);
     const [starCount, setStarCount] = useState(7);
     const [answers, setAnswers] = useState({
         answer1: "", //Answers can not be a null JSON object, it has to have at least one key-value pair
-        tableData: Array.from({ length: 4 }, () => Array(7).fill("")),
     });
     const [showHotTipPopup, setShowHotTipPopup] = useState(false);
     const [showLikeDislikePopup, setShowLikeDislikePopup] = useState(false);
