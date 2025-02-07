@@ -21,6 +21,7 @@ function TopActivities() {
                     activityStarCount={7}
                     activityTime='15 min'
                     moduleId={1}
+                    isReady={true}
                 />
 
                 <TopActivityCard
@@ -31,6 +32,7 @@ function TopActivities() {
                     activityStarCount={7}
                     activityTime='20 min'
                     moduleId={1}
+                    isReady={true}
                 />
 
                 <TopActivityCard
@@ -41,6 +43,7 @@ function TopActivities() {
                     activityStarCount={3}
                     activityTime='10 min'
                     moduleId={3}
+                    isReady={true}
                 />
 
                 <TopActivityCard
@@ -51,6 +54,7 @@ function TopActivities() {
                     activityStarCount={3}
                     activityTime='10 min'
                     moduleId={3}
+                    isReady={false}
                 />
 
                 <TopActivityCard
@@ -61,6 +65,7 @@ function TopActivities() {
                     activityStarCount={5}
                     activityTime='15 min'
                     moduleId={2}
+                    isReady={false}
                 />
 
                 <TopActivityCard
@@ -71,6 +76,7 @@ function TopActivities() {
                     activityStarCount={5}
                     activityTime='10 min'
                     moduleId={3}
+                    isReady={false}
                 />
             </div>
         </div>
