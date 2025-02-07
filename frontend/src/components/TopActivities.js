@@ -5,11 +5,44 @@ import clock from '../assets/images/clock.png';
 import startIcon from '../assets/images/start-icon.png';
 import TopActivityCard from './TopActivityCard';
 
-function TopActivities() {
+function TopActivities({ userId }) {
     const [firstname, setFirstname] = useState(localStorage.getItem('firstname') || '');
+    const [loading, setLoading] = useState(false);
+    const [activityStatuses, setActivityStatuses] = useState({});
+
+    useEffect(() => {
+        const fetchActivityStatusDetails = async () => {
+            setLoading(true);
+
+            try {
+                const response = await fetch(`https://api.careerstar.co/roadmapactivity/${userId}`);
+                const data = await response.json();
+                if (response.ok) {
+                    setActivityStatuses(data);
+                    console.log('Activity Statuses:', setActivityStatuses);
+
+                    console.log(activityStatuses[1]);
+                } else {
+                    console.error('Error fetching Activity Status details:', data);
+                }
+            } catch (error) {
+                console.error('Error fetching Activity Status details:', error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        if (userId) {
+            fetchActivityStatusDetails();
+        }
+    }, [userId]);
 
     return (
         <div className='top-activities'>
+            {loading && (
+                <div className="spinner-overlay">
+                    <div className="spinner"></div>
+                </div>
+            )}
             <h1>{firstname}'s Top Activities</h1>
             <div className='top-activities-container'>
 
@@ -22,6 +55,7 @@ function TopActivities() {
                     activityTime='15 min'
                     moduleId={1}
                     isReady={true}
+                    completed={!!activityStatuses?.[1]}
                 />
 
                 <TopActivityCard
@@ -33,6 +67,7 @@ function TopActivities() {
                     activityTime='20 min'
                     moduleId={1}
                     isReady={true}
+                    completed={!!activityStatuses?.[2]}
                 />
 
                 <TopActivityCard
@@ -44,10 +79,11 @@ function TopActivities() {
                     activityTime='10 min'
                     moduleId={3}
                     isReady={true}
+                    completed={!!activityStatuses?.[3]}
                 />
 
                 <TopActivityCard
-                    activityId={3}
+                    activityId={4}
                     activityTitle='Get To Know Your Interviewer'
                     activityDescription='Researching your interviewer before a job interview can give you a significant advantage.'
                     activityTags={['Interview', 'LinkedIn']}
@@ -55,10 +91,11 @@ function TopActivities() {
                     activityTime='10 min'
                     moduleId={3}
                     isReady={false}
+                    completed={!!activityStatuses?.[4]}
                 />
 
                 <TopActivityCard
-                    activityId={1}
+                    activityId={5}
                     activityTitle='The Dreaded Salary Talk'
                     activityDescription='Discussing Salary During Interviews'
                     activityTags={['Interview']}
@@ -66,10 +103,11 @@ function TopActivities() {
                     activityTime='15 min'
                     moduleId={2}
                     isReady={false}
+                    completed={!!activityStatuses?.[5]}
                 />
 
                 <TopActivityCard
-                    activityId={3}
+                    activityId={6}
                     activityTitle='Sending A Great Thank You Note - Immediately'
                     activityDescription='Master the art of writing a professional and memorable thank-you note after your interview.'
                     activityTags={['Interview', 'LinkedIn']}
@@ -77,6 +115,7 @@ function TopActivities() {
                     activityTime='10 min'
                     moduleId={3}
                     isReady={false}
+                    completed={!!activityStatuses?.[6]}
                 />
             </div>
         </div>
