@@ -26,7 +26,7 @@ const Activity3 = () => {
     const dispatch = useDispatch();
     const userId = localStorage.getItem('userId');
     // const history = useHistory();
-    const activityId = 11;
+    const activityId = 13;
     const [completed, setCompleted] = useState(false);
     const [alreadyCompleted, setAlreadyCompleted] = useState(false);
     const [starCount, setStarCount] = useState(7);
