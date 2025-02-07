@@ -5,7 +5,7 @@ import star from '../assets/images/star.png';
 import clock from '../assets/images/clock.png';
 import startIcon from '../assets/images/start-icon.png';
 
-function TopActivityCard({ activityId, activityTitle, activityDescription, activityTags, activityStarCount, activityTime, moduleId, isReady }) {
+function TopActivityCard({ activityId, activityTitle, activityDescription, activityTags, activityStarCount, activityTime, moduleId, isReady, completed }) {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const handleActivityClick = (activityId) => {
@@ -31,7 +31,9 @@ function TopActivityCard({ activityId, activityTitle, activityDescription, activ
             </div>
             <div className='top-activity-card-bottom-container'>
                 <div className='top-activity-card-star'>
-                    <img src={starEmpty} alt='star' />
+                    {completed ?
+                        <img src={star} alt='star' /> :
+                        <img src={starEmpty} alt='star' />}
                     <p>{activityStarCount}</p>
                 </div>
                 <div className='top-activity-card-time'>
