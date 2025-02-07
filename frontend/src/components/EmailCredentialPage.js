@@ -3,7 +3,7 @@ import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import axios from 'axios';
 import ProgressBar from './ProgressBar';
-import careerStarLogo from '../assets/images/career-star-logo-black.png';
+import careerStarLogo from '../assets/images/career-star-logo-white.png';
 import Stars3 from '../assets/images/stars3.png';
 import eye from '../assets/images/eye.svg';
 import eyeOff from '../assets/images/eye-off.svg';

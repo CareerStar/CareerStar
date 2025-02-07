@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-import careerStarLogo from '../assets/images/career-star-logo-black.png';
+import careerStarLogo from '../assets/images/career-star-logo-white.png';
 import astroaut from '../assets/images/main-page-astronaut.png';
 
 function StartPage() {
