@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import starEmpty from '../assets/images/star-empty.png';
 import star from '../assets/images/star.png';
 import clock from '../assets/images/clock.png';
 import startIcon from '../assets/images/start-icon.png';
 
-function TopActivityCard({activityId, activityTitle, activityDescription, activityTags, activityStarCount, activityTime, moduleId}) {
+function TopActivityCard({ activityId, activityTitle, activityDescription, activityTags, activityStarCount, activityTime, moduleId, isReady, completed }) {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const handleActivityClick = (activityId) => {
@@ -31,17 +31,25 @@ function TopActivityCard({activityId, activityTitle, activityDescription, activi
             </div>
             <div className='top-activity-card-bottom-container'>
                 <div className='top-activity-card-star'>
-                    <img src={starEmpty} alt='star' />
+                    {completed ?
+                        <img src={star} alt='star' /> :
+                        <img src={starEmpty} alt='star' />}
                     <p>{activityStarCount}</p>
                 </div>
                 <div className='top-activity-card-time'>
                     <img src={clock} alt='clock' />
                     <p>{activityTime}</p>
                 </div>
-                <div className='top-activity-card-start' onClick={() => handleActivityClick(activityId)}>
-                    <p>Start</p>
-                    <img src={startIcon} alt='start' />
-                </div>
+                {isReady ? (
+                    <div className='top-activity-card-start' onClick={() => handleActivityClick(activityId)}>
+                        <p>Start</p>
+                        <img src={startIcon} alt='start' />
+                    </div>
+                ) : (
+                    <div className='top-activity-card-start'>
+                        <p>Coming Soon</p>
+                    </div>
+                )}
             </div>
         </div>
     );
