@@ -114,6 +114,11 @@ function Events({ userId }) {
         );
     };
 
+    const openEventPage = () => {
+        if (currentCard.eventURL) {
+            window.open(currentCard.eventURL, '_blank');
+        }
+    }
 
     const updateUserEvent = async () => {
         if (currentCard.completed) {
@@ -150,12 +155,7 @@ function Events({ userId }) {
         <div className='events-container'>
             <h1>Top Picks For You This Week</h1>
             <div className='event-cards'>
-                {/* {events.length > 0 ? (
-                    events.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
-                ) : (
-                    cards.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
-                )} */}
-                {events.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><EventCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} completed={card.completed} /></div>)}
+                {events.map(card => <div className="event-card-wrapper" onClick={() => { setShowPopup(true); setCurrentCard(card) }}><EventCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} eventDate={card.eventDate} description={card.description} eventURL={card.eventURL} starCount={card.star} completed={card.completed} /></div>)}
             </div>
             {showPopup && (
                 <div className='event-popup'>
@@ -182,11 +182,15 @@ function Events({ userId }) {
                         </div>
                         <h2>{currentCard.title}</h2>
                         <div className='event-popup-text'>
-                            <p>{currentCard.description}</p>
+                            {currentCard.detailedDescription ? <p>{currentCard.detailedDescription}</p> : <p>{currentCard.description}</p>}
                         </div>
-                        <div className='event-popup-submit-button' onClick={updateUserEvent}>
-                            {currentCard.completed ? <p>Completed</p> : <p>Mark as completed</p>}
-                            {/* <p>I watched this</p> */}
+                        <div className='event-popup-buttons'>
+                            <div className='event-popup-sign-up-button' onClick={openEventPage}>
+                                <p>Sign up ↗</p>
+                            </div>
+                            <div className='event-popup-submit-button' onClick={updateUserEvent}>
+                                {currentCard.completed ? <p>Completed</p> : <p>Mark as completed</p>}
+                            </div>
                         </div>
                     </div>
                 </div>
