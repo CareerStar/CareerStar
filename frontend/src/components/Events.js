@@ -1,10 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EventCard from './EventCard';
-import activity1 from '../assets/images/activity-1.png';
-import activity2 from '../assets/images/activity-2.png';
-import activity3 from '../assets/images/activity-3.png';
-import activity4 from '../assets/images/activity-4.png';
 import starEmpty from '../assets/images/star-empty.png';
 import star from '../assets/images/star.png';
 
@@ -25,18 +21,6 @@ function Events({ userId }) {
                 } else {
                     console.error('Error fetching user details:', data);
                 }
-
-                // if (data.length === 0) {
-                //     const response = await fetch(`https://api.careerstar.co/events`);
-                //     const data = await response.json();
-                //     console.log('All activities:', data);
-                //     if (response.ok) {
-                //         if (data) {
-                //             setEvents(data);
-                //         }
-                //         console.log('User activities details:', data);
-                //     }
-                // }
             }
             catch (error) {
                 console.error('Error fetching user details:', error);
@@ -47,41 +31,6 @@ function Events({ userId }) {
         }
     }, [userId]);
 
-    const cards =
-        [
-            {
-                activityId: 1,
-                imageURL: activity1,
-                tags: ['Profile', 'Event'],
-                title: 'Complete your LinkedIn profile',
-                description: 'Enhance your professional presence with a fully optimized LinkedIn profile. This step-by-step guide will walk you through the process, ensuring you showcase your skills and experience effectively.',
-                star: 7
-            },
-            {
-                activityId: 2,
-                imageURL: activity2,
-                tags: ['Event'],
-                title: 'TechWalk - Brooklyn',
-                description: 'This is a chance to network, share ideas, and build relationships in a healthy and refreshing alternative to the average happy hour.',
-                star: 15
-            },
-            {
-                activityId: 3,
-                imageURL: activity3,
-                tags: ['Upskill', 'Community'],
-                title: 'Flushing Tech Meetup at TIQC',
-                description: 'Get ready to dive into the world of innovation and collaboration at the Tech Incubator at Queens College, where the Flushing Tech Meetup is hosting an electrifying hackathon just for you!',
-                star: 20
-            },
-            {
-                activityId: 4,
-                imageURL: activity4,
-                tags: ['Tip of the day'],
-                title: 'Showing confidence in job interviews',
-                description: 'Watch our tip of the day: How to show confidence in job interviews. It’s easier than you think!',
-                star: 3
-            }
-        ];
     const [showPopup, setShowPopup] = useState(false);
     const [currentCard, setCurrentCard] = useState(null);
     const popupRef = useRef(null);
