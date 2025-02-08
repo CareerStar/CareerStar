@@ -723,6 +723,35 @@ def upload_image():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+
+@app.route('/roadmapactivity/<int:userId>', methods=['GET'])
+def roadmapactivityget_all(userId):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        get_roadmapactivity_query="""
+        SELECT roadmapactivityid, completed FROM user_roadmap_activities
+        WHERE userId = %s;
+        """
+
+        cursor.execute(get_roadmapactivity_query, (userId, ))
+        roadmap_activities = cursor.fetchall()
+
+        activity_dict = {activity[0]: activity[1] for activity in roadmap_activities}
+
+        if roadmap_activities:
+            return jsonify(activity_dict)
+        else:
+            return jsonify({"error": str(error)}), 404
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+    finally:
+        if connection:
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
+
 @app.route('/roadmapactivity/<int:userId>/<int:roadmapActivityId>', methods=['GET'])
 def roadmapactivityget(userId, roadmapActivityId):
     try:
