@@ -577,7 +577,7 @@ def get_user_activities_details(userId):
         connection = get_db_connection()
         cursor = connection.cursor()
         get_user_activities_details_query = """
-        SELECT a.imageURL, a.videoURL, a.title, a.description, a.tags, a.star, a.activityId, u.completed FROM user_activities u JOIN activities a ON a.activityId = u.activityId WHERE u.userId = %s;
+        SELECT a.imageURL, a.videoURL, a.title, a.description, a.tags, a.star, a.activityId, a.eventURL, a.eventDate, a.detailedDescription, u.completed FROM user_activities u JOIN activities a ON a.activityId = u.activityId WHERE u.userId = %s;
         """
         cursor.execute(get_user_activities_details_query, (userId,))
         activities = cursor.fetchall()
@@ -591,7 +591,10 @@ def get_user_activities_details(userId):
                 "tags": activity[4],
                 "star": activity[5],
                 "activityId": activity[6],
-                "completed": activity[7],
+                "eventURL": activity[7],
+                "eventDate": activity[8], 
+                "detailedDescription": activity[9],
+                "completed": activity[10],
             }
             activity_list.append(activity_dict)
         return jsonify(activity_list)
@@ -615,7 +618,7 @@ def get_all_activities_details():
         connection = get_db_connection()
         cursor = connection.cursor()
         get_user_activities_details_query = """
-        SELECT imageURL, title, description, tags, star, activityId, videoURL FROM activities;
+        SELECT imageURL, title, description, tags, star, activityId, videoURL, eventURL, eventDate, detailedDescription FROM activities;
         """
         cursor.execute(get_user_activities_details_query)
         activities = cursor.fetchall()
@@ -628,7 +631,10 @@ def get_all_activities_details():
                 "tags": activity[3],
                 "star": activity[4],
                 "activityId": activity[5],
-                "videoURL": activity[6]
+                "videoURL": activity[6],
+                "eventURL": activity[7],
+                "eventDate": activity[8], 
+                "detailedDescription": activity[9]
             }
             activity_list.append(activity_dict)
         return jsonify(activity_list)
@@ -655,20 +661,23 @@ def add_new_activities():
         data = request.json
         title = data.get("title")
         description = data.get("description")
+        detailedDescription = data.get("detailedDescription")
         tags = data.get("tags")
         star = data.get("star")
         imageURL = data.get("imageURL")
         videoURL = data.get("videoURL")
+        eventURL = data.get("eventURL")
+        eventDate = data.get("eventDate")
 
         print(title, description, tags, star)
 
         add_new_activities_query = """
-        INSERT INTO activities (imageURL, title, description, tags, star, videoURL)
-        VALUES (%s, %s, %s, %s, %s, %s)
+        INSERT INTO activities (imageURL, title, description, tags, star, videoURL, eventURL, eventDate, detailedDescription)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING activityId;
         """
 
-        cursor.execute(add_new_activities_query, (imageURL, title, description, tags, star, videoURL, ))
+        cursor.execute(add_new_activities_query, (imageURL, title, description, tags, star, videoURL, eventURL, eventDate, detailedDescription))
         activity_id = cursor.fetchone()[0]
         connection.commit()
 
@@ -678,7 +687,10 @@ def add_new_activities():
             "description": description,
             "tags": tags,
             "star": star,
-            "videoURL": videoURL
+            "videoURL": videoURL,
+            "eventURL": eventURL,
+            "eventDate": eventDate,
+            "detailedDescription": detailedDescription
         }
 
         return jsonify({"message": "Activity added successfully", "activity": added_activity}), 201
@@ -847,17 +859,21 @@ def update_activity(activityId):
         data = request.json
         title = data.get("title")
         description = data.get("description")
+        detailedDescription = data.get("detailedDescription")
         tags = data.get("tags")
         star = data.get("star")
         imageURL = data.get("imageURL")
         videoURL = data.get("videoURL")
+        eventURL = data.get("eventURL")
+        eventDate = data.get("eventDate")
+        detailedDescription = data.get("detailedDescription")
 
         update_activity_query = """
         UPDATE activities 
-        SET title = %s, description = %s, tags = %s, star = %s, imageURL = %s, videoURL = %s 
+        SET title = %s, description = %s, tags = %s, star = %s, imageURL = %s, videoURL = %s, eventURL = %s, eventDate = %s, detailedDescription = %s
         WHERE activityId = %s;
         """
-        cursor.execute(update_activity_query, (title, description, tags, star, imageURL, videoURL, activityId))
+        cursor.execute(update_activity_query, (title, description, tags, star, imageURL, videoURL, eventURL, eventDate, detailedDescription, activityId))
         connection.commit()
 
         return jsonify({"message": "Activity updated successfully"}), 200
