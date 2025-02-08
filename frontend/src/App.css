@@ -1178,6 +1178,14 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   /* align-items: center; */
   gap: 32px;
   flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.event-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; 
+  cursor: pointer;
 }
 
 /* Activity card styles */
@@ -1188,12 +1196,14 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   gap: 10px;
   padding: 20px;
   width: 100%;
-  height: 380px;
+  /* height: 380px; */
+  min-height: 100px;
   max-width: 200px;
   background: #FFFFFF;
   border-radius: 15px;
   box-shadow: 0px 485px 194px rgba(224, 224, 224, 0.01), 0px 273px 164px rgba(224, 224, 224, 0.05), 0px 121px 121px rgba(224, 224, 224, 0.09), 0px 30px 67px rgba(224, 224, 224, 0.1);
   text-align: left;
+  flex-grow: 1;
 }
 
 .event-card-container:hover {
@@ -1249,6 +1259,16 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   color: #000000;
   margin: 0px;
   margin-top: 10px;
+}
+
+.event-card-date p {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #000000;
+  margin: 0px;
 }
 
 .event-card-content .event-card-description p {
@@ -1347,7 +1367,35 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 
 }
 
-.event-popup-content .event-popup-submit-button {
+.event-popup-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  margin: 0 auto;
+}
+
+.event-popup-sign-up-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 0px;
+
+  width: 100%;
+  height: 20px;
+
+  margin: 0 auto;
+  margin-top: 20px;
+  background: #009323;
+  border-radius: 8px;
+
+  color: #FFFFFF;
+}
+
+.event-popup-submit-button {
   display: flex;
   flex-direction: row;
   justify-content: center;
