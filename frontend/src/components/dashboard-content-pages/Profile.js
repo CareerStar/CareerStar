@@ -79,6 +79,7 @@ function Profile({ userId: propUserId }) {
     }, [userId]);
 
     const handleSave = async () => {
+        setLoading(true);
         try {
             const response = await fetch(`https://api.careerstar.co/update_profile/${userId}`, {
                 method: 'PUT',
@@ -97,6 +98,8 @@ function Profile({ userId: propUserId }) {
             }
         } catch (error) {
             console.error('Error updating user details:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
