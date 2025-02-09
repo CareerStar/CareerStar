@@ -264,12 +264,12 @@ const Activity1 = () => {
                             <ul>
                                 <li><p>What are the responsibilities of this department?</p></li>
                                 <li><p>Search for the keywords (here example: Advanced Data Science, Artificial Intelligence)</p></li>
-                                <div className="activity-image">
-                                    <img src={step2Image1} alt="Step 1" />
-                                </div>
                                 {/* <li><p>What person is ultimately responsible for this department’s KPIs and Lines of Business?</p></li>
                                 <li><p>What is the department’s focus area (e.g., Engineering, Operations, Research & Development)?</p></li> */}
                             </ul>
+                            <div className="activity-image">
+                                <img src={step2Image1} alt="Step 1" />
+                            </div>
                         </ol>
                     </div>
                 ) : currentStep === 3 ? (
@@ -312,7 +312,7 @@ const Activity1 = () => {
                             </div>
                             <ul>
                                 <li>
-                                    <h3>Salimat Solebo is the most likely Hiring Manager for this role.</h3>
+                                    <h3>Salimat Solebo is the most likely the Hiring Manager for this role.</h3>
                                 </li>
                             </ul>
                         </ol>
