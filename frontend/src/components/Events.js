@@ -75,7 +75,7 @@ function Events({ userId }) {
             return;
         }
         try {
-            const response = await fetch(`https://api.careerstar.co/user_activities/${userId}/${currentCard.activityId}`, {
+            const response = await fetch(`https://api.careerstar.co/events/${userId}/${currentCard.activityId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
