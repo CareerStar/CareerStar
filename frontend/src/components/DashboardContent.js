@@ -19,7 +19,7 @@ function DashboardContent({ selectedPage, activityName, onComplete, userId }) {
             case 'Roadmap':
                 return <Roadmap userId={userId} />;
             case 'Events':
-                return <EventPage />;
+                return <EventPage userId={userId} />;
             case 'Network':
                 return <Network />;
             case 'Support':
