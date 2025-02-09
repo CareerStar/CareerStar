@@ -571,49 +571,87 @@ def update_user_profile_details(userId):
             # cursor.close()
             # connection.close()
 
-@app.route('/events/<int:userId>', methods=['GET'])
-def get_user_activities_details(userId):
-    try:
-        connection = get_db_connection()
-        cursor = connection.cursor()
-        get_user_activities_details_query = """
-        SELECT a.imageURL, a.videoURL, a.title, a.description, a.tags, a.star, a.activityId, a.eventURL, a.eventDate, a.detailedDescription, u.completed FROM user_activities u JOIN activities a ON a.activityId = u.activityId WHERE u.userId = %s;
-        """
-        cursor.execute(get_user_activities_details_query, (userId,))
-        activities = cursor.fetchall()
-        activity_list = []
-        for activity in activities:
-            activity_dict = {
-                "imageURL": activity[0],
-                "videoURL": activity[1],
-                "title": activity[2],
-                "description": activity[3],
-                "tags": activity[4],
-                "star": activity[5],
-                "activityId": activity[6],
-                "eventURL": activity[7],
-                "eventDate": activity[8], 
-                "detailedDescription": activity[9],
-                "completed": activity[10],
-            }
-            activity_list.append(activity_dict)
-        return jsonify(activity_list)
+# Below is the archieved version of fetching user events details
+# @app.route('/events/<int:userId>', methods=['GET'])
+# def get_user_activities_details(userId):
+#     try:
+#         connection = get_db_connection()
+#         cursor = connection.cursor()
+#         get_user_activities_details_query = """
+#         SELECT a.imageURL, a.videoURL, a.title, a.description, a.tags, a.star, a.activityId, a.eventURL, a.eventDate, a.detailedDescription, u.completed FROM user_activities u JOIN activities a ON a.activityId = u.activityId WHERE u.userId = %s;
+#         """
+#         cursor.execute(get_user_activities_details_query, (userId,))
+#         activities = cursor.fetchall()
+#         activity_list = []
+#         for activity in activities:
+#             activity_dict = {
+#                 "imageURL": activity[0],
+#                 "videoURL": activity[1],
+#                 "title": activity[2],
+#                 "description": activity[3],
+#                 "tags": activity[4],
+#                 "star": activity[5],
+#                 "activityId": activity[6],
+#                 "eventURL": activity[7],
+#                 "eventDate": activity[8], 
+#                 "detailedDescription": activity[9],
+#                 "completed": activity[10],
+#             }
+#             activity_list.append(activity_dict)
+#         return jsonify(activity_list)
 
-    except Exception as error:
-        return jsonify({"error": str(error)}), 500
+#     except Exception as error:
+#         return jsonify({"error": str(error)}), 500
 
-    finally:
-        if connection:
-            return_db_connection(connection)
+#     finally:
+#         if connection:
+#             return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
+
+# Below is the archieved version of get all activities/events details
+# @app.route('/events', methods=['GET'])
+# @jwt_required()
+# def get_all_activities_details():
+#     current_user = get_jwt_identity()
+#     if current_user['role'] != 'admin':
+#         return jsonify({"error": "Unauthorized"}), 401
+#     try:
+#         connection = get_db_connection()
+#         cursor = connection.cursor()
+#         get_user_activities_details_query = """
+#         SELECT imageURL, title, description, tags, star, activityId, videoURL, eventURL, eventDate, detailedDescription FROM activities;
+#         """
+#         cursor.execute(get_user_activities_details_query)
+#         activities = cursor.fetchall()
+#         activity_list = []
+#         for activity in activities:
+#             activity_dict = {
+#                 "imageURL": activity[0],
+#                 "title": activity[1],
+#                 "description": activity[2],
+#                 "tags": activity[3],
+#                 "star": activity[4],
+#                 "activityId": activity[5],
+#                 "videoURL": activity[6],
+#                 "eventURL": activity[7],
+#                 "eventDate": activity[8], 
+#                 "detailedDescription": activity[9]
+#             }
+#             activity_list.append(activity_dict)
+#         return jsonify(activity_list)
+
+#     except Exception as error:
+#         return jsonify({"error": str(error)}), 500
+
+#     finally:
+#         if connection:
+#             return_db_connection(connection)
             # cursor.close()
             # connection.close()
 
 @app.route('/events', methods=['GET'])
-@jwt_required()
-def get_all_activities_details():
-    current_user = get_jwt_identity()
-    if current_user['role'] != 'admin':
-        return jsonify({"error": "Unauthorized"}), 401
+def get_all_events_details_new():
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
@@ -698,6 +736,34 @@ def add_new_activities():
     except Exception as error:
         return jsonify({"error": str(error)}), 500
 
+    finally:
+        if connection:
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
+
+@app.route('/events/<int:userId>', methods=['GET'])
+def event_get_all(userId):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        get_events_query="""
+        SELECT activityId FROM user_activities
+        WHERE userId = %s AND completed = True;
+        """
+
+        cursor.execute(get_events_query, (userId, ))
+        events = cursor.fetchall()
+
+        event_dict = {event[0]: True for event in events}
+
+        if event_dict:
+            return jsonify(event_dict)
+        else:
+            return jsonify({"message": "No completed events found"}), 200
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
     finally:
         if connection:
             return_db_connection(connection)
@@ -940,6 +1006,42 @@ def delete_activity(activityId):
         if connection:
             return_db_connection(connection)
 
+# Below is archeieved version of update user activities
+# @app.route('/events/<int:userId>/<int:activityId>', methods=['PUT'])
+# def update_user_activity(userId, activityId):
+#     try:
+#         connection = get_db_connection()
+#         cursor = connection.cursor()
+
+#         data = request.json
+#         completed = data.get("completed")
+#         stars = data.get('stars')
+
+#         update_user_activity_query = """
+#         UPDATE user_activities 
+#         SET completed = %s 
+#         WHERE userId=%s AND activityId = %s;
+#         """
+#         cursor.execute(update_user_activity_query, (completed, userId, activityId))
+#         connection.commit()
+
+#         update_user_star_query = """
+#         UPDATE Users
+#         SET stars = stars + %s
+#         WHERE userId=%s
+#         """
+#         cursor.execute(update_user_star_query, (stars, userId))
+#         connection.commit()
+
+#         return jsonify({"message": "User activity table updated successfully"}), 200
+
+#     except Exception as error:
+#         return jsonify({"error": str(error)}), 500
+
+#     finally:
+#         if connection:
+#             return_db_connection(connection)
+
 @app.route('/events/<int:userId>/<int:activityId>', methods=['PUT'])
 def update_user_activity(userId, activityId):
     try:
@@ -950,13 +1052,25 @@ def update_user_activity(userId, activityId):
         completed = data.get("completed")
         stars = data.get('stars')
 
-        update_user_activity_query = """
-        UPDATE user_activities 
-        SET completed = %s 
-        WHERE userId=%s AND activityId = %s;
+        check_query = """
+        SELECT 1 FROM user_activities WHERE userId = %s AND activityId = %s;
         """
-        cursor.execute(update_user_activity_query, (completed, userId, activityId))
-        connection.commit()
+        cursor.execute(check_query, (userId, activityId))
+        existing_record = cursor.fetchone()
+
+        if existing_record:
+            update_user_activity_query = """
+            UPDATE user_activities 
+            SET completed = %s 
+            WHERE userId=%s AND activityId = %s;
+            """
+            cursor.execute(update_user_activity_query, (completed, userId, activityId))
+        else:
+            insert_user_activity_query = """
+            INSERT INTO user_activities (userId, activityId, completed)
+            VALUES (%s, %s, %s);
+            """
+            cursor.execute(insert_user_activity_query, (userId, activityId, completed))
 
         update_user_star_query = """
         UPDATE Users
@@ -964,9 +1078,10 @@ def update_user_activity(userId, activityId):
         WHERE userId=%s
         """
         cursor.execute(update_user_star_query, (stars, userId))
+
         connection.commit()
 
-        return jsonify({"message": "User activity table updated successfully"}), 200
+        return jsonify({"message": "User activity updated successfully"}), 200
 
     except Exception as error:
         return jsonify({"error": str(error)}), 500
