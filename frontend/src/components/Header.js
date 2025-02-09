@@ -17,7 +17,6 @@ function Header({ userName }) {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                console.log('fetching user detailsss', userId);
                 const response = await fetch(`https://api.careerstar.co/profile_picture/${userId}`);
                 const data = await response.json();
                 if (response.ok) {

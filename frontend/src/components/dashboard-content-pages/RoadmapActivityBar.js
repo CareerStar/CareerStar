@@ -9,7 +9,6 @@ import rightArrow from '../../assets/images/right-arrow-roadmap.png';
 
 function RoadmapActivityBar({ activityName, activityId, completed, starCount }) {
     const navigate = useNavigate();
-    console.log('activityId', activityId, 'activityName', activityName, 'completed', completed, 'starCount', starCount);
     return (
         <div className='roadmap-sub-phase flex-row'>
             <div className='roadmap-phase-card'>

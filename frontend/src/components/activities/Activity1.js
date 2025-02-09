@@ -94,7 +94,6 @@ const Activity1 = () => {
     }, [userId]);
     const handleSubmit = async (completed) => {
         try {
-            console.log('answers:', answers);
             const payload = {
                 userId: userId,
                 roadmapActivityId: 11,

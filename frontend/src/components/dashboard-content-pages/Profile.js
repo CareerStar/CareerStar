@@ -57,7 +57,6 @@ function Profile({ userId: propUserId }) {
             try {
                 const response = await fetch(`https://api.careerstar.co/onboarding/${userId}`);
                 const data = await response.json();
-                console.log(data);
                 if (response.ok) {
                     if (data.summary) {
                         setSummary(data.summary);
@@ -104,10 +103,8 @@ function Profile({ userId: propUserId }) {
     };
 
     const handleProfilePictureClick = async (avatar) => {
-        console.log('Avatar clicked', avatar);
         setShowavatarModal(false);
         dispatch({ type: "SET_AVATAR", payload: avatar });
-        console.log('Avatar:', avatar);
         try {
             const response = await fetch(`https://api.careerstar.co/profile_picture/${userId}`, {
                 method: 'PUT',

@@ -61,7 +61,6 @@ function Home({ onComplete, userId }) {
                 const data = await response.json();
                 if (response.ok) {
                     setUserDetails(data);
-                    console.log('User details:', data);
                 } else {
                     console.error('Error fetching user details:', data);
                 }

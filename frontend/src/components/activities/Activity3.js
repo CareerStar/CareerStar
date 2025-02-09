@@ -86,7 +86,6 @@ const Activity3 = () => {
 
     const generateAIOutput = async (userMessage) => {
         setLoading(true); // Show loader
-        console.log("userMessage", userMessage);
     
         try {
             const response = await axios.post("https://api.careerstar.co/generate-ai-feedback", {
@@ -107,7 +106,6 @@ const Activity3 = () => {
 
     const handleSubmit = async (completed) => {
         try {
-            console.log('answers:', answers);
             const payload = {
                 userId: userId,
                 roadmapActivityId: 11,
