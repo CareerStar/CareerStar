@@ -1401,6 +1401,10 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   color: #FFFFFF;
 }
 
+.event-popup-sign-up-button:hover {
+  cursor: pointer !important;
+}
+
 .event-popup-submit-button {
   display: flex;
   flex-direction: row;
