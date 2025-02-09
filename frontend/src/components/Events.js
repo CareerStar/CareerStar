@@ -11,19 +11,33 @@ function Events({ userId }) {
     useEffect(() => {
         const fetchUserEventsDetails = async () => {
             try {
-                const response = await fetch(`https://api.careerstar.co/events/${userId}`);
-
-                const data = await response.json();
-                if (response.ok) {
-                    if (data) {
-                        setEvents(data);
-                    }
-                } else {
-                    console.error('Error fetching user details:', data);
+                const responseAll = await fetch(`https://api.careerstar.co/events`);
+                const eventsData = await responseAll.json();
+            
+                if (!responseAll.ok) {
+                    console.error('Error fetching all events:', eventsData);
+                    return;
                 }
-            }
-            catch (error) {
-                console.error('Error fetching user details:', error);
+            
+                const responseUser = await fetch(`https://api.careerstar.co/events/${userId}`);
+                const completedData = await responseUser.json();
+            
+                if (!responseUser.ok) {
+                    console.error('Error fetching user completed events:', completedData);
+                    return;
+                }
+            
+                const completedSet = new Set(Object.keys(completedData).map(id => Number(id)));
+            
+                const updatedEvents = eventsData.map(event => ({
+                    ...event,
+                    completed: completedSet.has(event.activityId)
+                }));
+        
+                setEvents(updatedEvents);
+
+            } catch (error) {
+                console.error('Error fetching event details:', error);
             }
         }
         if (userId) {
