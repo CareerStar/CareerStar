@@ -1223,14 +1223,15 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   justify-content: center;
   margin: 0;
   padding: 0px;
+  flex-grow: 1;
 }
 
 .event-card-tags {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .event-card-tags .event-card-tag {
@@ -1269,6 +1270,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   line-height: 16px;
   color: #000000;
   margin: 0px;
+  margin-top: 12px;
 }
 
 .event-card-content .event-card-description p {
@@ -1289,7 +1291,8 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-left: 160px;
+  margin-left: auto;
+  margin-top: auto;
 }
 
 .event-card-star p {
@@ -1300,6 +1303,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   line-height: 16px;
   text-align: center;
   color: #000000;
+  margin: 0px;
 }
 
 .event-card-star img {
@@ -1348,13 +1352,15 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 }
 
 .event-popup-content .popup-image {
-  max-width: 350px;
-  max-height: 350px;
+  max-width: 100%;
+  max-height: 250px;
 }
 
 .event-popup-content .event-popup-text {
 
-  max-width: 350px;
+  max-width: 450px;
+  max-height: 200px;
+  overflow-y: auto;
   font-family: 'Nunito';
   font-style: normal;
   font-weight: 400;
