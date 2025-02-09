@@ -332,7 +332,9 @@ const Activity3 = () => {
                         {AIOutput && (
                             <div className="ai-output">
                                 <h3>AI Feedback:</h3>
-                                <ReactMarkdown>{AIOutput}</ReactMarkdown>
+                                <div className="ai-output-content">
+                                    <ReactMarkdown>{AIOutput}</ReactMarkdown>
+                                </div>
                             </div>
                         )}
                     </div>
