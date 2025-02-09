@@ -146,7 +146,12 @@ const Activity1 = () => {
     ];
 
     const scrollToTop = () => {
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    const handleStepChange = (stepId) => {
+        scrollToTop();
+        setCurrentStep(stepId);
     };
 
     const handleNext = () => {
@@ -205,7 +210,7 @@ const Activity1 = () => {
                             <div className="activity-step-right-element">
                                 <div className="activity-step-number">{step.number}</div>
                                 <div className="activity-step-title">{step.title}</div>
-                                <div className={`activity-step-button ${currentStep === step.id ? "selected" : ""}`} onClick={() => setCurrentStep(step.id)}>Dive In</div>
+                                <div className={`activity-step-button ${currentStep === step.id ? "selected" : ""}`} onClick={() => handleStepChange(step.id)}>Dive In</div>
                             </div>
                         </div>
                     ))}
