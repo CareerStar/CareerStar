@@ -212,6 +212,7 @@ const Activity4 = () => {
                             </div>
                         </div>
                         <p>Check out these hot jobs of the week!</p>
+                        <p>Stay ahead in your career by exploring top openings from leading companies, handpicked just for you.</p>
 
                     </div>
                 ) : currentStep === 1 ? (
