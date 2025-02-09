@@ -28,7 +28,7 @@ function Home({ onComplete, userId }) {
         goal: '',
         onboarded: false,
         choice: '',
-        summary: 'My summary',
+        summary: '',
         degree: '',
         major: '',
         activityChoices: [],
