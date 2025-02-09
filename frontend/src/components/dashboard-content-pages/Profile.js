@@ -7,6 +7,7 @@ function Profile({ userId: propUserId }) {
     const dispatch = useDispatch();
     const [userId, setUserId] = useState(propUserId || localStorage.getItem('userId') || '');
     const [firstname, setFirstname] = useState('');
+    const [majorDetails, setMajorDetails] = useState('');
     const [summary, setSummary] = useState('');
     const [stars, setStars] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -40,7 +41,6 @@ function Profile({ userId: propUserId }) {
             setLoading(true);
             try {
                 const response = await fetch(`https://api.careerstar.co/user/${userId}`);
-
                 const data = await response.json();
                 if (response.ok) {
                     if (data.firstname) {
@@ -57,9 +57,11 @@ function Profile({ userId: propUserId }) {
             try {
                 const response = await fetch(`https://api.careerstar.co/onboarding/${userId}`);
                 const data = await response.json();
+                console.log(data);
                 if (response.ok) {
                     if (data.summary) {
                         setSummary(data.summary);
+                        setMajorDetails(data.degree + ' in ' + data.major);
                     }
                 } else {
                     console.error('Error fetching user details:', data);
@@ -145,7 +147,7 @@ function Profile({ userId: propUserId }) {
                     <p className='star-count'>{stars}</p>
                     <img src={star} className='star' />
                 </div>
-                <p className='profile-role'>Software Engineer</p>
+                <p className='profile-role'>{majorDetails}</p>
 
                 <div className='profile-summary flex-column'>
                     <p>My Summary</p>
