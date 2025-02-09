@@ -940,7 +940,7 @@ def delete_activity(activityId):
         if connection:
             return_db_connection(connection)
 
-@app.route('/user_activities/<int:userId>/<int:activityId>', methods=['PUT'])
+@app.route('/events/<int:userId>/<int:activityId>', methods=['PUT'])
 def update_user_activity(userId, activityId):
     try:
         connection = get_db_connection()
