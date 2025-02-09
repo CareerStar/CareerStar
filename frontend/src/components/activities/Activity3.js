@@ -108,7 +108,6 @@ const Activity3 = () => {
         try {
             const payload = {
                 userId: userId,
-                roadmapActivityId: 11,
                 completed: completed,
                 answers: answers,
                 stars: starCount,

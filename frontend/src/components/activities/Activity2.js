@@ -80,7 +80,6 @@ const Activity2 = () => {
             console.log('answers:', answers);
             const payload = {
                 userId: userId,
-                roadmapActivityId: 11,
                 completed: completed,
                 answers: answers,
                 stars: starCount,
