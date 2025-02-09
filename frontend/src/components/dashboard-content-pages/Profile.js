@@ -61,8 +61,8 @@ function Profile({ userId: propUserId }) {
                 if (response.ok) {
                     if (data.summary) {
                         setSummary(data.summary);
-                        setMajorDetails(data.degree + ' in ' + data.major);
                     }
+                    setMajorDetails(data.degree + ' in ' + data.major);
                 } else {
                     console.error('Error fetching user details:', data);
                 }
