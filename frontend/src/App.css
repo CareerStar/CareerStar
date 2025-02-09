@@ -2534,13 +2534,12 @@ h3 {
 .activity-like-dislike-popup-content p {
   font-family: 'Nunito';
   font-style: normal;
-  font-weight: 400;
-  font-size: 17px;
-  line-height: 23px;
+  font-weight: 500;
+  font-size: 20px;
   text-align: center;
   letter-spacing: 0.3px;
   color: #171717;
-  margin: 10px 0px;
+  margin: 10px 0px 20px 0px;
 }
 
 .activity-like-dislike-buttons {
@@ -3078,4 +3077,42 @@ h3 {
   text-align: center !important;
 
   color: #FFFFFF !important;
+}
+
+/* Job Listing page styles */
+
+.job-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px 0;
+  background-color: #fff;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.job-card:hover {
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.job-title {
+  font-size: 20px !important;
+  margin: 5px 0;
+}
+
+.job-title a {
+  text-decoration: none;
+  color: #0073e6;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.job-title a:hover {
+  text-decoration: underline;
+}
+
+.job-company {
+  color: #555;
+  font-size: 14px !important;
+  margin: 5px 0px;
 }

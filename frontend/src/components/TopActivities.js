@@ -1,8 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import star from '../assets/images/star.png';
-import clock from '../assets/images/clock.png';
-import startIcon from '../assets/images/start-icon.png';
 import TopActivityCard from './TopActivityCard';
 
 function TopActivities({ userId }) {
@@ -81,6 +77,18 @@ function TopActivities({ userId }) {
 
                 <TopActivityCard
                     activityId={4}
+                    activityTitle='Hot Jobs of the Week'
+                    activityDescription='Check out these hot jobs of the week! Stay ahead in your career by exploring top openings from leading companies, handpicked just for you.'
+                    activityTags={['Job', 'LinkedIn']}
+                    activityStarCount={3}
+                    activityTime='10 min'
+                    moduleId={3}
+                    isReady={true}
+                    completed={!!activityStatuses?.[4]}
+                />
+
+                <TopActivityCard
+                    activityId={5}
                     activityTitle='Get To Know Your Interviewer'
                     activityDescription='Researching your interviewer before a job interview can give you a significant advantage.'
                     activityTags={['Interview', 'LinkedIn']}
@@ -88,29 +96,17 @@ function TopActivities({ userId }) {
                     activityTime='10 min'
                     moduleId={3}
                     isReady={false}
-                    completed={!!activityStatuses?.[4]}
+                    completed={!!activityStatuses?.[5]}
                 />
 
                 <TopActivityCard
-                    activityId={5}
+                    activityId={6}
                     activityTitle='The Dreaded Salary Talk'
                     activityDescription='Discussing Salary During Interviews'
                     activityTags={['Interview']}
                     activityStarCount={5}
                     activityTime='15 min'
                     moduleId={2}
-                    isReady={false}
-                    completed={!!activityStatuses?.[5]}
-                />
-
-                <TopActivityCard
-                    activityId={6}
-                    activityTitle='Sending A Great Thank You Note - Immediately'
-                    activityDescription='Master the art of writing a professional and memorable thank-you note after your interview.'
-                    activityTags={['Interview', 'LinkedIn']}
-                    activityStarCount={5}
-                    activityTime='10 min'
-                    moduleId={3}
                     isReady={false}
                     completed={!!activityStatuses?.[6]}
                 />
