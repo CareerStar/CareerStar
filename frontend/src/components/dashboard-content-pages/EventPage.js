@@ -1,9 +1,10 @@
 import React from 'react';
+import Events from '../Events';
 
-function EventPage() {
+function EventPage({ userId }) {
     return (
         <div>
-            <h1>Events Page</h1>
+            <Events userId={userId} />
         </div>
     );
 };

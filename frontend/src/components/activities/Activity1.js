@@ -94,7 +94,6 @@ const Activity1 = () => {
     }, [userId]);
     const handleSubmit = async (completed) => {
         try {
-            console.log('answers:', answers);
             const payload = {
                 userId: userId,
                 roadmapActivityId: 11,
@@ -146,7 +145,12 @@ const Activity1 = () => {
     ];
 
     const scrollToTop = () => {
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    const handleStepChange = (stepId) => {
+        scrollToTop();
+        setCurrentStep(stepId);
     };
 
     const handleNext = () => {
@@ -205,7 +209,7 @@ const Activity1 = () => {
                             <div className="activity-step-right-element">
                                 <div className="activity-step-number">{step.number}</div>
                                 <div className="activity-step-title">{step.title}</div>
-                                <div className={`activity-step-button ${currentStep === step.id ? "selected" : ""}`} onClick={() => setCurrentStep(step.id)}>Dive In</div>
+                                <div className={`activity-step-button ${currentStep === step.id ? "selected" : ""}`} onClick={() => handleStepChange(step.id)}>Dive In</div>
                             </div>
                         </div>
                     ))}
@@ -259,12 +263,12 @@ const Activity1 = () => {
                             <ul>
                                 <li><p>What are the responsibilities of this department?</p></li>
                                 <li><p>Search for the keywords (here example: Advanced Data Science, Artificial Intelligence)</p></li>
-                                <div className="activity-image">
-                                    <img src={step2Image1} alt="Step 1" />
-                                </div>
                                 {/* <li><p>What person is ultimately responsible for this department’s KPIs and Lines of Business?</p></li>
                                 <li><p>What is the department’s focus area (e.g., Engineering, Operations, Research & Development)?</p></li> */}
                             </ul>
+                            <div className="activity-image">
+                                <img src={step2Image1} alt="Step 1" />
+                            </div>
                         </ol>
                     </div>
                 ) : currentStep === 3 ? (
@@ -307,7 +311,7 @@ const Activity1 = () => {
                             </div>
                             <ul>
                                 <li>
-                                    <h3>Salimat Solebo is the most likely Hiring Manager for this role.</h3>
+                                    <h3>Salimat Solebo is the most likely the Hiring Manager for this role.</h3>
                                 </li>
                             </ul>
                         </ol>

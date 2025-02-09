@@ -70,6 +70,10 @@ function AdminEvents() {
                     tags: [],
                     imageURL: '',
                     star: 0,
+                    videoURL: '',
+                    eventURL: '',
+                    detailedDescription: '',
+                    eventDate: ''
                 });
             } else {
                 console.error('Error adding activity:', response.data);
@@ -167,6 +171,12 @@ function AdminEvents() {
                         placeholder='Description'
                         onChange={(e) => handleChangeNewActivity('description', e.target.value)}
                     />
+                    <textarea
+                        type='text'
+                        value={newEvents.detailedDescription || ""}
+                        placeholder='Detailed Description'
+                        onChange={(e) => handleChangeNewActivity('detailedDescription', e.target.value)}
+                    />
                     <input
                         type='text'
                         value={newEvents.tags?.join(', ')}
@@ -191,6 +201,17 @@ function AdminEvents() {
                         placeholder='Star'
                         onChange={(e) => handleChangeNewActivity('star', e.target.value)}
                     />
+                    <input
+                        type='text'
+                        value={newEvents.eventURL || ""}
+                        placeholder='Event URL'
+                        onChange={(e) => handleChangeNewActivity('eventURL', e.target.value)}
+                    />
+                    <input
+                        type="date"
+                        value={newEvents.eventDate || ""}
+                        onChange={(e) => handleChangeNewActivity('eventDate', e.target.value)}
+                    />
                     <button onClick={() => handleAddNewActivity()}>Save</button>
                 </div>
                 <div className='event-cards'>
@@ -206,6 +227,11 @@ function AdminEvents() {
                                     <textarea
                                         value={event.description}
                                         onChange={(e) => handleChange(index, 'description', e.target.value)}
+                                    />
+                                    <textarea
+                                        type='text'
+                                        value={event.detailedDescription || ""}
+                                        onChange={(e) => handleChange(index, 'detailedDescription', e.target.value)}
                                     />
                                     <input
                                         type='text'
@@ -226,6 +252,16 @@ function AdminEvents() {
                                         type='number'
                                         value={event.star}
                                         onChange={(e) => handleChange(index, 'star', e.target.value)}
+                                    />
+                                    <input
+                                        type='text'
+                                        value={event.eventURL || ""}
+                                        onChange={(e) => handleChange(index, 'eventURL', e.target.value)}
+                                    />
+                                    <input
+                                        type="date"
+                                        value={event.eventDate ? new Date(event.eventDate).toISOString().split("T")[0] : ""}
+                                        onChange={(e) => handleChange(index, 'eventDate', e.target.value)}
                                     />
                                     <button onClick={() => handleSave(event)}>Save</button>
                                 </div>

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import ProgressBar from './ProgressBar';
-import careerStarLogo from '../assets/images/career-star-logo-black.png';
+import careerStarLogo from '../assets/images/career-star-logo-white.png';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import eye from '../assets/images/eye.svg';

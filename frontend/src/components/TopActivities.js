@@ -19,9 +19,6 @@ function TopActivities({ userId }) {
                 const data = await response.json();
                 if (response.ok) {
                     setActivityStatuses(data);
-                    console.log('Activity Statuses:', setActivityStatuses);
-
-                    console.log(activityStatuses[1]);
                 } else {
                     console.error('Error fetching Activity Status details:', data);
                 }

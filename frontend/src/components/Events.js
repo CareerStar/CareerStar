@@ -1,10 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EventCard from './EventCard';
-import activity1 from '../assets/images/activity-1.png';
-import activity2 from '../assets/images/activity-2.png';
-import activity3 from '../assets/images/activity-3.png';
-import activity4 from '../assets/images/activity-4.png';
 import starEmpty from '../assets/images/star-empty.png';
 import star from '../assets/images/star.png';
 
@@ -15,31 +11,33 @@ function Events({ userId }) {
     useEffect(() => {
         const fetchUserEventsDetails = async () => {
             try {
-                const response = await fetch(`https://api.careerstar.co/events/${userId}`);
-
-                const data = await response.json();
-                if (response.ok) {
-                    if (data) {
-                        setEvents(data);
-                    }
-                } else {
-                    console.error('Error fetching user details:', data);
+                const responseAll = await fetch(`https://api.careerstar.co/events`);
+                const eventsData = await responseAll.json();
+            
+                if (!responseAll.ok) {
+                    console.error('Error fetching all events:', eventsData);
+                    return;
                 }
+            
+                const responseUser = await fetch(`https://api.careerstar.co/events/${userId}`);
+                const completedData = await responseUser.json();
+            
+                if (!responseUser.ok) {
+                    console.error('Error fetching user completed events:', completedData);
+                    return;
+                }
+            
+                const completedSet = new Set(Object.keys(completedData).map(id => Number(id)));
+            
+                const updatedEvents = eventsData.map(event => ({
+                    ...event,
+                    completed: completedSet.has(event.activityId)
+                }));
+        
+                setEvents(updatedEvents);
 
-                // if (data.length === 0) {
-                //     const response = await fetch(`https://api.careerstar.co/events`);
-                //     const data = await response.json();
-                //     console.log('All activities:', data);
-                //     if (response.ok) {
-                //         if (data) {
-                //             setEvents(data);
-                //         }
-                //         console.log('User activities details:', data);
-                //     }
-                // }
-            }
-            catch (error) {
-                console.error('Error fetching user details:', error);
+            } catch (error) {
+                console.error('Error fetching event details:', error);
             }
         }
         if (userId) {
@@ -47,41 +45,6 @@ function Events({ userId }) {
         }
     }, [userId]);
 
-    const cards =
-        [
-            {
-                activityId: 1,
-                imageURL: activity1,
-                tags: ['Profile', 'Event'],
-                title: 'Complete your LinkedIn profile',
-                description: 'Enhance your professional presence with a fully optimized LinkedIn profile. This step-by-step guide will walk you through the process, ensuring you showcase your skills and experience effectively.',
-                star: 7
-            },
-            {
-                activityId: 2,
-                imageURL: activity2,
-                tags: ['Event'],
-                title: 'TechWalk - Brooklyn',
-                description: 'This is a chance to network, share ideas, and build relationships in a healthy and refreshing alternative to the average happy hour.',
-                star: 15
-            },
-            {
-                activityId: 3,
-                imageURL: activity3,
-                tags: ['Upskill', 'Community'],
-                title: 'Flushing Tech Meetup at TIQC',
-                description: 'Get ready to dive into the world of innovation and collaboration at the Tech Incubator at Queens College, where the Flushing Tech Meetup is hosting an electrifying hackathon just for you!',
-                star: 20
-            },
-            {
-                activityId: 4,
-                imageURL: activity4,
-                tags: ['Tip of the day'],
-                title: 'Showing confidence in job interviews',
-                description: 'Watch our tip of the day: How to show confidence in job interviews. It’s easier than you think!',
-                star: 3
-            }
-        ];
     const [showPopup, setShowPopup] = useState(false);
     const [currentCard, setCurrentCard] = useState(null);
     const popupRef = useRef(null);
@@ -114,6 +77,11 @@ function Events({ userId }) {
         );
     };
 
+    const openEventPage = () => {
+        if (currentCard.eventURL) {
+            window.open(currentCard.eventURL, '_blank');
+        }
+    }
 
     const updateUserEvent = async () => {
         if (currentCard.completed) {
@@ -121,7 +89,7 @@ function Events({ userId }) {
             return;
         }
         try {
-            const response = await fetch(`https://api.careerstar.co/user_activities/${userId}/${currentCard.activityId}`, {
+            const response = await fetch(`https://api.careerstar.co/events/${userId}/${currentCard.activityId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -150,12 +118,7 @@ function Events({ userId }) {
         <div className='events-container'>
             <h1>Top Picks For You This Week</h1>
             <div className='event-cards'>
-                {/* {events.length > 0 ? (
-                    events.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
-                ) : (
-                    cards.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><ActivityCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} /></div>)
-                )} */}
-                {events.map(card => <div onClick={() => { setShowPopup(true); setCurrentCard(card) }}><EventCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} description={card.description} starCount={card.star} completed={card.completed} /></div>)}
+                {events.map(card => <div className="event-card-wrapper" onClick={() => { setShowPopup(true); setCurrentCard(card) }}><EventCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} eventDate={card.eventDate} description={card.description} eventURL={card.eventURL} starCount={card.star} completed={card.completed} /></div>)}
             </div>
             {showPopup && (
                 <div className='event-popup'>
@@ -182,11 +145,15 @@ function Events({ userId }) {
                         </div>
                         <h2>{currentCard.title}</h2>
                         <div className='event-popup-text'>
-                            <p>{currentCard.description}</p>
+                            {currentCard.detailedDescription ? <p>{currentCard.detailedDescription}</p> : <p>{currentCard.description}</p>}
                         </div>
-                        <div className='event-popup-submit-button' onClick={updateUserEvent}>
-                            {currentCard.completed ? <p>Completed</p> : <p>Mark as completed</p>}
-                            {/* <p>I watched this</p> */}
+                        <div className='event-popup-buttons'>
+                            <div className='event-popup-sign-up-button' onClick={openEventPage}>
+                                <p>Sign up ↗</p>
+                            </div>
+                            <div className='event-popup-submit-button' onClick={updateUserEvent}>
+                                {currentCard.completed ? <p>Completed</p> : <p>Mark as completed</p>}
+                            </div>
                         </div>
                     </div>
                 </div>

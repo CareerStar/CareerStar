@@ -86,7 +86,6 @@ const Activity3 = () => {
 
     const generateAIOutput = async (userMessage) => {
         setLoading(true); // Show loader
-        console.log("userMessage", userMessage);
     
         try {
             const response = await axios.post("https://api.careerstar.co/generate-ai-feedback", {
@@ -107,7 +106,6 @@ const Activity3 = () => {
 
     const handleSubmit = async (completed) => {
         try {
-            console.log('answers:', answers);
             const payload = {
                 userId: userId,
                 roadmapActivityId: 11,
@@ -148,7 +146,12 @@ const Activity3 = () => {
     ];
 
     const scrollToTop = () => {
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    const handleStepChange = (stepId) => {
+        scrollToTop();
+        setCurrentStep(stepId);
     };
 
     const handleNext = () => {
@@ -207,7 +210,7 @@ const Activity3 = () => {
                             <div className="activity-step-right-element">
                                 <div className="activity-step-number">{step.number}</div>
                                 <div className="activity-step-title">{step.title}</div>
-                                <div className={`activity-step-button ${currentStep === step.id ? "selected" : ""}`} onClick={() => setCurrentStep(step.id)}>Dive In</div>
+                                <div className={`activity-step-button ${currentStep === step.id ? "selected" : ""}`} onClick={() => handleStepChange(step.id)}>Dive In</div>
                             </div>
                         </div>
                     ))}
@@ -329,7 +332,9 @@ const Activity3 = () => {
                         {AIOutput && (
                             <div className="ai-output">
                                 <h3>AI Feedback:</h3>
-                                <ReactMarkdown>{AIOutput}</ReactMarkdown>
+                                <div className="ai-output-content">
+                                    <ReactMarkdown>{AIOutput}</ReactMarkdown>
+                                </div>
                             </div>
                         )}
                     </div>

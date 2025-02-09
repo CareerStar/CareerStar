@@ -15,7 +15,6 @@ function Dashboard() {
     const [selectedPage, setSelectedPage] = useState('Home');
     const validPages = ['Home', 'Profile', 'Roadmap', 'Events', 'Network', 'Support', 'Activity'];
     useEffect(() => {
-        console.log('location.pathname', location.pathname);
         const pathParts = location.pathname.split('/');
         const page = pathParts.length > 3
             ? pathParts[pathParts.length - 2]

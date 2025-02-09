@@ -1178,6 +1178,14 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   /* align-items: center; */
   gap: 32px;
   flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.event-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; 
+  cursor: pointer;
 }
 
 /* Activity card styles */
@@ -1188,12 +1196,14 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   gap: 10px;
   padding: 20px;
   width: 100%;
-  height: 380px;
+  /* height: 380px; */
+  min-height: 100px;
   max-width: 200px;
   background: #FFFFFF;
   border-radius: 15px;
   box-shadow: 0px 485px 194px rgba(224, 224, 224, 0.01), 0px 273px 164px rgba(224, 224, 224, 0.05), 0px 121px 121px rgba(224, 224, 224, 0.09), 0px 30px 67px rgba(224, 224, 224, 0.1);
   text-align: left;
+  flex-grow: 1;
 }
 
 .event-card-container:hover {
@@ -1213,14 +1223,15 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   justify-content: center;
   margin: 0;
   padding: 0px;
+  flex-grow: 1;
 }
 
 .event-card-tags {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .event-card-tags .event-card-tag {
@@ -1251,6 +1262,17 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   margin-top: 10px;
 }
 
+.event-card-date p {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #000000;
+  margin: 0px;
+  margin-top: 12px;
+}
+
 .event-card-content .event-card-description p {
   font-family: 'Nunito';
   font-style: normal;
@@ -1269,7 +1291,8 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-left: 160px;
+  margin-left: auto;
+  margin-top: auto;
 }
 
 .event-card-star p {
@@ -1280,6 +1303,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   line-height: 16px;
   text-align: center;
   color: #000000;
+  margin: 0px;
 }
 
 .event-card-star img {
@@ -1328,13 +1352,15 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 }
 
 .event-popup-content .popup-image {
-  max-width: 350px;
-  max-height: 350px;
+  max-width: 100%;
+  max-height: 250px;
 }
 
 .event-popup-content .event-popup-text {
 
-  max-width: 350px;
+  max-width: 450px;
+  max-height: 200px;
+  overflow-y: auto;
   font-family: 'Nunito';
   font-style: normal;
   font-weight: 400;
@@ -1347,7 +1373,39 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 
 }
 
-.event-popup-content .event-popup-submit-button {
+.event-popup-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  margin: 0 auto;
+}
+
+.event-popup-sign-up-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 0px;
+
+  width: 100%;
+  height: 20px;
+
+  margin: 0 auto;
+  margin-top: 20px;
+  background: #009323;
+  border-radius: 8px;
+
+  color: #FFFFFF;
+}
+
+.event-popup-sign-up-button:hover {
+  cursor: pointer !important;
+}
+
+.event-popup-submit-button {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -2888,6 +2946,42 @@ h3 {
   word-wrap: break-word;
   white-space: pre-wrap;
   resize: vertical;
+}
+
+.ai-output {
+  margin-top: 10px;
+  box-sizing: border-box;
+
+  display: block;
+  width: 100%;
+  padding: 16px;
+  gap: 10px;
+  border: none;
+  background: #F5F5F5;
+  border-radius: 4px;
+
+  font-family: 'Nunito', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+
+  overflow-x: auto;
+}
+
+.ai-output-content {
+  white-space: normal;
+}
+
+.ai-output-content p {
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.ai-output-content code {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 
 .get-ai-feedback-button {
