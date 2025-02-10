@@ -42,34 +42,36 @@ function Profile({ userId: propUserId }) {
         const fetchUserDetails = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`https://api.careerstar.co/user/${userId}`);
-                const data = await response.json();
-                if (response.ok) {
+                const response = await axios.get(`https://api.careerstar.co/user/${userId}`);
+            
+                if (response.status === 200) {
+                    const data = response.data;
+            
                     if (data.firstname) {
                         setFirstname(data.firstname);
                         setStars(data.stars);
                     }
                 } else {
-                    console.error('Error fetching user details:', data);
+                    console.error('Error fetching user details:', response);
                 }
-            }
-            catch (error) {
+            } catch (error) {
                 console.error('Error fetching user details:', error);
             }
             try {
-                const response = await fetch(`https://api.careerstar.co/onboarding/${userId}`);
-                const data = await response.json();
-                if (response.ok) {
+                const response = await axios.get(`https://api.careerstar.co/onboarding/${userId}`);
+            
+                if (response.status === 200) {
+                    const data = response.data;
+            
                     if (data.summary) {
                         setSummary(data.summary);
                     }
-                    setMajorDetails(data.degree + ' in ' + data.major);
+                    setMajorDetails(`${data.degree} in ${data.major}`);
                     setGoal(data.goal);
                 } else {
-                    console.error('Error fetching user details:', data);
+                    console.error('Error fetching user details:', response);
                 }
-            }
-            catch (error) {
+            } catch (error) {
                 console.error('Error fetching user details:', error);
             } finally {
                 setLoading(false);
@@ -83,17 +85,11 @@ function Profile({ userId: propUserId }) {
     const handleSave = async (updatedSummary) => {
         setLoading(true);
         try {
-            const response = await fetch(`https://api.careerstar.co/update_profile/${userId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    "summary": updatedSummary,
-                }),
+            const response = await axios.put(`https://api.careerstar.co/update_profile/${userId}`, {
+                summary: updatedSummary,
             });
-
-            if (response.ok) {
+        
+            if (response.status === 200) {
                 console.log('User details updated successfully');
             } else {
                 console.error('Error updating user details');
@@ -109,17 +105,11 @@ function Profile({ userId: propUserId }) {
         setShowavatarModal(false);
         dispatch({ type: "SET_AVATAR", payload: avatar });
         try {
-            const response = await fetch(`https://api.careerstar.co/profile_picture/${userId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    "profilepicture": avatar,
-                }),
+            const response = await axios.put(`https://api.careerstar.co/profile_picture/${userId}`, {
+                profilepicture: avatar,
             });
-
-            if (response.ok) {
+        
+            if (response.status === 200) {
                 console.log('User details updated successfully');
             } else {
                 console.error('Error updating user details');
