@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import star from '../../assets/images/star-yellow.png';
+import axios from 'axios';
 
 function Profile({ userId: propUserId }) {
     const dispatch = useDispatch();
     const [userId, setUserId] = useState(propUserId || localStorage.getItem('userId') || '');
     const [firstname, setFirstname] = useState('');
     const [majorDetails, setMajorDetails] = useState('');
+    const [goal, setGoal] = useState('');
     const [summary, setSummary] = useState('');
     const [stars, setStars] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -33,7 +35,7 @@ function Profile({ userId: propUserId }) {
     };
 
     const handleHelp = () => {
-        setSummary('Software Engineer with 3 years of experience in building web applications.');
+        generateAIOutput();
     };
 
     useEffect(() => {
@@ -62,6 +64,7 @@ function Profile({ userId: propUserId }) {
                         setSummary(data.summary);
                     }
                     setMajorDetails(data.degree + ' in ' + data.major);
+                    setGoal(data.goal);
                 } else {
                     console.error('Error fetching user details:', data);
                 }
@@ -77,7 +80,7 @@ function Profile({ userId: propUserId }) {
         }
     }, [userId]);
 
-    const handleSave = async () => {
+    const handleSave = async (updatedSummary) => {
         setLoading(true);
         try {
             const response = await fetch(`https://api.careerstar.co/update_profile/${userId}`, {
@@ -86,7 +89,7 @@ function Profile({ userId: propUserId }) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    "summary": summary,
+                    "summary": updatedSummary,
                 }),
             });
 
@@ -127,6 +130,34 @@ function Profile({ userId: propUserId }) {
         dispatch({ type: "SET_AVATAR", payload: avatar });
     };
 
+    const generateAIOutput = async (userMessage) => {
+        setLoading(true); // Show loader
+    
+        try {
+            const response = await axios.post("https://api.careerstar.co/generate-ai-feedback", {
+                prompt: `You are a professional summary writer. 
+                    your role is to write a resume summary / LinkedIn About section based on the details I provide. 
+                    Do not give options or any other instructions, I just want summary, no heading, nothing. 
+                    Directly write it in normal text. It should be short, concise, positive, and in first voice like "I am..". 
+                    You don't have to start with "I am". It should be positive in tone.
+                    If you write it amzingly, I will give you 5 star rating and a $5 Million check.
+                    The summary should be 2-3 sentences long. First name is ${firstname}, pursuing ${majorDetails} from NYIT, 
+                    have a dream of becoming ${goal}.`,
+            });
+    
+            if (response.data && response.data.feedback) {
+                setSummary(response.data.feedback);
+                await handleSave(response.data.feedback);
+            } else {
+                console.log("Error: Unable to fetch feedback. Please try again.");
+            }
+        } catch (error) {
+            console.log("Error: Unable to fetch feedback. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const handleLogout = () => {
         localStorage.clear();
         navigate('/');
@@ -161,7 +192,7 @@ function Profile({ userId: propUserId }) {
 
                     <div className='summary-buttons flex-row'>
                         <button className='help-me-button' onClick={handleHelp}>Help me</button>
-                        <button className='save-button' onClick={handleSave}>Save</button>
+                        <button className='save-button' onClick={() => handleSave(summary)}>Save</button>
                     </div>
                     <div className='summary-buttons flex-row'>
                         <button className='save-button' onClick={handleLogout}>Log Out</button>
