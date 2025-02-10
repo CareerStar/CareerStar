@@ -181,7 +181,7 @@ function Profile({ userId: propUserId }) {
                     />
 
                     <div className='summary-buttons flex-row'>
-                        <button className='help-me-button' onClick={handleHelp}>Help me</button>
+                        <button className='help-me-button' onClick={handleHelp}>Help me write summary</button>
                         <button className='save-button' onClick={() => handleSave(summary)}>Save</button>
                     </div>
                     <div className='summary-buttons flex-row'>
