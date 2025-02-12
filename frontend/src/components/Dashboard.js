@@ -75,6 +75,33 @@ function Dashboard() {
         setSelectedPage(page);
         fetchUserDetails();
     }
+
+     /* Cheking Mobile Screen*/
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
+    if (isMobile) {
+        return (
+            <div className='main-page'>
+                <div className='main-page-contnent'>
+                    <div className='main-page-header'>
+                        <h1>Thank you for Sign up</h1>
+                        <p>This app is currently available only on desktop. You can use the same credentials to log in on your desktop. Mobile access is coming soon! </p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className='dashboard'>
             <Header userName={firstname} />

@@ -19,40 +19,6 @@ function StartPage() {
         localStorage.removeItem('selectedPage');
     }, []);
 
-    /* Cheking Mobile Screen*/
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        const checkMobile = () => {
-            setIsMobile(window.innerWidth < 768);
-        };
-
-        checkMobile();
-        window.addEventListener("resize", checkMobile);
-
-        return () => window.removeEventListener("resize", checkMobile);
-    }, []);
-
-    if (isMobile) {
-        return (
-            <div className='main-page'>
-                <div className='career-star-logo'>
-                    <img src={careerStarLogo} alt='Career Star Logo' />
-                </div>
-                <div className='main-page-contnent'>
-                    <div className='hey'>
-                        <img src={astroaut} alt='Astronaut' />
-                    </div>
-    
-                    <div className='main-page-header'>
-                        <h1>Your LaunchPad to Success</h1>
-                        <p>This app is only available on desktop for now. It will be available on mobile shortly. </p>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
     return (
         <div className='main-page'>
             <div className='career-star-logo'>
