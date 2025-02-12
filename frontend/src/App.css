@@ -477,7 +477,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   padding: 10px;
   gap: 10px;
 
-  width: 409px;
+  width: 100%;
   height: 45px;
 
   background: #F5F5F5;
@@ -497,7 +497,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   background: #581AD1;
   border-radius: 40px;
   margin: 0 auto;
-  margin-top: 40px;
+  margin-top: 20px;
   color: #FFFFFF;
 }
 
@@ -542,34 +542,89 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   margin-top: 5px;
 }
 
+@media (max-width: 768px) {
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .signUp-page {
+    padding: 20px;
+    background-size: cover;
+    background-position: center;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .signUp-page .career-star-logo {
+    width: 100px;
+    height: 43px;
+    left: 20px;
+    top: 20px;
+    fill: black;
+  }
+
+  .signUp-page .signUp-page-content {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .signUp-page-question {
+    padding: 20px;
+    gap: 10px;
+    max-width: 100%;
+  }
+
+  .signUp-page-question h2 {
+    font-size: 30px;
+    line-height: 40px;
+  }
+
+  .signUp-page-question p {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .signUp-page-question input {
+    width: 100%;
+    height: 35px;
+  }
+
+  .signUp-page-button {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .signUp-page-footer {
+    font-size: 16px;
+  }
+}
+
 /* Password section styles */
 .password-section {
   position: relative;
-  display: inline-block;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .password-visibility-icon {
   position: absolute;
   right: 10px;
-  top: 70%;
+  top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
 }
 
 /* User Intent page styles */
 .dropdown-menu {
-  box-sizing: border-box;
-
-  padding: 8px 12px;
-  margin-right: 60px;
-
-  width: 409px;
+  width: 100%;
+  max-width: 409px;
   height: 41px;
-
+  padding: 8px 12px;
   background: #FFFFFF;
   border: 1px solid #CBD5E1;
   border-radius: 6px;
-
   appearance: none;
   background-image: url('data:image/svg+xml;utf8,<svg width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1.5L5 5.5L9 1.5" stroke="%2394A3B8" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/></svg>');
   background-repeat: no-repeat;
@@ -580,17 +635,20 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 .dropdown-menu option {
   background: #FFFFFF;
   color: #000000;
-  padding: 20px;
+  padding: 8px;
   border: none;
 }
 
-/* Email Credentaial page styles */
-
+/* Email Credential page styles */
 .toggle-button-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 0 auto;
+  justify-content: flex-start;
+  margin-top: 20px;
+  gap: 10px;
+  width: 100%;
+  padding-left: 20px;
 }
 
 .toggle-button {
@@ -603,7 +661,6 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   border-radius: 15px;
   cursor: pointer;
   transition: background 0.3s ease;
-  margin-right: 10px;
 }
 
 .toggle-button::before {
@@ -628,7 +685,9 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 .toggle-button-container p {
   line-height: 29px;
   text-align: center;
-  white-space: nowrap;
+  white-space: wrap;
+  font-size: 14px;
+  margin: 0px;
 }
 
 .email-credential-page-footer {
@@ -644,6 +703,40 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 
 .email-credential-page-footer .email-credential-page-footer-bold {
   font-weight: 700;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    width: 90%;
+    margin-right: 0;
+  }
+
+  .toggle-button-container {
+    flex-direction: row;
+    gap: 5px;
+  }
+
+  .toggle-button::before {
+    width: 16px;
+    height: 16px;
+  }
+
+  .toggle-button {
+    width: 36px;
+    height: 20px;
+  }
+
+  .password-visibility-icon {
+    right: 5px;
+  }
+
+  .password-visibility-icon {
+    width: 16px;
+    height: 16px;
+    top: 40%;
+    margin-right: 10px;
+  }
 }
 
 /*Pop up styles*/
@@ -1184,7 +1277,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 .event-card-wrapper {
   display: flex;
   flex-direction: column;
-  flex-grow: 1; 
+  flex-grow: 1;
   cursor: pointer;
 }
 
