@@ -143,14 +143,14 @@ function EmailCredentialPage() {
                         onKeyDown={handleKeyPress}
                     />
                     {errorEmail && <div className='error-text'><p>{errorEmail}</p></div>}
+                    <p>Password</p>
                     <div className='password-section'>
-                        <p>Password</p>
                         <input
                             type={showPassword ? 'text' : 'password'}
                             placeholder='**********'
                             onChange={handlePasswordInputChange}
                             onKeyDown={handleKeyPress}
-                            style={{paddingRight: '40px'}}
+                            // style={{paddingRight: '40px'}}
                         />
                         <span
                             onClick={togglePasswordVisibility}
@@ -166,7 +166,7 @@ function EmailCredentialPage() {
                         className={`toggle-button ${isChecked ? 'checked' : ''}`}
                         onClick={handleToggle}
                     />
-                    <p>Yes, I’d like to receive updates and events from CareerStar</p>
+                    <p>Yes, I’d like to receive updates from CareerStar.</p>
                 </div>
                 <div className='signUp-page-button' onClick={nextPageNavigation}>
                     <p>Continue</p>

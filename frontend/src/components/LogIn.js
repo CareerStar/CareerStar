@@ -146,8 +146,8 @@ function LogIn() {
                         onKeyDown={handleKeyPress}
                     />
                     {errorEmail && <div className='error-text'><p>{errorEmail}</p></div>}
+                    <p>Password</p>
                     <div className='password-section'>
-                        <p>Password</p>
                         <input 
                             type={showPassword ? 'text' : 'password'}
                             placeholder='**********'
