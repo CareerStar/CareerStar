@@ -165,6 +165,12 @@
   opacity: 0.5;
 }
 
+@media (min-width: 768px) {
+  .sidebar {
+    width: 15%;
+  }
+}
+
 /* Progress bar styles */
 .main-progress-container {
   display: flex;
