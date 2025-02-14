@@ -28,7 +28,7 @@ function Sidebar({pages, selectedPage, onboarded}) {
             case 'LinkedIn':
                 return eventsIcon;
             case 'Resume Feedback':
-                return eventsIcon;
+                return supportIcon;
             default:
                 return <i className="fas fa-tachometer-alt"></i>;
         }
