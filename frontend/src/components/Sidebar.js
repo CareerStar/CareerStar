@@ -27,6 +27,8 @@ function Sidebar({pages, selectedPage, onboarded}) {
                 return eventsIcon;
             case 'LinkedIn':
                 return eventsIcon;
+            case 'Resume Feedback':
+                return eventsIcon;
             default:
                 return <i className="fas fa-tachometer-alt"></i>;
         }
@@ -34,7 +36,7 @@ function Sidebar({pages, selectedPage, onboarded}) {
 
     const handleClick = (page) => {
         if (onboarded || page === 'Home') {
-            navigate(`/dashboard/${page.toLowerCase()}`);
+            navigate(`/dashboard/${page.replace(/\s+/g, '').toLowerCase()}`);
         }
     }
 
