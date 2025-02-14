@@ -58,7 +58,7 @@ function ResumeFeedback() {
     return (
         <div className="resume-feedback-container">
             <h1 className="resume-feedback-heading">
-                AI Resume Feedback Generator
+                Generate AI Resume Feedback
             </h1>
 
             <form onSubmit={handleSubmit} className="resume-feedback-form">
