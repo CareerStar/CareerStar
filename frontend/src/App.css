@@ -3215,3 +3215,107 @@ h3 {
   font-size: 14px !important;
   margin: 5px 0px;
 }
+
+/* ResumeFeedback Component Styles */
+.resume-feedback-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.resume-feedback-heading {
+  font-family: 'Sora';
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.resume-feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.resume-feedback-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resume-feedback-label {
+  font-family: 'Nunito';
+  display: block;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.resume-feedback-input-file {
+  width: 100%;
+  font-size: 14px;
+  color: #6B7280;
+}
+
+.resume-feedback-input-file::file-selector-button {
+  margin-right: 16px;
+  padding: 10px 16px;
+  border-radius: 40px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #EFF6FF;
+  color: #581AD1;
+  cursor: pointer;
+}
+
+.resume-feedback-input-file::file-selector-button:hover {
+  cursor: pointer !important; 
+  background-color: #DBEAFE;
+}
+
+.resume-feedback-button {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  background: #581AD1;
+  border-radius: 40px;
+  margin: 0 auto;
+  margin-top: 20px;
+  color: #FFFFFF;
+  border: none;
+
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+}
+
+.resume-feedback-button:hover {
+  cursor: pointer !important;
+  background-color: #1E40AF;
+}
+
+.resume-feedback-button:disabled {
+  background-color: #9CA3AF;
+  cursor: not-allowed;
+}
+
+.resume-feedback-feedback {
+  margin-top: 32px;
+  padding: 24px;
+  background-color: #F9FAFB;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.resume-feedback-feedback-heading {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.resume-feedback-feedback-content {
+  font-size: 16px;
+  line-height: 1.5;
+}
