@@ -94,7 +94,7 @@ function Dashboard() {
             <div className='main-page'>
                 <div className='main-page-contnent'>
                     <div className='main-page-header'>
-                        <h1>Thank you for Sign up</h1>
+                        <h1>Thank you for Signing up</h1>
                         <p>This app is currently available only on desktop. You can use the same credentials to log in on your desktop. Mobile access is coming soon! </p>
                     </div>
                 </div>
