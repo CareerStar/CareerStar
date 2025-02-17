@@ -3,6 +3,8 @@ import os
 import psycopg2
 import json
 import boto3
+import base64
+import logging
 from psycopg2 import pool
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -13,6 +15,7 @@ import mailchimp_marketing as MailchimpMarketing
 from mailchimp_marketing import Client
 from mailchimp_marketing.api_client import ApiClientError
 import requests
+from google import genai
 
 
 load_dotenv()
@@ -36,6 +39,8 @@ mailchimp_audience_id = os.getenv('MAILCHIMP_AUDIENCE_ID')
 
 openrouter_api_key = os.getenv('OPENROUTER_API_KEY')
 
+client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+
 connection_pool = psycopg2.pool.SimpleConnectionPool(
     1, 20,  # Min and max connections
     host=db_host,
@@ -51,6 +56,18 @@ S3_SECRET = os.getenv('AWS_SECRET_KEY')
 S3_REGION = os.getenv('AWS_REGION')
 
 s3 = boto3.client('s3', aws_access_key_id=S3_KEY, aws_secret_access_key=S3_SECRET, region_name=S3_REGION)
+
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('careerstar-backend.log'), 
+        logging.StreamHandler() 
+    ]
+)
+
+logger = logging.getLogger()
 
 def get_db_connection():
     # connection = psycopg2.connect(
@@ -944,6 +961,54 @@ def generate_ai_feedback():
 
     except Exception as error:
         return jsonify({"error": str(error)}), 500
+
+@app.route('/resumefeedback', methods=['POST'])
+def upload_resume():
+    try:
+        if 'resume' not in request.files:
+            return jsonify({'error': 'No file provided'}), 400
+        
+        file = request.files['resume']
+        
+        if file.filename == '':
+            return jsonify({'error': 'No file selected'}), 400
+
+        file_data = file.read()
+
+        prompt = """Please analyze this resume and provide detailed feedback on:
+            1. Overall presentation and format
+            2. Content effectiveness and impact
+            3. Key strengths
+            4. Areas for improvement
+            Please be specific and provide actionable suggestions."""
+
+        try:
+            pdf = {
+                "inlineData": {
+                    "data": base64.b64encode(file_data).decode('utf-8'),
+                    "mimeType": "application/pdf"
+                }
+            }
+            logger.info("PDF successfully encoded.")
+        except Exception as encoding_error:
+            logger.error(f"Error encoding PDF: {encoding_error}")
+            return jsonify({'error': 'Failed to encode PDF'}), 500
+
+        try:
+            result = client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=[pdf, prompt])
+                
+        except Exception as model_error:
+            return jsonify({'error': 'Failed to generate content'}), 500
+
+        feedback = result.text if result.text else 'No feedback'
+
+        return jsonify({'feedback': feedback})
+
+    except Exception as e:
+        logger.error(f"General error: {e}")
+        return jsonify({'error': 'Failed to process resume'}), 500
 
 @app.route('/events/<int:activityId>', methods=['PUT'])
 def update_activity(activityId):
