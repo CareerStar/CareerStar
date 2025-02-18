@@ -725,7 +725,7 @@ def get_all_events_details_new():
         connection = get_db_connection()
         cursor = connection.cursor()
         get_user_activities_details_query = """
-        SELECT imageURL, title, description, tags, star, activityId, videoURL, eventURL, eventDate, detailedDescription FROM activities;
+        SELECT imageURL, title, description, tags, star, activityId, videoURL, eventURL, eventDate, detailedDescription FROM activities WHERE eventDate >= CURRENT_DATE;
         """
         cursor.execute(get_user_activities_details_query)
         activities = cursor.fetchall()
