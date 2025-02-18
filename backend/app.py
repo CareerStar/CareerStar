@@ -112,9 +112,57 @@ def add_contact_to_mailchimp(audience_id, email, firstname, interview_date):
     except ApiClientError as error:
         print("An error occurred:", error.text)
 
+def check_access_code(access_code):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        get_access_code_query = """
+        SELECT usage_limit, usage_count, expires_at FROM access_codes WHERE code = %s;
+        """
+
+        cursor.execute(get_access_code_query, (access_code,))
+        access_code_details = cursor.fetchone()
+
+        if access_code_details:
+            usage_limit = access_code_details[0]
+            usage_count = access_code_details[1]
+            expires_at = access_code_details[2]
+        else:
+            return False
+        
+        if expires_at and expires_at < datetime.now():
+            return False
+        
+        if usage_limit and usage_count >= usage_limit:
+            return False
+
+        update_access_code_query = """
+        UPDATE access_codes
+        SET usage_count = %s
+        WHERE code = %s;
+        """
+        cursor.execute(update_access_code_query, (usage_count + 1, access_code))
+
+        connection.commit()
+        
+        return True
+    
+    except Exception as error:
+        return False
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
+
 @app.route('/users', methods=['POST'])
 def add_user():
     try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
         user_data = request.json
 
         firstname = user_data.get('firstname')
@@ -123,14 +171,18 @@ def add_user():
         emailID = emailID.lower()
         password = user_data.get('password')
         stars = user_data.get('stars')
+        access_code = user_data.get('accesscode')
 
-        if not firstname or not lastname or not emailID or not password:
+        if access_code:
+            is_access_code_valid = check_access_code(access_code)
+
+        if not firstname or not lastname or not emailID or not password or not access_code or not access_code:
             return jsonify({"error": "Missing required fields"}), 400
         
+        if not is_access_code_valid:
+            return jsonify({"error": "Invalid Access code"}), 401
+        
         hashed_password = generate_password_hash(password)
-
-        connection = get_db_connection()
-        cursor = connection.cursor()
 
         insert_query = """
         INSERT INTO Users (firstname, lastname, emailID, password, stars)
@@ -155,7 +207,7 @@ def add_user():
                 }), 201
 
     except psycopg2.IntegrityError as e:
-        return jsonify({"error": "Email already exists"}), 400
+        return jsonify({"error": "User already exists."}), 400
     except Exception as error:
         return jsonify({"error": str(error)}), 500
     finally:
@@ -989,9 +1041,7 @@ def upload_resume():
                     "mimeType": "application/pdf"
                 }
             }
-            logger.info("PDF successfully encoded.")
         except Exception as encoding_error:
-            logger.error(f"Error encoding PDF: {encoding_error}")
             return jsonify({'error': 'Failed to encode PDF'}), 500
 
         try:
@@ -1007,7 +1057,6 @@ def upload_resume():
         return jsonify({'feedback': feedback})
 
     except Exception as e:
-        logger.error(f"General error: {e}")
         return jsonify({'error': 'Failed to process resume'}), 500
 
 @app.route('/events/<int:activityId>', methods=['PUT'])
