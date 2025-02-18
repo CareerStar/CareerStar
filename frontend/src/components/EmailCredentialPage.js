@@ -19,6 +19,7 @@ function EmailCredentialPage() {
     const [lastname, setLastname] = useState('');
     const [emailID, setEmailID] = useState('');
     const [password, setPassword] = useState('');
+    const [accessCode, setAccessCode] = useState('');
     const [userId, setUserID] = useState(0);
 
     const [isChecked, setIsChecked] = useState(true);
@@ -48,6 +49,10 @@ function EmailCredentialPage() {
             setErrorPassword('');
         }
     };
+    
+    const handleAccessCodeInputChange = (event) => {
+        setAccessCode(event.target.value);
+    };
 
     const nextPageNavigation = async () => {
 
@@ -74,7 +79,8 @@ function EmailCredentialPage() {
                 firstname: firstname,
                 lastname: "No last name",
                 password: password,
-                stars: 3
+                stars: 3,
+                accesscode: accessCode
             };
             const response = await axios.post('https://api.careerstar.co/users', requestBody);
 
@@ -86,7 +92,7 @@ function EmailCredentialPage() {
                 localStorage.setItem('userId', data.userId);
                 localStorage.setItem('firstname', data.firstname);
                 localStorage.setItem('login_timestamp', Date.now());
-                
+
                 setUserID(response.data.userId);
                 dispatch({ type: "SET_STAR_COUNT", payload: 3 });
                 setShowPopup(true);
@@ -94,7 +100,9 @@ function EmailCredentialPage() {
 
         } catch (error) {
             if (error.response && error.response.status === 400) {
-                alert('User already exists.');
+                alert(error.response.data.error);
+            } else if (error.response && error.response.status === 401) {
+                alert(error.response.data.error);
             }
             console.error("Error fetching data:", error);
         }
@@ -125,7 +133,7 @@ function EmailCredentialPage() {
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
-    
+
     return (
         <div className='signUp-page'>
             <div className='career-star-logo' onClick={navigateToStartPage}>
@@ -150,7 +158,7 @@ function EmailCredentialPage() {
                             placeholder='**********'
                             onChange={handlePasswordInputChange}
                             onKeyDown={handleKeyPress}
-                            // style={{paddingRight: '40px'}}
+                        // style={{paddingRight: '40px'}}
                         />
                         <span
                             onClick={togglePasswordVisibility}
@@ -160,6 +168,14 @@ function EmailCredentialPage() {
                         </span>
                     </div>
                     {errorPassword && <div className='error-text'><p>{errorPassword}</p></div>}
+
+                    <p>Access Code</p>
+                    <input
+                        type='text'
+                        placeholder='**********'
+                        onChange={handleAccessCodeInputChange}
+                        onKeyDown={handleKeyPress}
+                    />
                 </div>
                 <div className='toggle-button-container'>
                     <div
