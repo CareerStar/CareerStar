@@ -3,6 +3,8 @@ import os
 import psycopg2
 import json
 import boto3
+import base64
+import logging
 from psycopg2 import pool
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -13,6 +15,7 @@ import mailchimp_marketing as MailchimpMarketing
 from mailchimp_marketing import Client
 from mailchimp_marketing.api_client import ApiClientError
 import requests
+from google import genai
 
 
 load_dotenv()
@@ -36,6 +39,8 @@ mailchimp_audience_id = os.getenv('MAILCHIMP_AUDIENCE_ID')
 
 openrouter_api_key = os.getenv('OPENROUTER_API_KEY')
 
+client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+
 connection_pool = psycopg2.pool.SimpleConnectionPool(
     1, 20,  # Min and max connections
     host=db_host,
@@ -51,6 +56,18 @@ S3_SECRET = os.getenv('AWS_SECRET_KEY')
 S3_REGION = os.getenv('AWS_REGION')
 
 s3 = boto3.client('s3', aws_access_key_id=S3_KEY, aws_secret_access_key=S3_SECRET, region_name=S3_REGION)
+
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('careerstar-backend.log'), 
+        logging.StreamHandler() 
+    ]
+)
+
+logger = logging.getLogger()
 
 def get_db_connection():
     # connection = psycopg2.connect(
@@ -95,9 +112,57 @@ def add_contact_to_mailchimp(audience_id, email, firstname, interview_date):
     except ApiClientError as error:
         print("An error occurred:", error.text)
 
+def check_access_code(access_code):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        get_access_code_query = """
+        SELECT usage_limit, usage_count, expires_at FROM access_codes WHERE code = %s;
+        """
+
+        cursor.execute(get_access_code_query, (access_code,))
+        access_code_details = cursor.fetchone()
+
+        if access_code_details:
+            usage_limit = access_code_details[0]
+            usage_count = access_code_details[1]
+            expires_at = access_code_details[2]
+        else:
+            return False
+        
+        if expires_at and expires_at < datetime.now():
+            return False
+        
+        if usage_limit and usage_count >= usage_limit:
+            return False
+
+        update_access_code_query = """
+        UPDATE access_codes
+        SET usage_count = %s
+        WHERE code = %s;
+        """
+        cursor.execute(update_access_code_query, (usage_count + 1, access_code))
+
+        connection.commit()
+        
+        return True
+    
+    except Exception as error:
+        return False
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
+
 @app.route('/users', methods=['POST'])
 def add_user():
     try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
         user_data = request.json
 
         firstname = user_data.get('firstname')
@@ -106,14 +171,18 @@ def add_user():
         emailID = emailID.lower()
         password = user_data.get('password')
         stars = user_data.get('stars')
+        access_code = user_data.get('accesscode')
 
-        if not firstname or not lastname or not emailID or not password:
+        if access_code:
+            is_access_code_valid = check_access_code(access_code)
+
+        if not firstname or not lastname or not emailID or not password or not access_code or not access_code:
             return jsonify({"error": "Missing required fields"}), 400
         
+        if not is_access_code_valid:
+            return jsonify({"error": "Invalid Access code"}), 401
+        
         hashed_password = generate_password_hash(password)
-
-        connection = get_db_connection()
-        cursor = connection.cursor()
 
         insert_query = """
         INSERT INTO Users (firstname, lastname, emailID, password, stars)
@@ -138,7 +207,7 @@ def add_user():
                 }), 201
 
     except psycopg2.IntegrityError as e:
-        return jsonify({"error": "Email already exists"}), 400
+        return jsonify({"error": "User already exists."}), 400
     except Exception as error:
         return jsonify({"error": str(error)}), 500
     finally:
@@ -656,7 +725,7 @@ def get_all_events_details_new():
         connection = get_db_connection()
         cursor = connection.cursor()
         get_user_activities_details_query = """
-        SELECT imageURL, title, description, tags, star, activityId, videoURL, eventURL, eventDate, detailedDescription FROM activities;
+        SELECT imageURL, title, description, tags, star, activityId, videoURL, eventURL, eventDate, detailedDescription FROM activities WHERE eventDate >= CURRENT_DATE;
         """
         cursor.execute(get_user_activities_details_query)
         activities = cursor.fetchall()
@@ -944,6 +1013,51 @@ def generate_ai_feedback():
 
     except Exception as error:
         return jsonify({"error": str(error)}), 500
+
+@app.route('/resumefeedback', methods=['POST'])
+def upload_resume():
+    try:
+        if 'resume' not in request.files:
+            return jsonify({'error': 'No file provided'}), 400
+        
+        file = request.files['resume']
+        
+        if file.filename == '':
+            return jsonify({'error': 'No file selected'}), 400
+
+        file_data = file.read()
+
+        prompt = """Please analyze this resume and provide detailed feedback on:
+            1. Overall presentation and format
+            2. Content effectiveness and impact
+            3. Key strengths
+            4. Areas for improvement
+            Please be specific and provide actionable suggestions."""
+
+        try:
+            pdf = {
+                "inlineData": {
+                    "data": base64.b64encode(file_data).decode('utf-8'),
+                    "mimeType": "application/pdf"
+                }
+            }
+        except Exception as encoding_error:
+            return jsonify({'error': 'Failed to encode PDF'}), 500
+
+        try:
+            result = client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=[pdf, prompt])
+                
+        except Exception as model_error:
+            return jsonify({'error': 'Failed to generate content'}), 500
+
+        feedback = result.text if result.text else 'No feedback'
+
+        return jsonify({'feedback': feedback})
+
+    except Exception as e:
+        return jsonify({'error': 'Failed to process resume'}), 500
 
 @app.route('/events/<int:activityId>', methods=['PUT'])
 def update_activity(activityId):
