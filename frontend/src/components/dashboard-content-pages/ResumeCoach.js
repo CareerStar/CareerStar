@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
 
-function ResumeFeedback() {
+function ResumeCoach() {
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
     const [feedback, setFeedback] = useState('');
@@ -56,39 +56,39 @@ function ResumeFeedback() {
     };
 
     return (
-        <div className="resume-feedback-container">
-            <h1 className="resume-feedback-heading">
+        <div className="resume-coach-container">
+            <h1 className="resume-coach-heading">
                 Generate AI Resume Feedback
             </h1>
 
-            <form onSubmit={handleSubmit} className="resume-feedback-form">
-                <div className="resume-feedback-input-group">
-                    <label className="resume-feedback-label">
+            <form onSubmit={handleSubmit} className="resume-coach-form">
+                <div className="resume-coach-input-group">
+                    <label className="resume-coach-label">
                         Upload your resume (PDF)
                     </label>
                     <input
                         type="file"
                         accept=".pdf"
                         onChange={handleFileChange}
-                        className="resume-feedback-input-file"
+                        className="resume-coach-input-file"
                     />
                 </div>
 
                 <button
                     type="submit"
                     disabled={!file || loading}
-                    className="resume-feedback-button"
+                    className="resume-coach-button"
                 >
                     {loading ? 'Analyzing...' : 'Get Feedback'}
                 </button>
             </form>
 
             {feedback && (
-                <div className="resume-feedback-feedback">
-                    <h2 className="resume-feedback-feedback-heading">
-                        Resume Feedback
+                <div className="resume-coach-feedback">
+                    <h2 className="resume-coach-feedback-heading">
+                        Resume Coach
                     </h2>
-                    <div className="resume-feedback-feedback-content">
+                    <div className="resume-coach-feedback-content">
                         <ReactMarkdown>{feedback}</ReactMarkdown>
                     </div>
                 </div>
@@ -98,4 +98,4 @@ function ResumeFeedback() {
     );
 }
 
-export default ResumeFeedback;
+export default ResumeCoach;

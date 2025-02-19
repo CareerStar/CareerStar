@@ -8,7 +8,7 @@ import Support from './dashboard-content-pages/Support';
 import AdminEvents from './admin/AdminEvents';
 import LinkedIn from './admin/LinkedIn';
 import ActivityAggregator from './activities/ActivityAggregator';
-import ResumeFeedback from './dashboard-content-pages/ResumeFeedback';
+import ResumeCoach from './dashboard-content-pages/ResumeCoach';
 
 function DashboardContent({ selectedPage, activityName, onComplete, userId }) {
     const renderPage = () => {
@@ -31,8 +31,8 @@ function DashboardContent({ selectedPage, activityName, onComplete, userId }) {
                 return <AdminEvents />;
             case 'LinkedIn':
                 return <LinkedIn />;
-            case 'Resumefeedback':
-                return <ResumeFeedback />;
+            case 'Resumecoach':
+                return <ResumeCoach />;
             default:
                 return <Home />;
         }
