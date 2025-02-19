@@ -260,7 +260,7 @@ function Home({ onComplete, userId }) {
                     <img src={astronaut} alt="Astronaut" />
                     <div className="home-welcome-left-text">
                         <h1>Welcome, {userDetails.firstname}!</h1>
-                        <p>It's great day to be a Career Star!</p>
+                        <p>It's a great day to be a Career Star!</p>
                     </div>
                 </div>
                 <div className="home-welcome-right"><span className="star-count"> {stars} </span>  <img src={star} className='star' /></div>
