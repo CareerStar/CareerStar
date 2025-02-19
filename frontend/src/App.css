@@ -3215,32 +3215,32 @@ h3 {
   margin: 5px 0px;
 }
 
-/* ResumeFeedback Component Styles */
-.resume-feedback-container {
+/* ResumeCoach Component Styles */
+.resume-coach-container {
   max-width: 100%;
   margin: 0 auto;
   padding: 24px;
 }
 
-.resume-feedback-heading {
+.resume-coach-heading {
   font-family: 'Sora';
   font-size: 30px;
   font-weight: 700;
 }
 
-.resume-feedback-form {
+.resume-coach-form {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-.resume-feedback-input-group {
+.resume-coach-input-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.resume-feedback-label {
+.resume-coach-label {
   font-family: 'Nunito';
   display: block;
   font-size: 18px;
@@ -3249,13 +3249,13 @@ h3 {
   margin-left: 15px;
 }
 
-.resume-feedback-input-file {
+.resume-coach-input-file {
   width: 100%;
   font-size: 14px;
   color: #6B7280;
 }
 
-.resume-feedback-input-file::file-selector-button {
+.resume-coach-input-file::file-selector-button {
   margin-right: 16px;
   padding: 10px 16px;
   border-radius: 40px;
@@ -3267,12 +3267,12 @@ h3 {
   cursor: pointer;
 }
 
-.resume-feedback-input-file::file-selector-button:hover {
+.resume-coach-input-file::file-selector-button:hover {
   cursor: pointer !important; 
   background-color: #DBEAFE;
 }
 
-.resume-feedback-button {
+.resume-coach-button {
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -3292,17 +3292,17 @@ h3 {
   text-align: center;
 }
 
-.resume-feedback-button:hover {
+.resume-coach-button:hover {
   cursor: pointer !important;
   background-color: #1E40AF;
 }
 
-.resume-feedback-button:disabled {
+.resume-coach-button:disabled {
   background-color: #9CA3AF;
   cursor: not-allowed;
 }
 
-.resume-feedback-feedback {
+.resume-coach-feedback {
   margin-top: 32px;
   padding: 24px;
   background-color: #F9FAFB;
@@ -3310,13 +3310,13 @@ h3 {
   text-align: left;
 }
 
-.resume-feedback-feedback-heading {
+.resume-coach-feedback-heading {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 16px;
 }
 
-.resume-feedback-feedback-content {
+.resume-coach-feedback-content {
   font-size: 16px;
   line-height: 1.5;
 }
