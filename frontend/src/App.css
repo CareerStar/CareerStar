@@ -2298,6 +2298,39 @@ h3 {
   flex-wrap: wrap;
 }
 
+.star-method-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 0px;
+  gap: 10px;
+  height: 100%;
+
+  border: 1px solid #000;
+  border-radius: 32px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.star-method-container h3 {
+  color: #171717;
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0px;
+}
+
+.star-method-container p {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  color: #000000;
+  margin: 10px 0px;
+}
+
 /* New Activity page styles */
 
 .activity-container {
