@@ -34,8 +34,7 @@ function Events({ userId }) {
                     completed: completedSet.has(event.activityId)
                 }));
         
-                setEvents(updatedEvents);
-
+                setEvents(updatedEvents.slice(0, 4));
             } catch (error) {
                 console.error('Error fetching event details:', error);
             }
@@ -116,7 +115,10 @@ function Events({ userId }) {
 
     return (
         <div className='events-container'>
-            <h1>Top Picks For You This Week</h1>
+            <div className='events-header'>
+                <h1>Top Picks For You This Week</h1>
+                <button className='view-all-button' onClick={() => navigate('/dashboard/events')}>View all →</button>
+            </div>
             <div className='event-cards'>
                 {events.map(card => <div className="event-card-wrapper" onClick={() => { setShowPopup(true); setCurrentCard(card) }}><EventCard activityId={card.activityId} image={card.imageURL} tags={card.tags} title={card.title} eventDate={card.eventDate} description={card.description} eventURL={card.eventURL} starCount={card.star} completed={card.completed} /></div>)}
             </div>
