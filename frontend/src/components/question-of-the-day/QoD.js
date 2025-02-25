@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import QoDList from '../question-of-the-day/QoDList';
+import starMethodImage from '../../assets/images/star-method.png';
 
 function QoD() {
     // const questions = [
@@ -67,14 +68,19 @@ function QoD() {
     const [qod, setQod] = useState([questions[0]]);
     return (
         <div className='qod-container'>
-            <h1>Star Method</h1>
+            <h1>Stars Method</h1>
             <div className='star-method-container'>
-                {starMethod.map((q) => (
-                    <div key={q.id} className='star-method-card'>
-                        <h3>{q.question}</h3>
-                        <p>{q.answer}</p>
-                    </div>
-                ))}
+                <div className='star-method-description'>
+                    {starMethod.map((q) => (
+                        <div key={q.id} className='star-method-card'>
+                            <h3>{q.question}</h3>
+                            <p>{q.answer}</p>
+                        </div>
+                    ))}
+                </div>
+                <div className='star-method-image'>
+                    <img src={starMethodImage} alt="Star Method Example" />
+                </div>
             </div>
             <br />
             <h1>Question of the Day</h1>
