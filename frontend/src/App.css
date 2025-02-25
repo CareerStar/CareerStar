@@ -1260,6 +1260,33 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   /* max-width: 1300px; */
 }
 
+.events-container .events-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.events-container .events-header .view-all-button {
+
+  padding: 10px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  background: #F9F8FF;
+  border: 1px solid #000;
+  border-radius: 32px;
+
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+  
+  margin-bottom: 20px;
+}
+
 .events-container h1 {
   color: #171717;
   font-family: 'Sora';
