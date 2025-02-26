@@ -38,10 +38,15 @@ function QoD() {
             id: 4,
             question: "Result",
             answer: "The MVP was successfully launched on time, enabling the company to showcase a working product to investors, which led to securing early funding and user traction."
+        },
+        {
+            id: 5,
+            question: "Summary",
+            answer: "In summary, this experience underscored the importance of agile planning, clear communication, and collaborative problem solving, which have since become integral to my approach on subsequent projects."
         }
-    ];    
-
-    const starMethod = [
+    ];
+    
+    const starsMethod = [
         { 
             id: 1, 
             question: "Situation", 
@@ -61,8 +66,14 @@ function QoD() {
             id: 4, 
             question: "Result", 
             answer: "Share the results or outcomes of your actions, highlighting any achievements or lessons learned." 
+        },
+        { 
+            id: 5, 
+            question: "Summary", 
+            answer: "Provide a concise reflection on the experience, emphasizing key takeaways and how it has influenced your skills or approach." 
         }
     ];
+    
     
 
     const [qod, setQod] = useState([questions[0]]);
@@ -71,7 +82,7 @@ function QoD() {
             <h1>Stars Method</h1>
             <div className='star-method-container'>
                 <div className='star-method-description'>
-                    {starMethod.map((q) => (
+                    {starsMethod.map((q) => (
                         <div key={q.id} className='star-method-card'>
                             <h3>{q.question}</h3>
                             <p>{q.answer}</p>
