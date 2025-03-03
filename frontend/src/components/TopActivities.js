@@ -89,6 +89,18 @@ function TopActivities({ userId }) {
 
                 <TopActivityCard
                     activityId={5}
+                    activityTitle='Let’s Network Before We Network'
+                    activityDescription='Want to make the most of an event? Start by building a relationship with the event host!'
+                    activityTags={['Events', 'Networking']}
+                    activityStarCount={7}
+                    activityTime='15 min'
+                    moduleId={3}
+                    isReady={true}
+                    completed={!!activityStatuses?.[5]}
+                />
+
+                {/* <TopActivityCard
+                    activityId={99}
                     activityTitle='Get To Know Your Interviewer'
                     activityDescription='Researching your interviewer before a job interview can give you a significant advantage.'
                     activityTags={['Interview', 'LinkedIn']}
@@ -96,11 +108,11 @@ function TopActivities({ userId }) {
                     activityTime='10 min'
                     moduleId={3}
                     isReady={false}
-                    completed={!!activityStatuses?.[5]}
-                />
+                    completed={!!activityStatuses?.[99]}
+                /> */}
 
                 <TopActivityCard
-                    activityId={6}
+                    activityId={100}
                     activityTitle='The Dreaded Salary Talk'
                     activityDescription='Discussing Salary During Interviews'
                     activityTags={['Interview']}
@@ -108,7 +120,7 @@ function TopActivities({ userId }) {
                     activityTime='15 min'
                     moduleId={2}
                     isReady={false}
-                    completed={!!activityStatuses?.[6]}
+                    completed={!!activityStatuses?.[100]}
                 />
             </div>
         </div>
