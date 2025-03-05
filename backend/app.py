@@ -174,7 +174,7 @@ def add_user():
         access_code = user_data.get('accesscode')
 
         if access_code:
-            is_access_code_valid = check_access_code(access_code)
+            is_access_code_valid = check_access_code(access_code.lower())
 
         if not firstname or not lastname or not emailID or not password or not access_code or not access_code:
             return jsonify({"error": "Missing required fields"}), 400
