@@ -16,7 +16,7 @@ from mailchimp_marketing import Client
 from mailchimp_marketing.api_client import ApiClientError
 import requests
 from google import genai
-
+import threading
 
 load_dotenv()
 
@@ -112,6 +112,32 @@ def add_contact_to_mailchimp(audience_id, email, firstname, interview_date):
     except ApiClientError as error:
         print("An error occurred:", error.text)
 
+def sign_up_journey_mailchimp(email, firstname):
+    mailchimp = Client()
+    mailchimp.set_config({
+        "api_key": mailchimp_api_key,
+        "server": mailchimp_server
+    })
+
+    try:
+        response = mailchimp.lists.add_list_member(mailchimp_audience_id, {
+            "email_address": email,
+            "status": "subscribed",
+            "merge_fields": {
+                "FNAME": firstname,
+            }
+        })
+
+        mailchimp.lists.update_list_member_tags(
+            mailchimp_audience_id,
+            response["id"],
+            {"tags": [{"name": "sign-up", "status": "active"}]}
+        )
+
+        print("Contact added successfully:")
+    except ApiClientError as error:
+        print("An error occurred:", error.text)
+
 def check_access_code(access_code):
     try:
         connection = get_db_connection()
@@ -197,6 +223,8 @@ def add_user():
         access_token = create_access_token(identity=user_id, expires_delta=timedelta(days=7))
         refresh_token = create_access_token(identity=user_id, expires_delta=timedelta(days=30))
         connection.commit()
+
+        threading.Thread(target=sign_up_journey_mailchimp, args=(emailID, firstname)).start()
 
         return jsonify({
                     "message": "User added successfully",
