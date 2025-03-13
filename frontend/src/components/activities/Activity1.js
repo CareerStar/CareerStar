@@ -60,6 +60,14 @@ const Activity1 = () => {
         setShowHotTipPopup(false);
     }
 
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToTop();
+    }, []);
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (popupRef.current && !popupRef.current.contains(event.target)) {
@@ -142,10 +150,6 @@ const Activity1 = () => {
         { id: 4, number: "Step 4", title: "Uncover the Hiring Team", icon: collaboratingInCircle },
         { id: 5, number: "Step 5", title: "Your Turn, go shine!", icon: changeUser },
     ];
-
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    };
 
     const handleStepChange = (stepId) => {
         scrollToTop();

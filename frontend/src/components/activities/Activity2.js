@@ -42,6 +42,14 @@ const Activity2 = () => {
         setShowHotTipPopup(false);
     }
 
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToTop();
+    }, []);
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (popupRef.current && !popupRef.current.contains(event.target)) {
@@ -127,7 +135,7 @@ const Activity2 = () => {
         { abbreviation: 'B2B', fullForm: 'Business-to-Business', duty: "A type of commerce where businesses exchange products, services, or information with other businesses." },
         { abbreviation: 'B2C', fullForm: 'Business-to-Consumer', duty: "A business model where a company sells products or services directly to consumers." },
         { abbreviation: 'SaaS', fullForm: 'Software as a Service', duty: "A cloud-based model for delivering software applications to users over the internet." },
-        { abbreviation: 'KPI', fullForm: 'Key Performance Indicator', duty: "A measurable value that demonstrates how effectively a company is achieving key objectives."},
+        { abbreviation: 'KPI', fullForm: 'Key Performance Indicator', duty: "A measurable value that demonstrates how effectively a company is achieving key objectives." },
         { abbreviation: 'OKR', fullForm: 'Objectives and Key Results', duty: "A goal-setting methodology that can help teams set measurable goals." },
         { abbreviation: 'CRM', fullForm: 'Customer Relationship Management', duty: "A system for managing all of your company's interactions with current and potential customers." },
         { abbreviation: 'HR', fullForm: 'Human Resources', duty: "The department of a business that manages the employee life cycle." },
@@ -138,10 +146,6 @@ const Activity2 = () => {
         { id: 2, number: "Step 2", title: "Technical & Product Roles & Terms", icon: caseStudy },
         { id: 3, number: "Step 3", title: "Business Models, Metrics & Technology", icon: collaboratingInCircle }
     ];
-
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    };
 
     const handleStepChange = (stepId) => {
         scrollToTop();
@@ -238,7 +242,7 @@ const Activity2 = () => {
                         <h2>Step 1 : Executive Leadership & Senior Management</h2>
                         <div className="flip-cards-container">
                             {executiveLeadershipAndManagement.map((role, index) => (
-                                <FlippableCard key={`step1-${index}`}  abbreviation={role.abbreviation} fullForm={role.fullForm} duty={role.duty} />
+                                <FlippableCard key={`step1-${index}`} abbreviation={role.abbreviation} fullForm={role.fullForm} duty={role.duty} />
                             ))}
                         </div>
                     </div>
@@ -247,7 +251,7 @@ const Activity2 = () => {
                         <h2>Step 2 : Technical & Product Roles & Terms</h2>
                         <div className="flip-cards-container">
                             {technicalAndProductRoles.map((role, index) => (
-                                <FlippableCard key={`step2-${index}`}  abbreviation={role.abbreviation} fullForm={role.fullForm} duty={role.duty} />
+                                <FlippableCard key={`step2-${index}`} abbreviation={role.abbreviation} fullForm={role.fullForm} duty={role.duty} />
                             ))}
                         </div>
                     </div>

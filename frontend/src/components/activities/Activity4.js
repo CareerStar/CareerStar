@@ -51,6 +51,14 @@ const Activity4 = () => {
         setShowHotTipPopup(false);
     }
 
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToTop();
+    }, []);
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (popupRef.current && !popupRef.current.contains(event.target)) {
@@ -119,10 +127,6 @@ const Activity4 = () => {
     const stepsData = [
         { id: 1, number: "Step 1", title: "Hot Jobs", icon: lawyer },
     ];
-
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    };
 
     const handleStepChange = (stepId) => {
         scrollToTop();
@@ -221,6 +225,24 @@ const Activity4 = () => {
                         {jobs.map((job, index) => (
                             <JobListing key={index} {...job} />
                         ))}
+                        <div style={{ position: 'relative', paddingBottom: '56.25%', paddingTop: '35px', height: '0', overflow: 'hidden' }}>
+                            <iframe
+                                sandbox="allow-scripts allow-same-origin allow-presentation allow-forms"
+                                allowFullScreen
+                                allowTransparency
+                                frameBorder="0"
+                                src="https://www.menti.com/al2wrpk8zmt6"
+                                style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    height: '100%',
+                                }}
+                                width="420"
+                                height="315"
+                            />
+                        </div>
                     </div>
                 ) : null}
                 <div className="activity-navigation-buttons">

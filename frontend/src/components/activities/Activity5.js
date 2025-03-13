@@ -39,6 +39,14 @@ const Activity5 = () => {
     const [showLikeDislikePopup, setShowLikeDislikePopup] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToTop();
+    }, []);
+
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
@@ -91,10 +99,6 @@ const Activity5 = () => {
         { id: 4, number: "Step 4", title: "Reach Out to the Event Host", icon: collaboratingInCircle },
         { id: 5, number: "Step 5", title: "Meet the Host at the Event", icon: changeUser },
     ];
-
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    };
 
     const handleStepChange = (stepId) => {
         scrollToTop();

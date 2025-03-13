@@ -52,6 +52,14 @@ const Activity3 = () => {
         setShowHotTipPopup(false);
     }
 
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToTop();
+    }, []);
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (popupRef.current && !popupRef.current.contains(event.target)) {
@@ -86,12 +94,12 @@ const Activity3 = () => {
 
     const generateAIOutput = async (userMessage) => {
         setLoading(true); // Show loader
-    
+
         try {
             const response = await axios.post("https://api.careerstar.co/generate-ai-feedback", {
                 prompt: `You are a Career Guide. This message is what I am sending to a recruiter. Provide feedback on the message. The feedback should be concise and also write the message in an improved way. The message is as follows:\n\n "${userMessage}"`
             });
-    
+
             if (response.data && response.data.feedback) {
                 setAIOutput(response.data.feedback);
             } else {
@@ -143,10 +151,6 @@ const Activity3 = () => {
         { id: 3, number: "Step 3", title: "Complete the activity", icon: collaboratingInCircle },
         { id: 4, number: "Step 4", title: "Draft your own message", icon: collaboratingInCircle },
     ];
-
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    };
 
     const handleStepChange = (stepId) => {
         scrollToTop();
