@@ -22,6 +22,7 @@ function Home({ onComplete, userId }) {
     const [loading, setLoading] = useState(false);
     const [userDetails, setUserDetails] = useState({});
     const [activityChoices, setActivityChoices] = useState([]);
+    const [showPopup, setShowPopup] = useState(false);
     const [answers, setAnswers] = useState({
         describeMe: 'NA',
         currentSituation: 'A student at NYIT',
@@ -85,9 +86,11 @@ function Home({ onComplete, userId }) {
                     }));
                 } else {
                     console.error('Error fetching user details:', data);
+                    setShowPopup(true);
                 }
             } catch (error) {
                 console.error('Error fetching user details:', error);
+                setShowPopup(true);
             } finally {
                 setLoading(false);
             }
@@ -253,6 +256,20 @@ function Home({ onComplete, userId }) {
             {loading && (
                 <div className="spinner-overlay">
                     <div className="spinner"></div>
+                </div>
+            )}
+            {showPopup && (
+                <div className='popup'>
+                    <div className='popup-content'>
+                        <div className='earned-star'>Onboarding process</div>
+                        <div className='popup-text'>
+                            <p>Please finish the quick onboarding process.</p>
+                            <p>It comprises of a short introduction video and two quick questionnaires.</p>
+                        </div>
+                        <div className='popup-submit-button' onClick={() => { setShowPopup(false); }}>
+                            <p>Continue</p>
+                        </div>
+                    </div>
                 </div>
             )}
             <div className="home-welcome">
