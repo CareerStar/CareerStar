@@ -378,6 +378,41 @@ def assignActivitiesToUser(user_id, activitychoices):
         if connection:
             return_db_connection(connection)
 
+@app.route('/universities', methods=['GET'])
+def get_universities():
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        get_universities_query = "SELECT universityId, name FROM universities;"  # Assuming you have university_id and name columns
+        cursor.execute(get_universities_query)
+
+        universities = cursor.fetchall()
+
+        university_list = []
+
+        for university in universities:
+            university_dict = {
+                "universityId": university[0],
+                "name": university[1],
+            }
+            university_list.append(university_dict)
+
+        if universities:
+            return jsonify(university_list), 200
+        else:
+            return jsonify({"message": "No universities found"}), 404
+
+    except Exception as error:
+        # Return error message in case of any exception
+        return jsonify({"error": str(error)}), 500
+
+    finally:
+        # Close the database connection
+        if connection:
+            return_db_connection(connection)
+
+
 @app.route('/onboarding', methods=['POST'])
 def onboarding():
     try:
@@ -390,6 +425,7 @@ def onboarding():
         summary = user_data.get('summary')
         degree = user_data.get('degree')
         major = user_data.get('major')
+        universityId = int(user_data.get('universityId'))
         activitychoices = user_data.get('activityChoices')
 
         if not userId or not describeMe or not currentSituation or not goal:
@@ -399,12 +435,12 @@ def onboarding():
         cursor = connection.cursor()
 
         insert_query = """
-        INSERT INTO user_personalization (userId, describeMe, currentSituation, goal, onboarded, choice, summary, degree, major, activitychoices)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        INSERT INTO user_personalization (userId, describeMe, currentSituation, goal, onboarded, choice, summary, degree, major, universityId, activitychoices)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING userId;
         """
 
-        cursor.execute(insert_query, (userId, describeMe, currentSituation, goal, True, choice, summary, degree, major, activitychoices))
+        cursor.execute(insert_query, (userId, describeMe, currentSituation, goal, True, choice, summary, degree, major, universityId, activitychoices))
         user_id = 0
         user_id = cursor.fetchone()[0]
 
