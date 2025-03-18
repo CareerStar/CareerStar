@@ -33,6 +33,7 @@ function Home({ onComplete, userId }) {
         degree: '',
         major: '',
         activityChoices: [],
+        universityId: null
     });
     const [errors, setErrors] = useState({
         describeMe: '',
@@ -40,6 +41,7 @@ function Home({ onComplete, userId }) {
         goal: '',
         degree: '',
         major: '',
+        universityId: ''
     });
 
     const totalSteps = 2;
@@ -164,6 +166,7 @@ function Home({ onComplete, userId }) {
                 "degree": answers.degree,
                 "major": answers.major,
                 "activityChoices": answers.activityChoices,
+                "universityId": answers.universityId 
             };
             const response = await axios.post('https://api.careerstar.co/onboarding', requestBody);
             // const response = await axios.post('http://localhost:8080/onboarding', requestBody);
@@ -200,9 +203,10 @@ function Home({ onComplete, userId }) {
             case 2:
                 return (
                     <>
-                        <HomepageQuestion4 onChangeDegree={(value) => handleAnswerChange('degree', value)} onChangeMajor={(value) => handleAnswerChange('major', value)} />
+                        <HomepageQuestion4 onChangeDegree={(value) => handleAnswerChange('degree', value)} onChangeMajor={(value) => handleAnswerChange('major', value)} onChangeUniversity={(value) => handleAnswerChange('universityId', value)} />
                         {errors.degree && <div className='error-text'><p>{errors.degree}</p></div>}
                         {errors.major && <div className='error-text'><p>{errors.major}</p></div>}
+                        {errors.universityId && <div className='error-text'><p>{errors.universityId}</p></div>}
                     </>
                 );
             case 3:
@@ -232,6 +236,9 @@ function Home({ onComplete, userId }) {
         }
         if (currentStep === 2 && !answers.major.trim()) {
             stepErrors.major = 'Please choose your major*';
+        }
+        if (currentStep === 2 && !answers.universityId) {
+            stepErrors.universityId = 'Please choose your university*';
         }
         setErrors(stepErrors);
         return Object.keys(stepErrors).length === 0;
