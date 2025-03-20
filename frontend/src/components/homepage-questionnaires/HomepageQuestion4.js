@@ -1,8 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function HomepageQuestion4({ onChangeDegree, onChangeMajor }) {
+function HomepageQuestion4({ onChangeDegree, onChangeMajor, onChangeUniversity }) {
+    const [universityDetails, setUniversityDetails] = useState([]);
+    const [selectedUniversity, setSelectedUniversity] = useState('');
     const [selectedDegree, setSelectedDegree] = useState('');
     const [selectedMajor, setSelectedMajor] = useState('');
+
+    useEffect(() => {
+        const fetchuniversityDetails = async () => {
+            try {
+                const response = await axios.get('https://api.careerstar.co/universities');
+                if (response.data) {
+                    setUniversityDetails(response.data);  // Assuming the response is an array of university names
+                }
+            } catch (error) {
+                console.error('Error fetching university names', error);
+            }
+        };
+    
+        fetchuniversityDetails();
+    }, []);
 
     const handleChangeDegree = (event) => {
         setSelectedDegree(event.target.value);
@@ -14,9 +32,37 @@ function HomepageQuestion4({ onChangeDegree, onChangeMajor }) {
         onChangeMajor(event.target.value);
     };
 
+    const handleChangeUniversity = (event) => {
+        setSelectedUniversity(event.target.value);
+        onChangeUniversity(event.target.value);
+        console.log('Selected University:', event.target.value);
+    };
+
     return (
         <div className='home-page-question'>
+
+            <h2>Choose your University</h2>
+
+            <div>
+                <select
+                    id="university-select"
+                    className="home-page-question-dropdown-menu"
+                    value={selectedUniversity}
+                    onChange={handleChangeUniversity}
+                >
+                    <option value="" disabled>
+                        Choose your university
+                    </option>
+                    {universityDetails.map((university) => (
+                        <option key={university.universityId} value={university.universityId}>
+                            {university.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
+
             <h2>Choose your Degree</h2>
+
             <div>
                 <select id="options" className='home-page-question-dropdown-menu' value={selectedDegree} onChange={handleChangeDegree}>
                     <option value="" disabled>Choose your degree</option>

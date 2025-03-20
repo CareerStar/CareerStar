@@ -756,6 +756,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  z-index: 99;
 }
 
 .popup-content {
@@ -1979,6 +1980,7 @@ button:hover {
 
 .activity-description-content {
   padding: 20px 40px;
+  width: 100%;
 }
 
 .activity-box {
@@ -2053,6 +2055,15 @@ h3 {
   max-height: 300px;
 }
 
+.roadmap-activity-title {
+  padding: 20px 0 !important;
+  font-family: 'Sora';
+  font-style: normal;
+  font-size: 18px;
+  line-height: 27px;
+
+  color: #2E2E2E;
+}
 /* Admin page styles */
 
 .admin-events {
