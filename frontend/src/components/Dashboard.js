@@ -13,7 +13,7 @@ function Dashboard() {
     const [userId, setUserId] = useState(location.state?.userId || localStorage.getItem('userId') || '');
     const [userDetails, setUserDetails] = useState({});
     const [selectedPage, setSelectedPage] = useState('Home');
-    const validPages = ['Home', 'Profile', 'Roadmap', 'Events', 'Network', 'Support', 'Activity', 'Resumecoach'];
+    const validPages = ['Home', 'Profile', 'Roadmap', 'Events', 'Network', 'Support', 'Activity', 'Resumecoach', 'Modules'];
     useEffect(() => {
         const pathParts = location.pathname.split('/');
         const page = pathParts.length > 3
@@ -30,7 +30,7 @@ function Dashboard() {
     }, [location.pathname]);
     const activityName = location.pathname.split('/')[3];
     const [onboarded, setOnboarded] = useState(false);
-    const pages = ['Home', 'Profile', 'Roadmap', 'Events', 'Resume Coach'];
+    const pages = ['Home', 'Profile', 'Roadmap', 'Events', 'Modules', 'Resume Coach'];
 
     const fetchUserDetails = async () => {
         try {

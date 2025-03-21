@@ -9,6 +9,7 @@ import AdminEvents from './admin/AdminEvents';
 import LinkedIn from './admin/LinkedIn';
 import ActivityAggregator from './activities/ActivityAggregator';
 import ResumeCoach from './dashboard-content-pages/ResumeCoach';
+import Modules from './dashboard-content-pages/Modules';
 
 function DashboardContent({ selectedPage, activityName, onComplete, userId }) {
     const renderPage = () => {
@@ -33,6 +34,8 @@ function DashboardContent({ selectedPage, activityName, onComplete, userId }) {
                 return <LinkedIn />;
             case 'Resumecoach':
                 return <ResumeCoach />;
+            case 'Modules':
+                return <Modules />;
             default:
                 return <Home />;
         }

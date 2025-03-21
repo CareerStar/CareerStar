@@ -29,6 +29,8 @@ function Sidebar({pages, selectedPage, onboarded}) {
                 return eventsIcon;
             case 'Resume Coach':
                 return supportIcon;
+            case 'Modules':
+                return roadmapIcon;
             default:
                 return <i className="fas fa-tachometer-alt"></i>;
         }
