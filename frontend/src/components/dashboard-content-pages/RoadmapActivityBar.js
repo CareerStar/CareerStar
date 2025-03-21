@@ -7,16 +7,18 @@ import starEmpty from '../../assets/images/star-empty.png';
 import star from '../../assets/images/star.png';
 import rightArrow from '../../assets/images/right-arrow-roadmap.png';
 
-function RoadmapActivityBar({ activityName, activityId, completed, starCount }) {
+function RoadmapActivityBar({ activityName, activityId, completed, starCount, showStatus = true, showStar = true }) {
     const navigate = useNavigate();
     return (
         <div className='roadmap-sub-phase flex-row'>
             <div className='roadmap-phase-card'>
-                <input
-                    type="checkbox"
-                    checked={completed}
-                />
-                <p>{activityName}</p>
+                {showStatus && (
+                    <input
+                        type="checkbox"
+                        checked={completed}
+                    />
+                )}
+                <p className='roadmap-activity-title'>{activityName}</p>
                 <img
                     src={rightArrow}
                     alt='Right arrow icon'
@@ -24,14 +26,16 @@ function RoadmapActivityBar({ activityName, activityId, completed, starCount }) 
                     style={{ cursor: 'pointer' }}
                 />
             </div>
-            <div className='roadmap-phase-star-count flex-row'>
-                <p>{starCount}</p>
-                {completed ? (
-                    <img src={star} alt='Star icon' />
-                ) : (
-                    <img src={starEmpty} alt='Star icon' />
-                )}
-            </div>
+            {showStar && (
+                <div className='roadmap-phase-star-count flex-row'>
+                    <p>{starCount}</p>
+                    {completed ? (
+                        <img src={star} alt='Star icon' />
+                    ) : (
+                        <img src={starEmpty} alt='Star icon' />
+                    )}
+                </div>
+            )}
         </div>
     );
 }

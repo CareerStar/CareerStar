@@ -39,7 +39,7 @@ function CanvaSlidesPlugin({ activityName, url }) {
         <div>
             <div className='roadmap-sub-phase flex-row'>
                 <div className='roadmap-phase-card'>
-                    <div className='workshop-title'>
+                    <div className='module-title'>
                         <p className='roadmap-activity-title'>Workshop presentation</p>
                     </div>
                     {isDescriptionVisible ? (
