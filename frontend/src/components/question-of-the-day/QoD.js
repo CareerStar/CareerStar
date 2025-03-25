@@ -94,7 +94,7 @@ function QoD() {
                 </div>
             </div>
             <br />
-            <h1>Question of the Day</h1>
+            <h1>Sample Interview Question</h1>
             <QoDList questions={questions} />
             <br />
             <h1>Model Answer</h1>
