@@ -117,6 +117,18 @@ function Home({ onComplete, userId }) {
         };
     }, [currentStep, answers]);
 
+    const scrollToBottom = () => {
+        setTimeout(() => {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+        }, 100);
+    };
+
+    const scrollToTop = () => {
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }, 100);
+    };
+
     const handleOptionSelect = async (selectedOption) => {
         if (selectedOption === 'roadmap') {
             answers.onboarded = true;
@@ -166,7 +178,7 @@ function Home({ onComplete, userId }) {
                 "degree": answers.degree,
                 "major": answers.major,
                 "activityChoices": answers.activityChoices,
-                "universityId": answers.universityId 
+                "universityId": answers.universityId
             };
             const response = await axios.post('https://api.careerstar.co/onboarding', requestBody);
             // const response = await axios.post('http://localhost:8080/onboarding', requestBody);
@@ -270,10 +282,9 @@ function Home({ onComplete, userId }) {
                     <div className='popup-content'>
                         <div className='earned-star'>Onboarding process</div>
                         <div className='popup-text'>
-                            <p>Please finish the profile creation.</p>
-                            <p>It comprises of a three quick questionnaires.</p>
+                            <p>Please complete your profile by answering three quick questions.</p>
                         </div>
-                        <div className='popup-submit-button' onClick={() => { setShowPopup(false); }}>
+                        <div className='popup-submit-button' onClick={() => { setShowPopup(false); scrollToBottom(); }}>
                             <p>Continue</p>
                         </div>
                     </div>
@@ -298,7 +309,7 @@ function Home({ onComplete, userId }) {
                             {renderPage()}
                         </div>
                         {buttonVisibility[currentStep] && (
-                            <div className='home-page-button' onClick={handleClick}>
+                            <div className='home-page-button' onClick={() => { handleClick(); scrollToBottom(); }}>
                                 <p>Continue</p>
                             </div>
                         )}
@@ -307,12 +318,12 @@ function Home({ onComplete, userId }) {
             ) : currentStep === (totalSteps) ? (
                 <div className="home-questions">
                     <div className="home-questions-border">
-                        <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />   
+                        <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
                         <span className="personalize-text">LET'S GET GOING THEN!</span>
                         <div className="home-question-wrapper">
                             {renderPage()}
                         </div>
-                        <div className='home-page-button' onClick={() => { saveUserOnboardingDetailsWithActivities(); }}>
+                        <div className='home-page-button' onClick={() => { saveUserOnboardingDetailsWithActivities(); scrollToTop(); }}>
                             <p>Continue</p>
                         </div>
                     </div>
