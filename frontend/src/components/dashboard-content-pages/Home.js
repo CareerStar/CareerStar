@@ -270,8 +270,7 @@ function Home({ onComplete, userId }) {
                     <div className='popup-content'>
                         <div className='earned-star'>Onboarding process</div>
                         <div className='popup-text'>
-                            <p>Please finish the profile creation.</p>
-                            <p>It comprises of a three quick questionnaires.</p>
+                            <p>Please complete your profile by answering three quick questions.</p>
                         </div>
                         <div className='popup-submit-button' onClick={() => { setShowPopup(false); }}>
                             <p>Continue</p>
