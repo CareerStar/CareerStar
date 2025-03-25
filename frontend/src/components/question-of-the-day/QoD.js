@@ -79,7 +79,7 @@ function QoD() {
     const [qod, setQod] = useState([questions[0]]);
     return (
         <div className='qod-container'>
-            <h1>Stars Method</h1>
+            <h1>STARS Method</h1>
             <div className='star-method-container'>
                 <div className='star-method-description'>
                     {starsMethod.map((q) => (
@@ -97,7 +97,7 @@ function QoD() {
             <h1>Question of the Day</h1>
             <QoDList questions={questions} />
             <br />
-            <h1>Model answer</h1>
+            <h1>Model Answer</h1>
             <QoDList questions={modelAnswer} />
         </div>
     );
