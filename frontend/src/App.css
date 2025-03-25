@@ -220,10 +220,10 @@
 
   /* background: linear-gradient(180deg, #BAB0D4 0%, #7562E3 45%, #2B30F5 100%); */
   /* background: radial-gradient(69.66% 91.85% at 54.1% 6.69%, #6B37F4 0%, #5118BF 72.89%, #D86C4C 100%); */
-  /* background: radial-gradient(circle at 7% 7%, #b33939, #732dff, #4e15be, #160438); */
+  background: radial-gradient(circle at 7% 7%, #b33939, #732dff, #4e15be, #160438);
   margin: 0;
   height: 100vh;
-  background-image: url('./assets/images/shootingstar.gif');
+  /* background-image: url('./assets/images/shootingstar.gif'); */
   /* Use relative path */
   background-size: cover;
   background-position: center;

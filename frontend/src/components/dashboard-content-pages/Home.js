@@ -17,7 +17,7 @@ import TopActivities from "../TopActivities";
 function Home({ onComplete, userId }) {
     const stars = useSelector(state => state.starCount);
     const navigate = useNavigate();
-    const [currentStep, setCurrentStep] = useState(0);
+    const [currentStep, setCurrentStep] = useState(1);
     const [videoEnded, setVideoEnded] = useState(false);
     const [loading, setLoading] = useState(false);
     const [userDetails, setUserDetails] = useState({});
@@ -44,7 +44,7 @@ function Home({ onComplete, userId }) {
         universityId: ''
     });
 
-    const totalSteps = 2;
+    const totalSteps = 3;
 
     const buttonVisibility = {
         1: true,
@@ -270,8 +270,8 @@ function Home({ onComplete, userId }) {
                     <div className='popup-content'>
                         <div className='earned-star'>Onboarding process</div>
                         <div className='popup-text'>
-                            <p>Please finish the quick onboarding process.</p>
-                            <p>It comprises of a short introduction video and two quick questionnaires.</p>
+                            <p>Please finish the profile creation.</p>
+                            <p>It comprises of a three quick questionnaires.</p>
                         </div>
                         <div className='popup-submit-button' onClick={() => { setShowPopup(false); }}>
                             <p>Continue</p>
@@ -289,7 +289,7 @@ function Home({ onComplete, userId }) {
                 </div>
                 <div className="home-welcome-right"><span className="star-count"> {stars} </span>  <img src={star} className='star' /></div>
             </div>
-            {currentStep >= 1 && currentStep <= totalSteps ? (
+            {currentStep >= 1 && currentStep < totalSteps ? (
                 <div className="home-questions">
                     <div className="home-questions-border">
                         <span className="personalize-text">LET'S PERSONALIZE YOUR CAREERSTAR JOURNEY</span>
@@ -304,9 +304,10 @@ function Home({ onComplete, userId }) {
                         )}
                     </div>
                 </div>
-            ) : currentStep === (totalSteps + 1) ? (
+            ) : currentStep === (totalSteps) ? (
                 <div className="home-questions">
                     <div className="home-questions-border">
+                        <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />   
                         <span className="personalize-text">LET'S GET GOING THEN!</span>
                         <div className="home-question-wrapper">
                             {renderPage()}
@@ -316,7 +317,7 @@ function Home({ onComplete, userId }) {
                         </div>
                     </div>
                 </div>
-            ) : currentStep === (totalSteps + 2) ? (
+            ) : currentStep === (totalSteps + 1) ? (
                 <div className="">
                     {renderPage()}
                 </div>
