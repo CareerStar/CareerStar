@@ -164,9 +164,15 @@
   opacity: 0.5;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 1499px) {
   .sidebar {
-    width: 15%;
+    width: 14%;
+  }
+}
+
+@media (min-width: 1500px) {
+  .sidebar {
+    width: 12%;
   }
 }
 
