@@ -1,63 +1,62 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import homeIcon from '../assets/images/home-icon.png';
-import profileIcon from '../assets/images/profile-icon.png';
-import roadmapIcon from '../assets/images/roadmap-icon.png';
-import supportIcon from '../assets/images/support-icon.png';
-import networkIcon from '../assets/images/network-icon.png';
-import eventsIcon from '../assets/images/events-icon.png';
+import { Trophy, Folder} from "lucide-react";
+import homeIcon from "../assets/images/home-icon.png";
+import profileIcon from "../assets/images/profile-icon.png";
+import roadmapIcon from "../assets/images/roadmap-icon.png";
+import supportIcon from "../assets/images/support-icon.png";
+import networkIcon from "../assets/images/network-icon.png";
+import eventsIcon from "../assets/images/events-icon.png";
 
-function Sidebar({pages, selectedPage, onboarded}) {
+function Sidebar({ pages, selectedPage, onboarded }) {
     const navigate = useNavigate();
-    const getIcon = (page) => {
-        switch(page) {
-            case 'Home':
-                return homeIcon;
-            case 'Profile':
-                return profileIcon;
-            case 'Roadmap':
-                return roadmapIcon;
-            case 'Support':
-                return supportIcon;
-            case 'Network':
-                return networkIcon;
-            case 'Events':
-                return eventsIcon;
-            case 'AdminEvents':
-                return eventsIcon;
-            case 'LinkedIn':
-                return eventsIcon;
-            case 'Resume Coach':
-                return supportIcon;
-            case 'Modules':
-                return roadmapIcon;
-            default:
-                return <i className="fas fa-tachometer-alt"></i>;
-        }
-    }
+
+    const iconMap = {
+        Home: homeIcon,
+        Profile: profileIcon,
+        Roadmap: roadmapIcon,
+        Support: supportIcon,
+        Network: networkIcon,
+        Events: eventsIcon,
+        AdminEvents: eventsIcon,
+        LinkedIn: eventsIcon,
+        "Resume Coach": supportIcon,
+        Modules: <Folder size={24} color="black" />,
+        Leaderboard: <Trophy size={24} color="black" />,
+    };
 
     const handleClick = (page) => {
-        if (onboarded || page === 'Home') {
-            navigate(`/dashboard/${page.replace(/\s+/g, '').toLowerCase()}`);
+        if (onboarded || page === "Home") {
+            navigate(`/dashboard/${page.replace(/\s+/g, "").toLowerCase()}`);
         }
-    }
+    };
 
     return (
         <div className="sidebar">
             <ul>
                 {pages.map((page, index) => (
-                    <li 
-                        key={index} 
+                    <li
+                        key={index}
                         onClick={() => handleClick(page)}
-                        className={selectedPage === page ? 'selected' : onboarded || page === 'Home' ? '' : 'disabled'}
+                        className={
+                            selectedPage === page
+                                ? "selected"
+                                : onboarded || page === "Home"
+                                ? ""
+                                : "disabled"
+                        }
                     >
-                        <img src={getIcon(page)} alt={page} />
+                        {typeof iconMap[page] === "string" ? (
+                            <img src={iconMap[page]} alt={page} />
+                        ) : (
+                            iconMap[page]
+                        )}
                         <p>{page}</p>
                     </li>
                 ))}
             </ul>
         </div>
-    )
+    );
 }
 
 export default Sidebar;
