@@ -144,7 +144,7 @@ def check_access_code(access_code):
         cursor = connection.cursor()
 
         get_access_code_query = """
-        SELECT usage_limit, usage_count, expires_at FROM access_codes WHERE code = %s;
+        SELECT usage_limit, usage_count, expires_at FROM access_codes WHERE code ILIKE %s;
         """
 
         cursor.execute(get_access_code_query, (access_code,))
