@@ -4,21 +4,24 @@ import axios from "axios";
 
 const Leaderboard = () => {
     const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchTopUsers = async () => {
+            setLoading(true);
             try {
                 const response = await axios.get("https://api.careerstar.co/top-users");
                 const updatedUsers = response.data.map(user => ({
-                    firstname: user.firstname,  
+                    firstname: user.firstname,
                     stars: user.stars
                 }));
                 setUsers(updatedUsers);
             } catch (err) {
-                // setError("Failed to fetch users");
+                setError("Failed to fetch users");
                 console.error(err);
             } finally {
-                // setLoading(false);
+                setLoading(false);
             }
         };
 
@@ -99,14 +102,21 @@ const Leaderboard = () => {
     };
 
     return (
-        <div className="max-w-md mx-auto bg-white rounded-lg shadow-xl p-4 mt-10">
-            <h2 className="text-2xl font-bold text-center mb-4 flex items-center justify-center">
-                <Star fill="#FFD700" color="#FFD700" className="mr-2" />
-                Leaderboard
-                <Star fill="#FFD700" color="#FFD700" className="ml-2" />
-            </h2>
-            {renderTopThree()}
-            {renderRemainingUsers()}
+        <div>
+            {loading && (
+                <div className="spinner-overlay">
+                    <div className="spinner"></div>
+                </div>
+            )}
+            <div className="max-w-md mx-auto bg-white rounded-lg shadow-xl p-4 mt-10">
+                <h2 className="text-2xl font-bold text-center mb-4 flex items-center justify-center">
+                    <Star fill="#FFD700" color="#FFD700" className="mr-2" />
+                    Leaderboard
+                    <Star fill="#FFD700" color="#FFD700" className="ml-2" />
+                </h2>
+                {renderTopThree()}
+                {renderRemainingUsers()}
+            </div>
         </div>
     );
 };
