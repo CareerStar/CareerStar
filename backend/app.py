@@ -274,6 +274,41 @@ def get_user_details(userId):
             # cursor.close()
             # connection.close()
 
+@app.route("/top-users", methods=["GET"])
+def top_users():
+    try:
+        logger.info("comes here 111")
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        
+        query = """
+        SELECT userId, firstname, stars 
+        FROM Users 
+        ORDER BY stars DESC 
+        LIMIT 10;
+        """
+        
+        cursor.execute(query, )
+        users = cursor.fetchall()
+        logger.info(users)
+
+        userlist = []
+        for user in users:
+            userDict = {
+                "userId": user[0],
+                "firstname": user[1],
+                "stars": user[2]
+            }
+            userlist.append(userDict)
+        
+        return jsonify(userlist)
+    
+    except Exception as e:
+        print(f"Database error: {e}")
+        return []
+    finally:
+        if connection:
+            return_db_connection(connection)
 
 @app.route('/login', methods=['POST'])
 def login():
