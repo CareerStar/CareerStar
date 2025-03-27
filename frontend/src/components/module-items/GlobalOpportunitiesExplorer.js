@@ -236,7 +236,7 @@ const GlobalOpportunitiesExplorer = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4 flex flex-col justify-center">
+    <div className="bg-gray-100 pt-10 flex flex-col h-screen w-full">
       {gameState === 'intro' && renderIntro()}
       {gameState === 'playing' && renderPlaying()}
       {gameState === 'results' && renderResults()}
