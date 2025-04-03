@@ -37,7 +37,7 @@ function Modules() {
                     {/* <JeopardyPlugin activityName='Jeopardy Game' url='https://jeopardylabs.com/play/hello-2033?embed=1'/> */}
                     <MentimeterPlugin activityName="Let's hear from you! (Part II)" url='https://www.menti.com/alm4vbxmkwhg'/>
                     <JeopardyPlugin activityName='Jeopardy Game' url='https://jeopardylabs.com/play/mock-interview-jeopardy-5?embed=1'/>
-                    <MentimeterPlugin activityName=' Workshop feedback' url='https://www.menti.com/al5oj1os25oo' />
+                    {/* <MentimeterPlugin activityName=' Workshop feedback' url='https://www.menti.com/al5oj1os25oo' /> */}
                     <RoadmapActivityBar activityName='Offline Activity: The Dreaded Salary Talk' activityId='7' showStatus = {false} showStar = {false}/>
 
                     <p className='roadmap-phase-title'>Navigating Career Success Beyond Borders</p>
