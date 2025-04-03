@@ -117,8 +117,8 @@ function Roadmap({ userId, activityName }) {
                     <div className="spinner"></div>
                 </div>
             )}
-            <p className='roadmap-title'>My Roadmap</p>
-            <div className='roadmap-goals-container flex-row'>
+            {/* <p className='roadmap-title'>My Roadmap</p> */}
+            {/* <div className='roadmap-goals-container flex-row'>
                 <div className='roadmap-goal-card flex-column'>
                     <img src={editIcon} alt='Edit icon' onClick={handleCurrentSituationEdit} />
                     <p className='roadmap-goal-card-heading'>Where you’re at</p>
@@ -157,16 +157,18 @@ function Roadmap({ userId, activityName }) {
                         <p className='roadmap-goal-card-answer'>{goal}</p>
                     )}
                 </div>
-            </div>
+            </div> */}
 
             <div className='roadmap-phases-container'>
                 <div className='roadmap-phase flex-column'>
-                    <p className='roadmap-phase-title'>Module 1</p>
+                    <p className='roadmap-phase-title'>Your Activities</p>
                     <RoadmapActivityBar activityName='Reaching Out To More Than Recruiters' activityId='1' completed={!!activityStatuses?.[1]} starCount={7} />
                     <RoadmapActivityBar activityName='Career Acronym Challenge' activityId='2' completed={!!activityStatuses?.[2]} starCount={7} />
                     <RoadmapActivityBar activityName='Better Cold Call LinkedIn Messages' activityId='3' completed={!!activityStatuses?.[3]} starCount={3} />
-                    <p className='roadmap-phase-title'>Module 2 (Coming Soon)</p>
+                    {/* <p className='roadmap-phase-title'>Module 2</p> */}
                     <RoadmapActivityBar activityName='Let’s Network Before We Network' activityId='5' completed={!!activityStatuses?.[5]} starCount={7} />
+                    <RoadmapActivityBar activityName='Offline Activity: The Dreaded Salary Talk' activityId='7' completed={!!activityStatuses?.[7]} starCount={7}/>
+                    <p className='roadmap-phase-title'>(More coming soon...)</p>
                 </div>
             </div>
         </div>

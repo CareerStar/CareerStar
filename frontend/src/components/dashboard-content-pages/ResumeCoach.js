@@ -58,7 +58,7 @@ function ResumeCoach() {
     return (
         <div className="resume-coach-container">
             <h1 className="resume-coach-heading">
-                Generate AI Resume Feedback
+                CareerStar Resume Wizard (Beta)
             </h1>
 
             <form onSubmit={handleSubmit} className="resume-coach-form">
