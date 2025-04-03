@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Trophy, Folder} from "lucide-react";
+import { Trophy, Folder, Cast} from "lucide-react";
 import homeIcon from "../assets/images/home-icon.png";
 import profileIcon from "../assets/images/profile-icon.png";
 import roadmapIcon from "../assets/images/roadmap-icon.png";
@@ -21,7 +21,7 @@ function Sidebar({ pages, selectedPage, onboarded }) {
         AdminEvents: eventsIcon,
         LinkedIn: eventsIcon,
         "Resume Coach": supportIcon,
-        Modules: <Folder size={24} color="black" />,
+        Modules: <Cast size={24} color="black" />,
         Leaderboard: <Trophy size={24} color="black" />,
     };
 
