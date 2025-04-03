@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import EventCard from '../EventCard';
 import starEmpty from '../../assets/images/star-empty.png';
+import AdminStarAssignment from './AdminStarAssignment';
 
 function AdminEvents() {
 
@@ -284,6 +285,7 @@ function AdminEvents() {
                     ))}
                 </div>
             </div>
+            <AdminStarAssignment />
         </div>
     );
 }
