@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import RoadmapActivityBar from './RoadmapActivityBar';
 import MentimeterPlugin from '../module-items/MentimeterPlugin';
 import CanvaSlidesPlugin from '../module-items/CanvaSlidesPlugin';
+import JeopardyPlugin from '../module-items/JeopardyPlugin';
 
 function Modules() {
     const [loading, setLoading] = useState(false);
@@ -32,8 +33,11 @@ function Modules() {
 
                     <p className='roadmap-phase-title'>Hard Questions, Better Answers</p>
                     <CanvaSlidesPlugin activityName='Workshop presentation' url='https://www.canva.com/design/DAGYHOxOd78/ewUztoW9L7NgpKHckBbqCA/view?embed'/>
-                    <MentimeterPlugin activityName=' Ice breaker' url='https://www.menti.com/alpntzfaofi4'/>
+                    <MentimeterPlugin activityName=' Ice breaker' url='https://www.menti.com/al14wx9gcdgu'/>
+                    {/* <JeopardyPlugin activityName='Jeopardy Game' url='https://jeopardylabs.com/play/hello-2033?embed=1'/> */}
+                    <JeopardyPlugin activityName='Jeopardy Game' url='https://jeopardylabs.com/play/mock-interview-jeopardy-5?embed=1'/>
                     <MentimeterPlugin activityName=' Workshop feedback' url='https://www.menti.com/al5oj1os25oo' />
+                    <RoadmapActivityBar activityName='Offline Activity: The Dreaded Salary Talk' activityId='7' showStatus = {false} showStar = {false}/>
 
                     <p className='roadmap-phase-title'>Navigating Career Success Beyond Borders</p>
                     <RoadmapActivityBar activityName='Quiz: Test your knowledge' activityId='6' showStatus = {false} showStar = {false} />

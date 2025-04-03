@@ -30,7 +30,7 @@ function Dashboard() {
     }, [location.pathname]);
     const activityName = location.pathname.split('/')[3];
     const [onboarded, setOnboarded] = useState(false);
-    const pages = ['Home', 'Profile', 'Roadmap', 'Modules', 'Leaderboard', , 'Events', 'Resume Coach'];
+    const pages = ['Home', 'Profile', 'Roadmap', 'Modules', 'Leaderboard', 'Resume Coach'];
 
     const fetchUserDetails = async () => {
         try {
