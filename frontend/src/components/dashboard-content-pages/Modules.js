@@ -32,9 +32,10 @@ function Modules() {
                     <RoadmapActivityBar activityName='Offline Activity: Let’s Network Before We Network' activityId='5' showStatus = {false} showStar = {false}/>
 
                     <p className='roadmap-phase-title'>Hard Questions, Better Answers</p>
-                    <CanvaSlidesPlugin activityName='Workshop presentation' url='https://www.canva.com/design/DAGYHOxOd78/ewUztoW9L7NgpKHckBbqCA/view?embed'/>
-                    <MentimeterPlugin activityName=' Ice breaker' url='https://www.menti.com/al14wx9gcdgu'/>
+                    <CanvaSlidesPlugin activityName='Workshop presentation' url='https://www.canva.com/design/DAGhobwj2t4/nfzpKh1kTXfme8xfWmudYA/view?embed'/>
+                    <MentimeterPlugin activityName="Let's hear from you! (Part I)" url='https://www.menti.com/al14wx9gcdgu'/>
                     {/* <JeopardyPlugin activityName='Jeopardy Game' url='https://jeopardylabs.com/play/hello-2033?embed=1'/> */}
+                    <MentimeterPlugin activityName="Let's hear from you! (Part II)" url='https://www.menti.com/alm4vbxmkwhg'/>
                     <JeopardyPlugin activityName='Jeopardy Game' url='https://jeopardylabs.com/play/mock-interview-jeopardy-5?embed=1'/>
                     <MentimeterPlugin activityName=' Workshop feedback' url='https://www.menti.com/al5oj1os25oo' />
                     <RoadmapActivityBar activityName='Offline Activity: The Dreaded Salary Talk' activityId='7' showStatus = {false} showStar = {false}/>
