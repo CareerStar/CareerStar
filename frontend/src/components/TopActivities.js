@@ -112,15 +112,15 @@ function TopActivities({ userId }) {
                 /> */}
 
                 <TopActivityCard
-                    activityId={100}
-                    activityTitle='The Dreaded Salary Talk'
+                    activityId={7}
+                    activityTitle='The Dreaded Salary Talk.'
                     activityDescription='Discussing Salary During Interviews'
                     activityTags={['Interview']}
-                    activityStarCount={5}
+                    activityStarCount={7}
                     activityTime='15 min'
                     moduleId={2}
-                    isReady={false}
-                    completed={!!activityStatuses?.[100]}
+                    isReady={true}
+                    completed={!!activityStatuses?.[7]}
                 />
             </div>
         </div>
