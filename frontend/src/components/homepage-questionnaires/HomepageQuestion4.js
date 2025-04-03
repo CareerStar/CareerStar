@@ -94,6 +94,7 @@ function HomepageQuestion4({ onChangeDegree, onChangeMajor, onChangeUniversity }
                     <option value="Electrical Engineering">Electrical Engineering</option>
                     <option value="Mechanical Engineering">Mechanical Engineering</option>
                     <option value="Civil Engineering">Civil Engineering</option>
+                    <option value="Architecture">Architecture</option>
                     <option value="Journalism">Journalism</option>
                     <option value="Bio Chemistry">Bio Chemistry</option>
                     <option value="Pharmacy">Pharmacy</option>
