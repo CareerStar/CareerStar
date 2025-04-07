@@ -244,6 +244,37 @@ def add_user():
             # cursor.close()
             # connection.close()
 
+@app.route('/users', methods=['GET'])
+@jwt_required()
+def get_all_users():
+    """API endpoint to fetch all users"""
+    current_user = get_jwt_identity()
+    if current_user['role'] != 'admin':
+        return jsonify({"error": "Unauthorized"}), 401
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        
+        query = "SELECT userId, firstname, emailID, stars FROM Users ORDER BY created_at DESC"
+        cursor.execute(query)
+        users = cursor.fetchall()
+        
+        cursor.close()
+        connection.close()
+
+        userlist = []
+        for user in users:
+            userDict = {
+                "userId": user[0],
+                "firstname": user[1],
+                "emailID": user[2],
+                "stars": user[3]
+            }
+            userlist.append(userDict)
+        
+        return jsonify({"users": userlist})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/user/<int:userId>', methods=['GET'])
 def get_user_details(userId):
@@ -274,10 +305,36 @@ def get_user_details(userId):
             # cursor.close()
             # connection.close()
 
+@app.route('/users/<int:user_id>/stars', methods=['PUT'])
+@jwt_required()
+def update_user_stars(user_id):
+    current_user = get_jwt_identity()
+    if current_user['role'] != 'admin':
+        return jsonify({"error": "Unauthorized"}), 401
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        
+        data = request.json
+        new_stars = data.get('stars')
+        
+        if new_stars is None:
+            return jsonify({"error": "Stars value is required"}), 400
+        
+        update_query = "UPDATE Users SET stars = %s WHERE userId = %s"
+        cursor.execute(update_query, (new_stars, user_id))
+        connection.commit()
+        
+        cursor.close()
+        connection.close()
+        
+        return jsonify({"success": True, "message": f"Stars updated for user {user_id}"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route("/top-users", methods=["GET"])
 def top_users():
     try:
-        logger.info("comes here 111")
         connection = get_db_connection()
         cursor = connection.cursor()
         
@@ -290,7 +347,6 @@ def top_users():
         
         cursor.execute(query, )
         users = cursor.fetchall()
-        logger.info(users)
 
         userlist = []
         for user in users:
