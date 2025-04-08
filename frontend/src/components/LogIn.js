@@ -26,7 +26,7 @@ function LogIn() {
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordReset, setShowPasswordReset] = useState(false);
 
-    const [codeSent, setCodeSent] = useState(false);
+    const [linkSent, setLinkSent] = useState(false);
     const [resetPasswordEmail, setResetPasswordEmail] = useState('');
 
     const [isLoading, setIsLoading] = useState(false);
@@ -117,7 +117,7 @@ function LogIn() {
         }
     };
 
-    const handleSendCode = async () => {
+    const handleSendLink = async () => {
         setIsLoading(true);
         try {
             const response = await axios.post('https://api.careerstar.co/forgot-password', {
@@ -125,7 +125,7 @@ function LogIn() {
             });
     
             if (response.status === 200) {
-                setCodeSent(true);
+                setLinkSent(true);
             } else {
                 alert('Something went wrong. Please try again.');
             }
@@ -193,10 +193,10 @@ function LogIn() {
                         {showPasswordReset && (
                             <div className='password-reset-modal'>
                                 <div className='password-reset-container'>
-                                    {!codeSent ? (
+                                    {!linkSent ? (
                                         <>
                                             <h3>Reset Your Password</h3>
-                                            <p>Enter your email address below to receive a verification code.</p>
+                                            <p>Enter your email address below to receive a reset password link.</p>
 
                                             <div className='email-input-container'>
                                                 <input
@@ -211,10 +211,10 @@ function LogIn() {
                                             <div className='reset-buttons'>
                                                 <button
                                                     className="password-reset-button"
-                                                    onClick={handleSendCode}
+                                                    onClick={handleSendLink}
                                                     disabled={!resetPasswordEmail || isLoading}
                                                 >
-                                                    {isLoading ? 'Sending...' : 'Send Code'}
+                                                    {isLoading ? 'Sending...' : 'Send Link'}
                                                 </button>
                                                 <button
                                                     className="cancel-button"
@@ -235,10 +235,10 @@ function LogIn() {
                                             <div className='reset-buttons'>
                                                 <button
                                                     className="password-reset-button"
-                                                    onClick={handleSendCode}
+                                                    onClick={handleSendLink}
                                                     disabled={!resetPasswordEmail || isLoading}
                                                 >
-                                                    {isLoading ? 'Sending...' : 'Resend Code'}
+                                                    {isLoading ? 'Sending...' : 'Resend Link'}
                                                 </button>
                                                 <button
                                                     className="cancel-button"
