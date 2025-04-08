@@ -3,6 +3,7 @@ import './App.css';
 import StartPage from './components/StartPage';
 import UserIntent from './components/UserIntent';
 import EmailCredentialPage from './components/EmailCredentialPage';
+import ResetPasswordPage from './components/ResetPasswordPage';
 import {
   BrowserRouter as Router,
   Routes,
@@ -73,6 +74,11 @@ function App() {
             exact
             path='/admin/dashboard'
             element={<AuthProtectedAdminDashboard />}
+          />
+
+          <Route
+            path='/reset-password/:token'
+            element={<ResetPasswordPage />}
           />
         </Routes>
       </Router>
