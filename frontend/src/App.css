@@ -627,6 +627,171 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   cursor: pointer;
 }
 
+/* Forgot password styles */
+.forgot-password {
+  font-family: 'Nunito', sans-serif;
+  position: relative;
+}
+
+.forgot-password p {
+  color: #0a56ad;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 8px 0 0 0;
+  transition: color 0.3s ease;
+}
+
+.forgot-password p:hover {
+  color: #2a6fc9;
+  text-decoration: underline;
+}
+
+.password-reset-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  font-family: 'Nunito', sans-serif;
+}
+
+.password-reset-container {
+  background-color: white;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  max-width: 440px;
+  width: 90%;
+  text-align: center;
+}
+
+.password-reset-container h3 {
+  font-weight: 700;
+  font-size: 22px;
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.password-reset-container p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+  color: #555;
+}
+
+.verification-code-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.code-input-box {
+  width: 50px;
+  height: 60px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  background-color: #f7f7f7;
+  color: #333;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.code-input-box:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.spam-notice {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.password-reset-button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 12px;
+}
+
+.password-reset-button:hover {
+  background-color: #2a6fc9;
+}
+
+.cancel-button {
+  background-color: #f2f2f2;
+  color: #555;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cancel-button:hover {
+  background-color: #e5e5e5;
+}
+
+.email-input-container {
+  margin-bottom: 24px;
+}
+
+.email-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.email-input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.reset-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.resend-button {
+  background: none;
+  border: none;
+  color: #4a90e2;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+.resend-button:hover {
+  color: #2a6fc9;
+}
+
 /* User Intent page styles */
 .dropdown-menu {
   width: 100%;
