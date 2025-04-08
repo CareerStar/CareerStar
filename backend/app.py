@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, url_for
 import os
 import psycopg2
 import json
@@ -17,6 +17,8 @@ from mailchimp_marketing.api_client import ApiClientError
 import requests
 from google import genai
 import threading
+from flask_mail import Mail, Message
+from itsdangerous import URLSafeTimedSerializer
 
 load_dotenv()
 
@@ -40,6 +42,9 @@ mailchimp_audience_id = os.getenv('MAILCHIMP_AUDIENCE_ID')
 openrouter_api_key = os.getenv('OPENROUTER_API_KEY')
 
 client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+
+app.config.from_object('mail_config')
+mail = Mail(app)
 
 connection_pool = psycopg2.pool.SimpleConnectionPool(
     1, 20,  # Min and max connections
@@ -82,6 +87,95 @@ def get_db_connection():
 
 def return_db_connection(conn):
     connection_pool.putconn(conn)
+
+serializer = URLSafeTimedSerializer(os.getenv('SECRET_KEY'))
+
+def check_user_by_email(email):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        email = email.lower()
+        query = "SELECT 1 FROM Users WHERE emailID = %s;"
+        cursor.execute(query, (email,))
+        result = cursor.fetchone()
+
+        return result is not None
+
+    except Exception as error:
+        print("Error in get_user_by_email:", error)
+        return False
+    finally:
+        if connection:
+            return_db_connection(connection)
+
+
+@app.route('/forgot-password', methods=['POST'])
+def forgot_password():
+    data = request.get_json()
+    email = data.get('email')
+
+    user = check_user_by_email(email)
+
+    if not user:
+        return jsonify({"message": "Email not registered"}), 400
+
+    logger.info("Here 101")
+    token = serializer.dumps(email, salt="password-reset")
+
+    logger.info(token)
+    app_url = 'https://app.careerstar.co/'
+    reset_url = f"{app_url}reset-password/{token}"
+
+    logger.info("Reset url:", reset_url)
+
+    msg = Message("Password Reset Request", sender="support@careerstar.co", recipients=[email])
+    msg.body = f"Click the link to reset your password: {reset_url}"
+
+    logger.info("Message", msg)
+    mail.send(msg)
+
+    return jsonify({"message": "Password reset email sent"}), 200
+
+def update_user_password(email, new_password):
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        hashed_password = generate_password_hash(new_password)
+
+        update_query = """
+        UPDATE Users
+        SET password = %s
+        WHERE emailID = %s;
+        """
+        cursor.execute(update_query, (hashed_password, email.lower()))
+        connection.commit()
+
+        return True
+
+    except Exception as error:
+        print("Error updating user password:", error)
+        return False
+
+    finally:
+        if connection:
+            return_db_connection(connection)
+
+@app.route('/reset-password/<token>', methods=['POST'])
+def reset_password(token):
+    print("token", token)
+    try:
+        email = serializer.loads(token, salt="password-reset", max_age=3600)
+    except:
+        return jsonify({"message": "Invalid or expired token"}), 400
+
+    data = request.get_json()
+    new_password = data.get("password")
+
+    update_user_password(email, new_password)
+
+    return jsonify({"message": "Password successfully reset"}), 200
 
 def add_contact_to_mailchimp(audience_id, email, firstname, interview_date):
     mailchimp = Client()
@@ -244,6 +338,37 @@ def add_user():
             # cursor.close()
             # connection.close()
 
+@app.route('/users', methods=['GET'])
+@jwt_required()
+def get_all_users():
+    """API endpoint to fetch all users"""
+    current_user = get_jwt_identity()
+    if current_user['role'] != 'admin':
+        return jsonify({"error": "Unauthorized"}), 401
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        
+        query = "SELECT userId, firstname, emailID, stars FROM Users ORDER BY created_at DESC"
+        cursor.execute(query)
+        users = cursor.fetchall()
+        
+        cursor.close()
+        connection.close()
+
+        userlist = []
+        for user in users:
+            userDict = {
+                "userId": user[0],
+                "firstname": user[1],
+                "emailID": user[2],
+                "stars": user[3]
+            }
+            userlist.append(userDict)
+        
+        return jsonify({"users": userlist})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/user/<int:userId>', methods=['GET'])
 def get_user_details(userId):
@@ -274,10 +399,36 @@ def get_user_details(userId):
             # cursor.close()
             # connection.close()
 
+@app.route('/users/<int:user_id>/stars', methods=['PUT'])
+@jwt_required()
+def update_user_stars(user_id):
+    current_user = get_jwt_identity()
+    if current_user['role'] != 'admin':
+        return jsonify({"error": "Unauthorized"}), 401
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        
+        data = request.json
+        new_stars = data.get('stars')
+        
+        if new_stars is None:
+            return jsonify({"error": "Stars value is required"}), 400
+        
+        update_query = "UPDATE Users SET stars = %s WHERE userId = %s"
+        cursor.execute(update_query, (new_stars, user_id))
+        connection.commit()
+        
+        cursor.close()
+        connection.close()
+        
+        return jsonify({"success": True, "message": f"Stars updated for user {user_id}"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route("/top-users", methods=["GET"])
 def top_users():
     try:
-        logger.info("comes here 111")
         connection = get_db_connection()
         cursor = connection.cursor()
         
@@ -290,7 +441,6 @@ def top_users():
         
         cursor.execute(query, )
         users = cursor.fetchall()
-        logger.info(users)
 
         userlist = []
         for user in users:
@@ -659,7 +809,7 @@ def update_interviewschedule(userId):
 
         connection.commit()
 
-        add_contact_to_mailchimp(mailchimp_audience_id, emailID, firstname, interview_date)
+        #add_contact_to_mailchimp(mailchimp_audience_id, emailID, firstname, interview_date)
 
         if cursor.rowcount > 0:
             return jsonify({"message": "User interview schedule updated successfully"}), 200
