@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import ProgressBar from './ProgressBar';
@@ -24,6 +24,12 @@ function LogIn() {
     const [errorPassword, setErrorPassword] = useState('');
 
     const [showPassword, setShowPassword] = useState(false);
+    const [showPasswordReset, setShowPasswordReset] = useState(false);
+
+    const [codeSent, setCodeSent] = useState(false);
+    const [resetPasswordEmail, setResetPasswordEmail] = useState('');
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleToggle = () => {
         setIsChecked(!isChecked);
@@ -93,7 +99,7 @@ function LogIn() {
                 localStorage.setItem('firstname', data.firstname);
                 localStorage.setItem('login_timestamp', Date.now());
 
-                navigate('/dashboard', { state: { userId: data.userId, firstname: data.firstname  } });
+                navigate('/dashboard', { state: { userId: data.userId, firstname: data.firstname } });
             }
         } catch (error) {
             if (error.status === 400) {
@@ -111,6 +117,25 @@ function LogIn() {
         }
     };
 
+    const handleSendCode = async () => {
+        setIsLoading(true);
+        try {
+            const response = await axios.post('https://api.careerstar.co/forgot-password', {
+                email: resetPasswordEmail
+            });
+    
+            if (response.status === 200) {
+                setCodeSent(true);
+            } else {
+                alert('Something went wrong. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error sending forgot password request:', error);
+            alert(error.response?.data?.error || 'Failed to send reset email');
+        } finally {
+            setIsLoading(false);
+        }
+    };
     // const navigateToDashboard = () => {
     //     setShowPopup(false);
     //     navigate('/dashboard');
@@ -138,22 +163,22 @@ function LogIn() {
                 <div className='signUp-page-question'>
                     <h2>Log in to <span className="highlight">my account</span></h2>
                     <p>Email address</p>
-                    <input 
-                        type='text' 
+                    <input
+                        type='text'
                         placeholder='abigail@gmail.com'
-                        value={emailID} 
+                        value={emailID}
                         onChange={handleEmailIDInputChange}
                         onKeyDown={handleKeyPress}
                     />
                     {errorEmail && <div className='error-text'><p>{errorEmail}</p></div>}
                     <p>Password</p>
                     <div className='password-section'>
-                        <input 
+                        <input
                             type={showPassword ? 'text' : 'password'}
                             placeholder='**********'
                             onChange={handlePasswordInputChange}
                             onKeyDown={handleKeyPress}
-                            style={{paddingRight: '40px'}}
+                            style={{ paddingRight: '40px' }}
                         />
                         <span
                             onClick={togglePasswordVisibility}
@@ -162,6 +187,71 @@ function LogIn() {
                             {/* <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} /> */}
                             {showPassword ? <img src={eye} alt='Eye icon' /> : <img src={eyeOff} alt='Eye off icon' />}
                         </span>
+                    </div>
+                    <div className='forgot-password'>
+                        <p onClick={() => setShowPasswordReset(true)}>Forgot password?</p>
+                        {showPasswordReset && (
+                            <div className='password-reset-modal'>
+                                <div className='password-reset-container'>
+                                    {!codeSent ? (
+                                        <>
+                                            <h3>Reset Your Password</h3>
+                                            <p>Enter your email address below to receive a verification code.</p>
+
+                                            <div className='email-input-container'>
+                                                <input
+                                                    type="email"
+                                                    className="email-input"
+                                                    placeholder="Enter your email address"
+                                                    value={resetPasswordEmail}
+                                                    onChange={(e) => setResetPasswordEmail(e.target.value)}
+                                                />
+                                            </div>
+
+                                            <div className='reset-buttons'>
+                                                <button
+                                                    className="password-reset-button"
+                                                    onClick={handleSendCode}
+                                                    disabled={!resetPasswordEmail || isLoading}
+                                                >
+                                                    {isLoading ? 'Sending...' : 'Send Code'}
+                                                </button>
+                                                <button
+                                                    className="cancel-button"
+                                                    onClick={() => setShowPasswordReset(false)}
+                                                >
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <p>We've sent an email to you to resent your password.</p>
+
+                                            <p className="spam-notice">
+                                                Don't see the mail? Check your spam folder.
+                                            </p>
+
+                                            <div className='reset-buttons'>
+                                                <button
+                                                    className="password-reset-button"
+                                                    onClick={handleSendCode}
+                                                    disabled={!resetPasswordEmail || isLoading}
+                                                >
+                                                    {isLoading ? 'Sending...' : 'Resend Code'}
+                                                </button>
+                                                <button
+                                                    className="cancel-button"
+                                                    onClick={() => setShowPasswordReset(false)}
+                                                >
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+                            </div>
+                        )}
                     </div>
                     {errorPassword && <div className='error-text'><p>{errorPassword}</p></div>}
                 </div>
