@@ -189,7 +189,7 @@ function LogIn() {
                         </span>
                     </div>
                     <div className='forgot-password'>
-                        <p onClick={() => setShowPasswordReset(true)}>Forgot password?</p>
+                        <p className='forgot-password-text' onClick={() => setShowPasswordReset(true)}>Forgot password?</p>
                         {showPasswordReset && (
                             <div className='password-reset-modal'>
                                 <div className='password-reset-container'>
