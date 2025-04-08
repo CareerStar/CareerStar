@@ -634,10 +634,20 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 }
 
 .forgot-password p {
-  color: #0a56ad;
+  font-size: 16px;
+  margin: 8px 0 0 0;
+}
+
+.forgot-password-text {
+  color: #611DE4 !important;
+  cursor: pointer;
   font-size: 16px;
   margin: 8px 0 0 0;
   transition: color 0.3s ease;
+}
+
+.forgot-password-text:hover {
+  text-decoration: underline;
 }
 
 .password-reset-modal {
