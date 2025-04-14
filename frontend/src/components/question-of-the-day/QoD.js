@@ -12,69 +12,70 @@ function QoD() {
     // ];
 
     const questions = [
-        { 
-            id: 1, 
-            question: "Describe a time when you had to work under pressure to meet a tight deadline.", 
-            answer: "Choose an example where you managed stress effectively. Highlight prioritization and planning skills. Emphasize resilience under pressure." },
+        {
+            id: 1,
+            question: "Can you describe a time when you had to lead a project end-to-end with limited resources or support?",
+            answer: "Choose an example where you took initiative, made strategic decisions, and adapted creatively to constraints. Highlight leadership, ownership, and problem-solving."
+        },
     ]
 
     const modelAnswer = [
         {
             id: 1,
             question: "Situation",
-            answer: "My team was given the responsibility of delivering an MVP within two months to meet a critical investor pitch deadline."
+            answer: "As the sole developer at CareerStar, I was tasked with building the MVP of our career guidance platform to support an upcoming investor pitch in two months."
         },
         {
             id: 2,
             question: "Task",
-            answer: "The team had to design, develop, and deploy a fully functional web application, ensuring it was scalable and user-friendly while managing limited resources."
+            answer: "I needed to design, develop, and deploy a scalable, user-friendly web app that offered activity-based career development tools — all with limited resources."
         },
         {
             id: 3,
             question: "Action",
-            answer: "We broke down the project into key milestones, prioritized essential features, and automated deployment using CI/CD pipelines. We worked efficiently, collaborating with stakeholders to quickly resolve roadblocks and iterating based on feedback."
+            answer: "I led the full SDLC, chose a React + Flask + PostgreSQL stack, set up AWS infrastructure, built secure APIs, integrated recording tools, and implemented CI/CD pipelines for fast deployment."
         },
         {
             id: 4,
             question: "Result",
-            answer: "The MVP was successfully launched on time, enabling the company to showcase a working product to investors, which led to securing early funding and user traction."
+            answer: "The MVP was launched on time, entered closed beta with 100+ users, and received positive feedback. It also helped attract early investor interest and build momentum for the startup."
         },
         {
             id: 5,
             question: "Summary",
-            answer: "In summary, this experience underscored the importance of agile planning, clear communication, and collaborative problem solving, which have since become integral to my approach on subsequent projects."
+            answer: "This project strengthened my skills in end-to-end development, cloud infrastructure, and agile execution — all of which I now apply to future product-building efforts."
         }
     ];
-    
+
     const starsMethod = [
-        { 
-            id: 1, 
-            question: "Situation", 
-            answer: "Describe the situation you were in or the task you needed to accomplish." 
+        {
+            id: 1,
+            question: "Situation",
+            answer: "Describe the situation you were in or the task you needed to accomplish."
         },
-        { 
-            id: 2, 
-            question: "Task", 
-            answer: "Explain the task you were responsible for in that situation." 
+        {
+            id: 2,
+            question: "Task",
+            answer: "Explain the task you were responsible for in that situation."
         },
-        { 
-            id: 3, 
-            question: "Action", 
-            answer: "Describe the specific actions you took to address the situation or complete the task." 
+        {
+            id: 3,
+            question: "Action",
+            answer: "Describe the specific actions you took to address the situation or complete the task."
         },
-        { 
-            id: 4, 
-            question: "Result", 
-            answer: "Share the results or outcomes of your actions, highlighting any achievements or lessons learned." 
+        {
+            id: 4,
+            question: "Result",
+            answer: "Share the results or outcomes of your actions, highlighting any achievements or lessons learned."
         },
-        { 
-            id: 5, 
-            question: "Summary", 
-            answer: "Provide a concise reflection on the experience, emphasizing key takeaways and how it has influenced your skills or approach." 
+        {
+            id: 5,
+            question: "Summary",
+            answer: "Provide a concise reflection on the experience, emphasizing key takeaways and how it has influenced your skills or approach."
         }
     ];
-    
-    
+
+
 
     const [qod, setQod] = useState([questions[0]]);
     return (
