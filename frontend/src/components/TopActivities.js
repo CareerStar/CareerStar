@@ -75,7 +75,7 @@ function TopActivities({ userId }) {
                     completed={!!activityStatuses?.[3]}
                 />
 
-                <TopActivityCard
+                {/* <TopActivityCard
                     activityId={4}
                     activityTitle='Hot Jobs of the Week'
                     activityDescription='Check out these hot jobs of the week! Stay ahead in your career by exploring top openings from leading companies, handpicked just for you.'
@@ -85,7 +85,7 @@ function TopActivities({ userId }) {
                     moduleId={3}
                     isReady={true}
                     completed={!!activityStatuses?.[4]}
-                />
+                /> */}
 
                 <TopActivityCard
                     activityId={5}
