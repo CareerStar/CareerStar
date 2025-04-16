@@ -809,7 +809,7 @@ def update_interviewschedule(userId):
 
         connection.commit()
 
-        #add_contact_to_mailchimp(mailchimp_audience_id, emailID, firstname, interview_date)
+        add_contact_to_mailchimp(mailchimp_audience_id, emailID, firstname, interview_date)
 
         if cursor.rowcount > 0:
             return jsonify({"message": "User interview schedule updated successfully"}), 200
@@ -1276,12 +1276,14 @@ def upload_resume():
 
         file_data = file.read()
 
-        prompt = """Please analyze this resume and provide detailed feedback on:
-            1. Overall presentation and format
-            2. Content effectiveness and impact
-            3. Key strengths
-            4. Areas for improvement
-            Please be specific and provide actionable suggestions."""
+        prompt = """Please analyze this resume and provide detailed feedback on each section of the resume:
+            1. Summary
+            2. Education
+            3. Experience
+            4. Projects
+            5. Skills
+            6. Areas for improvement
+            Please be specific and provide actionable suggestions. Focus on actionable suggestions, not on strength."""
 
         try:
             pdf = {
