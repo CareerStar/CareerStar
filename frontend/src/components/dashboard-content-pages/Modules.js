@@ -43,6 +43,9 @@ function Modules() {
 
                     <p className='roadmap-phase-title'>Navigating Career Success Beyond Borders</p>
                     <RoadmapActivityBar activityName='Quiz: Test your knowledge' activityId='6' showStatus = {false} showStar = {false} />
+
+                    <p className='roadmap-phase-title'>Product Feedback</p>
+                    <TypeformPlugin activityName='Feedback form' url='https://77v849yn4dk.typeform.com/to/I6gWaWlG?typeform-medium=embed-snippet'/>
                 </div>
             </div>
         </div>
