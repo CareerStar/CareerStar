@@ -14,8 +14,8 @@ function QoD() {
     const questions = [
         {
             id: 1,
-            question: "Can you describe a time when you had to lead a project end-to-end with limited resources or support?",
-            answer: "Choose an example where you took initiative, made strategic decisions, and adapted creatively to constraints. Highlight leadership, ownership, and problem-solving."
+            question: "Tell me about a time when you had to adapt to a significant change in a team project or academic environment.",
+            answer: "Choose an example where you demonstrated flexibility, positive attitude, and problem-solving skills when facing unexpected changes. Focus on your adaptability and how you helped others navigate the transition."
         },
     ]
 
@@ -23,27 +23,27 @@ function QoD() {
         {
             id: 1,
             question: "Situation",
-            answer: "As the sole developer at CareerStar, I was tasked with building the MVP of our career guidance platform to support an upcoming investor pitch in two months."
+            answer: "During my third year of university, our 6-person team for the Entrepreneurship Capstone was thrown off course when our primary industry partner withdrew just 4 weeks before our final presentation."
         },
         {
             id: 2,
             question: "Task",
-            answer: "I needed to design, develop, and deploy a scalable, user-friendly web app that offered activity-based career development tools — all with limited resources."
+            answer: "As team leader, I needed to quickly reorient our project, salvage our research, and establish a new direction while maintaining team morale and meeting our academic requirements."
         },
         {
             id: 3,
             question: "Action",
-            answer: "I led the full SDLC, chose a React + Flask + PostgreSQL stack, set up AWS infrastructure, built secure APIs, integrated recording tools, and implemented CI/CD pipelines for fast deployment."
+            answer: "I organized an emergency meeting, facilitated an honest discussion about our options, reached out to my network to secure a new partner in a related industry, and restructured our timeline with clear new milestones and redistributed responsibilities."
         },
         {
             id: 4,
             question: "Result",
-            answer: "The MVP was launched on time, entered closed beta with 100+ users, and received positive feedback. It also helped attract early investor interest and build momentum for the startup."
+            answer: "We successfully pivoted the project, delivered our presentation on time, and actually received higher marks than most teams for demonstrating resilience. Our professor used our case as an example of professional crisis management."
         },
         {
             id: 5,
             question: "Summary",
-            answer: "This project strengthened my skills in end-to-end development, cloud infrastructure, and agile execution — all of which I now apply to future product-building efforts."
+            answer: "This experience taught me valuable lessons in contingency planning, stakeholder management, and leading through uncertainty—skills I've since applied repeatedly in other academic and internship settings."
         }
     ];
 
