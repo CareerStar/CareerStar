@@ -6,6 +6,8 @@ import Activity4 from './Activity4';
 import Activity5 from './Activity5';
 import Activity6 from './Activity6';
 import Activity7 from './Activity7';
+import Activity8 from './Activity8';
+import Activity9 from './Activity9';
 
 function ActivityAggregator({activity}) {
 
@@ -17,6 +19,8 @@ function ActivityAggregator({activity}) {
         5: <Activity5 />,
         6: <Activity6 />,
         7: <Activity7 />,
+        8: <Activity8 />,
+        9: <Activity9 />,
     };
 
     return (

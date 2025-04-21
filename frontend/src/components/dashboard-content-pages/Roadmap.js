@@ -166,8 +166,10 @@ function Roadmap({ userId, activityName }) {
                     <RoadmapActivityBar activityName='Career Acronym Challenge' activityId='2' completed={!!activityStatuses?.[2]} starCount={7} />
                     <RoadmapActivityBar activityName='Better Cold Call LinkedIn Messages' activityId='3' completed={!!activityStatuses?.[3]} starCount={3} />
                     {/* <p className='roadmap-phase-title'>Module 2</p> */}
+                    <RoadmapActivityBar activityName='Networking Made Easy: Finding Your Events' activityId='9' completed={!!activityStatuses?.[9]} starCount={7} />
                     <RoadmapActivityBar activityName='Let’s Network Before We Network' activityId='5' completed={!!activityStatuses?.[5]} starCount={7} />
                     <RoadmapActivityBar activityName='The Dreaded Salary Talk' activityId='7' completed={!!activityStatuses?.[7]} starCount={7}/>
+                    <RoadmapActivityBar activityName='Presenting Your Portfolio' activityId='8' completed={!!activityStatuses?.[8]} starCount={10} />
                     <p className='roadmap-phase-title'>(More coming soon...)</p>
                 </div>
             </div>
