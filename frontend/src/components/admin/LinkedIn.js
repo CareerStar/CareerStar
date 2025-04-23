@@ -11,10 +11,10 @@ function LinkedIn() {
     useEffect(() => {
         const fetchUsersLinkedInDetails = async () => {
             try {
-                const token = localStorage.getItem('token');
+                const admin_token = localStorage.getItem('admin_token');
                 const response = await axios.get('https://api.careerstar.co/linkedin', {
                     headers: {
-                        Authorization: `Bearer ${token}`,
+                        Authorization: `Bearer ${admin_token}`,
                     },
                 });
                 if (response.status === 200) {
