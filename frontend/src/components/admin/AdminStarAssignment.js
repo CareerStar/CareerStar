@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { 
-  Container, Table, Form, Button, InputGroup, 
-  Alert, Spinner, Card, Row, Col 
+import {
+  Container, Table, Form, Button, InputGroup,
+  Alert, Spinner, Card, Row, Col
 } from 'react-bootstrap';
 
 const UserManagement = () => {
@@ -12,7 +12,7 @@ const UserManagement = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [updatedUsers, setUpdatedUsers] = useState({});
   const [notifications, setNotifications] = useState({});
-  
+
   const admin_token = localStorage.getItem('admin_token') || '';
 
   const headers = {
@@ -29,7 +29,6 @@ const UserManagement = () => {
       setLoading(true);
       const response = await axios.get('https://api.careerstar.co/users', { headers });
       setUsers(response.data.users);
-      console.log('Fetched users:', response.data.users);
       setError(null);
     } catch (err) {
       setError('Failed to load users. Please try again later.');
@@ -48,25 +47,25 @@ const UserManagement = () => {
 
   const updateStars = async (userId) => {
     if (updatedUsers[userId] === undefined) return;
-    
+
     try {
       const response = await axios.put(
-        `https://api.careerstar.co/users/${userId}/stars`, 
+        `https://api.careerstar.co/users/${userId}/stars`,
         { stars: updatedUsers[userId] },
         { headers }
       );
-      
-      setUsers(users.map(user => 
-        user.userId === userId 
-          ? { ...user, stars: updatedUsers[userId] } 
+
+      setUsers(users.map(user =>
+        user.userId === userId
+          ? { ...user, stars: updatedUsers[userId] }
           : user
       ));
-      
+
       setNotifications({
         ...notifications,
         [userId]: { type: 'success', message: 'Stars updated successfully!' }
       });
-      
+
       setTimeout(() => {
         setNotifications(prev => {
           const updated = { ...prev };
@@ -74,7 +73,7 @@ const UserManagement = () => {
           return updated;
         });
       }, 3000);
-      
+
     } catch (err) {
       setNotifications({
         ...notifications,
@@ -88,7 +87,7 @@ const UserManagement = () => {
     const fullName = `${user.firstname}`;
     const email = user.emailID;
     const term = searchTerm;
-    
+
     return fullName.includes(term) || email.includes(term);
   });
 
@@ -108,14 +107,14 @@ const UserManagement = () => {
         <div className="bg-gradient-to-r from-purple-500 to-indigo-600 px-6 py-4">
           <h2 className="text-2xl font-bold text-white">Workshop User Management</h2>
         </div>
-        
+
         <div className="p-6">
           {error && (
             <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
               <p>{error}</p>
             </div>
           )}
-          
+
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             <div className="flex-grow">
               <input
@@ -126,14 +125,14 @@ const UserManagement = () => {
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
               />
             </div>
-            <button 
-              onClick={fetchUsers} 
+            <button
+              onClick={fetchUsers}
               className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition-colors"
             >
               Refresh List
             </button>
           </div>
-          
+
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -181,19 +180,19 @@ const UserManagement = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <div className="flex items-center space-x-2">
-                          <button 
+                          <button
                             onClick={() => updateStars(user.userId)}
                             className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md transition-colors"
                           >
                             Update
                           </button>
-                          
+
                           {notifications[user.userId]?.type === 'success' && (
                             <span className="text-green-600 bg-green-100 px-2 py-1 rounded">
                               {notifications[user.userId].message}
                             </span>
                           )}
-                          
+
                           {notifications[user.userId]?.type === 'danger' && (
                             <span className="text-red-600 bg-red-100 px-2 py-1 rounded">
                               {notifications[user.userId].message}
