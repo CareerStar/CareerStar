@@ -11,6 +11,8 @@ import ActivityAggregator from './activities/ActivityAggregator';
 import ResumeCoach from './dashboard-content-pages/ResumeCoach';
 import Modules from './dashboard-content-pages/Modules';
 import Leaderboard from './dashboard-content-pages/Leaderboard';
+import UserManagement from './admin/UserManagement';
+import ActivityManagement from './admin/ActivityManagement';
 
 function DashboardContent({ selectedPage, activityName, onComplete, userId }) {
     const renderPage = () => {
@@ -39,6 +41,10 @@ function DashboardContent({ selectedPage, activityName, onComplete, userId }) {
                 return <Modules />;
             case 'Leaderboard':
                 return <Leaderboard />;
+            case 'Users':
+                return <UserManagement />;
+            case 'Activitymanagement':
+                return <ActivityManagement />;
             default:
                 return <Home />;
         }
