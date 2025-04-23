@@ -29,9 +29,9 @@ function DashboardContent({ selectedPage, activityName, onComplete, userId }) {
                 return <Support />;
             case 'Activity':
                 return <ActivityAggregator activity={activityName} />;
-            case 'AdminEvents':
+            case 'Adminevents':
                 return <AdminEvents />;
-            case 'LinkedIn':
+            case 'Linkedin':
                 return <LinkedIn />;
             case 'Resumecoach':
                 return <ResumeCoach />;

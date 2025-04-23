@@ -8,7 +8,7 @@ import supportIcon from "../assets/images/support-icon.png";
 import networkIcon from "../assets/images/network-icon.png";
 import eventsIcon from "../assets/images/events-icon.png";
 
-function Sidebar({ pages, selectedPage, onboarded }) {
+function Sidebar({ pages, selectedPage, onboarded, isAdmin = false }) {
     const navigate = useNavigate();
 
     const iconMap = {
@@ -26,7 +26,10 @@ function Sidebar({ pages, selectedPage, onboarded }) {
     };
 
     const handleClick = (page) => {
-        if (onboarded || page === "Home") {
+        if (isAdmin) {
+            navigate(`/admin/dashboard/${page.replace(/\s+/g, "").toLowerCase()}`);
+        }
+        else if (onboarded || page === "Home") {
             navigate(`/dashboard/${page.replace(/\s+/g, "").toLowerCase()}`);
         }
     };
