@@ -23,6 +23,8 @@ function Sidebar({ pages, selectedPage, onboarded, isAdmin = false }) {
         "Resume Coach": supportIcon,
         Modules: <Cast size={24} color="black" />,
         Leaderboard: <Trophy size={24} color="black" />,
+        Users: <Folder size={24} color="black" />,
+        "Activity Management": <Folder size={24} color="black" />,
     };
 
     const handleClick = (page) => {
