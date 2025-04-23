@@ -72,7 +72,7 @@ function App() {
 
           <Route
             exact
-            path='/admin/dashboard'
+            path='/admin/dashboard/*'
             element={<AuthProtectedAdminDashboard />}
           />
 
