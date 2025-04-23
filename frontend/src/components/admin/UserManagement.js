@@ -12,6 +12,7 @@ const UserManagement = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [updatedUsers, setUpdatedUsers] = useState({});
   const [notifications, setNotifications] = useState({});
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
 
   const admin_token = localStorage.getItem('admin_token') || '';
 
@@ -83,13 +84,54 @@ const UserManagement = () => {
     }
   };
 
-  const filteredUsers = users.filter(user => {
-    const fullName = `${user.firstname}`;
-    const email = user.emailID;
-    const term = searchTerm;
+  const requestSort = (key) => {
+    let direction = 'ascending';
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+  };
 
-    return fullName.includes(term) || email.includes(term);
+  const getSortValue = (user, key) => {
+    if (key === 'stars') {
+      return updatedUsers[user.userId] !== undefined
+        ? updatedUsers[user.userId]
+        : user.stars || 0;
+    }
+    return user[key];
+  };
+
+  const sortedUsers = React.useMemo(() => {
+    let sortableUsers = [...users];
+    if (sortConfig.key !== null) {
+      sortableUsers.sort((a, b) => {
+        const aValue = getSortValue(a, sortConfig.key);
+        const bValue = getSortValue(b, sortConfig.key);
+
+        if (aValue < bValue) {
+          return sortConfig.direction === 'ascending' ? -1 : 1;
+        }
+        if (aValue > bValue) {
+          return sortConfig.direction === 'ascending' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableUsers;
+  }, [users, sortConfig, updatedUsers]);
+
+  const filteredUsers = sortedUsers.filter(user => {
+    const fullName = `${user.firstname} ${user.lastname || ''}`;
+    const email = user.emailID;
+    const term = searchTerm.toLowerCase();
+
+    return fullName.toLowerCase().includes(term) || email.toLowerCase().includes(term);
   });
+
+  const getSortDirectionIndicator = (key) => {
+    if (sortConfig.key !== key) return null;
+    return sortConfig.direction === 'ascending' ? ' ↑' : ' ↓';
+  };
 
   if (loading) {
     return (
@@ -105,7 +147,7 @@ const UserManagement = () => {
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="bg-gradient-to-r from-purple-500 to-indigo-600 px-6 py-4">
-          <h2 className="text-2xl font-bold text-white">Workshop User Management</h2>
+          <h2 className="text-2xl font-bold text-white">User Management</h2>
         </div>
 
         <div className="p-6">
@@ -146,8 +188,12 @@ const UserManagement = () => {
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Email
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Stars
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                    onClick={() => requestSort('stars')}
+                  >
+                    Stars {getSortDirectionIndicator('stars')}
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions

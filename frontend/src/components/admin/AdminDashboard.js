@@ -9,8 +9,8 @@ const AdminDashboard = () => {
     const [userId, setUserId] = useState(location.state?.userId || '');
     const [selectedPage, setSelectedPage] = useState('Adminevents');
     const [onboarded, setOnboarded] = useState(true);
-    const pages = ['AdminEvents', 'LinkedIn'];
-    const validPages = ['Home', 'Adminevents', 'Profile', 'Roadmap', 'Events', 'Network', 'Support', 'Activity', 'Resumecoach', 'Modules', 'Leaderboard', 'Linkedin'];
+    const pages = ['AdminEvents', 'LinkedIn', 'Users', 'Activity Management'];
+    const validPages = ['Home', 'Adminevents', 'Profile', 'Roadmap', 'Events', 'Network', 'Support', 'Activity', 'Resumecoach', 'Modules', 'Leaderboard', 'Linkedin', 'Users', 'Activitymanagement'];
 
     useEffect(() => {
         console.log('AdminDashboard useEffect');
