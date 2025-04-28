@@ -369,6 +369,9 @@ def get_all_users():
         return jsonify({"users": userlist})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    finally:
+        if connection:
+            return_db_connection(connection)
 
 @app.route('/user/<int:userId>', methods=['GET'])
 def get_user_details(userId):
@@ -1222,6 +1225,42 @@ def roadmapactivitypost(userId, roadmapActivityId):
             connection.commit()
 
             return jsonify({"message": "Data added successful", "userId": userId, "roadmapActivityId": roadmapActivityId}), 200
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+    finally:
+        if connection:
+            return_db_connection(connection)
+            # cursor.close()
+            # connection.close()
+
+@app.route('/roadmapactivity', methods=['GET'])
+@jwt_required()
+def roadmapactivitiesget():
+    current_user = get_jwt_identity()
+    if current_user['role'] != 'admin':
+        return jsonify({"error": "Unauthorized"}), 401
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        get_roadmapactivity_query="""
+        SELECT COUNT(*), roadmapactivityid FROM user_roadmap_Activities GROUP BY roadmapactivityid;
+        """
+
+        cursor.execute(get_roadmapactivity_query, )
+        activities = cursor.fetchall()
+
+        activityList = []
+        for activity in activities:
+            activityDict = {
+                "count": activity[0],
+                "activityId": activity[1]
+            }
+            activityList.append(activityDict)
+        if activities:
+            return jsonify(activityList)
+        else:
+            return jsonify({"error": str(error)}), 404
     except Exception as error:
         return jsonify({"error": str(error)}), 500
     finally:
