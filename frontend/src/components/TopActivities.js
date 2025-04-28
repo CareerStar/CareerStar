@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import TopActivityCard from './TopActivityCard';
 
 function TopActivities({ userId }) {
+    const navigate = useNavigate();
     const [firstname, setFirstname] = useState(localStorage.getItem('firstname') || '');
     const [loading, setLoading] = useState(false);
     const [activityStatuses, setActivityStatuses] = useState({});
@@ -36,7 +38,10 @@ function TopActivities({ userId }) {
                     <div className="spinner"></div>
                 </div>
             )}
-            <h1>{firstname}'s Top Activities</h1>
+            <div className='top-activities-header'>
+                <h1>{firstname}'s Top Activities</h1>
+                <button className='view-all-button' onClick={() => navigate('/dashboard/roadmap')}>View all →</button>
+            </div>
             <div className='top-activities-container'>
 
                 <TopActivityCard

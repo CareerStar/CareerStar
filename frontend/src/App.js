@@ -72,6 +72,12 @@ function App() {
 
           <Route
             exact
+            path='/admin/login'
+            element={<AdminLogin />}
+          />
+
+          <Route
+            exact
             path='/admin/dashboard/*'
             element={<AuthProtectedAdminDashboard />}
           />

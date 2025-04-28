@@ -2925,6 +2925,33 @@ h3 {
   box-sizing: border-box;
 }
 
+.top-activities .top-activities-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.top-activities .top-activities-header .view-all-button {
+
+  padding: 10px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  background: #F9F8FF;
+  border: 1px solid #000;
+  border-radius: 32px;
+
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+  
+  margin-bottom: 20px;
+}
+
 .top-activities h1 {
   font-family: 'Sora';
   font-style: normal;
