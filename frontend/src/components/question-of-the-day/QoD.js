@@ -14,36 +14,36 @@ function QoD() {
     const questions = [
         {
             id: 1,
-            question: "Tell me about a time when you had to adapt to a significant change in a team project or academic environment.",
-            answer: "Choose an example where you demonstrated flexibility, positive attitude, and problem-solving skills when facing unexpected changes. Focus on your adaptability and how you helped others navigate the transition."
+            question: "Tell me about a time when you had to adapt quickly to an unexpected change during a group project.",
+            answer: "Choose an example where you demonstrated flexibility, problem-solving skills, and effective teamwork when faced with a sudden change. Highlight your ability to remain calm under pressure, think creatively, and contribute to a successful outcome despite the challenge."
         },
     ]
-
+    
     const modelAnswer = [
         {
             id: 1,
             question: "Situation",
-            answer: "During my third year of university, our 6-person team for the Entrepreneurship Capstone was thrown off course when our primary industry partner withdrew just 4 weeks before our final presentation."
+            answer: "During my second year at university, our 4-person team was preparing a business case analysis due in three days when our primary dataset became unusable due to critical errors discovered in the source material."
         },
         {
             id: 2,
             question: "Task",
-            answer: "As team leader, I needed to quickly reorient our project, salvage our research, and establish a new direction while maintaining team morale and meeting our academic requirements."
+            answer: "I needed to help our team quickly find alternative data, restructure our analysis approach, and still deliver a compelling presentation within the original deadline."
         },
         {
             id: 3,
             question: "Action",
-            answer: "I organized an emergency meeting, facilitated an honest discussion about our options, reached out to my network to secure a new partner in a related industry, and restructured our timeline with clear new milestones and redistributed responsibilities."
+            answer: "I immediately organized an emergency team meeting, proposed using a combination of three smaller publicly available datasets, redistributed tasks based on team strengths, and created a shared document with hourly progress updates."
         },
         {
             id: 4,
             question: "Result",
-            answer: "We successfully pivoted the project, delivered our presentation on time, and actually received higher marks than most teams for demonstrating resilience. Our professor used our case as an example of professional crisis management."
+            answer: "We completed and submitted the project on time, received an A- grade, and our professor highlighted our creative use of alternative data sources as particularly impressive given the circumstances."
         },
         {
             id: 5,
             question: "Summary",
-            answer: "This experience taught me valuable lessons in contingency planning, stakeholder management, and leading through uncertainty—skills I've since applied repeatedly in other academic and internship settings."
+            answer: "This experience strengthened my adaptability, crisis management, and collaborative problem-solving skills, which I now apply whenever unexpected challenges arise in academic or professional settings."
         }
     ];
 
