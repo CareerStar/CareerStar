@@ -40,7 +40,7 @@ function TopActivities({ userId }) {
             )}
             <div className='top-activities-header'>
                 <h1>{firstname}'s Top Activities</h1>
-                <button className='view-all-button' onClick={() => navigate('/dashboard/roadmap')}>View all →</button>
+                <button className='view-all-button' onClick={() => navigate('/dashboard/activities')}>View all →</button>
             </div>
             <div className='top-activities-container'>
 
@@ -69,30 +69,6 @@ function TopActivities({ userId }) {
                 />
 
                 <TopActivityCard
-                    activityId={3}
-                    activityTitle='Better Cold Call LinkedIn Messages'
-                    activityDescription='Draft better Messages that actually get results, while learning something new at the same time!'
-                    activityTags={['Networking', 'LinkedIn']}
-                    activityStarCount={3}
-                    activityTime='10 min'
-                    moduleId={3}
-                    isReady={true}
-                    completed={!!activityStatuses?.[3]}
-                />
-
-                {/* <TopActivityCard
-                    activityId={4}
-                    activityTitle='Hot Jobs of the Week'
-                    activityDescription='Check out these hot jobs of the week! Stay ahead in your career by exploring top openings from leading companies, handpicked just for you.'
-                    activityTags={['Job', 'LinkedIn']}
-                    activityStarCount={3}
-                    activityTime='10 min'
-                    moduleId={3}
-                    isReady={true}
-                    completed={!!activityStatuses?.[4]}
-                /> */}
-
-                <TopActivityCard
                     activityId={5}
                     activityTitle='Let’s Network Before We Network'
                     activityDescription='Want to make the most of an event? Start by building a relationship with the event host!'
@@ -104,29 +80,6 @@ function TopActivities({ userId }) {
                     completed={!!activityStatuses?.[5]}
                 />
 
-                {/* <TopActivityCard
-                    activityId={99}
-                    activityTitle='Get To Know Your Interviewer'
-                    activityDescription='Researching your interviewer before a job interview can give you a significant advantage.'
-                    activityTags={['Interview', 'LinkedIn']}
-                    activityStarCount={3}
-                    activityTime='10 min'
-                    moduleId={3}
-                    isReady={false}
-                    completed={!!activityStatuses?.[99]}
-                /> */}
-
-                <TopActivityCard
-                    activityId={7}
-                    activityTitle='The Dreaded Salary Talk.'
-                    activityDescription='Discussing Salary During Interviews'
-                    activityTags={['Interview']}
-                    activityStarCount={7}
-                    activityTime='15 min'
-                    moduleId={2}
-                    isReady={true}
-                    completed={!!activityStatuses?.[7]}
-                />
             </div>
         </div>
     );
