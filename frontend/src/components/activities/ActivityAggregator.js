@@ -8,6 +8,8 @@ import Activity6 from './Activity6';
 import Activity7 from './Activity7';
 import Activity8 from './Activity8';
 import Activity9 from './Activity9';
+import Activity11 from './Activity11';
+import Activity10 from './Activity10';
 
 function ActivityAggregator({activity}) {
 
@@ -21,6 +23,8 @@ function ActivityAggregator({activity}) {
         7: <Activity7 />,
         8: <Activity8 />,
         9: <Activity9 />,
+        10: <Activity10 />,
+        11: <Activity11 />,
     };
 
     return (
