@@ -33,7 +33,7 @@ function Modules() {
                     <RoadmapActivityBar activityName='Offline Activity: Let’s Network Before We Network' activityId='5' showStatus = {false} showStar = {false}/>
 
                     <p className='roadmap-phase-title'>Hard Questions, Better Answers</p>
-                    <CanvaSlidesPlugin activityName='Workshop presentation' url='https://www.canva.com/design/DAGhobwj2t4/nfzpKh1kTXfme8xfWmudYA/view?embed'/>
+                    <CanvaSlidesPlugin activityName='Workshop presentation' url='https://www.canva.com/design/DAGl9FdILBM/6ea_SDsy6UKXRM3pL04C6w/view?embed'/>
                     <MentimeterPlugin activityName="Let's hear from you! (Part I)" url='https://www.menti.com/al14wx9gcdgu'/>
                     {/* <JeopardyPlugin activityName='Jeopardy Game' url='https://jeopardylabs.com/play/hello-2033?embed=1'/> */}
                     <MentimeterPlugin activityName="Let's hear from you! (Part II)" url='https://www.menti.com/alm4vbxmkwhg'/>

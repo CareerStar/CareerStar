@@ -82,8 +82,8 @@ const Activity5 = () => {
                     dispatch({ type: "INCREMENT_STAR", payload: starCount });
                 }
             }
-            if (prevPage === 'roadmap') {
-                navigate('/dashboard/roadmap');
+            if (prevPage === 'activities') {
+                navigate('/dashboard/activities');
             } else {
                 navigate('/dashboard/home');
             }
@@ -123,8 +123,8 @@ const Activity5 = () => {
         } else if (currentStep > 1) {
             setCurrentStep(currentStep - 1);
         } else if (currentStep === null) {
-            if (prevPage === 'roadmap') {
-                navigate('/dashboard/roadmap');
+            if (prevPage === 'activities') {
+                navigate('/dashboard/activities');
             } else {
                 navigate('/dashboard/home');
             }
@@ -132,8 +132,8 @@ const Activity5 = () => {
     };
 
     const handleBackNavigation = () => {
-        if (prevPage === 'roadmap') {
-            navigate('/dashboard/roadmap');
+        if (prevPage === 'activities') {
+            navigate('/dashboard/activities');
         } else {
             navigate('/dashboard/home');
         }

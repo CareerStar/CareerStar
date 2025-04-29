@@ -21,7 +21,7 @@ function DashboardContent({ selectedPage, activityName, onComplete, userId }) {
                 return <Home onComplete={onComplete} userId={userId} />;
             case 'Profile':
                 return <Profile userId={userId} />;
-            case 'Roadmap':
+            case 'Activities':
                 return <Roadmap userId={userId} />;
             case 'Events':
                 return <EventPage userId={userId} />;
@@ -37,7 +37,7 @@ function DashboardContent({ selectedPage, activityName, onComplete, userId }) {
                 return <LinkedIn />;
             case 'Resumecoach':
                 return <ResumeCoach />;
-            case 'Modules':
+            case 'Workshops':
                 return <Modules />;
             case 'Leaderboard':
                 return <Leaderboard />;
