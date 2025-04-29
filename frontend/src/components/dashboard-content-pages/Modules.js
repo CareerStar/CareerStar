@@ -40,6 +40,7 @@ function Modules() {
                     <JeopardyPlugin activityName='Jeopardy Game' url='https://jeopardylabs.com/play/mock-interview-jeopardy-5?embed=1'/>
                     <TypeformPlugin activityName='Workshop feedback' url='https://77v849yn4dk.typeform.com/to/WugecXuQ?typeform-medium=embed-snippet'/>
                     <RoadmapActivityBar activityName='Offline Activity: The Dreaded Salary Talk' activityId='7' showStatus = {false} showStar = {false}/>
+                    <RoadmapActivityBar activityName='Offline Activity: The 10% Coffee Challenge' activityId='10' showStatus = {false} showStar = {false}/>
 
                     <p className='roadmap-phase-title'>Navigating Career Success Beyond Borders</p>
                     <RoadmapActivityBar activityName='Quiz: Test your knowledge' activityId='6' showStatus = {false} showStar = {false} />
