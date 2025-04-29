@@ -21,7 +21,7 @@ function Sidebar({ pages, selectedPage, onboarded, isAdmin = false }) {
         AdminEvents: eventsIcon,
         LinkedIn: eventsIcon,
         "Resume Coach": supportIcon,
-        Modules: <Cast size={24} color="black" />,
+        Workshops: <Cast size={24} color="black" />,
         Leaderboard: <Trophy size={24} color="black" />,
         Users: <Folder size={24} color="black" />,
         "Activity Management": <Folder size={24} color="black" />,

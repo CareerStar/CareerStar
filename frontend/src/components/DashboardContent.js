@@ -37,7 +37,7 @@ function DashboardContent({ selectedPage, activityName, onComplete, userId }) {
                 return <LinkedIn />;
             case 'Resumecoach':
                 return <ResumeCoach />;
-            case 'Modules':
+            case 'Workshops':
                 return <Modules />;
             case 'Leaderboard':
                 return <Leaderboard />;
