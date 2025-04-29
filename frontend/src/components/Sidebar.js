@@ -14,7 +14,7 @@ function Sidebar({ pages, selectedPage, onboarded, isAdmin = false }) {
     const iconMap = {
         Home: homeIcon,
         Profile: profileIcon,
-        Roadmap: roadmapIcon,
+        Activities: roadmapIcon,
         Support: supportIcon,
         Network: networkIcon,
         Events: eventsIcon,

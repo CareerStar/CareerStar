@@ -21,7 +21,7 @@ function DashboardContent({ selectedPage, activityName, onComplete, userId }) {
                 return <Home onComplete={onComplete} userId={userId} />;
             case 'Profile':
                 return <Profile userId={userId} />;
-            case 'Roadmap':
+            case 'Activities':
                 return <Roadmap userId={userId} />;
             case 'Events':
                 return <EventPage userId={userId} />;

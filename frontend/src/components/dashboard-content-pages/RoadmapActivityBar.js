@@ -22,7 +22,7 @@ function RoadmapActivityBar({ activityName, activityId, completed, starCount, sh
                 <img
                     src={rightArrow}
                     alt='Right arrow icon'
-                    onClick={() => navigate('/dashboard/activity/' + activityId, { state: { prevPage: 'roadmap' } })}
+                    onClick={() => navigate('/dashboard/activity/' + activityId, { state: { prevPage: 'activities' } })}
                     style={{ cursor: 'pointer' }}
                 />
             </div>
