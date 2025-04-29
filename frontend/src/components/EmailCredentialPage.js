@@ -19,6 +19,7 @@ function EmailCredentialPage() {
     const [lastname, setLastname] = useState('');
     const [emailID, setEmailID] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [accessCode, setAccessCode] = useState('');
     const [userId, setUserID] = useState(0);
 
@@ -27,8 +28,10 @@ function EmailCredentialPage() {
 
     const [errorEmail, setErrorEmail] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
+    const [errorConfirmPassword, setErrorConfirmPassword] = useState('');
 
     const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const navigate = useNavigate();
 
@@ -49,27 +52,49 @@ function EmailCredentialPage() {
             setErrorPassword('');
         }
     };
-    
+
+    const handleConfirmPasswordInputChange = (event) => {
+        setConfirmPassword(event.target.value);
+        if (event.target.value.trim() !== '') {
+            setErrorConfirmPassword('');
+        }
+    };
+
     const handleAccessCodeInputChange = (event) => {
         setAccessCode(event.target.value);
     };
 
     const nextPageNavigation = async () => {
 
+        setErrorEmail('');
+        setErrorPassword('');
+        setErrorConfirmPassword('');
+        
         if (emailID.trim() === '') {
             setErrorEmail('Email ID cannot be empty*');
             return;
         }
 
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]*(nyit\.edu|cuny\.edu)$/;
 
         if (!emailRegex.test(emailID)) {
-            setErrorEmail('Invalid email format*');
+            setErrorEmail('Email must be a valid .edu email address*');
             return;
         }
 
         if (password.trim() === '') {
             setErrorPassword('Password cannot be empty*');
+            return;
+        }
+
+        if (confirmPassword.trim() === '') {
+            setErrorConfirmPassword('Confirm Password cannot be empty*');
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            setErrorPassword('Passwords do not match*');
+            setErrorConfirmPassword('Passwords do not match*');
             return;
         }
 
@@ -134,6 +159,10 @@ function EmailCredentialPage() {
         setShowPassword(!showPassword);
     };
 
+    const toggleConfirmPasswordVisibility = () => {
+        setShowConfirmPassword(!showConfirmPassword);
+    }
+
     return (
         <div className='signUp-page'>
             <div className='career-star-logo' onClick={navigateToStartPage}>
@@ -168,6 +197,24 @@ function EmailCredentialPage() {
                         </span>
                     </div>
                     {errorPassword && <div className='error-text'><p>{errorPassword}</p></div>}
+
+                    <p>Re-enter Password</p>
+                    <div className='password-section'>
+                        <input
+                            type={showConfirmPassword ? 'text' : 'password'}
+                            placeholder='**********'
+                            onChange={handleConfirmPasswordInputChange}
+                            onKeyDown={handleKeyPress}
+                        // style={{paddingRight: '40px'}}
+                        />
+                        <span
+                            onClick={toggleConfirmPasswordVisibility}
+                            className='password-visibility-icon'
+                        >
+                            {showConfirmPassword ? <img src={eye} alt='Eye icon' /> : <img src={eyeOff} alt='Eye off icon' />}
+                        </span>
+                    </div>
+                    {errorConfirmPassword && <div className='error-text'><p>{errorConfirmPassword}</p></div>}
 
                     <p>Access Code</p>
                     <input
