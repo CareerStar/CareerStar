@@ -14,36 +14,36 @@ function QoD() {
     const questions = [
         {
             id: 1,
-            question: "Tell me about a time when you had to adapt quickly to an unexpected change during a group project.",
-            answer: "Choose an example where you demonstrated flexibility, problem-solving skills, and effective teamwork when faced with a sudden change. Highlight your ability to remain calm under pressure, think creatively, and contribute to a successful outcome despite the challenge."
+            question: "Tell me about a time when you had to collaborate with a difficult team member to complete an important group project.",
+            answer: "Choose an example where you demonstrated effective communication, conflict resolution, and teamwork skills despite interpersonal challenges. Highlight your adaptability, emotional intelligence, and focus on achieving collective goals."
         },
-    ]
+    ];
     
     const modelAnswer = [
         {
             id: 1,
             question: "Situation",
-            answer: "During my second year at university, our 4-person team was preparing a business case analysis due in three days when our primary dataset became unusable due to critical errors discovered in the source material."
+            answer: "During my third year at university, I was assigned to a four-person team for our semester-long marketing strategy project. One team member consistently missed meetings, submitted work late, and was defensive when receiving feedback."
         },
         {
             id: 2,
             question: "Task",
-            answer: "I needed to help our team quickly find alternative data, restructure our analysis approach, and still deliver a compelling presentation within the original deadline."
+            answer: "I needed to find a way to improve our team dynamics and ensure project completion while maintaining high quality, as this project counted for 40% of our final grade."
         },
         {
             id: 3,
             question: "Action",
-            answer: "I immediately organized an emergency team meeting, proposed using a combination of three smaller publicly available datasets, redistributed tasks based on team strengths, and created a shared document with hourly progress updates."
+            answer: "I scheduled a conversation with the team member to understand their perspective, discovering they were struggling with personal issues. We created a modified schedule with clearer deadlines, and implemented weekly check-ins with specific talking points."
         },
         {
             id: 4,
             question: "Result",
-            answer: "We completed and submitted the project on time, received an A- grade, and our professor highlighted our creative use of alternative data sources as particularly impressive given the circumstances."
+            answer: "Our team successfully delivered the project on time, receiving an A- grade. The difficult team member completed all their assigned tasks, and our presentation was commended for its cohesiveness."
         },
         {
             id: 5,
             question: "Summary",
-            answer: "This experience strengthened my adaptability, crisis management, and collaborative problem-solving skills, which I now apply whenever unexpected challenges arise in academic or professional settings."
+            answer: "This experience enhanced my ability to address interpersonal challenges in professional settings, taught me the importance of empathy in leadership, and developed my skills in creating effective team structures."
         }
     ];
 
