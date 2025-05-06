@@ -402,6 +402,64 @@ def get_user_details(userId):
             # cursor.close()
             # connection.close()
 
+@app.route('/users/stats', methods=['GET'])
+def get_user_stats():
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        query_initial = """
+            SELECT COUNT(*) FROM Users
+            WHERE created_at < CURRENT_DATE - INTERVAL '50 days'
+        """
+        cursor.execute(query_initial)
+        initial_count = cursor.fetchone()[0]
+
+        query_daily = """
+            SELECT DATE(created_at) as date, COUNT(*) as count
+            FROM Users
+            WHERE created_at >= CURRENT_DATE - INTERVAL '50 days'
+            GROUP BY DATE(created_at)
+            ORDER BY DATE(created_at)
+        """
+        cursor.execute(query_daily)
+        daily_counts = cursor.fetchall()
+
+        counts_by_date = {row[0]: row[1] for row in daily_counts}
+
+        from datetime import date, timedelta
+
+        today = date.today()
+        dates = [today - timedelta(days=i) for i in range(50, -1, -1)]
+
+        data = []
+        cumulative_count = initial_count
+
+        for d in dates:
+            count_today = counts_by_date.get(d, 0)
+            cumulative_count += count_today
+            data.append({
+                "date": d.strftime('%Y-%m-%d'),
+                "total_users": cumulative_count
+            })
+
+        goal_count = 1000
+
+        cursor.close()
+        connection.close()
+
+        return jsonify({
+            "data": data,
+            "goal_count": goal_count
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        if connection:
+            return_db_connection(connection)
+
+
 @app.route('/users/<int:user_id>/stars', methods=['PUT'])
 @jwt_required()
 def update_user_stars(user_id):
