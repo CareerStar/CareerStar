@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
 
-function ResumeCoach() {
+function ResumeGuide() {
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
     const [feedback, setFeedback] = useState('');
@@ -86,7 +86,7 @@ function ResumeCoach() {
             {feedback && (
                 <div className="resume-coach-feedback">
                     <h2 className="resume-coach-feedback-heading">
-                        Resume Coach
+                        Resume Guide
                     </h2>
                     <div className="resume-coach-feedback-content">
                         <ReactMarkdown>{feedback}</ReactMarkdown>
@@ -98,4 +98,4 @@ function ResumeCoach() {
     );
 }
 
-export default ResumeCoach;
+export default ResumeGuide;
