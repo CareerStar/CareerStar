@@ -1342,7 +1342,7 @@ def generate_ai_feedback():
                 "Content-Type": "application/json",
             },
             json={
-                "model": "google/gemini-2.0-flash-thinking-exp:free",
+                "model": "qwen/qwen3-4b:free",
                 "messages": [
                     {
                         "role": "user",
@@ -1354,7 +1354,14 @@ def generate_ai_feedback():
             }
         )
 
+        if not response.ok:
+            return jsonify({"error": f"OpenRouter error: {response.status_code}", "details": response.text}), 500
+
         response_json = response.json()
+
+        if "choices" not in response_json:
+            return jsonify({"error": "'choices' not found", "full_response": response_json}), 500
+
         return jsonify({"feedback": response_json["choices"][0]["message"]["content"]})
 
     except Exception as error:
