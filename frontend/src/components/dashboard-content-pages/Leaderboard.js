@@ -1,6 +1,7 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import { Star } from 'lucide-react';
 import axios from "axios";
+import UserGrowthChart from '../internal-components/UserGrowthChart';
 
 const Leaderboard = () => {
     const [users, setUsers] = useState([]);
@@ -117,6 +118,7 @@ const Leaderboard = () => {
                 {renderTopThree()}
                 {renderRemainingUsers()}
             </div>
+            <UserGrowthChart />
         </div>
     );
 };

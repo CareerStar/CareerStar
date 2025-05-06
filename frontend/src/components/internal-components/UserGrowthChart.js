@@ -1,0 +1,61 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine, ResponsiveContainer } from 'recharts';
+
+const UserGrowthChart = () => {
+    const [data, setData] = useState([]);
+    const [goal, setGoal] = useState(1000);
+
+    useEffect(() => {
+        axios.get('https://api.careerstar.co/users/stats')
+            .then(response => {
+                const { data, goal_count } = response.data;
+                setData(data);
+                setGoal(goal_count);
+            })
+            .catch(error => console.error('Error fetching user stats:', error));
+    }, []);
+
+    return (
+        <div className="p-4 bg-white rounded shadow"
+            style={{ backgroundColor: '#F9F8FF' }}>
+            <h2 className="text-xl font-semibold mb-4"
+                style={{ fontFamily: 'Sora' }}>User Growth (Target: 1000)</h2>
+            <ResponsiveContainer width="100%" height={400}>
+                <LineChart data={data}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" />
+                    <YAxis />
+                    <Tooltip />
+                    <Line
+                        type="monotone"
+                        dataKey="total_users"
+                        stroke="#8884d8"
+                        strokeWidth={2}
+                        dot={false}
+                    />
+                    <Line
+                        type="monotone"
+                        dataKey={() => 100}
+                        stroke="#82ca9d"
+                        strokeDasharray="5 5"
+                        dot={false}
+                        isAnimationActive={false}
+                    />
+                </LineChart>
+            </ResponsiveContainer>
+
+            <div className="mt-6 px-2 py-4 rounded-lg text-left pl-10">
+                <h3 className="text-xl font-semibold mb-2"
+                style={{ fontFamily: 'Sora' }}>📈 Milestones & Achievements</h3>
+                <ul className="list-disc pl-6 text-lg text-gray-700 space-y-1"
+                style={{ fontFamily: 'Nunito' }}>
+                    <li>🚀 50+ users onboarded in under 3 months</li>
+                    <li>💬 100% of users provided positive feedback</li>
+                </ul>
+            </div>
+        </div>
+    );
+};
+
+export default UserGrowthChart;

@@ -3490,6 +3490,56 @@ h3 {
   padding: 24px;
 }
 
+.resume-welcome {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  max-width: 100%;
+  background-color: #ffffff;
+  margin-top: 45px;
+  box-shadow: 0px 485px 194px rgba(224, 224, 224, 0.01), 0px 273px 164px rgba(224, 224, 224, 0.05), 0px 121px 121px rgba(224, 224, 224, 0.09), 0px 30px 67px rgba(224, 224, 224, 0.1);
+  border: 1px solid #000;
+  border-radius: 32px;
+  padding: 24px;
+  box-sizing: border-box;
+  margin-bottom: 34px;
+}
+
+.resume-welcome-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.resume-welcome-left-text {
+  margin: 0px;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.resume-welcome-left-text h1 {
+  margin: 0px;
+  margin-bottom: 5px;
+  color: #171717;
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 40px;
+}
+
+.resume-welcome-left-text p {
+  margin: 0px;
+  color: #171717;
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+}
+
 .resume-coach-heading {
   font-family: 'Sora';
   font-size: 30px;
@@ -3587,6 +3637,15 @@ h3 {
 .resume-coach-feedback-content {
   font-size: 16px;
   line-height: 1.5;
+}
+
+.disclaimer {
+  font-size: 13px;
+  color: gray;
+  text-align: left;
+  padding: 0px;
+  padding-left: 16px;
+  margin: 0px;
 }
 
 /* SalaryNegotiationApp.css */
