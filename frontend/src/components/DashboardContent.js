@@ -8,7 +8,7 @@ import Support from './dashboard-content-pages/Support';
 import AdminEvents from './admin/AdminEvents';
 import LinkedIn from './admin/LinkedIn';
 import ActivityAggregator from './activities/ActivityAggregator';
-import ResumeCoach from './dashboard-content-pages/ResumeCoach';
+import ResumeGuide from './dashboard-content-pages/ResumeGuide';
 import Modules from './dashboard-content-pages/Modules';
 import Leaderboard from './dashboard-content-pages/Leaderboard';
 import UserManagement from './admin/UserManagement';
@@ -35,8 +35,8 @@ function DashboardContent({ selectedPage, activityName, onComplete, userId }) {
                 return <AdminEvents />;
             case 'Linkedin':
                 return <LinkedIn />;
-            case 'Resumecoach':
-                return <ResumeCoach />;
+            case 'Resumeguide':
+                return <ResumeGuide />;
             case 'Workshops':
                 return <Modules />;
             case 'Leaderboard':

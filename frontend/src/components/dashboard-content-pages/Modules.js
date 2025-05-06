@@ -34,11 +34,11 @@ function Modules() {
 
                     <p className='roadmap-phase-title'>Hard Questions, Better Answers</p>
                     <CanvaSlidesPlugin activityName='Workshop presentation' url='https://www.canva.com/design/DAGl9FdILBM/6ea_SDsy6UKXRM3pL04C6w/view?embed'/>
-                    <MentimeterPlugin activityName="Let's hear from you! (Part I)" url='https://www.menti.com/al14wx9gcdgu'/>
+                    <MentimeterPlugin activityName="Let's hear from you! (Part I)" url='https://www.menti.com/aljtz88hqaaj'/>
                     {/* <JeopardyPlugin activityName='Jeopardy Game' url='https://jeopardylabs.com/play/hello-2033?embed=1'/> */}
-                    <MentimeterPlugin activityName="Let's hear from you! (Part II)" url='https://www.menti.com/alm4vbxmkwhg'/>
+                    <MentimeterPlugin activityName="Let's hear from you! (Part II)" url='https://www.menti.com/alefqaaf3paa'/>
                     <JeopardyPlugin activityName='Jeopardy Game' url='https://jeopardylabs.com/play/mock-interview-jeopardy-5?embed=1'/>
-                    <TypeformPlugin activityName='Workshop feedback' url='https://77v849yn4dk.typeform.com/to/WugecXuQ?typeform-medium=embed-snippet'/>
+                    <TypeformPlugin activityName='Workshop feedback' url='https://77v849yn4dk.typeform.com/to/tomCbbVn?typeform-medium=embed-snippet'/>
                     <RoadmapActivityBar activityName='Offline Activity: The Dreaded Salary Talk' activityId='7' showStatus = {false} showStar = {false}/>
                     <RoadmapActivityBar activityName='Offline Activity: The 10% Coffee Challenge' activityId='10' showStatus = {false} showStar = {false}/>
 
