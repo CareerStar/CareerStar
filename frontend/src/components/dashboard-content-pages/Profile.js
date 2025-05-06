@@ -132,7 +132,7 @@ function Profile({ userId: propUserId }) {
                     You don't have to start with "I am". It should be positive in tone.
                     If you write it amzingly, I will give you 5 star rating and a $5 Million check.
                     The summary should be 2-3 sentences long. First name is ${firstname}, pursuing ${majorDetails} from NYIT, 
-                    have a dream of becoming ${goal}.`,
+                    have a dream of becoming ${goal}. It should be in first voice like "I am..".`,
             });
     
             if (response.data && response.data.feedback) {
