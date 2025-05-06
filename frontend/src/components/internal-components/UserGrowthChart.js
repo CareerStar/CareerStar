@@ -16,6 +16,15 @@ const UserGrowthChart = () => {
             .catch(error => console.error('Error fetching user stats:', error));
     }, []);
 
+    const EmojiActiveDot = (props) => {
+        const { cx, cy } = props;
+        return (
+            <text x={cx} y={cy} dy={5} textAnchor="middle" fontSize={20}>
+                🚀
+            </text>
+        );
+    };
+
     return (
         <div className="p-4 bg-white rounded shadow"
             style={{ backgroundColor: '#F9F8FF' }}>
@@ -32,7 +41,8 @@ const UserGrowthChart = () => {
                         dataKey="total_users"
                         stroke="#8884d8"
                         strokeWidth={2}
-                        dot={false}
+                        dot={false} // No default dots
+                        activeDot={<EmojiActiveDot />} // Show emoji on hover
                     />
                     <Line
                         type="monotone"
@@ -47,9 +57,9 @@ const UserGrowthChart = () => {
 
             <div className="mt-6 px-2 py-4 rounded-lg text-left pl-10">
                 <h3 className="text-xl font-semibold mb-2"
-                style={{ fontFamily: 'Sora' }}>📈 Milestones & Achievements</h3>
+                    style={{ fontFamily: 'Sora' }}>📈 Milestones & Achievements</h3>
                 <ul className="list-disc pl-6 text-lg text-gray-700 space-y-1"
-                style={{ fontFamily: 'Nunito' }}>
+                    style={{ fontFamily: 'Nunito' }}>
                     <li>🚀 50+ users onboarded in under 3 months</li>
                     <li>💬 100% of users provided positive feedback</li>
                 </ul>
