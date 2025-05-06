@@ -1414,7 +1414,6 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   font-size: 18px;
   line-height: 25px;
   text-align: center;
-  
   margin-bottom: 20px;
 }
 
@@ -2194,6 +2193,7 @@ h3 {
 
   color: #2E2E2E;
 }
+
 /* Admin page styles */
 
 .admin-events {
@@ -2516,6 +2516,7 @@ h3 {
   max-width: 100%;
   height: auto;
 }
+
 /* New Activity page styles */
 
 .activity-container {
@@ -2958,7 +2959,7 @@ h3 {
   font-size: 18px;
   line-height: 25px;
   text-align: center;
-  
+
   margin-bottom: 20px;
 }
 
@@ -3519,6 +3520,7 @@ h3 {
   margin: 0px;
   white-space: nowrap;
   text-align: left;
+  overflow-wrap: break-word;
 }
 
 .resume-welcome-left-text h1 {
@@ -3537,7 +3539,10 @@ h3 {
   font-family: 'Nunito';
   font-style: normal;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 18px;
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .resume-coach-heading {
@@ -3586,7 +3591,7 @@ h3 {
 }
 
 .resume-coach-input-file::file-selector-button:hover {
-  cursor: pointer !important; 
+  cursor: pointer !important;
   background-color: #DBEAFE;
 }
 
@@ -3896,11 +3901,11 @@ h3 {
 
 @media (max-width: 768px) {
   .platform-rating {
-      justify-content: center;
+    justify-content: center;
   }
-  
+
   .rating-button {
-      font-size: 24px;
+    font-size: 24px;
   }
 }
 
@@ -4103,14 +4108,16 @@ h3 {
 
 /* Activity 11 */
 
-.interest-buttons-container, .skill-buttons-container {
+.interest-buttons-container,
+.skill-buttons-container {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 20px;
 }
 
-.interest-button, .skill-button {
+.interest-button,
+.skill-button {
   padding: 8px 12px;
   border: 1px solid #ccc;
   border-radius: 20px;
@@ -4118,13 +4125,15 @@ h3 {
   transition: all 0.2s;
 }
 
-.interest-button.selected, .skill-button.selected {
+.interest-button.selected,
+.skill-button.selected {
   background-color: #4CAF50;
   color: white;
   border-color: #4CAF50;
 }
 
-.research-list li, .tips-container li {
+.research-list li,
+.tips-container li {
   margin-bottom: 10px;
 }
 
@@ -4210,11 +4219,11 @@ h3 {
   .section-container {
     padding: 15px;
   }
-  
+
   .section-container h3 {
     font-size: 16px;
   }
-  
+
   .section-container textarea {
     padding: 12px;
     font-size: 14px;
