@@ -172,6 +172,7 @@ function Roadmap({ userId, activityName }) {
                     <RoadmapActivityBar activityName='Unlock Your Volunteer Superpowers!' activityId='11' completed={!!activityStatuses?.[11]} starCount={8} /> 
                     <RoadmapActivityBar activityName='The Dreaded Salary Talk' activityId='7' completed={!!activityStatuses?.[7]} starCount={7}/>
                     <RoadmapActivityBar activityName='The 10% Coffee Challenge' activityId='10' completed={!!activityStatuses?.[10]} starCount={10} />
+                    <RoadmapActivityBar activityName='3-2-1 + Report: Stand Out During Your Internship' activityId='13' completed={!!activityStatuses?.[13]} starCount={10} />
                     <p className='roadmap-phase-title'>(More coming soon...)</p>
                 </div>
             </div>
