@@ -56,7 +56,7 @@ function TopActivities({ userId }) {
                     completed={!!activityStatuses?.[1]}
                 />
 
-                <TopActivityCard
+                {/* <TopActivityCard
                     activityId={2}
                     activityTitle='Career Acronym Challenge'
                     activityDescription='Test your knowledge of industry acronyms and their meanings, perfect for anyone looking to strengthen their business and tech vocabulary.'
@@ -66,6 +66,18 @@ function TopActivities({ userId }) {
                     moduleId={1}
                     isReady={true}
                     completed={!!activityStatuses?.[2]}
+                /> */}
+
+                <TopActivityCard    
+                    activityId={13}
+                    activityTitle='3-2-1 + Report: Stand Out During Your Internship'
+                    activityDescription='A great way to show your skills and get noticed by your team.'
+                    activityTags={['Internship', 'Report']}
+                    activityStarCount={10}
+                    activityTime='20 min'
+                    moduleId={1}
+                    isReady={true}
+                    completed={!!activityStatuses?.[13]}
                 />
 
                 <TopActivityCard
