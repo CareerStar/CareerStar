@@ -100,6 +100,7 @@ const Activity13 = () => {
     }, [userId]);
 
     const handleSubmit = async (completed) => {
+        setLoading(true);
         try {
             const payload = {
                 userId: userId,
@@ -123,6 +124,8 @@ const Activity13 = () => {
             }
         } catch (error) {
             console.error('Error saving answers:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
