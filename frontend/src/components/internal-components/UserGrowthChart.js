@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const UserGrowthChart = () => {
     const [data, setData] = useState([]);
@@ -34,23 +34,16 @@ const UserGrowthChart = () => {
                 <LineChart data={data}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="date" />
-                    <YAxis />
+                    <YAxis domain={[0, 100]} />
                     <Tooltip />
                     <Line
                         type="monotone"
                         dataKey="total_users"
+                        name="Career Stars"
                         stroke="#8884d8"
                         strokeWidth={2}
-                        dot={false} // No default dots
-                        activeDot={<EmojiActiveDot />} // Show emoji on hover
-                    />
-                    <Line
-                        type="monotone"
-                        dataKey={() => 100}
-                        stroke="#82ca9d"
-                        strokeDasharray="5 5"
                         dot={false}
-                        isAnimationActive={false}
+                        activeDot={<EmojiActiveDot />}
                     />
                 </LineChart>
             </ResponsiveContainer>
