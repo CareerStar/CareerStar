@@ -189,15 +189,15 @@ const Activity13 = () => {
     const generateReportPreview = () => {
         const reportDate = new Date().toLocaleDateString();
         const reportContent = `
-# Weekly Progress Report - ${reportDate}
+## Weekly Progress Report - ${reportDate}
 
-## Work Delivery Highlights
+### Work Delivery Highlights
 ${answers.highlights.map((highlight, index) => highlight ? `${index + 1}. ${highlight}` : '').filter(Boolean).join('\n')}
 
-## Next Week's Focus
+### Next Week's Focus
 ${answers.futureHighlights.map((highlight, index) => highlight ? `${index + 1}. ${highlight}` : '').filter(Boolean).join('\n')}
 
-## Support Needed
+### Support Needed
 ${answers.supportNeeded}
 `;
         return reportContent;
