@@ -1342,7 +1342,7 @@ def generate_ai_feedback():
                 "Content-Type": "application/json",
             },
             json={
-                "model": "qwen/qwen3-4b:free",
+                "model": "meta-llama/llama-3.3-8b-instruct:free",
                 "messages": [
                     {
                         "role": "user",
