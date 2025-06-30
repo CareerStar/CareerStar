@@ -229,8 +229,8 @@ function Home({ onComplete, userId }) {
                 return (
                     <div className="home-page-content">
                         <TopActivities userId={userId} />
-                        <Events userId={userId} />
-                        <QoD />
+                        {/*<Events userId={userId} />*/}
+                        {/*<QoD />*/}
                     </div>
                 );
             default:
