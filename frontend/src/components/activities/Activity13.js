@@ -542,8 +542,19 @@ ${answers.supportNeeded}
                                 <p>{starCount} stars</p>
                             </div>
                         </div>
-                        <p>Learn how to create concise, impactful weekly reports that will make you stand out during your internship. The 3-2-1 Report format helps you showcase your accomplishments, demonstrate forward thinking, and communicate effectively with managers and stakeholders.</p>
-                        <p>Regular reporting is a professional skill that many interns overlook but can significantly increase your visibility and demonstrate your value to the organization. This activity will walk you through creating reports that highlight your contributions and help you build a record of your achievements.</p>
+                        <ul>
+                            <li>
+                                The 3-2-1+ Report is a simple, effective tool that helps you track your work, request support, and advance your career.
+                            </li>
+                            <br />
+                            <li>
+                                This streamlined format showcases accomplishments, demonstrates forward thinking, and communicates effectively with stakeholders.
+                            </li>
+                            <br />
+                            <li>
+                                This activity will help you generate a report with images that can be shared instantly with coworkers and managers.
+                            </li>
+                         </ul>
                     </div>
                 ) : currentStep === 1 ? (
                     <div className="activity-description">
