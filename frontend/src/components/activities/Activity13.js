@@ -334,17 +334,46 @@ ${answers.supportNeeded}
                 
                 // Add text content
                 splitText.forEach(line => {
-                    if (line.startsWith('# ')) {
-                        pdf.setFontSize(20);
-                        pdf.text(line.substring(2), 20, y);
-                    } else if (line.startsWith('## ')) {
-                        pdf.setFontSize(16);
-                        pdf.text(line.substring(3), 20, y);
+                // Match headings with any number of #
+                const headingMatch = line.match(/^(#+)\s+(.*)/);
+
+                if (headingMatch) {
+                    const level = headingMatch[1].length;  // how many #
+                    const content = headingMatch[2].trim();
+
+                    // Set font size based on heading level
+                    if (level === 1) {
+                    pdf.setFontSize(20);
+                    } else if (level === 2) {
+                    pdf.setFontSize(16);
                     } else {
-                        pdf.setFontSize(12);
-                        pdf.text(line, 20, y);
+                    pdf.setFontSize(14);
                     }
-                    y += 10;
+
+                    pdf.setFont('helvetica', 'bold');
+                    pdf.text(content, 20, y);
+                    pdf.setFont('helvetica', 'normal');
+
+                } else if (/^\d+\.\s/.test(line)) {
+                    pdf.setFontSize(12);
+                    const numberPart = line.match(/^\d+\./)[0];
+                    const textPart = line.replace(/^\d+\.\s*/, '');
+
+                    pdf.setFont('helvetica', 'bold');
+                    pdf.text(numberPart, 20, y);
+
+                    const numberWidth = pdf.getTextWidth(numberPart + ' ');
+
+                    pdf.text(textPart, 20 + numberWidth, y);
+
+                    pdf.setFont('helvetica', 'normal');
+
+                } else {
+                    pdf.setFontSize(12);
+                    pdf.text(line, 20, y);
+                }
+
+                y += 10;
                 });
 
                 if (answers.screenshots && answers.screenshots.length > 0) {
