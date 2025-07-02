@@ -4258,8 +4258,10 @@ h3 {
   background-color: #f8f9fa;
   border-radius: 8px;
   padding: 15px;
+  margin-top: 15px;  
   margin-bottom: 15px;
-  border-left: 3px solid #3498db;
+  border-left: 3px solid #F6C645;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .example-card h4 {
@@ -4278,7 +4280,7 @@ h3 {
   white-space: pre-wrap;
   font-size: 16px;
   line-height: 1.5;
-  color: #555;
+  color: #333;
 }
 
 .screenshots-preview {

@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import ReactMarkdown from "react-markdown";
-import activityImage from '../../assets/images/activities/activity13/activity-image.jpg';
+// import activityImage from '../../assets/images/activities/activity13/activity-image.jpg';
+import activityImage from '../../assets/images/activities/activity13/activity-image2.png';
 import futureIcon from '../../assets/images/activities/activity13/future-icon.png';
 import supportIcon from '../../assets/images/activities/activity13/highlight-icon.png';
 import highlightIcon from '../../assets/images/activities/activity13/report-icon.png';
