@@ -35,11 +35,17 @@ const Activity13 = () => {
     const [loading, setLoading] = useState(false);
     const [previewMode, setPreviewMode] = useState(false);
     const [savedReports, setSavedReports] = useState([]);
+
+    const [managerEmail, setManagerEmail] = useState('');
+    const [managerName, setManagerName] = useState('');
+    const [isSendingEmail, setIsSendingEmail] = useState(false);
+    const [emailSent, setEmailSent] = useState(false);
     
     const [answers, setAnswers] = useState({
         highlights: ["", "", ""],
         futureHighlights: ["", ""],
         supportNeeded: "",
+        idea: "",
         screenshots: []
     });
 
@@ -82,6 +88,7 @@ const Activity13 = () => {
                         highlights: userData.highlights || ["", "", ""],
                         futureHighlights: userData.futureHighlights || ["", ""],
                         supportNeeded: userData.supportNeeded || "",
+                        idea: userData.idea || "",
                         screenshots: userData.screenshots || []
                     });
                     if (userData.savedReports) {
@@ -166,39 +173,90 @@ const Activity13 = () => {
         }));
     };
 
-    const handleScreenshotUpload = (event) => {
-        const files = Array.from(event.target.files);
-        const promises = files.map(file => {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    resolve(e.target.result);
-                };
-                reader.readAsDataURL(file);
-            });
-        });
+    // const handleScreenshotUpload = (event) => {
+    //     const files = Array.from(event.target.files);
+    //     const promises = files.map(file => {
+    //         return new Promise((resolve) => {
+    //             const reader = new FileReader();
+    //             reader.onload = (e) => {
+    //                 resolve(e.target.result);
+    //             };
+    //             reader.readAsDataURL(file);
+    //         });
+    //     });
 
-        Promise.all(promises).then(fileDataUrls => {
-            setAnswers(prev => ({
-                ...prev,
-                screenshots: [...prev.screenshots, ...fileDataUrls]
-            }));
-        });
-    };
+    //     Promise.all(promises).then(fileDataUrls => {
+    //         setAnswers(prev => ({
+    //             ...prev,
+    //             screenshots: [...prev.screenshots, ...fileDataUrls]
+    //         }));
+    //     });
+    // };
+
+    const exampleHighlights = [
+        {
+            title: "Completed database migration for user profiles",
+            details: "• Migrated 10,000+ user records to new schema\n• Reduced query time by 35%\n• Zero data loss during transition"
+        },
+        {
+            title: "Redesigned checkout process UI",
+            details: "• Simplified from 5 steps to 3 steps\n• Created responsive mobile version\n• Checkout completion rate increased by 12%"
+        },
+        {
+            title: "Implemented automated testing framework",
+            details: "• Set up CI/CD pipeline integration\n• Created 50+ test cases\n• Reduced manual QA time by 8 hours per sprint"
+        }
+    ];
+
+    const exampleFutureHighlights = [
+        {
+            title: "Optimize database indexing strategy",
+            details: "• Will reduce query bottlenecks identified in last week's performance audit\n• Supports company-wide initiative to improve application responsiveness"
+        },
+        {
+            title: "Create user onboarding tutorial flow",
+            details: "• Design interactive guide for new feature rollout\n• Aligns with Q3 goal to improve user retention by 15%"
+        }
+    ];
+
+    const exampleSupportRequests = [
+        {
+            title: "Access to production error logs",
+            details: "Having direct access to these logs would help me identify the source of intermittent authentication failures more efficiently, reducing debugging time by approximately 3-4 hours per week."
+        },
+        {
+            title: "Stakeholder feedback on proposed UI changes",
+            details: "Early feedback from marketing and sales teams would help ensure the new dashboard design meets both user needs and business objectives before development begins."
+        }
+    ];
+
+    const exampleIdeas = [
+        {
+            title: "Agile Development Methodology",
+            details: "• Learned how to break down large projects into manageable sprints\n• Implemented daily stand-ups for better team communication\n• Applied this to improve project planning and delivery timelines"
+        },
+        {
+            title: "User-Centered Design Principles",
+            details: "• Discovered the importance of user feedback in design decisions\n• Applied these principles to improve our product's usability\n• Created a framework for gathering and implementing user feedback"
+        }
+    ];
 
     const generateReportPreview = () => {
         const reportDate = new Date().toLocaleDateString();
         const reportContent = `
-## Weekly Progress Report - ${reportDate}
+# Weekly Progress Report - ${reportDate}
 
-### Work Delivery Highlights
+## Work Delivery Highlights
 ${answers.highlights.map((highlight, index) => highlight ? `${index + 1}. ${highlight}` : '').filter(Boolean).join('\n')}
 
-### Next Week's Focus
+## Next Week's Focus
 ${answers.futureHighlights.map((highlight, index) => highlight ? `${index + 1}. ${highlight}` : '').filter(Boolean).join('\n')}
 
-### Support Needed
+## Support Needed
 ${answers.supportNeeded}
+
+## Idea/Initiative
+${answers.idea}
 `;
         return reportContent;
     };
@@ -278,6 +336,23 @@ ${answers.supportNeeded}
                                     })
                                 ]
                             }),
+                            new Paragraph({
+                                children: [
+                                    new TextRun({
+                                        text: '\nIdea/Initiative',
+                                        bold: true,
+                                        size: 24
+                                    })
+                                ]
+                            }),
+                            new Paragraph({
+                                children: [
+                                    new TextRun({
+                                        text: answers.idea,
+                                        size: 24
+                                    })
+                                ]
+                            }),
                             // Add screenshots section if there are any
                             ...(answers.screenshots && answers.screenshots.length > 0 ? [
                                 new Paragraph({
@@ -334,46 +409,17 @@ ${answers.supportNeeded}
                 
                 // Add text content
                 splitText.forEach(line => {
-                // Match headings with any number of #
-                const headingMatch = line.match(/^(#+)\s+(.*)/);
-
-                if (headingMatch) {
-                    const level = headingMatch[1].length;  // how many #
-                    const content = headingMatch[2].trim();
-
-                    // Set font size based on heading level
-                    if (level === 1) {
-                    pdf.setFontSize(20);
-                    } else if (level === 2) {
-                    pdf.setFontSize(16);
+                    if (line.startsWith('# ')) {
+                        pdf.setFontSize(20);
+                        pdf.text(line.substring(2), 20, y);
+                    } else if (line.startsWith('## ')) {
+                        pdf.setFontSize(16);
+                        pdf.text(line.substring(3), 20, y);
                     } else {
-                    pdf.setFontSize(14);
+                        pdf.setFontSize(12);
+                        pdf.text(line, 20, y);
                     }
-
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.text(content, 20, y);
-                    pdf.setFont('helvetica', 'normal');
-
-                } else if (/^\d+\.\s/.test(line)) {
-                    pdf.setFontSize(12);
-                    const numberPart = line.match(/^\d+\./)[0];
-                    const textPart = line.replace(/^\d+\.\s*/, '');
-
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.text(numberPart, 20, y);
-
-                    const numberWidth = pdf.getTextWidth(numberPart + ' ');
-
-                    pdf.text(textPart, 20 + numberWidth, y);
-
-                    pdf.setFont('helvetica', 'normal');
-
-                } else {
-                    pdf.setFontSize(12);
-                    pdf.text(line, 20, y);
-                }
-
-                y += 10;
+                    y += 10;
                 });
 
                 if (answers.screenshots && answers.screenshots.length > 0) {
@@ -391,7 +437,7 @@ ${answers.supportNeeded}
                         const img = new Image();
                         img.src = screenshot;
                         
-                        pdf.addImage(img, 'JPEG', 20, y, 170, 127.5);
+                        pdf.addImage(img, 'JPEG', 20, y, 120, 90);
                         y += 140;
                     });
                 }
@@ -410,11 +456,237 @@ ${answers.supportNeeded}
         }
     };
 
+    const compressImage = (file, maxWidth = 800, quality = 0.7) => {
+        return new Promise((resolve) => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            img.onload = () => {
+                const ratio = Math.min(maxWidth / img.width, maxWidth / img.height);
+                canvas.width = img.width * ratio;
+                canvas.height = img.height * ratio;
+                
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                canvas.toBlob(resolve, 'image/jpeg', quality);
+            };
+            
+            img.src = URL.createObjectURL(file);
+        });
+    };
+    
+    const convertBlobToBase64 = (blob) => {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.readAsDataURL(blob);
+        });
+    };
+    
+    // Updated screenshot upload handler with compression
+    const handleScreenshotUpload = async (event) => {
+        const files = Array.from(event.target.files);
+        
+        // Show loading state
+        setLoading(true);
+        
+        try {
+            const processedImages = await Promise.all(
+                files.map(async (file) => {
+                    // Compress large images
+                    if (file.size > 1024 * 1024) { // If larger than 1MB
+                        const compressedBlob = await compressImage(file, 800, 0.6);
+                        return await convertBlobToBase64(compressedBlob);
+                    } else {
+                        return new Promise((resolve) => {
+                            const reader = new FileReader();
+                            reader.onload = (e) => resolve(e.target.result);
+                            reader.readAsDataURL(file);
+                        });
+                    }
+                })
+            );
+    
+            setAnswers(prev => ({
+                ...prev,
+                screenshots: [...prev.screenshots, ...processedImages]
+            }));
+        } catch (error) {
+            console.error('Error processing images:', error);
+            alert('Error processing images. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+    
+    // Updated send email function with better error handling and optimization
+    const sendReportToManager = async () => {
+        if (!managerEmail || !managerName) {
+            alert('Please enter both your manager\'s name and email address');
+            return;
+        }
+    
+        if (!managerEmail.includes('@')) {
+            alert('Please enter a valid email address');
+            return;
+        }
+    
+        setIsSendingEmail(true);
+        
+        try {
+            // Generate PDF with size optimization
+            const reportContent = generateReportPreview();
+            const reportDate = new Date().toLocaleDateString().replace(/\//g, '-');
+            
+            const pdf = new jsPDF();
+            
+            // Set PDF compression
+            pdf.internal.events.subscribe('addPage', function () {
+                pdf.setFont(undefined, 'normal');
+            });
+    
+            const splitText = reportContent.split('\n');
+            let y = 20;
+            
+            // Add text content with better formatting
+            splitText.forEach(line => {
+                if (y > 280) { // Check if we need a new page
+                    pdf.addPage();
+                    y = 20;
+                }
+                
+                if (line.startsWith('# ')) {
+                    pdf.setFontSize(18); // Reduced from 20
+                    pdf.text(line.substring(2), 20, y);
+                    y += 12;
+                } else if (line.startsWith('## ')) {
+                    pdf.setFontSize(14); // Reduced from 16
+                    pdf.text(line.substring(3), 20, y);
+                    y += 10;
+                } else if (line.trim()) {
+                    pdf.setFontSize(10); // Reduced from 12
+                    const splitLine = pdf.splitTextToSize(line, 170);
+                    pdf.text(splitLine, 20, y);
+                    y += splitLine.length * 5;
+                } else {
+                    y += 5;
+                }
+            });
+    
+            // Add screenshots with compression and size limits
+            if (answers.screenshots && answers.screenshots.length > 0) {
+                // Limit number of screenshots to prevent large files
+                const maxScreenshots = 5;
+                const screenshotsToInclude = answers.screenshots.slice(0, maxScreenshots);
+                
+                if (y > 250) {
+                    pdf.addPage();
+                    y = 20;
+                }
+                
+                pdf.setFontSize(14);
+                pdf.text('Screenshots:', 20, y);
+                y += 15;
+    
+                for (let i = 0; i < screenshotsToInclude.length; i++) {
+                    const screenshot = screenshotsToInclude[i];
+                    
+                    if (y > 200) {
+                        pdf.addPage();
+                        y = 20;
+                    }
+    
+                    try {
+                        const img = new Image();
+                        img.src = screenshot;
+                        await new Promise((res) => img.onload = res);
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = 800;
+                        canvas.height = 600;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        const resizedBase64 = canvas.toDataURL('image/jpeg', 0.6); // 60% quality
+
+                        pdf.addImage(resizedBase64, 'JPEG', 20, y, 120, 90);
+                        y += 100;
+                    } catch (error) {
+                        console.warn(`Failed to add screenshot ${i + 1}:`, error);
+                        // Continue without this screenshot
+                    }
+                }
+                
+                if (answers.screenshots.length > maxScreenshots) {
+                    pdf.text(`Note: Only first ${maxScreenshots} screenshots included due to size limits.`, 20, y);
+                }
+            }
+    
+            // Get PDF as base64 with compression
+            const pdfBase64 = pdf.output('datauristring').split(',')[1];
+            
+            // Check file size before sending (rough estimate)
+            const estimatedSizeMB = (pdfBase64.length * 0.75) / (1024 * 1024);
+            
+            if (estimatedSizeMB > 20) {
+                alert('Report is too large to email. Please reduce the number of screenshots and try again.');
+                setIsSendingEmail(false);
+                return;
+            }
+            
+            // Prepare email data
+            const emailData = {
+                managerEmail: managerEmail,
+                managerName: managerName,
+                studentName: localStorage.getItem('firstname') || 'Student',
+                reportDate: reportDate,
+                pdfContent: pdfBase64,
+                reportPreview: reportContent.substring(0, 1000) // Limit preview text
+            };
+    
+            // Send email via API with timeout
+            const response = await axios.post('https://api.careerstar.co/send-report-email', emailData, {
+                timeout: 60000, // 60 second timeout
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            
+            if (response.status === 200) {
+                setEmailSent(true);
+                alert('Report sent successfully to your manager!');
+                setManagerEmail(''); // Clear email field
+                setManagerName(''); // Clear name field
+                
+                // Auto-hide success message after 5 seconds
+                setTimeout(() => setEmailSent(false), 5000);
+            }
+            
+        } catch (error) {
+            console.error('Error sending email:', error);
+            
+            // Better error messages
+            if (error.response?.status === 413) {
+                alert('Report is too large to send. Please reduce screenshots and try again.');
+            } else if (error.response?.status === 400) {
+                alert('Invalid email format or missing information.');
+            } else if (error.code === 'ERR_NETWORK') {
+                alert('Network error. Please check your connection and try again.');
+            } else if (error.code === 'ECONNABORTED') {
+                alert('Request timed out. The report might be too large.');
+            } else {
+                alert('Failed to send report. Please try again.');
+            }
+        } finally {
+            setIsSendingEmail(false);
+        }
+    };
+
     const stepsData = [
         { id: 1, number: "Step 1", title: "3 Highlights", icon: highlightIcon },
         { id: 2, number: "Step 2", title: "2 Future Highlights", icon: futureIcon },
         { id: 3, number: "Step 3", title: "1 Support Need", icon: supportIcon },
-        { id: 4, number: "Step 4", title: "Create Your 3-2-1 Report", icon: reportIcon },
+        { id: 4, number: "Step 4", title: "1 Idea", icon: futureIcon },
+        { id: 5, number: "Step 5", title: "Create Your 3-2-1-1 Report", icon: reportIcon },
     ];
 
     const handleStepChange = (stepId) => {
@@ -456,43 +728,6 @@ ${answers.supportNeeded}
             navigate('/dashboard/home');
         }
     };
-
-    const exampleHighlights = [
-        {
-            title: "Completed database migration for user profiles",
-            details: "• Migrated 10,000+ user records to new schema\n• Reduced query time by 35%\n• Zero data loss during transition"
-        },
-        {
-            title: "Redesigned checkout process UI",
-            details: "• Simplified from 5 steps to 3 steps\n• Created responsive mobile version\n• Checkout completion rate increased by 12%"
-        },
-        {
-            title: "Implemented automated testing framework",
-            details: "• Set up CI/CD pipeline integration\n• Created 50+ test cases\n• Reduced manual QA time by 8 hours per sprint"
-        }
-    ];
-
-    const exampleFutureHighlights = [
-        {
-            title: "Optimize database indexing strategy",
-            details: "• Will reduce query bottlenecks identified in last week's performance audit\n• Supports company-wide initiative to improve application responsiveness"
-        },
-        {
-            title: "Create user onboarding tutorial flow",
-            details: "• Design interactive guide for new feature rollout\n• Aligns with Q3 goal to improve user retention by 15%"
-        }
-    ];
-
-    const exampleSupportRequests = [
-        {
-            title: "Access to production error logs",
-            details: "Having direct access to these logs would help me identify the source of intermittent authentication failures more efficiently, reducing debugging time by approximately 3-4 hours per week."
-        },
-        {
-            title: "Stakeholder feedback on proposed UI changes",
-            details: "Early feedback from marketing and sales teams would help ensure the new dashboard design meets both user needs and business objectives before development begins."
-        }
-    ];
 
     return (
         <div className="activity-container">
@@ -542,19 +777,8 @@ ${answers.supportNeeded}
                                 <p>{starCount} stars</p>
                             </div>
                         </div>
-                        <ul>
-                            <li>
-                                The 3-2-1+ Report is a simple, effective tool that helps you track your work, request support, and advance your career.
-                            </li>
-                            <br />
-                            <li>
-                                This streamlined format showcases accomplishments, demonstrates forward thinking, and communicates effectively with stakeholders.
-                            </li>
-                            <br />
-                            <li>
-                                This activity will help you generate a report with images that can be shared instantly with coworkers and managers.
-                            </li>
-                         </ul>
+                        <p>Learn how to create concise, impactful weekly reports that will make you stand out during your internship. The 3-2-1 Report format helps you showcase your accomplishments, demonstrate forward thinking, and communicate effectively with managers and stakeholders.</p>
+                        <p>Regular reporting is a professional skill that many interns overlook but can significantly increase your visibility and demonstrate your value to the organization. This activity will walk you through creating reports that highlight your contributions and help you build a record of your achievements.</p>
                     </div>
                 ) : currentStep === 1 ? (
                     <div className="activity-description">
@@ -700,7 +924,41 @@ ${answers.supportNeeded}
                     </div>
                 ) : currentStep === 4 ? (
                     <div className="activity-description">
-                        <h2>Step 4: Create Your 3-2-1 Report</h2>
+                        <h2>Step 4: 1 Idea</h2>
+                        <p>In this section, outline one key idea or concept you've learned or discovered during your internship.</p>
+                        
+                        <div className="activity-hot-tip">
+                            <img src={fireFlameIcon} alt="Fire Flame Icon" />
+                            <p>Share your learning and apply it to future projects or challenges!</p>
+                        </div>
+                        
+                        <h3>Key components for effective ideas:</h3>
+                        <ul>
+                            <li>Be specific about the idea</li>
+                            <li>Explain its relevance to your internship experience</li>
+                            <li>Provide examples of how you've applied the idea</li>
+                        </ul>
+                        
+                        <h3>Examples of effective ideas:</h3>
+                        {exampleIdeas.map((example, index) => (
+                            <div className="example-card" key={index}>
+                                <h4>{example.title}</h4>
+                                <pre>{example.details}</pre>
+                            </div>
+                        ))}
+                        
+                        <h3>Your turn - describe your key idea:</h3>
+                        <textarea
+                            className="support-need-textarea"
+                            placeholder="Describe one key idea you've learned or discovered during your internship..."
+                            value={answers.idea}
+                            onChange={(e) => setAnswers({...answers, idea: e.target.value})}
+                            rows={4}
+                        />
+                    </div>
+                ) : currentStep === 5 ? (
+                    <div className="activity-description">
+                        <h2>Step 5: Create Your 3-2-1-1 Report</h2>
                         
                         {previewMode ? (
                             <div className="report-preview">
@@ -734,10 +992,42 @@ ${answers.supportNeeded}
                                     </div>
                                     <button onClick={handleSaveReport}>Save Report</button>
                                 </div>
+                
+                                <div className="email-manager-section">
+                                    <h3>Send Report to Manager</h3>
+                                    <div className="email-input-container">
+                                        <input
+                                            type="text"
+                                            placeholder="Enter your manager's name"
+                                            value={managerName}
+                                            onChange={(e) => setManagerName(e.target.value)}
+                                            className="manager-email-input"
+                                            disabled={isSendingEmail}
+                                        />
+                                        <input
+                                            type="email"
+                                            placeholder="Enter your manager's email"
+                                            value={managerEmail}
+                                            onChange={(e) => setManagerEmail(e.target.value)}
+                                            className="manager-email-input"
+                                            disabled={isSendingEmail}
+                                        />
+                                        <button 
+                                            onClick={sendReportToManager}
+                                            disabled={isSendingEmail || !managerEmail || !managerName}
+                                            className="send-email-button"
+                                        >
+                                            {isSendingEmail ? 'Sending...' : 'Send Report'}
+                                        </button>
+                                    </div>
+                                    {emailSent && (
+                                        <p className="email-success-message">✓ Report sent successfully!</p>
+                                    )}
+                                </div>
                             </div>
                         ) : (
                             <div className="report-builder">
-                                <p>Now that you've completed all three sections, let's put them together into a professional 3-2-1 Report that you can share with your manager and stakeholders.</p>
+                                <p>Now that you've completed all four sections, let's put them together into a professional 3-2-1-1 Report that you can share with your manager and stakeholders.</p>
                                 
                                 <div className="report-section-summary">
                                     <h3>3 Highlights:</h3>
@@ -757,6 +1047,9 @@ ${answers.supportNeeded}
                                     <h3>1 Support Need:</h3>
                                     <p>{answers.supportNeeded || <span className="missing-content">Not completed</span>}</p>
                                     
+                                    <h3>1 Idea:</h3>
+                                    <p>{answers.idea || <span className="missing-content">Not completed</span>}</p>
+                                    
                                     {answers.screenshots && answers.screenshots.length > 0 && (
                                         <div>
                                             <h3>Screenshots ({answers.screenshots.length}):</h3>
@@ -767,12 +1060,12 @@ ${answers.supportNeeded}
                                 
                                 <button 
                                     onClick={() => setPreviewMode(true)}
-                                    disabled={!answers.highlights[0] || !answers.futureHighlights[0] || !answers.supportNeeded}
+                                    disabled={!answers.highlights[0] || !answers.futureHighlights[0] || !answers.supportNeeded || !answers.idea}
                                 >
                                     Preview Report
                                 </button>
                                 
-                                {(!answers.highlights[0] || !answers.futureHighlights[0] || !answers.supportNeeded) && (
+                                {(!answers.highlights[0] || !answers.futureHighlights[0] || !answers.supportNeeded || !answers.idea) && (
                                     <p className="warning-message">Please complete all required sections before previewing your report.</p>
                                 )}
                             </div>
