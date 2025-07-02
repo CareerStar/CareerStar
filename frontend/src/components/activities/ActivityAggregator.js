@@ -11,6 +11,7 @@ import Activity9 from './Activity9';
 import Activity11 from './Activity11';
 import Activity10 from './Activity10';
 import Activity13 from './Activity13';
+import Activity14 from './Activity14';
 function ActivityAggregator({activity}) {
 
     const ActivityComponent = {
@@ -26,6 +27,7 @@ function ActivityAggregator({activity}) {
         10: <Activity10 />,
         11: <Activity11 />,
         13: <Activity13 />,
+        14: <Activity14 />,
     };
 
     return (
