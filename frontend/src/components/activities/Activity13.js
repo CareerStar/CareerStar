@@ -3,8 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import ReactMarkdown from "react-markdown";
 import activityImage from '../../assets/images/activities/activity13/activity-image.jpg';
 import futureIcon from '../../assets/images/activities/activity13/future-icon.png';
-import supportIcon from '../../assets/images/activities/activity13/support-icon.png';
-import highlightIcon from '../../assets/images/activities/activity13/highlight-icon.png';
+import supportIcon from '../../assets/images/activities/activity13/highlight-icon.png';
+import highlightIcon from '../../assets/images/activities/activity13/report-icon.png';
 import reportIcon from '../../assets/images/activities/activity13/report-icon.png';
 import backArrow from '../../assets/images/back-arrow.png';
 import clock from '../../assets/images/activities/clock.png';
@@ -537,34 +537,45 @@ ${answers.idea}
             // Generate PDF with size optimization
             const reportContent = generateReportPreview();
             const reportDate = new Date().toLocaleDateString().replace(/\//g, '-');
-            
+            const studentName = localStorage.getItem('firstname') || 'Student';
+
             const pdf = new jsPDF();
-            
-            // Set PDF compression
+
             pdf.internal.events.subscribe('addPage', function () {
                 pdf.setFont(undefined, 'normal');
             });
-    
-            const splitText = reportContent.split('\n');
+
             let y = 20;
-            
-            // Add text content with better formatting
+
+            // Add sender's name at the top
+            pdf.setFontSize(12);
+            pdf.setFont(undefined, 'bold');
+            pdf.text(`Report from: ${studentName}`, 20, y);
+            y += 10;
+
+            // Add the rest of the report content
+            const splitText = reportContent.split('\n');
             splitText.forEach(line => {
-                if (y > 280) { // Check if we need a new page
+                if (y > 280) {
                     pdf.addPage();
                     y = 20;
                 }
-                
+
                 if (line.startsWith('# ')) {
-                    pdf.setFontSize(18); // Reduced from 20
+                    pdf.setFontSize(18);
+                    pdf.setFont(undefined, 'bold');
                     pdf.text(line.substring(2), 20, y);
+                    pdf.setFont(undefined, 'normal');
                     y += 12;
                 } else if (line.startsWith('## ')) {
-                    pdf.setFontSize(14); // Reduced from 16
+                    pdf.setFontSize(14);
+                    pdf.setFont(undefined, 'bold');
                     pdf.text(line.substring(3), 20, y);
+                    pdf.setFont(undefined, 'normal');
                     y += 10;
                 } else if (line.trim()) {
-                    pdf.setFontSize(10); // Reduced from 12
+                    pdf.setFontSize(10);
+                    pdf.setFont(undefined, 'normal');
                     const splitLine = pdf.splitTextToSize(line, 170);
                     pdf.text(splitLine, 20, y);
                     y += splitLine.length * 5;
@@ -572,7 +583,7 @@ ${answers.idea}
                     y += 5;
                 }
             });
-    
+
             // Add screenshots with compression and size limits
             if (answers.screenshots && answers.screenshots.length > 0) {
                 // Limit number of screenshots to prevent large files
@@ -587,7 +598,7 @@ ${answers.idea}
                 pdf.setFontSize(14);
                 pdf.text('Screenshots:', 20, y);
                 y += 15;
-    
+
                 for (let i = 0; i < screenshotsToInclude.length; i++) {
                     const screenshot = screenshotsToInclude[i];
                     
@@ -842,7 +853,7 @@ ${answers.idea}
                                 onChange={handleScreenshotUpload} 
                             />
                         </div>
-                        
+                    
                         <div className="screenshots-preview">
                             {answers.screenshots && answers.screenshots.map((screenshot, index) => (
                                 <div className="screenshot-thumbnail" key={index}>
