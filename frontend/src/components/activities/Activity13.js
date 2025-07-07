@@ -19,6 +19,7 @@ import { useDispatch } from 'react-redux';
 import { Document, Packer, Paragraph, TextRun } from 'docx';
 import { jsPDF } from 'jspdf';
 
+
 const Activity13 = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -27,7 +28,6 @@ const Activity13 = () => {
 
     const dispatch = useDispatch();
     const userId = localStorage.getItem('userId');
-    const activityId = 13;
     const [completed, setCompleted] = useState(false);
     const [alreadyCompleted, setAlreadyCompleted] = useState(false);
     const [starCount, setStarCount] = useState(10); 
@@ -41,6 +41,16 @@ const Activity13 = () => {
     const [managerName, setManagerName] = useState('');
     const [isSendingEmail, setIsSendingEmail] = useState(false);
     const [emailSent, setEmailSent] = useState(false);
+    
+    const getCurrentWeekId = () => {
+        const now = new Date();
+        const startOfYear = new Date(now.getFullYear(), 0, 1);
+        const pastDaysOfYear = (now - startOfYear) / 86400000;
+        const weekNumber = Math.ceil((pastDaysOfYear + startOfYear.getDay() + 1) / 7);
+        // Compose a unique numeric ID: 13 (activity) + year + weekNumber, e.g., 13202423
+        return Number(`13${now.getFullYear()}${weekNumber}`);
+    };
+    const activityId = getCurrentWeekId();
     
     const [answers, setAnswers] = useState({
         highlights: ["", "", ""],
@@ -136,6 +146,8 @@ const Activity13 = () => {
             setLoading(false);
         }
     };
+    
+    
 
     const handleSaveReport = () => {
         // Create a new report with current answers and timestamp
