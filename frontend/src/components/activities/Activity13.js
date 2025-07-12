@@ -664,7 +664,9 @@ ${answers.idea}
                 studentName: localStorage.getItem('firstname') || 'Student',
                 reportDate: reportDate,
                 pdfContent: pdfBase64,
-                reportPreview: reportContent.substring(0, 1000) // Limit preview text
+                reportPreview: reportContent.substring(0, 1000), // Limit preview text
+                userId: userId, // Include user ID for database storage
+                userAnswers: answers // Include all user answers for database storage
             };
     
             // Send email via API with timeout
@@ -693,6 +695,8 @@ ${answers.idea}
                 alert('Report is too large to send. Please reduce screenshots and try again.');
             } else if (error.response?.status === 400) {
                 alert('Invalid email format or missing information.');
+            } else if (error.response?.status === 500) {
+                alert('Database error. Please try again or contact support.');
             } else if (error.code === 'ERR_NETWORK') {
                 alert('Network error. Please check your connection and try again.');
             } else if (error.code === 'ECONNABORTED') {
