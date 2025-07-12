@@ -19,6 +19,9 @@ import { useDispatch } from 'react-redux';
 import { Document, Packer, Paragraph, TextRun } from 'docx';
 import { jsPDF } from 'jspdf';
 
+// API base URL - use environment variable or default to production
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://api.careerstar.co';
+
 
 const Activity13 = () => {
     const navigate = useNavigate();
@@ -91,7 +94,7 @@ const Activity13 = () => {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`);
+                const response = await axios.get(`${API_BASE_URL}/roadmapactivity/${userId}/${activityId}`);
                 if (response.data) {
                     // Ensure arrays are properly initialized with default values
                     const userData = response.data[0] || {};
@@ -126,7 +129,7 @@ const Activity13 = () => {
                 answers: answers,
                 stars: starCount,
             };
-            const response = await axios.post(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`, payload);
+            const response = await axios.post(`${API_BASE_URL}/roadmapactivity/${userId}/${activityId}`, payload);
             if (response.status === 200) {
                 if (completed) {
                     setCompleted(true);
@@ -670,7 +673,7 @@ ${answers.idea}
             };
     
             // Send email via API with timeout
-            const response = await axios.post('https://api.careerstar.co/send-report-email', emailData, {
+            const response = await axios.post(`${API_BASE_URL}/send-report-email`, emailData, {
                 timeout: 60000, // 60 second timeout
                 headers: {
                     'Content-Type': 'application/json',
