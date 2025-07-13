@@ -1764,6 +1764,105 @@ def send_report_email():
         if connection:
             return_db_connection(connection)
 
+@app.route('/admin/reports/users', methods=['GET'])
+@jwt_required()
+def get_users_with_reports():
+    """Get all users who have submitted reports"""
+    try:
+        current_user = get_jwt_identity()
+        if current_user.get('role') != 'admin':
+            return jsonify({"error": "Unauthorized"}), 401
+        
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        
+        query = """
+        SELECT DISTINCT 
+            r.user_id,
+            r.student_name,
+            COUNT(r.id) as report_count,
+            MAX(r.report_date) as last_report_date
+        FROM reports r
+        GROUP BY r.user_id, r.student_name
+        ORDER BY last_report_date DESC
+        """
+        
+        cursor.execute(query)
+        users = cursor.fetchall()
+        
+        user_list = []
+        for user in users:
+            user_dict = {
+                "user_id": user[0],
+                "student_name": user[1],
+                "report_count": user[2],
+                "last_report_date": user[3].isoformat() if user[3] else None
+            }
+            user_list.append(user_dict)
+        
+        return jsonify(user_list)
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        if connection:
+            return_db_connection(connection)
+
+@app.route('/admin/reports/user/<int:user_id>', methods=['GET'])
+@jwt_required()
+def get_user_reports(user_id):
+    """Get all reports for a specific user"""
+    try:
+        current_user = get_jwt_identity()
+        if current_user.get('role') != 'admin':
+            return jsonify({"error": "Unauthorized"}), 401
+        
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        
+        query = """
+        SELECT 
+            id,
+            user_id,
+            student_name,
+            manager_name,
+            manager_email,
+            answers,
+            report_date
+        FROM reports 
+        WHERE user_id = %s
+        ORDER BY report_date DESC
+        """
+        
+        cursor.execute(query, (user_id,))
+        reports = cursor.fetchall()
+        
+        report_list = []
+        for report in reports:
+            # Parse the answers JSON to extract the data
+            answers_data = json.loads(report[5]) if report[5] else {}
+            
+            report_dict = {
+                "id": report[0],
+                "user_id": report[1],
+                "student_name": report[2],
+                "manager_name": report[3],
+                "manager_email": report[4],
+                "report_preview": answers_data.get('reportContent', ''),
+                "pdf_content": answers_data.get('pdfContent', ''),
+                "user_answers": answers_data,
+                "created_at": report[6].isoformat() if report[6] else None
+            }
+            report_list.append(report_dict)
+        
+        return jsonify(report_list)
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        if connection:
+            return_db_connection(connection)
+
 @app.route('/verifyAdminToken', methods=['GET'])
 @jwt_required()
 def verifyAdminToken():
