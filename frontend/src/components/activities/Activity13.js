@@ -19,9 +19,6 @@ import { useDispatch } from 'react-redux';
 import { Document, Packer, Paragraph, TextRun } from 'docx';
 import { jsPDF } from 'jspdf';
 
-// API base URL - use environment variable or default to production
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://api.careerstar.co';
-
 
 const Activity13 = () => {
     const navigate = useNavigate();
@@ -94,7 +91,7 @@ const Activity13 = () => {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`${API_BASE_URL}/roadmapactivity/${userId}/${activityId}`);
+                const response = await axios.get(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`);
                 if (response.data) {
                     // Ensure arrays are properly initialized with default values
                     const userData = response.data[0] || {};
@@ -129,7 +126,7 @@ const Activity13 = () => {
                 answers: answers,
                 stars: starCount,
             };
-            const response = await axios.post(`${API_BASE_URL}/roadmapactivity/${userId}/${activityId}`, payload);
+            const response = await axios.post(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`, payload);
             if (response.status === 200) {
                 if (completed) {
                     setCompleted(true);
@@ -536,9 +533,7 @@ ${answers.idea}
     };
     
     // Updated send email function with better error handling and optimization
-    const sendReportToManager = async (e) => {
-        if (e) e.preventDefault();
-        console.log("DEBUG: sendReportToManager called");
+    const sendReportToManager = async () => {
         if (!managerEmail || !managerName) {
             alert('Please enter both your manager\'s name and email address');
             return;
@@ -669,19 +664,16 @@ ${answers.idea}
                 studentName: localStorage.getItem('firstname') || 'Student',
                 reportDate: reportDate,
                 pdfContent: pdfBase64,
-                reportPreview: reportContent.substring(0, 1000), // Limit preview text
-                userId: userId, // Include user ID for database storage
-                userAnswers: answers // Include all user answers for database storage
+                reportPreview: reportContent.substring(0, 1000) // Limit preview text
             };
     
             // Send email via API with timeout
-            const response = await axios.post(`${API_BASE_URL}/send-report-email`, emailData, {
+            const response = await axios.post('https://api.careerstar.co/send-report-email', emailData, {
                 timeout: 60000, // 60 second timeout
                 headers: {
                     'Content-Type': 'application/json',
                 }
             });
-            console.log("DEBUG: axios.post response:", response);
             
             if (response.status === 200) {
                 setEmailSent(true);
@@ -701,8 +693,6 @@ ${answers.idea}
                 alert('Report is too large to send. Please reduce screenshots and try again.');
             } else if (error.response?.status === 400) {
                 alert('Invalid email format or missing information.');
-            } else if (error.response?.status === 500) {
-                alert('Database error. Please try again or contact support.');
             } else if (error.code === 'ERR_NETWORK') {
                 alert('Network error. Please check your connection and try again.');
             } else if (error.code === 'ECONNABORTED') {
@@ -1059,7 +1049,7 @@ ${answers.idea}
                                         />
                                         <button 
                                             onClick={sendReportToManager}
-                                            //disabled={isSendingEmail || !managerEmail || !managerName}
+                                            disabled={isSendingEmail || !managerEmail || !managerName}
                                             className="send-email-button"
                                         >
                                             {isSendingEmail ? 'Sending...' : 'Send Report'}
