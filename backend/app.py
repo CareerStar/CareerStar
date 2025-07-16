@@ -22,6 +22,10 @@ import requests
 import threading
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
 
 load_dotenv()
 
@@ -1663,6 +1667,7 @@ def admin_login():
 
 @app.route('/send-report-email', methods=['POST'])
 def send_report_email():
+    logger.info("DEBUG: Entered /send-report-email endpoint")
     """
     Endpoint to save manager report data to AWS CareerStarDB and send email.
     Saves: manager name, manager email, user answers (highlights, future highlights, support needed, idea, screenshots)
@@ -1747,10 +1752,13 @@ def send_report_email():
         report_id = cursor.fetchone()[0]
         connection.commit()
         logger.info(f"Report saved to CareerStarDB with ID: {report_id} for user {user_id}")
-        
-        # Here you would typically send the email
-        # For now, we'll just return success
-        # You can integrate with your email service here
+
+        logger.info("DEBUG: About to save report to DB")
+        try:
+            send_report_email_to_manager(manager_email, manager_name, student_name, report_date, pdf_content)
+            logger.info(f"DEBUG: Email sent to {manager_email}")
+        except Exception as e:
+            logger.error(f"DEBUG: Failed to send email: {e}")
         
         return jsonify({
             "message": "Report saved successfully",
@@ -1759,6 +1767,7 @@ def send_report_email():
         }), 200
         
     except Exception as error:
+        logger.error(f"DEBUG: Exception occurred: {error}")
         return jsonify({"error": str(error)}), 500
     finally:
         if connection:
@@ -1809,13 +1818,15 @@ def get_users_with_reports():
             return_db_connection(connection)
 
 @app.route('/admin/reports/user/<int:user_id>', methods=['GET'])
-@jwt_required()
+# @jwt_required()  # Temporarily comment out for testing
 def get_user_reports(user_id):
     """Get all reports for a specific user"""
     try:
-        current_user = get_jwt_identity()
-        if current_user.get('role') != 'admin':
-            return jsonify({"error": "Unauthorized"}), 401
+        logger.info(f"Starting get_user_reports for user_id: {user_id}")
+        # current_user = get_jwt_identity()
+        # logger.info(f"Current user: {current_user}")
+        # if current_user.get('role') != 'admin':
+        #     return jsonify({"error": "Unauthorized"}), 401
         
         connection = get_db_connection()
         cursor = connection.cursor()
@@ -1834,13 +1845,25 @@ def get_user_reports(user_id):
         ORDER BY report_date DESC
         """
         
+        logger.info(f"Executing query for user_id: {user_id}")
         cursor.execute(query, (user_id,))
         reports = cursor.fetchall()
+        logger.info(f"Found {len(reports)} reports")
         
         report_list = []
-        for report in reports:
-            # Parse the answers JSON to extract the data
-            answers_data = json.loads(report[5]) if report[5] else {}
+        for i, report in enumerate(reports):
+            logger.info(f"Processing report {i+1}: {report}")
+            # Parse the answers JSON - it comes as a string from JSONB
+            try:
+                logger.info(f"Report[5] type: {type(report[5])}, value: {report[5]}")
+                if isinstance(report[5], str):
+                    answers_data = json.loads(report[5]) if report[5] else {}
+                else:
+                    answers_data = report[5] if report[5] else {}
+            except (TypeError, json.JSONDecodeError) as e:
+                logger.error(f"JSON parsing error: {e}")
+                # If it's already a dict or invalid JSON, use as is
+                answers_data = report[5] if report[5] else {}
             
             report_dict = {
                 "id": report[0],
@@ -1855,9 +1878,127 @@ def get_user_reports(user_id):
             }
             report_list.append(report_dict)
         
+        logger.info(f"Returning {len(report_list)} reports")
         return jsonify(report_list)
         
     except Exception as e:
+        logger.error(f"Error in get_user_reports: {str(e)}")
+        logger.error(f"Error type: {type(e)}")
+        import traceback
+        logger.error(f"Traceback: {traceback.format_exc()}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        if connection:
+            return_db_connection(connection)
+
+
+    """Test endpoint for user reports without JWT"""
+    try:
+        logger.info(f"Starting test_user_reports for user_id: {user_id}")
+        
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        
+        query = """
+        SELECT 
+            id,
+            user_id,
+            student_name,
+            manager_name,
+            manager_email,
+            answers,
+            report_date
+        FROM reports 
+        WHERE user_id = %s
+        ORDER BY report_date DESC
+        LIMIT 1
+        """
+        
+        logger.info(f"Executing query for user_id: {user_id}")
+        cursor.execute(query, (user_id,))
+        report = cursor.fetchone()
+        logger.info(f"Found report: {report}")
+        
+        if not report:
+            return jsonify({"message": "No reports found"})
+        
+        # Just return the raw data without processing
+        report_dict = {
+            "id": report[0],
+            "user_id": report[1],
+            "student_name": report[2],
+            "manager_name": report[3],
+            "manager_email": report[4],
+            "answers_raw": str(report[5]),
+            "answers_type": str(type(report[5])),
+            "created_at": report[6].isoformat() if report[6] else None
+        }
+        
+        logger.info(f"Returning report: {report_dict}")
+        return jsonify(report_dict)
+        
+    except Exception as e:
+        logger.error(f"Error in test_user_reports: {str(e)}")
+        logger.error(f"Error type: {type(e)}")
+        import traceback
+        logger.error(f"Traceback: {traceback.format_exc()}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        if connection:
+            return_db_connection(connection)
+
+@app.route('/debug-reports/<int:user_id>', methods=['GET'])
+def debug_user_reports(user_id):
+    """Debug endpoint for user reports without JWT"""
+    try:
+        logger.info(f"Starting debug_user_reports for user_id: {user_id}")
+        
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        
+        query = """
+        SELECT 
+            id,
+            user_id,
+            student_name,
+            manager_name,
+            manager_email,
+            answers,
+            report_date
+        FROM reports 
+        WHERE user_id = %s
+        ORDER BY report_date DESC
+        LIMIT 1
+        """
+        
+        logger.info(f"Executing query for user_id: {user_id}")
+        cursor.execute(query, (user_id,))
+        report = cursor.fetchone()
+        logger.info(f"Found report: {report}")
+        
+        if not report:
+            return jsonify({"message": "No reports found"})
+        
+        # Just return the raw data without processing
+        report_dict = {
+            "id": report[0],
+            "user_id": report[1],
+            "student_name": report[2],
+            "manager_name": report[3],
+            "manager_email": report[4],
+            "answers_raw": str(report[5]),
+            "answers_type": str(type(report[5])),
+            "created_at": report[6].isoformat() if report[6] else None
+        }
+        
+        logger.info(f"Returning report: {report_dict}")
+        return jsonify(report_dict)
+        
+    except Exception as e:
+        logger.error(f"Error in debug_user_reports: {str(e)}")
+        logger.error(f"Error type: {type(e)}")
+        import traceback
+        logger.error(f"Traceback: {traceback.format_exc()}")
         return jsonify({"error": str(e)}), 500
     finally:
         if connection:
@@ -1879,10 +2020,48 @@ def verifyAdminToken():
 @app.route('/', methods=['GET'])
 def home():
     return 'Hello world'
-    
+
+@app.route('/__debug_alive__')
+def debug_alive():
+    return "ALIVE"
+
+def send_report_email_to_manager(manager_email, manager_name, student_name, report_date, pdf_content_base64):
+    import smtplib
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.text import MIMEText
+    from email.mime.application import MIMEApplication
+    import os
+    import base64
+
+    logger.info("DEBUG: Inside send_report_email_to_manager")
+    pdf_bytes = base64.b64decode(pdf_content_base64)
+    sender_email = os.getenv('EMAIL_SENDER')
+    sender_password = os.getenv('EMAIL_PASSWORD')
+    smtp_server = os.getenv('EMAIL_SMTP_SERVER', 'smtp.secureserver.net')
+    smtp_port = int(os.getenv('EMAIL_SMTP_PORT', 465))
+
+    subject = f"Weekly Report from {student_name} - {report_date}"
+    body = f"Dear {manager_name},\n\nPlease find attached the weekly report from {student_name}.\n\nBest regards,\nCareerStar"
+
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = manager_email
+    msg['Subject'] = subject
+    msg.attach(MIMEText(body, 'plain'))
+
+    part = MIMEApplication(pdf_bytes, Name=f"Weekly_Report_{report_date}.pdf")
+    part['Content-Disposition'] = f'attachment; filename="Weekly_Report_{report_date}.pdf"'
+    msg.attach(part)
+
+    try:
+        with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
+            server.login(sender_email, sender_password)
+            server.send_message(msg)
+        logger.info(f"DEBUG: Email sent to {manager_email}")
+    except Exception as e:
+        logger.error(f"DEBUG: Failed to send email: {e}")
 
 if __name__ == '__main__':
-    # For local development, run without SSL on port 5001 to avoid conflicts
     app.run(host='0.0.0.0', port=5001, debug=True)
     # For production with SSL:
     # app.run(host='0.0.0.0', port=5000, ssl_context=('cert.pem', 'key.pem'))

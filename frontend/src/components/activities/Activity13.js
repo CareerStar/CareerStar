@@ -536,7 +536,9 @@ ${answers.idea}
     };
     
     // Updated send email function with better error handling and optimization
-    const sendReportToManager = async () => {
+    const sendReportToManager = async (e) => {
+        if (e) e.preventDefault();
+        console.log("DEBUG: sendReportToManager called");
         if (!managerEmail || !managerName) {
             alert('Please enter both your manager\'s name and email address');
             return;
@@ -679,6 +681,7 @@ ${answers.idea}
                     'Content-Type': 'application/json',
                 }
             });
+            console.log("DEBUG: axios.post response:", response);
             
             if (response.status === 200) {
                 setEmailSent(true);
@@ -1056,7 +1059,7 @@ ${answers.idea}
                                         />
                                         <button 
                                             onClick={sendReportToManager}
-                                            disabled={isSendingEmail || !managerEmail || !managerName}
+                                            //disabled={isSendingEmail || !managerEmail || !managerName}
                                             className="send-email-button"
                                         >
                                             {isSendingEmail ? 'Sending...' : 'Send Report'}
