@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Trophy, Folder, Cast} from "lucide-react";
+import { Trophy, Folder, Cast, FileText} from "lucide-react";
 import homeIcon from "../assets/images/home-icon.png";
 import profileIcon from "../assets/images/profile-icon.png";
 import roadmapIcon from "../assets/images/roadmap-icon.png";
@@ -25,6 +25,7 @@ function Sidebar({ pages, selectedPage, onboarded, isAdmin = false }) {
         Leaderboard: <Trophy size={24} color="black" />,
         Users: <Folder size={24} color="black" />,
         "Activity Management": <Folder size={24} color="black" />,
+        "Manager Reports": <FileText size={24} color="black" />,
     };
 
     const handleClick = (page) => {

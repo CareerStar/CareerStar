@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import editIcon from '../../assets/images/edit-icon.png';
 import RoadmapActivityBar from '../../components/dashboard-content-pages/RoadmapActivityBar';
+import TopActivityCard from '../../components/TopActivityCard';
 
 function Roadmap({ userId, activityName }) {
     const [currentSituation, setCurrentSituation] = useState('I’m a recent grad');
@@ -160,20 +161,139 @@ function Roadmap({ userId, activityName }) {
             </div> */}
 
             <div className='roadmap-phases-container'>
-                <div className='roadmap-phase flex-column'>
                     <p className='roadmap-phase-title'>Your Activities</p>
-                    <RoadmapActivityBar activityName='Reaching Out To More Than Recruiters' activityId='1' completed={!!activityStatuses?.[1]} starCount={7} />
-                    <RoadmapActivityBar activityName='Better Cold Call LinkedIn Messages' activityId='3' completed={!!activityStatuses?.[3]} starCount={7} />
-                    <RoadmapActivityBar activityName='Career Acronym Challenge' activityId='2' completed={!!activityStatuses?.[2]} starCount={7} />
-                    <RoadmapActivityBar activityName='Mock Interview Jeopardy' activityId='14' completed={!!activityStatuses?.[14]} starCount={10} />
-                    <RoadmapActivityBar activityName='Networking Made Easy: Finding Your Events' activityId='9' completed={!!activityStatuses?.[9]} starCount={7} />
-                    <RoadmapActivityBar activityName='Let’s Network Before We Network' activityId='5' completed={!!activityStatuses?.[5]} starCount={7} />
-                    <RoadmapActivityBar activityName='Presenting Your Portfolio' activityId='8' completed={!!activityStatuses?.[8]} starCount={10} />
-                    <RoadmapActivityBar activityName='Unlock Your Volunteer Superpowers!' activityId='11' completed={!!activityStatuses?.[11]} starCount={8} /> 
-                    <RoadmapActivityBar activityName='The Dreaded Salary Talk' activityId='7' completed={!!activityStatuses?.[7]} starCount={7}/>
-                    <RoadmapActivityBar activityName='The 10% Coffee Challenge' activityId='10' completed={!!activityStatuses?.[10]} starCount={10} />
-                    <RoadmapActivityBar activityName='3-2-1 + Report: Stand Out During Your Internship' activityId='13' completed={!!activityStatuses?.[13]} starCount={10} />
-                    {/*<p className='roadmap-phase-title'>(More coming soon...)</p>*/}
+                    <div className='top-activities-container'>
+                    <TopActivityCard
+                    activityId={1}
+                    activityTitle='Reaching Out To More Than Recruiters'
+                    activityDescription='Description here'
+                    activityTags={['Networking']}
+                    activityStarCount={7}
+                    activityTime='20 min'
+                    moduleId={1}
+                    isReady={true}
+                    completed={!!activityStatuses?.[1]}
+                    />
+
+                    <TopActivityCard
+                    activityId={3}
+                    activityTitle='Better Cold Call LinkedIn Messages'
+                    activityDescription='Description here'
+                    activityTags={['LinkedIn', 'Outreach']}
+                    activityStarCount={7}
+                    activityTime='20 min'
+                    moduleId={1}
+                    isReady={true}
+                    completed={!!activityStatuses?.[3]}
+                    />
+
+                    <TopActivityCard
+                    activityId={2}
+                    activityTitle='Career Acronym Challenge'
+                    activityDescription='Description here'
+                    activityTags={['Career']}
+                    activityStarCount={7}
+                    activityTime='20 min'
+                    moduleId={1}
+                    isReady={true}
+                    completed={!!activityStatuses?.[2]}
+                    />
+
+                    <TopActivityCard
+                    activityId={14}
+                    activityTitle='Mock Interview Jeopardy'
+                    activityDescription='Description here'
+                    activityTags={['Interview', 'Practice']}
+                    activityStarCount={10}
+                    activityTime='20 min'
+                    moduleId={1}
+                    isReady={true}
+                    completed={!!activityStatuses?.[14]}
+                    />
+
+                    <TopActivityCard
+                    activityId={9}
+                    activityTitle='Networking Made Easy: Finding Your Events'
+                    activityDescription='Description here'
+                    activityTags={['Networking', 'Events']}
+                    activityStarCount={7}
+                    activityTime='20 min'
+                    moduleId={1}
+                    isReady={true}
+                    completed={!!activityStatuses?.[9]}
+                    />
+
+                    <TopActivityCard
+                    activityId={5}
+                    activityTitle='Let’s Network Before We Network'
+                    activityDescription='Description here'
+                    activityTags={['Networking']}
+                    activityStarCount={7}
+                    activityTime='20 min'
+                    moduleId={1}
+                    isReady={true}
+                    completed={!!activityStatuses?.[5]}
+                    />
+
+                    <TopActivityCard
+                    activityId={8}
+                    activityTitle='Presenting Your Portfolio'
+                    activityDescription='Description here'
+                    activityTags={['Portfolio', 'Presentation']}
+                    activityStarCount={10}
+                    activityTime='20 min'
+                    moduleId={1}
+                    isReady={true}
+                    completed={!!activityStatuses?.[8]}
+                    />
+
+                    <TopActivityCard
+                    activityId={11}
+                    activityTitle='Unlock Your Volunteer Superpowers!'
+                    activityDescription='Description here'
+                    activityTags={['Volunteer']}
+                    activityStarCount={8}
+                    activityTime='20 min'
+                    moduleId={1}
+                    isReady={true}
+                    completed={!!activityStatuses?.[11]}
+                    />
+
+                    <TopActivityCard
+                    activityId={7}
+                    activityTitle='The Dreaded Salary Talk'
+                    activityDescription='Description here'
+                    activityTags={['Salary', 'Negotiation']}
+                    activityStarCount={7}
+                    activityTime='20 min'
+                    moduleId={1}
+                    isReady={true}
+                    completed={!!activityStatuses?.[7]}
+                    />
+
+                    <TopActivityCard
+                    activityId={10}
+                    activityTitle='The 10% Coffee Challenge'
+                    activityDescription='Description here'
+                    activityTags={['Networking', 'Coffee']}
+                    activityStarCount={10}
+                    activityTime='20 min'
+                    moduleId={1}
+                    isReady={true}
+                    completed={!!activityStatuses?.[10]}
+                    />
+
+                    <TopActivityCard
+                    activityId={13}
+                    activityTitle='3-2-1 + Report: Stand Out During Your Internship'
+                    activityDescription='A great way to show your skills and get noticed by your team.'
+                    activityTags={['Internship', 'Report']}
+                    activityStarCount={10}
+                    activityTime='20 min'
+                    moduleId={1}
+                    isReady={true}
+                    completed={!!activityStatuses?.[13]}
+                    />
                 </div>
             </div>
         </div>

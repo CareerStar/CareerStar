@@ -24,6 +24,7 @@ import { useDispatch } from 'react-redux';
 import { Document, Packer, Paragraph, TextRun } from 'docx';
 import { jsPDF } from 'jspdf';
 
+
 const Activity13 = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -32,7 +33,6 @@ const Activity13 = () => {
 
     const dispatch = useDispatch();
     const userId = localStorage.getItem('userId');
-    const activityId = 13;
     const [completed, setCompleted] = useState(false);
     const [alreadyCompleted, setAlreadyCompleted] = useState(false);
     const [starCount, setStarCount] = useState(10); 
@@ -46,6 +46,16 @@ const Activity13 = () => {
     const [managerName, setManagerName] = useState('');
     const [isSendingEmail, setIsSendingEmail] = useState(false);
     const [emailSent, setEmailSent] = useState(false);
+    
+    const getCurrentWeekId = () => {
+        const now = new Date();
+        const startOfYear = new Date(now.getFullYear(), 0, 1);
+        const pastDaysOfYear = (now - startOfYear) / 86400000;
+        const weekNumber = Math.ceil((pastDaysOfYear + startOfYear.getDay() + 1) / 7);
+        // Compose a unique numeric ID: 13 (activity) + year + weekNumber, e.g., 13202423
+        return Number(`13${now.getFullYear()}${weekNumber}`);
+    };
+    const activityId = getCurrentWeekId();
     
     const [answers, setAnswers] = useState({
         highlights: ["", "", ""],
@@ -141,6 +151,8 @@ const Activity13 = () => {
             setLoading(false);
         }
     };
+    
+    
 
     const handleSaveReport = () => {
         // Create a new report with current answers and timestamp
@@ -543,34 +555,45 @@ ${answers.idea}
             // Generate PDF with size optimization
             const reportContent = generateReportPreview();
             const reportDate = new Date().toLocaleDateString().replace(/\//g, '-');
-            
+            const studentName = localStorage.getItem('firstname') || 'Student';
+
             const pdf = new jsPDF();
-            
-            // Set PDF compression
+
             pdf.internal.events.subscribe('addPage', function () {
                 pdf.setFont(undefined, 'normal');
             });
-    
-            const splitText = reportContent.split('\n');
+
             let y = 20;
-            
-            // Add text content with better formatting
+
+            // Add sender's name at the top
+            pdf.setFontSize(12);
+            pdf.setFont(undefined, 'bold');
+            pdf.text(`Report from: ${studentName}`, 20, y);
+            y += 10;
+
+            // Add the rest of the report content
+            const splitText = reportContent.split('\n');
             splitText.forEach(line => {
-                if (y > 280) { // Check if we need a new page
+                if (y > 280) {
                     pdf.addPage();
                     y = 20;
                 }
-                
+
                 if (line.startsWith('# ')) {
-                    pdf.setFontSize(18); // Reduced from 20
+                    pdf.setFontSize(18);
+                    pdf.setFont(undefined, 'bold');
                     pdf.text(line.substring(2), 20, y);
+                    pdf.setFont(undefined, 'normal');
                     y += 12;
                 } else if (line.startsWith('## ')) {
-                    pdf.setFontSize(14); // Reduced from 16
+                    pdf.setFontSize(14);
+                    pdf.setFont(undefined, 'bold');
                     pdf.text(line.substring(3), 20, y);
+                    pdf.setFont(undefined, 'normal');
                     y += 10;
                 } else if (line.trim()) {
-                    pdf.setFontSize(10); // Reduced from 12
+                    pdf.setFontSize(10);
+                    pdf.setFont(undefined, 'normal');
                     const splitLine = pdf.splitTextToSize(line, 170);
                     pdf.text(splitLine, 20, y);
                     y += splitLine.length * 5;
@@ -578,7 +601,7 @@ ${answers.idea}
                     y += 5;
                 }
             });
-    
+
             // Add screenshots with compression and size limits
             if (answers.screenshots && answers.screenshots.length > 0) {
                 // Limit number of screenshots to prevent large files
@@ -593,7 +616,7 @@ ${answers.idea}
                 pdf.setFontSize(14);
                 pdf.text('Screenshots:', 20, y);
                 y += 15;
-    
+
                 for (let i = 0; i < screenshotsToInclude.length; i++) {
                     const screenshot = screenshotsToInclude[i];
                     
@@ -848,7 +871,7 @@ ${answers.idea}
                                 onChange={handleScreenshotUpload} 
                             />
                         </div>
-                        
+                    
                         <div className="screenshots-preview">
                             {answers.screenshots && answers.screenshots.map((screenshot, index) => (
                                 <div className="screenshot-thumbnail" key={index}>

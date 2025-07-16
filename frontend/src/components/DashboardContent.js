@@ -13,6 +13,7 @@ import Modules from './dashboard-content-pages/Modules';
 import Leaderboard from './dashboard-content-pages/Leaderboard';
 import UserManagement from './admin/UserManagement';
 import ActivityManagement from './admin/ActivityManagement';
+import ManagerReports from './admin/ManagerReports';
 
 function DashboardContent({ selectedPage, activityName, onComplete, userId }) {
     const renderPage = () => {
@@ -45,6 +46,8 @@ function DashboardContent({ selectedPage, activityName, onComplete, userId }) {
                 return <UserManagement />;
             case 'Activitymanagement':
                 return <ActivityManagement />;
+            case 'Managerreports':
+                return <ManagerReports />;
             default:
                 return <Home />;
         }
