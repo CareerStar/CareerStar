@@ -1,6 +1,3 @@
-# Add this at the very top of the file to disable type checking for this file
-# type: ignore
-
 from flask import Flask, jsonify, request, url_for
 import os
 import psycopg2
@@ -8,7 +5,7 @@ import json
 import boto3
 import base64
 import logging
-import psycopg2.pool
+from psycopg2 import pool
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
@@ -18,19 +15,15 @@ import mailchimp_marketing as MailchimpMarketing
 from mailchimp_marketing import Client
 from mailchimp_marketing.api_client import ApiClientError
 import requests
-## from google import genai  # Commented out for local testing
+from google import genai
 import threading
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.application import MIMEApplication
 
 load_dotenv()
 
 app = Flask(__name__)
-app.config['JWT_SECRET_KEY'] = os.getenv('SECRET_KEY') or 'default-secret-key'
+app.config['JWT_SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=7)
 app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=30)
 jwt = JWTManager(app)
@@ -48,10 +41,10 @@ mailchimp_audience_id = os.getenv('MAILCHIMP_AUDIENCE_ID')
 
 openrouter_api_key = os.getenv('OPENROUTER_API_KEY')
 
-# # client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))  # Commented out for local testing  # Commented out for local testing
+client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
 
-# app.config.from_object('mail_config')  # Commented out for local testing
-# mail = Mail(app)  # Commented out for local testing
+app.config.from_object('mail_config')
+mail = Mail(app)
 
 connection_pool = psycopg2.pool.SimpleConnectionPool(
     1, 20,  # Min and max connections
@@ -95,7 +88,7 @@ def get_db_connection():
 def return_db_connection(conn):
     connection_pool.putconn(conn)
 
-serializer = URLSafeTimedSerializer(os.getenv('SECRET_KEY') or 'default-secret-key')
+serializer = URLSafeTimedSerializer(os.getenv('SECRET_KEY'))
 
 def check_user_by_email(email):
     try:
@@ -120,9 +113,6 @@ def check_user_by_email(email):
 @app.route('/forgot-password', methods=['POST'])
 def forgot_password():
     data = request.get_json()
-    if not data:
-        return jsonify({"error": "No data provided"}), 400
-    
     email = data.get('email')
 
     user = check_user_by_email(email)
@@ -139,11 +129,11 @@ def forgot_password():
 
     logger.info("Reset url:", reset_url)
 
-    # Commented out mail functionality for local testing
-    # msg = Message("Password Reset Request", sender="support@careerstar.co", recipients=[email])
-    # msg.body = f"Click the link to reset your password: {reset_url}"
-    # logger.info("Message", msg)
-    # mail.send(msg)
+    msg = Message("Password Reset Request", sender="support@careerstar.co", recipients=[email])
+    msg.body = f"Click the link to reset your password: {reset_url}"
+
+    logger.info("Message", msg)
+    mail.send(msg)
 
     return jsonify({"message": "Password reset email sent"}), 200
 
@@ -294,14 +284,11 @@ def add_user():
         cursor = connection.cursor()
 
         user_data = request.json
-        if not user_data:
-            return jsonify({"error": "No data provided"}), 400
 
         firstname = user_data.get('firstname')
         lastname = user_data.get('lastname')
         emailID = user_data.get('emailID')
-        if emailID:
-            emailID = emailID.lower()
+        emailID = emailID.lower()
         password = user_data.get('password')
         stars = user_data.get('stars')
         access_code = user_data.get('accesscode')
@@ -484,8 +471,6 @@ def update_user_stars(user_id):
         cursor = connection.cursor()
         
         data = request.json
-        if not data:
-            return jsonify({"error": "No data provided"}), 400
         new_stars = data.get('stars')
         
         if new_stars is None:
@@ -540,11 +525,8 @@ def top_users():
 def login():
     try:
         user_data = request.json
-        if not user_data:
-            return jsonify({"error": "No data provided"}), 400
         emailID = user_data.get('emailID')
-        if emailID:
-            emailID = emailID.lower()
+        emailID = emailID.lower()
         password = user_data.get('password')
 
         if not emailID or not password:
@@ -681,8 +663,6 @@ def get_universities():
 def onboarding():
     try:
         user_data = request.json
-        if not user_data:
-            return jsonify({"error": "No data provided"}), 400
         userId = user_data.get('userId')
         describeMe = user_data.get('describeMe')
         currentSituation = user_data.get('currentSituation')
@@ -1096,8 +1076,6 @@ def add_new_activities():
         cursor = connection.cursor()
 
         data = request.json
-        if not data:
-            return jsonify({"error": "No data provided"}), 400
         title = data.get("title")
         description = data.get("description")
         detailedDescription = data.get("detailedDescription")
@@ -1249,8 +1227,6 @@ def roadmapactivityget(userId, roadmapActivityId):
 def roadmapactivitypost(userId, roadmapActivityId):
     try:
         activity_data = request.json
-        if not activity_data:
-            return jsonify({"error": "No data provided"}), 400
         answer = activity_data.get('answers')
         completed = activity_data.get('completed')
         stars = activity_data.get('stars')
@@ -1355,11 +1331,9 @@ def roadmapactivitiesget():
 def generate_ai_feedback():
     try:
         data = request.json
-        if not data:
-            return jsonify({"error": "No data provided"}), 400
         prompt = data.get("prompt")
 
-        brearerToken = "Bearer " + (openrouter_api_key or "")
+        brearerToken = "Bearer " + openrouter_api_key
 
         response = requests.post(
             url="https://openrouter.ai/api/v1/chat/completions",
@@ -1447,8 +1421,6 @@ def update_activity(activityId):
         cursor = connection.cursor()
 
         data = request.json
-        if not data:
-            return jsonify({"error": "No data provided"}), 400
         title = data.get("title")
         description = data.get("description")
         detailedDescription = data.get("detailedDescription")
@@ -1546,8 +1518,6 @@ def update_user_activity(userId, activityId):
         cursor = connection.cursor()
 
         data = request.json
-        if not data:
-            return jsonify({"error": "No data provided"}), 400
         completed = data.get("completed")
         stars = data.get('stars')
 
@@ -1665,345 +1635,6 @@ def admin_login():
     else:
         return jsonify({"error": "Invalid credentials"}), 401
 
-@app.route('/send-report-email', methods=['POST'])
-def send_report_email():
-    logger.info("DEBUG: Entered /send-report-email endpoint")
-    """
-    Endpoint to save manager report data to AWS CareerStarDB and send email.
-    Saves: manager name, manager email, user answers (highlights, future highlights, support needed, idea, screenshots)
-    Connects to AWS PostgreSQL using environment variables from .env file
-    """
-    try:
-        data = request.json
-        manager_email = data.get('managerEmail')
-        manager_name = data.get('managerName')
-        student_name = data.get('studentName')
-        report_date = data.get('reportDate')
-        pdf_content = data.get('pdfContent')
-        report_preview = data.get('reportPreview')
-        
-        # Get user ID from the request or from the student name
-        user_id = data.get('userId')
-        if not user_id:
-            # Try to get user ID from localStorage or other means
-            # For now, we'll use a placeholder
-            user_id = None
-        
-        connection = get_db_connection()
-        cursor = connection.cursor()
-        
-        # Check if reports table exists, if not create it with the existing structure
-        check_table_query = """
-        SELECT EXISTS (
-            SELECT FROM information_schema.tables 
-            WHERE table_name = 'reports'
-        );
-        """
-        cursor.execute(check_table_query)
-        table_exists = cursor.fetchone()[0]
-        
-        if not table_exists:
-            # Create reports table with the existing structure
-            create_table_query = """
-            CREATE TABLE reports (
-                id SERIAL PRIMARY KEY,
-                user_id INTEGER,
-                student_name TEXT,
-                manager_name TEXT,
-                manager_email TEXT,
-                answers JSONB,
-                report_date DATE
-            );
-            """
-            cursor.execute(create_table_query)
-            connection.commit()
-            logger.info(f"Reports table created in CareerStarDB")
-        
-        # Get user answers from the request
-        user_answers = data.get('userAnswers', {})
-        
-        # Prepare all the data as a JSON object to store in the answers column
-        report_data = {
-            'highlights': user_answers.get('highlights', []),
-            'futureHighlights': user_answers.get('futureHighlights', []),
-            'supportNeeded': user_answers.get('supportNeeded', ''),
-            'idea': user_answers.get('idea', ''),
-            'screenshots': user_answers.get('screenshots', []),
-            'reportContent': report_preview,
-            'pdfContent': pdf_content
-        }
-        
-        # Insert the report data into the database using the existing structure
-        insert_query = """
-        INSERT INTO reports (user_id, student_name, manager_name, manager_email, answers, report_date)
-        VALUES (%s, %s, %s, %s, %s, %s)
-        RETURNING id;
-        """
-        
-        cursor.execute(insert_query, (
-            user_id,
-            student_name,
-            manager_name,
-            manager_email,
-            json.dumps(report_data),
-            report_date
-        ))
-        
-        report_id = cursor.fetchone()[0]
-        connection.commit()
-        logger.info(f"Report saved to CareerStarDB with ID: {report_id} for user {user_id}")
-
-        logger.info("DEBUG: About to save report to DB")
-        try:
-            send_report_email_to_manager(manager_email, manager_name, student_name, report_date, pdf_content)
-            logger.info(f"DEBUG: Email sent to {manager_email}")
-        except Exception as e:
-            logger.error(f"DEBUG: Failed to send email: {e}")
-        
-        return jsonify({
-            "message": "Report saved successfully",
-            "report_id": report_id,
-            "status": "success"
-        }), 200
-        
-    except Exception as error:
-        logger.error(f"DEBUG: Exception occurred: {error}")
-        return jsonify({"error": str(error)}), 500
-    finally:
-        if connection:
-            return_db_connection(connection)
-
-@app.route('/admin/reports/users', methods=['GET'])
-@jwt_required()
-def get_users_with_reports():
-    """Get all users who have submitted reports"""
-    try:
-        current_user = get_jwt_identity()
-        if current_user.get('role') != 'admin':
-            return jsonify({"error": "Unauthorized"}), 401
-        
-        connection = get_db_connection()
-        cursor = connection.cursor()
-        
-        query = """
-        SELECT DISTINCT 
-            r.user_id,
-            r.student_name,
-            COUNT(r.id) as report_count,
-            MAX(r.report_date) as last_report_date
-        FROM reports r
-        GROUP BY r.user_id, r.student_name
-        ORDER BY last_report_date DESC
-        """
-        
-        cursor.execute(query)
-        users = cursor.fetchall()
-        
-        user_list = []
-        for user in users:
-            user_dict = {
-                "user_id": user[0],
-                "student_name": user[1],
-                "report_count": user[2],
-                "last_report_date": user[3].isoformat() if user[3] else None
-            }
-            user_list.append(user_dict)
-        
-        return jsonify(user_list)
-        
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-    finally:
-        if connection:
-            return_db_connection(connection)
-
-@app.route('/admin/reports/user/<int:user_id>', methods=['GET'])
-# @jwt_required()  # Temporarily comment out for testing
-def get_user_reports(user_id):
-    """Get all reports for a specific user"""
-    try:
-        logger.info(f"Starting get_user_reports for user_id: {user_id}")
-        # current_user = get_jwt_identity()
-        # logger.info(f"Current user: {current_user}")
-        # if current_user.get('role') != 'admin':
-        #     return jsonify({"error": "Unauthorized"}), 401
-        
-        connection = get_db_connection()
-        cursor = connection.cursor()
-        
-        query = """
-        SELECT 
-            id,
-            user_id,
-            student_name,
-            manager_name,
-            manager_email,
-            answers,
-            report_date
-        FROM reports 
-        WHERE user_id = %s
-        ORDER BY report_date DESC
-        """
-        
-        logger.info(f"Executing query for user_id: {user_id}")
-        cursor.execute(query, (user_id,))
-        reports = cursor.fetchall()
-        logger.info(f"Found {len(reports)} reports")
-        
-        report_list = []
-        for i, report in enumerate(reports):
-            logger.info(f"Processing report {i+1}: {report}")
-            # Parse the answers JSON - it comes as a string from JSONB
-            try:
-                logger.info(f"Report[5] type: {type(report[5])}, value: {report[5]}")
-                if isinstance(report[5], str):
-                    answers_data = json.loads(report[5]) if report[5] else {}
-                else:
-                    answers_data = report[5] if report[5] else {}
-            except (TypeError, json.JSONDecodeError) as e:
-                logger.error(f"JSON parsing error: {e}")
-                # If it's already a dict or invalid JSON, use as is
-                answers_data = report[5] if report[5] else {}
-            
-            report_dict = {
-                "id": report[0],
-                "user_id": report[1],
-                "student_name": report[2],
-                "manager_name": report[3],
-                "manager_email": report[4],
-                "report_preview": answers_data.get('reportContent', ''),
-                "pdf_content": answers_data.get('pdfContent', ''),
-                "user_answers": answers_data,
-                "created_at": report[6].isoformat() if report[6] else None
-            }
-            report_list.append(report_dict)
-        
-        logger.info(f"Returning {len(report_list)} reports")
-        return jsonify(report_list)
-        
-    except Exception as e:
-        logger.error(f"Error in get_user_reports: {str(e)}")
-        logger.error(f"Error type: {type(e)}")
-        import traceback
-        logger.error(f"Traceback: {traceback.format_exc()}")
-        return jsonify({"error": str(e)}), 500
-    finally:
-        if connection:
-            return_db_connection(connection)
-
-
-    """Test endpoint for user reports without JWT"""
-    try:
-        logger.info(f"Starting test_user_reports for user_id: {user_id}")
-        
-        connection = get_db_connection()
-        cursor = connection.cursor()
-        
-        query = """
-        SELECT 
-            id,
-            user_id,
-            student_name,
-            manager_name,
-            manager_email,
-            answers,
-            report_date
-        FROM reports 
-        WHERE user_id = %s
-        ORDER BY report_date DESC
-        LIMIT 1
-        """
-        
-        logger.info(f"Executing query for user_id: {user_id}")
-        cursor.execute(query, (user_id,))
-        report = cursor.fetchone()
-        logger.info(f"Found report: {report}")
-        
-        if not report:
-            return jsonify({"message": "No reports found"})
-        
-        # Just return the raw data without processing
-        report_dict = {
-            "id": report[0],
-            "user_id": report[1],
-            "student_name": report[2],
-            "manager_name": report[3],
-            "manager_email": report[4],
-            "answers_raw": str(report[5]),
-            "answers_type": str(type(report[5])),
-            "created_at": report[6].isoformat() if report[6] else None
-        }
-        
-        logger.info(f"Returning report: {report_dict}")
-        return jsonify(report_dict)
-        
-    except Exception as e:
-        logger.error(f"Error in test_user_reports: {str(e)}")
-        logger.error(f"Error type: {type(e)}")
-        import traceback
-        logger.error(f"Traceback: {traceback.format_exc()}")
-        return jsonify({"error": str(e)}), 500
-    finally:
-        if connection:
-            return_db_connection(connection)
-
-@app.route('/debug-reports/<int:user_id>', methods=['GET'])
-def debug_user_reports(user_id):
-    """Debug endpoint for user reports without JWT"""
-    try:
-        logger.info(f"Starting debug_user_reports for user_id: {user_id}")
-        
-        connection = get_db_connection()
-        cursor = connection.cursor()
-        
-        query = """
-        SELECT 
-            id,
-            user_id,
-            student_name,
-            manager_name,
-            manager_email,
-            answers,
-            report_date
-        FROM reports 
-        WHERE user_id = %s
-        ORDER BY report_date DESC
-        LIMIT 1
-        """
-        
-        logger.info(f"Executing query for user_id: {user_id}")
-        cursor.execute(query, (user_id,))
-        report = cursor.fetchone()
-        logger.info(f"Found report: {report}")
-        
-        if not report:
-            return jsonify({"message": "No reports found"})
-        
-        # Just return the raw data without processing
-        report_dict = {
-            "id": report[0],
-            "user_id": report[1],
-            "student_name": report[2],
-            "manager_name": report[3],
-            "manager_email": report[4],
-            "answers_raw": str(report[5]),
-            "answers_type": str(type(report[5])),
-            "created_at": report[6].isoformat() if report[6] else None
-        }
-        
-        logger.info(f"Returning report: {report_dict}")
-        return jsonify(report_dict)
-        
-    except Exception as e:
-        logger.error(f"Error in debug_user_reports: {str(e)}")
-        logger.error(f"Error type: {type(e)}")
-        import traceback
-        logger.error(f"Traceback: {traceback.format_exc()}")
-        return jsonify({"error": str(e)}), 500
-    finally:
-        if connection:
-            return_db_connection(connection)
-
 @app.route('/verifyAdminToken', methods=['GET'])
 @jwt_required()
 def verifyAdminToken():
@@ -2020,48 +1651,8 @@ def verifyAdminToken():
 @app.route('/', methods=['GET'])
 def home():
     return 'Hello world'
-
-@app.route('/__debug_alive__')
-def debug_alive():
-    return "ALIVE"
-
-def send_report_email_to_manager(manager_email, manager_name, student_name, report_date, pdf_content_base64):
-    import smtplib
-    from email.mime.multipart import MIMEMultipart
-    from email.mime.text import MIMEText
-    from email.mime.application import MIMEApplication
-    import os
-    import base64
-
-    logger.info("DEBUG: Inside send_report_email_to_manager")
-    pdf_bytes = base64.b64decode(pdf_content_base64)
-    sender_email = os.getenv('EMAIL_SENDER')
-    sender_password = os.getenv('EMAIL_PASSWORD')
-    smtp_server = os.getenv('EMAIL_SMTP_SERVER', 'smtp.secureserver.net')
-    smtp_port = int(os.getenv('EMAIL_SMTP_PORT', 465))
-
-    subject = f"Weekly Report from {student_name} - {report_date}"
-    body = f"Dear {manager_name},\n\nPlease find attached the weekly report from {student_name}.\n\nBest regards,\nCareerStar"
-
-    msg = MIMEMultipart()
-    msg['From'] = sender_email
-    msg['To'] = manager_email
-    msg['Subject'] = subject
-    msg.attach(MIMEText(body, 'plain'))
-
-    part = MIMEApplication(pdf_bytes, Name=f"Weekly_Report_{report_date}.pdf")
-    part['Content-Disposition'] = f'attachment; filename="Weekly_Report_{report_date}.pdf"'
-    msg.attach(part)
-
-    try:
-        with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
-            server.login(sender_email, sender_password)
-            server.send_message(msg)
-        logger.info(f"DEBUG: Email sent to {manager_email}")
-    except Exception as e:
-        logger.error(f"DEBUG: Failed to send email: {e}")
+    
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001, debug=True)
-    # For production with SSL:
-    # app.run(host='0.0.0.0', port=5000, ssl_context=('cert.pem', 'key.pem'))
+    app.run(host='0.0.0.0', port=5000, ssl_context=('cert.pem', 'key.pem'))
+    # app.run(host='0.0.0.0', port=5000)
