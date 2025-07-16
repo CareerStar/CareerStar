@@ -3,10 +3,15 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import ReactMarkdown from "react-markdown";
 // import activityImage from '../../assets/images/activities/activity13/activity-image.jpg';
 import activityImage from '../../assets/images/activities/activity13/activity-image2.png';
-import futureIcon from '../../assets/images/activities/activity13/future-icon.png';
-import supportIcon from '../../assets/images/activities/activity13/highlight-icon.png';
-import highlightIcon from '../../assets/images/activities/activity13/report-icon.png';
-import reportIcon from '../../assets/images/activities/activity13/report-icon.png';
+// import futureIcon from '../../assets/images/activities/activity13/future-icon.png';
+// import supportIcon from '../../assets/images/activities/activity13/support-icon.png';
+// import highlightIcon from '../../assets/images/activities/activity13/highlight-icon.png';
+// import reportIcon from '../../assets/images/activities/activity13/report-icon.png';
+import futureIcon from '../../assets/images/activities/activity13/2ReportIcon.png';
+import supportIcon from '../../assets/images/activities/activity13/1ReportIcon.png';
+import highlightIcon from '../../assets/images/activities/activity13/3ReportIcon.png';
+import ideaIcon from '../../assets/images/activities/activity13/plusIcon.png';
+import reportIcon from '../../assets/images/activities/activity13/321icon.png';
 import backArrow from '../../assets/images/back-arrow.png';
 import clock from '../../assets/images/activities/clock.png';
 import star from '../../assets/images/activities/star.png';
@@ -706,10 +711,10 @@ ${answers.idea}
     };
 
     const stepsData = [
-        { id: 1, number: "Step 1", title: "3 Highlights", icon: highlightIcon },
-        { id: 2, number: "Step 2", title: "2 Future Highlights", icon: futureIcon },
-        { id: 3, number: "Step 3", title: "1 Support Need", icon: supportIcon },
-        { id: 4, number: "Step 4", title: "1 Idea", icon: futureIcon },
+        { id: 1, number: "Step 1", title: "Highlights", icon: highlightIcon },
+        { id: 2, number: "Step 2", title: "Future Highlights", icon: futureIcon },
+        { id: 3, number: "Step 3", title: "Support Need", icon: supportIcon },
+        { id: 4, number: "Step 4", title: "Idea", icon: ideaIcon },
         { id: 5, number: "Step 5", title: "Create Your 3-2-1-1 Report", icon: reportIcon },
     ];
 
@@ -805,10 +810,10 @@ ${answers.idea}
                             <li>
                                 The 3-2-1+ Report is a simple, effective tool that helps you track your work, request support, and advance your career.
                             </li>
-                            <br />
-                            <li>
+                            {/* <br /> */}
+                            {/* <li>
                                 This streamlined format showcases accomplishments, demonstrates forward thinking, and communicates effectively with stakeholders.
-                            </li>
+                            </li> */}
                             <br />
                             <li>
                                 This activity will help you generate a report with images that can be shared instantly with coworkers and managers.
@@ -959,7 +964,7 @@ ${answers.idea}
                     </div>
                 ) : currentStep === 4 ? (
                     <div className="activity-description">
-                        <h2>Step 4: 1 Idea</h2>
+                        <h2>Step 4: Idea</h2>
                         <p>In this section, outline one key idea or concept you've learned or discovered during your internship.</p>
                         
                         <div className="activity-hot-tip">
