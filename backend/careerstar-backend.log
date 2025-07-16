@@ -170,3 +170,82 @@
 2025-07-13 11:08:15,887 - INFO - 127.0.0.1 - - [13/Jul/2025 11:08:15] "OPTIONS /admin/reports/users HTTP/1.1" 200 -
 2025-07-13 11:08:15,889 - INFO - 127.0.0.1 - - [13/Jul/2025 11:08:15] "[31m[1mGET /admin/reports/users HTTP/1.1[0m" 422 -
 2025-07-13 11:08:15,891 - INFO - 127.0.0.1 - - [13/Jul/2025 11:08:15] "[31m[1mGET /admin/reports/users HTTP/1.1[0m" 422 -
+2025-07-13 11:13:39,900 - WARNING -  * Debugger is active!
+2025-07-13 11:13:39,905 - INFO -  * Debugger PIN: 100-337-384
+2025-07-13 11:45:12,272 - INFO -  * Detected change in '/Users/abdulbaribest/Desktop/Carrer Star/CareerStar/backend/app.py', reloading
+2025-07-13 11:45:15,041 - WARNING -  * Debugger is active!
+2025-07-13 11:45:15,047 - INFO -  * Debugger PIN: 100-337-384
+2025-07-13 11:50:49,525 - INFO -  * Detected change in '/Users/abdulbaribest/Desktop/Carrer Star/CareerStar/backend/app.py', reloading
+2025-07-13 11:50:52,290 - WARNING -  * Debugger is active!
+2025-07-13 11:50:52,297 - INFO -  * Debugger PIN: 100-337-384
+2025-07-13 11:52:11,501 - INFO -  * Detected change in '/Users/abdulbaribest/Desktop/Carrer Star/CareerStar/backend/app.py', reloading
+2025-07-13 11:52:14,302 - WARNING -  * Debugger is active!
+2025-07-13 11:52:14,309 - INFO -  * Debugger PIN: 100-337-384
+2025-07-13 11:54:25,247 - INFO -  * Detected change in '/Users/abdulbaribest/Desktop/Carrer Star/CareerStar/backend/app.py', reloading
+2025-07-13 11:54:28,053 - WARNING -  * Debugger is active!
+2025-07-13 11:54:28,060 - INFO -  * Debugger PIN: 100-337-384
+2025-07-13 12:01:48,761 - INFO -  * Detected change in '/Users/abdulbaribest/Desktop/Carrer Star/CareerStar/backend/app.py', reloading
+2025-07-13 12:01:51,607 - WARNING -  * Debugger is active!
+2025-07-13 12:01:51,613 - INFO -  * Debugger PIN: 100-337-384
+2025-07-13 12:05:37,740 - INFO -  * Detected change in '/Users/abdulbaribest/Desktop/Carrer Star/CareerStar/backend/app.py', reloading
+2025-07-13 12:05:40,495 - WARNING -  * Debugger is active!
+2025-07-13 12:05:40,502 - INFO -  * Debugger PIN: 100-337-384
+2025-07-13 12:06:35,180 - INFO -  * Detected change in '/Users/abdulbaribest/Desktop/Carrer Star/CareerStar/backend/app.py', reloading
+2025-07-13 12:06:38,030 - WARNING -  * Debugger is active!
+2025-07-13 12:06:38,038 - INFO -  * Debugger PIN: 100-337-384
+2025-07-13 12:18:17,092 - INFO -  * Detected change in '/Users/abdulbaribest/Desktop/Carrer Star/CareerStar/backend/app.py', reloading
+2025-07-13 12:18:17,864 - WARNING -  * Debugger is active!
+2025-07-13 12:18:17,871 - INFO -  * Debugger PIN: 100-337-384
+2025-07-13 12:22:59,521 - INFO -  * Detected change in '/Users/abdulbaribest/Desktop/Carrer Star/CareerStar/backend/app.py', reloading
+2025-07-15 20:10:12,464 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.4:5001
+2025-07-15 20:10:12,464 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-15 20:10:12,465 - INFO -  * Restarting with stat
+2025-07-15 20:10:12,920 - WARNING -  * Debugger is active!
+2025-07-15 20:10:12,929 - INFO -  * Debugger PIN: 100-337-384
+2025-07-15 20:10:33,089 - INFO - 127.0.0.1 - - [15/Jul/2025 20:10:33] "GET / HTTP/1.1" 200 -
+2025-07-15 20:10:41,384 - INFO - 127.0.0.1 - - [15/Jul/2025 20:10:41] "OPTIONS /send-report-email HTTP/1.1" 200 -
+2025-07-15 20:10:41,387 - INFO - DEBUG: Entered /send-report-email endpoint
+2025-07-15 20:10:41,534 - INFO - Report saved to CareerStarDB with ID: 52 for user 296
+2025-07-15 20:10:41,534 - INFO - DEBUG: About to save report to DB
+2025-07-15 20:10:41,535 - INFO - DEBUG: Inside send_report_email_to_manager
+2025-07-15 20:14:26,565 - ERROR - DEBUG: Failed to send email: [Errno 60] Operation timed out
+2025-07-15 20:14:26,568 - INFO - DEBUG: Email sent to 11111@gmail.com
+2025-07-15 20:14:26,572 - INFO - 127.0.0.1 - - [15/Jul/2025 20:14:26] "POST /send-report-email HTTP/1.1" 200 -
+2025-07-15 20:15:34,667 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.4:5001
+2025-07-15 20:15:34,667 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-15 20:15:34,667 - INFO -  * Restarting with stat
+2025-07-15 20:15:35,287 - WARNING -  * Debugger is active!
+2025-07-15 20:15:35,294 - INFO -  * Debugger PIN: 100-337-384
+2025-07-15 20:15:38,327 - INFO - 127.0.0.1 - - [15/Jul/2025 20:15:38] "GET / HTTP/1.1" 200 -
+2025-07-15 20:15:46,492 - INFO - 127.0.0.1 - - [15/Jul/2025 20:15:46] "OPTIONS /send-report-email HTTP/1.1" 200 -
+2025-07-15 20:15:46,495 - INFO - DEBUG: Entered /send-report-email endpoint
+2025-07-15 20:15:46,656 - INFO - Report saved to CareerStarDB with ID: 53 for user 296
+2025-07-15 20:15:46,656 - INFO - DEBUG: About to save report to DB
+2025-07-15 20:15:46,656 - INFO - DEBUG: Inside send_report_email_to_manager
+2025-07-15 20:19:36,559 - ERROR - DEBUG: Failed to send email: [Errno 60] Operation timed out
+2025-07-15 20:19:36,561 - INFO - DEBUG: Email sent to 11111@gmail.com
+2025-07-15 20:19:36,564 - INFO - 127.0.0.1 - - [15/Jul/2025 20:19:36] "POST /send-report-email HTTP/1.1" 200 -
+2025-07-15 20:44:51,253 - INFO - 127.0.0.1 - - [15/Jul/2025 20:44:51] "OPTIONS /send-report-email HTTP/1.1" 200 -
+2025-07-15 20:44:51,257 - INFO - DEBUG: Entered /send-report-email endpoint
+2025-07-15 20:44:51,804 - INFO - 127.0.0.1 - - [15/Jul/2025 20:44:51] "GET /roadmapactivity/296/13202529 HTTP/1.1" 200 -
+2025-07-15 20:45:03,141 - INFO - 127.0.0.1 - - [15/Jul/2025 20:45:03] "GET /roadmapactivity/296/13202529 HTTP/1.1" 200 -
+2025-07-15 20:45:03,299 - INFO - 127.0.0.1 - - [15/Jul/2025 20:45:03] "GET /roadmapactivity/296/13202529 HTTP/1.1" 200 -
+2025-07-15 20:45:15,151 - INFO - 127.0.0.1 - - [15/Jul/2025 20:45:15] "OPTIONS /send-report-email HTTP/1.1" 200 -
+2025-07-15 20:45:15,153 - INFO - DEBUG: Entered /send-report-email endpoint
+2025-07-15 20:45:15,329 - INFO - Report saved to CareerStarDB with ID: 54 for user 296
+2025-07-15 20:45:15,329 - INFO - DEBUG: About to save report to DB
+2025-07-15 20:45:15,330 - INFO - DEBUG: Inside send_report_email_to_manager
+2025-07-15 20:45:22,881 - ERROR - DEBUG: Exception occurred: could not receive data from server: Operation timed out
+SSL SYSCALL error: Operation timed out
+
+2025-07-15 20:45:22,882 - INFO - 127.0.0.1 - - [15/Jul/2025 20:45:22] "[35m[1mPOST /send-report-email HTTP/1.1[0m" 500 -
+2025-07-15 20:46:51,464 - INFO - 127.0.0.1 - - [15/Jul/2025 20:46:51] "GET /roadmapactivity/296/13202529 HTTP/1.1" 200 -
+2025-07-15 20:49:00,351 - ERROR - DEBUG: Failed to send email: [Errno 60] Operation timed out
+2025-07-15 20:49:00,353 - INFO - DEBUG: Email sent to asdasds@gmail.com
+2025-07-15 20:49:00,357 - INFO - 127.0.0.1 - - [15/Jul/2025 20:49:00] "POST /send-report-email HTTP/1.1" 200 -
