@@ -669,9 +669,11 @@ ${answers.idea}
                 studentName: localStorage.getItem('firstname') || 'Student',
                 reportDate: reportDate,
                 pdfContent: pdfBase64,
-                reportPreview: reportContent.substring(0, 1000) // Limit preview text
+                reportPreview: reportContent.substring(0, 1000),
+                userId: userId,         
+                userAnswers: answers 
             };
-    
+            console.log("Sending emailData:", emailData);
             // Send email via API with timeout
             const response = await axios.post('https://api.careerstar.co/send-report-email', emailData, {
                 timeout: 60000, // 60 second timeout
