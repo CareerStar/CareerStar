@@ -131,7 +131,14 @@ const Activity13 = () => {
                 answers: answers,
                 stars: starCount,
             };
-            const response = await axios.post(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`, payload);
+            // Fetch users who sent reports
+            // const handleUserClick = (user) => {
+            //     axios.get(`http://localhost:5001/admin/reports/user/${user.userId}`)
+            //     .then(res => setReports(res.data))
+            //     .catch(err => alert("Failed to fetch reports"));
+            // };
+            const response = await axios.get(`http://localhost:5001/reports/user/${userId}`);
+            //const response = await axios.post(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`, payload);
             if (response.status === 200) {
                 if (completed) {
                     setCompleted(true);
@@ -673,7 +680,6 @@ ${answers.idea}
                 userId: userId,         
                 userAnswers: answers 
             };
-            console.log("Sending emailData:", emailData);
             // Send email via API with timeout
             const response = await axios.post('https://api.careerstar.co/send-report-email', emailData, {
                 timeout: 60000, // 60 second timeout

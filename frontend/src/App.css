@@ -5050,3 +5050,187 @@ h3 {
     width: 100%;
   }
 }
+
+/* Admin Reports Page Styles */
+.admin-reports-flex-container {
+  display: flex;
+  gap: 2rem;
+  min-height: 80vh;
+}
+
+.admin-user-list {
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically if you want */
+  margin: 0 auto;
+}
+
+.admin-user-list-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the list items */
+}
+
+.admin-user-list-li {
+  margin-bottom: 16px;
+}
+
+.admin-user-card {
+  background: #f7fafd;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 18px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 18px;
+  color: #2a5d9f;
+  box-shadow: 0 1px 3px rgba(42,93,159,0.04);
+  transition: background 0.2s, box-shadow 0.2s;
+  text-align: left;
+  position: relative;
+  max-width: 400px;
+  width: 100%;
+  text-align: center; /* Center the text inside the card */
+}
+.admin-user-card:hover {
+  background: #e3f0ff;
+  box-shadow: 0 4px 12px rgba(42,93,159,0.10);
+}
+.admin-user-last-report {
+  font-weight: 400;
+  font-size: 13px;
+  color: #888;
+  margin-top: 4px;
+}
+
+.admin-report-list {
+  flex: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 32px;
+}
+.admin-back-btn {
+  margin-bottom: 24px;
+  background: #eee;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+.admin-back-btn:hover {
+  background: #d6e4f0;
+}
+.admin-report-list-title {
+  margin-bottom: 24px;
+  text-align: left;
+}
+.admin-report-list-username {
+  color: #2a5d9f;
+}
+.admin-report-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.admin-report-card {
+  background: #f7fafd;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 18px 20px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+  color: #2a5d9f;
+  box-shadow: 0 1px 3px rgba(42,93,159,0.04);
+  transition: background 0.2s, box-shadow 0.2s;
+  text-align: left;
+  position: relative;
+}
+.admin-report-card:hover {
+  background: #e3f0ff;
+  box-shadow: 0 4px 12px rgba(42,93,159,0.10);
+}
+.admin-report-card-date {
+  font-weight: bold;
+  font-size: 17px;
+  color: #2a5d9f;
+}
+.admin-report-card-preview {
+  font-size: 14px;
+  color: #888;
+  margin-top: 6px;
+}
+
+.admin-report-detail {
+  flex: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 32px;
+}
+.admin-report-detail-title {
+  margin-bottom: 24px;
+  text-align: left;
+  color: #2a5d9f;
+}
+.admin-report-section {
+  margin-bottom: 16px;
+}
+.admin-report-section-title {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+.admin-report-section-list {
+  margin: 0;
+  padding-left: 20px;
+  text-align: left;
+}
+.admin-report-section-list-item {
+  margin-bottom: 4px;
+}
+.admin-report-section-content {
+  text-align: left;
+}
+
+.admin-report-detail-date {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 16px;
+  font-style: italic;
+  letter-spacing: 0.2px;
+}
+
+@media (max-width: 900px) {
+  .admin-reports-flex-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .admin-user-list {
+    min-width: 100%;
+    margin-bottom: 24px;
+  }
+  .admin-report-list, .admin-report-detail {
+    max-width: 100%;
+    padding: 16px;
+  }
+}
+
+.admin-report-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 16px;
+}
