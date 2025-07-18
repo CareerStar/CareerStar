@@ -1,187 +1,193 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import '../../App.css';
 
-const ManagerReports = () => {
-    const [users, setUsers] = useState([]);
-    const [selectedUser, setSelectedUser] = useState(null);
-    const [userReports, setUserReports] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+const AdminManagerReports = () => {
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [reports, setReports] = useState([]);
+  const [loadingUsers, setLoadingUsers] = useState(true);
+  const [loadingReports, setLoadingReports] = useState(false);
+  const [selectedReport, setSelectedReport] = useState(null);
 
-    // API base URL - use production for now
-    const API_BASE_URL = 'https://api.careerstar.co';
-
-    useEffect(() => {
-        fetchUsersWithReports();
-    }, []);
-
-    const fetchUsersWithReports = async () => {
-        try {
-            setLoading(true);
-            const adminToken = localStorage.getItem('admin_token');
-            const response = await axios.get(`${API_BASE_URL}/admin/reports/users`, {
-                headers: {
-                    'Authorization': `Bearer ${adminToken}`
-                }
-            });
-            setUsers(response.data);
-            setError(null);
-        } catch (err) {
-            console.error('Error fetching users:', err);
-            setError('Failed to load users with reports');
-        } finally {
-            setLoading(false);
-        }
+  // Fetch users who sent reports
+  useEffect(() => {
+    const fetchUsers = async () => {
+      setLoadingUsers(true);
+      try {
+        const res = await axios.get("https://api.careerstar.co/admin/reports/users");
+        setUsers(res.data);
+        console.log(res.data);
+      } catch (err) {
+        alert("Failed to fetch users");
+      }
+      setLoadingUsers(false);
     };
+    fetchUsers();
+  }, []);
 
-    const fetchUserReports = async (userId) => {
-        try {
-            setLoading(true);
-            const adminToken = localStorage.getItem('admin_token');
-            const response = await axios.get(`${API_BASE_URL}/admin/reports/user/${userId}`, {
-                headers: {
-                    'Authorization': `Bearer ${adminToken}`
-                }
-            });
-            setUserReports(response.data);
-            setError(null);
-        } catch (err) {
-            console.error('Error fetching user reports:', err);
-            setError('Failed to load user reports');
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleUserClick = (user) => {
-        setSelectedUser(user);
-        fetchUserReports(user.user_id);
-    };
-
-    const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    };
-
-    const openPdfInNewTab = (pdfContent) => {
-        const blob = new Blob([Uint8Array.from(atob(pdfContent), c => c.charCodeAt(0))], { type: 'application/pdf' });
-        const url = URL.createObjectURL(blob);
-        window.open(url, '_blank');
-    };
-
-    if (loading && users.length === 0) {
-        return (
-            <div className="admin-reports-container">
-                <h2>Manager Reports</h2>
-                <div className="loading">Loading...</div>
-            </div>
-        );
+  // Fetch reports for selected user
+  const handleUserClick = async (user) => {
+    try {
+      const res = await axios.get(`http://localhost:5001/reports/user/${user.userid}`);
+      //const res = await axios.get(`https://api.careerstar.co/admin/reports/user/${user.user_id || user.userId}`);
+      setReports(res.data);
+    } catch (err) {
+      alert("Failed to fetch reports");
+      setReports([]);
     }
+    setLoadingReports(false);
+  };
 
-    if (error) {
-        return (
-            <div className="admin-reports-container">
-                <h2>Manager Reports</h2>
-                <div className="error">{error}</div>
-                <button onClick={fetchUsersWithReports} className="retry-btn">Retry</button>
-            </div>
-        );
-    }
-
-    return (
-        <div className="admin-reports-container">
-            <h2>Manager Reports</h2>
-            
-            <div className="reports-layout">
-                {/* Users List */}
-                <div className="users-list">
-                    <h3>Users with Reports ({users.length})</h3>
-                    <div className="users-container">
-                        {users.map((user) => (
-                            <div
-                                key={user.user_id}
-                                className={`user-item ${selectedUser?.user_id === user.user_id ? 'selected' : ''}`}
-                                onClick={() => handleUserClick(user)}
-                            >
-                                <div className="user-info">
-                                    <div className="user-name">{user.student_name}</div>
-                                    <div className="report-count">{user.report_count} report(s)</div>
-                                </div>
-                                <div className="last-report-date">
-                                    Last: {formatDate(user.last_report_date)}
-                                </div>
-                            </div>
-                        ))}
+  return (
+    <div className="admin-reports-flex-container">
+      {/* User List */}
+      {!selectedUser ? (
+        <div className="admin-user-list">
+          <h2>Users Who Sent Reports</h2>
+          {loadingUsers ? (
+            <p>Loading users...</p>
+          ) : (
+            <ul className="admin-user-list-ul">
+              {users.map((user) => (
+                <li key={user.userid} className="admin-user-list-li">
+                  <div
+                    onClick={() => {
+                      setSelectedUser(user);
+                      setLoadingReports(true);
+                      axios.get(`http://localhost:5001/reports/user/${user.userid}`)
+                        .then(res => setReports(res.data))
+                        .catch(() => setReports([]))
+                        .finally(() => setLoadingReports(false));
+                    }}
+                    className="admin-user-card"
+                  >
+                    {user.firstname}
+                    <div className="admin-user-last-report">
+                      Last report: 
+                      {user.lastReport
+                        ? new Date(user.lastReport).toLocaleDateString('en-US', { 
+                            year: 'numeric', 
+                            month: 'short', 
+                            day: '2-digit', 
+                            timeZone: 'America/New_York' 
+                          })
+                        : "N/A"}
+                      {" at "}
+                      {user.lastReport
+                        ? new Date(user.lastReport).toLocaleTimeString('en-US', { 
+                            hour: '2-digit', 
+                            minute: '2-digit', 
+                            second: '2-digit', 
+                            hour12: true, 
+                            timeZone: 'America/New_York' 
+                          })
+                        : "N/A"}
                     </div>
-                </div>
-
-                {/* Reports List */}
-                {selectedUser && (
-                    <div className="reports-list">
-                        <h3>Reports for {selectedUser.student_name}</h3>
-                        <div className="reports-container">
-                            {userReports.map((report) => (
-                                <div key={report.id} className="report-item">
-                                    <div className="report-header">
-                                        <div className="report-date">
-                                            {formatDate(report.created_at)}
-                                        </div>
-                                        <div className="report-manager">
-                                            To: {report.manager_name} ({report.manager_email})
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="report-content">
-                                        <div className="report-preview">
-                                            <h4>Report Preview:</h4>
-                                            <div className="preview-text">
-                                                {report.report_preview?.substring(0, 200)}...
-                                            </div>
-                                        </div>
-                                        
-                                        <div className="report-actions">
-                                            <button
-                                                onClick={() => openPdfInNewTab(report.pdf_content)}
-                                                className="view-pdf-btn"
-                                            >
-                                                View PDF
-                                            </button>
-                                            <button
-                                                onClick={() => {
-                                                    const answers = report.user_answers;
-                                                    alert(`
-Report Details:
-- Highlights: ${answers?.highlights || 'N/A'}
-- Future Highlights: ${answers?.future_highlights || 'N/A'}
-- Support Needed: ${answers?.support_needed || 'N/A'}
-- Ideas: ${answers?.ideas || 'N/A'}
-                                                    `);
-                                                }}
-                                                className="view-details-btn"
-                                            >
-                                                View Details
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
-            </div>
-
-            {!selectedUser && users.length > 0 && (
-                <div className="no-selection">
-                    Select a user to view their reports
-                </div>
-            )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-    );
+      ) : null}
+
+      {/* Reports List - User's Reports as Cards */}
+      {selectedUser && !selectedReport && (
+        <div className="admin-report-list">
+          <button
+            onClick={() => { setSelectedUser(null); setReports([]); }}
+            className="admin-back-btn"
+          >
+            ← Back to user list
+          </button>
+          <h2 className="admin-report-list-title">
+            Reports for <span className="admin-report-list-username">{selectedUser.firstname}</span>
+          </h2>
+          {loadingReports ? (
+            <p>Loading reports...</p>
+          ) : reports.length === 0 ? (
+            <p>No reports found for this user.</p>
+          ) : (
+            <div className="admin-report-cards-container">
+              {[...reports].sort((a, b) => {
+                const aDateTime = new Date(`${a.report_date}T${a.created_time}`);
+                const bDateTime = new Date(`${b.report_date}T${b.created_time}`);
+                return bDateTime - aDateTime;
+              }).map((report) => (
+                <div
+                  key={report.id}
+                  onClick={() => setSelectedReport(report)}
+                  className="admin-report-card"
+                >
+                  <div className="admin-report-card-date">
+                    Report sent on: 
+                    {report.report_date
+                      ? new Date(report.report_date).toLocaleDateString('en-GB', { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit' })
+                      : "N/A"}
+                    {" at "}
+                    {report.time || "N/A"}
+                  </div>
+                  <div className="admin-report-card-preview">Click to view full report</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Single Report Full View */}
+      {selectedReport && (
+        <div className="admin-report-detail">
+          <button
+            onClick={() => setSelectedReport(null)}
+            className="admin-back-btn"
+          >
+            ← Back to reports list
+          </button>
+          <div className="admin-report-detail-header">
+            <div className="admin-report-detail-date">
+              Report sent on: 
+              {selectedReport.report_date
+                ? new Date(selectedReport.report_date).toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit' })
+                : "N/A"}
+              {" at "}
+              {selectedReport.time || "N/A"}
+            </div>
+          </div>
+          <div className="admin-report-section">
+            <div className="admin-report-section-title">Highlights:</div>
+            <ul className="admin-report-section-list">
+              {selectedReport.answers?.highlights?.map((h, i) => <li key={i} className="admin-report-section-list-item">{h}</li>)}
+            </ul>
+          </div>
+          <div className="admin-report-section">
+            <div className="admin-report-section-title">Future Highlights:</div>
+            <ul className="admin-report-section-list">
+              {selectedReport.answers?.futureHighlights?.map((fh, i) => <li key={i} className="admin-report-section-list-item">{fh}</li>)}
+            </ul>
+          </div>
+          <div className="admin-report-section">
+            <div className="admin-report-section-title">Support Needed:</div>
+            <div className="admin-report-section-content">{selectedReport.answers?.supportNeeded || "N/A"}</div>
+          </div>
+          <div className="admin-report-section">
+            <div className="admin-report-section-title">Idea:</div>
+            <div className="admin-report-section-content">{selectedReport.answers?.idea || "N/A"}</div>
+          </div>
+          <div className="admin-report-section">
+            <div className="admin-report-section-title">Screenshots:</div>
+            <ul className="admin-report-section-list">
+              {selectedReport.answers?.screenshots?.length
+                ? selectedReport.answers.screenshots.map((s, i) => <li key={i}><a href={s} target="_blank" rel="noopener noreferrer">Screenshot {i+1}</a></li>)
+                : <li>None</li>
+              }
+            </ul>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
-export default ManagerReports; 
+export default AdminManagerReports; 
