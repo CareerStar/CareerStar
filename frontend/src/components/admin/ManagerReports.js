@@ -29,8 +29,8 @@ const AdminManagerReports = () => {
   // Fetch reports for selected user
   const handleUserClick = async (user) => {
     try {
-      const res = await axios.get(`http://localhost:5001/reports/user/${user.userid}`);
-      //const res = await axios.get(`https://api.careerstar.co/admin/reports/user/${user.user_id || user.userId}`);
+      //const res = await axios.get(`http://localhost:5001/reports/user/${user.userid}`);
+      const res = await axios.get(`https://api.careerstar.co/admin/reports/user/${user.user_id || user.userId}`);
       setReports(res.data);
     } catch (err) {
       alert("Failed to fetch reports");
@@ -55,7 +55,7 @@ const AdminManagerReports = () => {
                     onClick={() => {
                       setSelectedUser(user);
                       setLoadingReports(true);
-                      axios.get(`http://localhost:5001/reports/user/${user.userid}`)
+                      axios.get(`https://api.careerstar.co/admin/reports/user/${user.userid}`)
                         .then(res => setReports(res.data))
                         .catch(() => setReports([]))
                         .finally(() => setLoadingReports(false));
