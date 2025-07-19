@@ -19,7 +19,6 @@ const AdminManagerReports = () => {
       try {
         const res = await axios.get(`https://api.careerstar.co/admin/reports/users`);
         setUsers(res.data);
-        console.log(res.data);
       } catch (err) {
         alert("Failed to fetch users");
       }
