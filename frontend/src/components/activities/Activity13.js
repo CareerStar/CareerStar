@@ -137,7 +137,7 @@ const Activity13 = () => {
             //     .then(res => setReports(res.data))
             //     .catch(err => alert("Failed to fetch reports"));
             // };
-            const response = await axios.get(`http://localhost:5001/reports/user/${userId}`);
+            const response = await axios.get(`http://api.careerstar.co/reports/user/${userId}`);
             //const response = await axios.post(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`, payload);
             if (response.status === 200) {
                 if (completed) {
