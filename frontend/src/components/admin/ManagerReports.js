@@ -113,7 +113,7 @@ const AdminManagerReports = () => {
               {[...reports].sort((a, b) => {
                 const aDateTime = new Date(`${a.report_date}T${a.created_time}`);
                 const bDateTime = new Date(`${b.report_date}T${b.created_time}`);
-                return bDateTime - aDateTime;
+                return bDateTime - aDateTime; // Ascending: oldest first
               }).map((report) => (
                 <div
                   key={report.id}
@@ -154,6 +154,11 @@ const AdminManagerReports = () => {
               {" at "}
               {selectedReport.time || "N/A"}
             </div>
+          </div>
+          <div className="admin-report-meta">
+            <div><strong>User Name:</strong> {selectedReport.student_name || "N/A"}</div>
+            <div><strong>Manager Name:</strong> {selectedReport.manager_name || "N/A"}</div>
+            <div><strong>Manager Email:</strong> {selectedReport.manager_email || "N/A"}</div>
           </div>
           <div className="admin-report-section">
             <div className="admin-report-section-title">Highlights:</div>

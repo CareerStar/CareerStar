@@ -5234,3 +5234,19 @@ h3 {
   gap: 24px;
   margin-bottom: 16px;
 }
+
+.admin-report-meta {
+  margin-bottom: 16px;
+  font-size: 15px;
+  color: #444;
+  text-align: left;         /* Ensure left alignment */
+  padding-left: 0;          /* Remove any accidental padding */
+  border-left: 3px solid #e0e0e0; /* Optional: subtle left border */
+  background: #f9f9f9;      /* Optional: subtle background */
+  padding: 12px 0 12px 16px; /* Top, right, bottom, left */
+  border-radius: 6px;
+  max-width: 350px;         /* Optional: keep it compact */
+}
+.admin-report-meta div {
+  margin-bottom: 4px;
+}
