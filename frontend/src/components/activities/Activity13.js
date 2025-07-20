@@ -147,6 +147,7 @@ const Activity13 = () => {
                     dispatch({ type: "INCREMENT_STAR", payload: starCount });
                 }
             }
+            setShowLikeDislikePopup(false); // <-- Add this line
             if (prevPage === 'activities') {
                 navigate('/dashboard/activities');
             } else {
