@@ -47,14 +47,37 @@ const Activity13 = () => {
     const [isSendingEmail, setIsSendingEmail] = useState(false);
     const [emailSent, setEmailSent] = useState(false);
     
-    const getCurrentWeekId = () => {
+    function getCurrentWeekId() {
         const now = new Date();
-        const startOfYear = new Date(now.getFullYear(), 0, 1);
-        const pastDaysOfYear = (now - startOfYear) / 86400000;
-        const weekNumber = Math.ceil((pastDaysOfYear + startOfYear.getDay() + 1) / 7);
+
+        // Get the current day of week (0=Sunday, 1=Monday, ..., 6=Saturday)
+        const day = now.getDay();
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+
+        // If it's Monday and before 00:01, treat as previous week
+        let effectiveDate = new Date(now);
+        if (day === 1 && (hour < 0 || (hour === 0 && minute < 1))) {
+            // Go back one day to Sunday
+            effectiveDate.setDate(now.getDate() - 1);
+        } else if (day === 0) {
+            // If it's Sunday, treat as previous week
+            effectiveDate.setDate(now.getDate() - 1);
+        }
+
+        // Calculate ISO week number
+        const year = effectiveDate.getFullYear();
+
+        // Set to nearest Thursday: current date + 4 - current day number
+        // Make Sunday (0) become 7
+        const tempDate = new Date(effectiveDate);
+        tempDate.setDate(effectiveDate.getDate() + 4 - (effectiveDate.getDay() || 7));
+        const yearStart = new Date(tempDate.getFullYear(), 0, 1);
+        const weekNo = Math.ceil((((tempDate - yearStart) / 86400000) + 1) / 7);
+
         // Compose a unique numeric ID: 13 (activity) + year + weekNumber, e.g., 13202423
-        return Number(`13${now.getFullYear()}${weekNumber}`);
-    };
+        return Number(`13${year}${weekNo}`);
+    }
     const activityId = getCurrentWeekId();
     
     const [answers, setAnswers] = useState({
@@ -137,8 +160,8 @@ const Activity13 = () => {
             //     .then(res => setReports(res.data))
             //     .catch(err => alert("Failed to fetch reports"));
             // };
-            const response = await axios.get(`http://api.careerstar.co/reports/user/${userId}`);
-            //const response = await axios.post(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`, payload);
+            // const response = await axios.get(`http://api.careerstar.co/reports/user/${userId}`);
+            const response = await axios.post(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`, payload);
             if (response.status === 200) {
                 if (completed) {
                     setCompleted(true);
