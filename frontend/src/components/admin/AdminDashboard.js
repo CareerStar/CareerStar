@@ -9,7 +9,9 @@ const AdminDashboard = () => {
     const [userId, setUserId] = useState(location.state?.userId || '');
     const [selectedPage, setSelectedPage] = useState('Adminevents');
     const [onboarded, setOnboarded] = useState(true);
-    const pages = ['AdminEvents', 'LinkedIn', 'Users', 'Activity Management', 'Manager Reports'];
+    //const pages = ['AdminEvents', 'LinkedIn', 'Users', 'Activity Management', 'Manager Reports'];
+    // Only show Users, Activity Management, and Manager Reports for admin
+    const pages = ['Users', 'Activity Management', 'Manager Reports'];
     const validPages = ['Home', 'Adminevents', 'Profile', 'Roadmap', 'Events', 'Network', 'Support', 'Activity', 'Resumeguide', 'Workshops', 'Leaderboard', 'Linkedin', 'Users', 'Activitymanagement', 'Managerreports'];
 
     useEffect(() => {
