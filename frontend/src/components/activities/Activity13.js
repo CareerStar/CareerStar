@@ -1064,38 +1064,6 @@ ${answers.idea}
                                     </div>
                                     <button onClick={handleSaveReport}>Save Report</button>
                                 </div>
-                
-                                <div className="email-manager-section">
-                                    <h3>Send Report to Manager</h3>
-                                    <div className="email-input-container">
-                                        <input
-                                            type="text"
-                                            placeholder="Enter your manager's name"
-                                            value={managerName}
-                                            onChange={(e) => setManagerName(e.target.value)}
-                                            className="manager-email-input"
-                                            disabled={isSendingEmail}
-                                        />
-                                        <input
-                                            type="email"
-                                            placeholder="Enter your manager's email"
-                                            value={managerEmail}
-                                            onChange={(e) => setManagerEmail(e.target.value)}
-                                            className="manager-email-input"
-                                            disabled={isSendingEmail}
-                                        />
-                                        <button 
-                                            onClick={sendReportToManager}
-                                            disabled={isSendingEmail || !managerEmail || !managerName}
-                                            className="send-email-button"
-                                        >
-                                            {isSendingEmail ? 'Sending...' : 'Send Report'}
-                                        </button>
-                                    </div>
-                                    {emailSent && (
-                                        <p className="email-success-message">✓ Report sent successfully!</p>
-                                    )}
-                                </div>
                             </div>
                         ) : (
                             <div className="report-builder">
@@ -1130,13 +1098,43 @@ ${answers.idea}
                                     )}
                                 </div>
                                 
-                                <button 
+                                {/*<button 
                                     onClick={() => setPreviewMode(true)}
                                     disabled={!answers.highlights[0] || !answers.futureHighlights[0] || !answers.supportNeeded || !answers.idea}
                                 >
                                     Preview Report
-                                </button>
-                                
+                                </button> */}
+                                <div className="email-manager-section">
+                                    <h3>Send Report to Manager</h3>
+                                    <div className="email-input-container">
+                                        <input
+                                            type="text"
+                                            placeholder="Enter your manager's name"
+                                            value={managerName}
+                                            onChange={(e) => setManagerName(e.target.value)}
+                                            className="manager-email-input"
+                                            disabled={isSendingEmail}
+                                        />
+                                        <input
+                                            type="email"
+                                            placeholder="Enter your manager's email"
+                                            value={managerEmail}
+                                            onChange={(e) => setManagerEmail(e.target.value)}
+                                            className="manager-email-input"
+                                            disabled={isSendingEmail}
+                                        />
+                                        <button 
+                                            onClick={sendReportToManager}
+                                            disabled={isSendingEmail || !managerEmail || !managerName}
+                                            className="send-email-button"
+                                        >
+                                            {isSendingEmail ? 'Sending...' : 'Send Report'}
+                                        </button>
+                                    </div>
+                                    {emailSent && (
+                                        <p className="email-success-message">✓ Report sent successfully!</p>
+                                    )}
+                                </div>
                                 {(!answers.highlights[0] || !answers.futureHighlights[0] || !answers.supportNeeded || !answers.idea) && (
                                     <p className="warning-message">Please complete all required sections before previewing your report.</p>
                                 )}

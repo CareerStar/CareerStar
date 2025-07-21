@@ -4772,13 +4772,13 @@ h3 {
   border-top: 2px solid #007bff;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
-
+/*
 .email-manager-section::before {
   content: "📧";
   font-size: 24px;
   margin-right: 10px;
 }
-
+*/
 .email-error-message {
   color: #dc3545;
   background-color: #f8d7da;
