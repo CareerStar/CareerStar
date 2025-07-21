@@ -1123,13 +1123,6 @@ ${answers.idea}
                                             className="manager-email-input"
                                             disabled={isSendingEmail}
                                         />
-                                        <button 
-                                            onClick={sendReportToManager}
-                                            disabled={isSendingEmail || !managerEmail || !managerName}
-                                            className="send-email-button"
-                                        >
-                                            {isSendingEmail ? 'Sending...' : 'Send Report'}
-                                        </button>
                                     </div>
                                     {emailSent && (
                                         <p className="email-success-message">✓ Report sent successfully!</p>
@@ -1183,9 +1176,36 @@ ${answers.idea}
                     <div className="activity-navigation-back-button" onClick={handleBack} disabled={currentStep === null} style={{ marginRight: "10px" }}>
                         {currentStep === null ? "Back to Activity Page" : "Back to Previous Step"}
                     </div>
-                    <div className="activity-navigation-next-button" onClick={handleNext} disabled={currentStep === stepsData.length}>
-                        {currentStep === stepsData.length ? "Mark as completed" : "Go to Next Step"}
-                    </div>
+                    {currentStep === stepsData.length ? (
+                        <button
+                            className="activity-navigation-next-button"
+                            disabled={
+                                isSendingEmail ||
+                                !managerName ||
+                                !managerEmail ||
+                                !answers.highlights[0] ||
+                                !answers.futureHighlights[0] ||
+                                !answers.supportNeeded ||
+                                !answers.idea
+                            }
+                            onClick={async () => {
+                                // Set loading state for button
+                                setIsSendingEmail(true);
+                                try {
+                                    await sendReportToManager();
+                                    await handleSubmit(true);
+                                } finally {
+                                    setIsSendingEmail(false);
+                                }
+                            }}
+                        >
+                            {isSendingEmail ? 'Sending...' : 'Send Report & Complete'}
+                        </button>
+                    ) : (
+                        <div className="activity-navigation-next-button" onClick={handleNext}>
+                            Go to Next Step
+                        </div>
+                    )}
                 </div>
             </div>
 
