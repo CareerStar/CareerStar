@@ -166,7 +166,7 @@ function Roadmap({ userId, activityName }) {
                     <TopActivityCard
                     activityId={1}
                     activityTitle='Reaching Out To More Than Recruiters'
-                    activityDescription='Description here'
+                    activityDescription='Reaching out to the people you could actually be working with is often be much more effective.'
                     activityTags={['Networking']}
                     activityStarCount={7}
                     activityTime='20 min'
@@ -178,7 +178,7 @@ function Roadmap({ userId, activityName }) {
                     <TopActivityCard
                     activityId={3}
                     activityTitle='Better Cold Call LinkedIn Messages'
-                    activityDescription='Description here'
+                    activityDescription='Draft better LinkedIn Messages that actually get results, while learning something new at the same time.'
                     activityTags={['LinkedIn', 'Outreach']}
                     activityStarCount={7}
                     activityTime='20 min'
@@ -190,7 +190,7 @@ function Roadmap({ userId, activityName }) {
                     <TopActivityCard
                     activityId={2}
                     activityTitle='Career Acronym Challenge'
-                    activityDescription='Description here'
+                    activityDescription='Test your knowledge of industry acronyms and their meanings!'
                     activityTags={['Career']}
                     activityStarCount={7}
                     activityTime='20 min'
@@ -202,7 +202,7 @@ function Roadmap({ userId, activityName }) {
                     <TopActivityCard
                     activityId={14}
                     activityTitle='Mock Interview Jeopardy'
-                    activityDescription='Description here'
+                    activityDescription='Practice your interview skills and win points with this fun game!'
                     activityTags={['Interview', 'Practice']}
                     activityStarCount={10}
                     activityTime='20 min'
@@ -214,7 +214,7 @@ function Roadmap({ userId, activityName }) {
                     <TopActivityCard
                     activityId={9}
                     activityTitle='Networking Made Easy: Finding Your Events'
-                    activityDescription='Description here'
+                    activityDescription="Let’s find a great local event for you to attend."
                     activityTags={['Networking', 'Events']}
                     activityStarCount={7}
                     activityTime='20 min'
@@ -226,7 +226,7 @@ function Roadmap({ userId, activityName }) {
                     <TopActivityCard
                     activityId={5}
                     activityTitle='Let’s Network Before We Network'
-                    activityDescription='Description here'
+                    activityDescription='Want to make the most of an event? Start by building a relationship with the event host!'
                     activityTags={['Networking']}
                     activityStarCount={7}
                     activityTime='20 min'
@@ -234,7 +234,7 @@ function Roadmap({ userId, activityName }) {
                     isReady={true}
                     completed={!!activityStatuses?.[5]}
                     />
-
+{/*
                     <TopActivityCard
                     activityId={8}
                     activityTitle='Presenting Your Portfolio'
@@ -246,11 +246,11 @@ function Roadmap({ userId, activityName }) {
                     isReady={true}
                     completed={!!activityStatuses?.[8]}
                     />
-
+*/}
                     <TopActivityCard
                     activityId={11}
                     activityTitle='Unlock Your Volunteer Superpowers!'
-                    activityDescription='Description here'
+                    activityDescription='Volunteering is a great way to give back to your community, gain valuable experience, and potentially enhance your career prospects.'
                     activityTags={['Volunteer']}
                     activityStarCount={8}
                     activityTime='20 min'
@@ -262,7 +262,7 @@ function Roadmap({ userId, activityName }) {
                     <TopActivityCard
                     activityId={7}
                     activityTitle='The Dreaded Salary Talk'
-                    activityDescription='Description here'
+                    activityDescription='Learn how to navigate this conversation confidenty and effectively!'
                     activityTags={['Salary', 'Negotiation']}
                     activityStarCount={7}
                     activityTime='20 min'
@@ -274,7 +274,7 @@ function Roadmap({ userId, activityName }) {
                     <TopActivityCard
                     activityId={10}
                     activityTitle='The 10% Coffee Challenge'
-                    activityDescription='Description here'
+                    activityDescription='Getting what you want in life isn’t luck - it’s an art form!'
                     activityTags={['Networking', 'Coffee']}
                     activityStarCount={10}
                     activityTime='20 min'
