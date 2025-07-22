@@ -36,7 +36,7 @@ const AdminManagerReports = () => {
       alert("Failed to fetch reports");
       setReports([]);
     }
-    setLoadingReports(false); 
+    setLoadingReports(false);
   };
 
   return (
@@ -64,24 +64,24 @@ const AdminManagerReports = () => {
                   >
                     {user.firstname}
                     <div className="admin-user-last-report">
-                      Last report: 
+                      Last report:
                       {user.lastReport
-                        ? new Date(user.lastReport).toLocaleDateString('en-US', { 
-                            year: 'numeric', 
-                            month: 'short', 
-                            day: '2-digit', 
-                            timeZone: 'America/New_York' 
-                          })
+                        ? new Date(user.lastReport).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: '2-digit',
+                          timeZone: 'America/New_York'
+                        })
                         : "N/A"}
                       {" at "}
                       {user.lastReport
-                        ? new Date(user.lastReport).toLocaleTimeString('en-US', { 
-                            hour: '2-digit', 
-                            minute: '2-digit', 
-                            second: '2-digit', 
-                            hour12: true, 
-                            timeZone: 'America/New_York' 
-                          })
+                        ? new Date(user.lastReport).toLocaleTimeString('en-US', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          second: '2-digit',
+                          hour12: true,
+                          timeZone: 'America/New_York'
+                        })
                         : "N/A"}
                     </div>
                   </div>
@@ -111,8 +111,8 @@ const AdminManagerReports = () => {
           ) : (
             <div className="admin-report-cards-container">
               {[...reports].sort((a, b) => {
-                const aDateTime = new Date(`${a.report_date}T${a.created_time}`);
-                const bDateTime = new Date(`${b.report_date}T${b.created_time}`);
+                const aDateTime = new Date(a.created_time);
+                const bDateTime = new Date(b.created_time);
                 return bDateTime - aDateTime; // Ascending: oldest first
               }).map((report) => (
                 <div
@@ -121,12 +121,28 @@ const AdminManagerReports = () => {
                   className="admin-report-card"
                 >
                   <div className="admin-report-card-date">
-                    Report sent on: 
-                    {report.report_date
-                      ? new Date(report.report_date).toLocaleDateString('en-GB', { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit' })
-                      : "N/A"}
+                    Report sent on:
+                    {report.created_time
+                      ? new Date(report.created_time).toLocaleDateString('en-US', {
+                        weekday: 'short',
+                        year: 'numeric',
+                        month: 'short',
+                        day: '2-digit',
+                        timeZone: 'America/New_York'
+                      })
+                      : "N/A"
+                    }
                     {" at "}
-                    {report.time || "N/A"}
+                    {report.created_time
+                      ? new Date(report.created_time).toLocaleTimeString('en-US', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: true,
+                        timeZone: 'America/New_York'
+                      })
+                      : "N/A"
+                    }
                   </div>
                   <div className="admin-report-card-preview">Click to view full report</div>
                 </div>
@@ -145,15 +161,27 @@ const AdminManagerReports = () => {
           >
             ← Back to reports list
           </button>
-          <div className="admin-report-detail-header">
-            <div className="admin-report-detail-date">
-              Report sent on: 
-              {selectedReport.report_date
-                ? new Date(selectedReport.report_date).toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit' })
-                : "N/A"}
-              {" at "}
-              {selectedReport.time || "N/A"}
-            </div>
+          <div className="admin-report-detail-date">
+            Report sent on:
+            {selectedReport.created_time
+              ? new Date(selectedReport.created_time).toLocaleDateString('en-US', {
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: '2-digit',
+                timeZone: 'America/New_York'
+              })
+              : "N/A"}
+            {" at "}
+            {selectedReport.created_time
+              ? new Date(selectedReport.created_time).toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true,
+                timeZone: 'America/New_York'
+              })
+              : "N/A"}
           </div>
           <div className="admin-report-meta">
             <div><strong>User Name:</strong> {selectedReport.student_name || "N/A"}</div>
@@ -184,7 +212,7 @@ const AdminManagerReports = () => {
             <div className="admin-report-section-title">Screenshots:</div>
             <ul className="admin-report-section-list">
               {selectedReport.answers?.screenshots?.length
-                ? selectedReport.answers.screenshots.map((s, i) => <li key={i}><a href={s} target="_blank" rel="noopener noreferrer">Screenshot {i+1}</a></li>)
+                ? selectedReport.answers.screenshots.map((s, i) => <li key={i}><a href={s} target="_blank" rel="noopener noreferrer">Screenshot {i + 1}</a></li>)
                 : <li>None</li>
               }
             </ul>
