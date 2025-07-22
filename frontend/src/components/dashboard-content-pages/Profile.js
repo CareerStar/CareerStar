@@ -16,6 +16,9 @@ function Profile({ userId: propUserId }) {
     const [showAvatarModal, setShowavatarModal] = useState(false);
     const avatar = useSelector(state => state.avatar) || 'avatar1';
     const navigate = useNavigate();
+    const [reports, setReports] = useState([]);
+    const [showReports, setShowReports] = useState(false);
+    const [selectedReport, setSelectedReport] = useState(null);
 
     const avatarURL = '../../assets/images/avatars/';
 
@@ -80,6 +83,19 @@ function Profile({ userId: propUserId }) {
         if (userId) {
             fetchUserDetails();
         }
+    }, [userId]);
+
+    useEffect(() => {
+      const fetchReports = async () => {
+        if (!userId) return;
+        try {
+          const res = await axios.get(`https://api.careerstar.co/admin/reports/user/${userId}`);
+          setReports(res.data.sort((a, b) => new Date(b.created_time) - new Date(a.created_time)));
+        } catch (err) {
+          setReports([]);
+        }
+      };
+      fetchReports();
     }, [userId]);
 
     const handleSave = async (updatedSummary) => {
@@ -183,6 +199,113 @@ function Profile({ userId: propUserId }) {
                     <div className='summary-buttons flex-row'>
                         <button className='help-me-button' onClick={handleHelp}>Help me write summary</button>
                         <button className='save-button' onClick={() => handleSave(summary)}>Save</button>
+                    </div>
+                    <div className="my-reports-section">
+                      <button
+                        className="my-reports-main-btn"
+                        onClick={() => {
+                          setShowReports(!showReports);
+                          setSelectedReport(null);
+                        }}
+                      >
+                        {showReports ? "Hide My Reports" : "My Reports"}
+                      </button>
+                      {showReports && !selectedReport && (
+                        <div className="my-reports-list">
+                          {reports.length === 0 ? (
+                            <p>No reports found.</p>
+                          ) : (
+                            <ul>
+                              {reports.map((report) => (
+                                <li
+                                  key={report.id}
+                                  className="my-report-card clickable"
+                                  onClick={() => setSelectedReport(report)}
+                                >
+                                  <strong>
+                                    {report.created_time
+                                      ? new Date(report.created_time).toLocaleDateString('en-US', {
+                                          weekday: 'short',
+                                          year: 'numeric',
+                                          month: 'short',
+                                          day: '2-digit',
+                                          timeZone: 'America/New_York'
+                                        })
+                                      : "N/A"}
+                                    {" at "}
+                                    {report.created_time
+                                      ? new Date(report.created_time).toLocaleTimeString('en-US', {
+                                          hour: '2-digit',
+                                          minute: '2-digit',
+                                          hour12: true,
+                                          timeZone: 'America/New_York'
+                                        })
+                                      : "N/A"}
+                                  </strong>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      )}
+                      {showReports && selectedReport && (
+                        <div className="my-report-detail">
+                          <button className="my-reports-back-btn" onClick={() => setSelectedReport(null)}>
+                            ← Back to My Reports
+                          </button>
+                          <div className="my-report-detail-header">
+                            <div className="my-report-detail-date">
+                              Report sent on: {selectedReport.created_time
+                                ? new Date(selectedReport.created_time).toLocaleDateString('en-US', {
+                                    weekday: 'short',
+                                    year: 'numeric',
+                                    month: 'short',
+                                    day: '2-digit',
+                                    timeZone: 'America/New_York'
+                                  })
+                                : "N/A"}
+                              {" at "}
+                              {selectedReport.created_time
+                                ? new Date(selectedReport.created_time).toLocaleTimeString('en-US', {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: true,
+                                    timeZone: 'America/New_York'
+                                  })
+                                : "N/A"}
+                            </div>
+                          </div>
+                          <div className="my-report-section">
+                            <div className="my-report-section-title">Highlights:</div>
+                            <ul className="my-report-section-list">
+                              {selectedReport.answers?.highlights?.map((h, i) => <li key={i}>{h}</li>)}
+                            </ul>
+                          </div>
+                          <div className="my-report-section">
+                            <div className="my-report-section-title">Future Highlights:</div>
+                            <ul className="my-report-section-list">
+                              {selectedReport.answers?.futureHighlights?.map((fh, i) => <li key={i}>{fh}</li>)}
+                            </ul>
+                          </div>
+                          <div className="my-report-section">
+                            <div className="my-report-section-title">Support Needed:</div>
+                            <div className="my-report-section-content">{selectedReport.answers?.supportNeeded || "N/A"}</div>
+                          </div>
+                          <div className="my-report-section">
+                            <div className="my-report-section-title">Idea:</div>
+                            <div className="my-report-section-content">{selectedReport.answers?.idea || "N/A"}</div>
+                          </div>
+                          <div className="my-report-section">
+                            <div className="my-report-section-title">Screenshots:</div>
+                            <ul className="my-report-section-list">
+                              {selectedReport.answers?.screenshots?.length
+                                ? selectedReport.answers.screenshots.map((s, i) => <li key={i}><a href={s} target="_blank" rel="noopener noreferrer">Screenshot {i + 1}</a></li>)
+                                : <li>None</li>
+                              }
+                            </ul>
+                          </div>
+                        </div>
+                      )}
                     </div>
                     <div className='summary-buttons flex-row'>
                         <button className='save-button' onClick={handleLogout}>Log Out</button>
