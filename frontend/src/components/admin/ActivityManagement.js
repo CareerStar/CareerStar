@@ -14,14 +14,17 @@ const ActivityManagement = () => {
   // Activity name mapping
   const activityNames = {
     1: "Reaching out to more than Recruiters",
-    2: "Acronym Card Game",
+    2: "Career Acronym Challenge",
     3: "Better Cold Call LinkedIn Messages",
     4: "Hot Jobs of the Week!",
     5: "Let’s Network Before We Network",
     7: "The Dreaded Salary Talk",
     8: "Presenting Your Portfolio",
     9: "Networking Made Easy: Finding Your Events",
-    10: "NA"
+    10: "The 10% Coffee Challenge",
+    11: "Unlock Your Volunteer Superpowers!",
+    13: "3-2-1 + Report: Stand Out During Your Internship",
+    14: "Mock Interview Jeopardy"
   };
 
   const admin_token = localStorage.getItem('admin_token') || '';
@@ -98,6 +101,32 @@ const ActivityManagement = () => {
     return sortedActivities;
   }, [activities, searchTerm, sortConfig]);
 
+  // IDs from Roadmap.js (except 13, which is handled specially)
+  const roadmapActivityIds = [1, 2, 3, 5, 7, 9, 10, 11, 14];
+
+  // Group and sum for Activity 13
+  const activity13Counts = activities
+    .filter(a => String(a.activityId).startsWith('13'))
+    .reduce((sum, a) => sum + a.count, 0);
+
+  // Filter for other roadmap activities
+  const filteredActivities = activities
+    .filter(a => roadmapActivityIds.includes(Number(a.activityId)))
+    .map(a => ({
+      ...a,
+      name: activityNames[a.activityId] || `Activity ${a.activityId}`
+    }));
+
+  // Add Activity 13 as a single entry
+  const displayActivities = [
+    ...filteredActivities,
+    {
+      activityId: '13',
+      name: '3-2-1 + Report: Stand Out During Your Internship',
+      count: activity13Counts
+    }
+  ];
+
   if (loading) {
     return (
       <Container className="d-flex justify-content-center mt-5">
@@ -168,8 +197,8 @@ const ActivityManagement = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {filteredAndSortedActivities.length > 0 ? (
-                  filteredAndSortedActivities.map(activity => (
+                {displayActivities.length > 0 ? (
+                  displayActivities.map(activity => (
                     <tr key={activity.activityId} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {activity.activityId}
@@ -209,7 +238,7 @@ const ActivityManagement = () => {
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h4 className="text-md font-medium mb-3">Most Completed Activities</h4>
                 <div className="space-y-3">
-                  {[...filteredAndSortedActivities]
+                  {[...displayActivities]
                     .sort((a, b) => b.count - a.count)
                     .slice(0, 5)
                     .map(activity => (
@@ -232,7 +261,7 @@ const ActivityManagement = () => {
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h4 className="text-md font-medium mb-3">Least Completed Activities</h4>
                 <div className="space-y-3">
-                  {[...filteredAndSortedActivities]
+                  {[...displayActivities]
                     .sort((a, b) => a.count - b.count)
                     .slice(0, 5)
                     .map(activity => (
