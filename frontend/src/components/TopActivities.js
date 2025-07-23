@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TopActivityCard from './TopActivityCard';
+import activity1 from '../assets/images/activities/activityGalery/activity1.svg';
+import activity5 from '../assets/images/activities/activityGalery/activity6.svg';
+import activity13 from '../assets/images/activities/activityGalery/acitivty10.svg';
 
 function TopActivities({ userId }) {
     const navigate = useNavigate();
@@ -54,6 +57,7 @@ function TopActivities({ userId }) {
                     moduleId={1}
                     isReady={true}
                     completed={!!activityStatuses?.[1]}
+                    activityImage={activity1}
                 />
 
                 {/* <TopActivityCard
@@ -78,6 +82,7 @@ function TopActivities({ userId }) {
                     moduleId={1}
                     isReady={true}
                     completed={!!activityStatuses?.[13]}
+                    activityImage={activity13}
                 />
 
                 <TopActivityCard
@@ -90,6 +95,7 @@ function TopActivities({ userId }) {
                     moduleId={3}
                     isReady={true}
                     completed={!!activityStatuses?.[5]}
+                    activityImage={activity5}
                 />
 
             </div>

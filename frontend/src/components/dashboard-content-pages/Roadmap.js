@@ -2,6 +2,16 @@ import React, { useEffect, useState, useRef } from 'react';
 import editIcon from '../../assets/images/edit-icon.png';
 import RoadmapActivityBar from '../../components/dashboard-content-pages/RoadmapActivityBar';
 import TopActivityCard from '../../components/TopActivityCard';
+import activity1 from '../../assets/images/activities/activityGalery/activity1.svg';
+import activity2 from '../../assets/images/activities/activityGalery/activity2.svg';
+import activity3 from '../../assets/images/activities/activityGalery/activity3.svg';
+import activity4 from '../../assets/images/activities/activityGalery/activity4.svg';
+import activity5 from '../../assets/images/activities/activityGalery/activity5.svg';
+import activity6 from '../../assets/images/activities/activityGalery/activity6.svg';
+import activity7 from '../../assets/images/activities/activityGalery/activity7.svg';
+import activity8 from '../../assets/images/activities/activityGalery/activity8.svg';
+import activity9 from '../../assets/images/activities/activityGalery/activity9.svg';
+import activity10 from '../../assets/images/activities/activityGalery/acitivty10.svg';
 
 function Roadmap({ userId, activityName }) {
     const [currentSituation, setCurrentSituation] = useState('I’m a recent grad');
@@ -173,6 +183,7 @@ function Roadmap({ userId, activityName }) {
                     moduleId={1}
                     isReady={true}
                     completed={!!activityStatuses?.[1]}
+                    activityImage={activity1}
                     />
 
                     <TopActivityCard
@@ -185,6 +196,7 @@ function Roadmap({ userId, activityName }) {
                     moduleId={1}
                     isReady={true}
                     completed={!!activityStatuses?.[3]}
+                    activityImage={activity2}
                     />
 
                     <TopActivityCard
@@ -197,6 +209,7 @@ function Roadmap({ userId, activityName }) {
                     moduleId={1}
                     isReady={true}
                     completed={!!activityStatuses?.[2]}
+                    activityImage={activity3}
                     />
 
                     <TopActivityCard
@@ -209,6 +222,7 @@ function Roadmap({ userId, activityName }) {
                     moduleId={1}
                     isReady={true}
                     completed={!!activityStatuses?.[14]}
+                    activityImage={activity4}
                     />
 
                     <TopActivityCard
@@ -221,6 +235,7 @@ function Roadmap({ userId, activityName }) {
                     moduleId={1}
                     isReady={true}
                     completed={!!activityStatuses?.[9]}
+                    activityImage={activity5}
                     />
 
                     <TopActivityCard
@@ -233,6 +248,7 @@ function Roadmap({ userId, activityName }) {
                     moduleId={1}
                     isReady={true}
                     completed={!!activityStatuses?.[5]}
+                    activityImage={activity6}
                     />
 {/*
                     <TopActivityCard
@@ -257,6 +273,7 @@ function Roadmap({ userId, activityName }) {
                     moduleId={1}
                     isReady={true}
                     completed={!!activityStatuses?.[11]}
+                    activityImage={activity7}
                     />
 
                     <TopActivityCard
@@ -269,6 +286,7 @@ function Roadmap({ userId, activityName }) {
                     moduleId={1}
                     isReady={true}
                     completed={!!activityStatuses?.[7]}
+                    activityImage={activity8}
                     />
 
                     <TopActivityCard
@@ -281,6 +299,7 @@ function Roadmap({ userId, activityName }) {
                     moduleId={1}
                     isReady={true}
                     completed={!!activityStatuses?.[10]}
+                    activityImage={activity9}
                     />
 
                     <TopActivityCard
@@ -293,6 +312,7 @@ function Roadmap({ userId, activityName }) {
                     moduleId={1}
                     isReady={true}
                     completed={!!activityStatuses?.[13]}
+                    activityImage={activity10}
                     />
                 </div>
             </div>
