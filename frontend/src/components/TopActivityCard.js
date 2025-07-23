@@ -5,7 +5,7 @@ import star from '../assets/images/star.png';
 import clock from '../assets/images/clock.png';
 import startIcon from '../assets/images/start-icon.png';
 
-function TopActivityCard({ activityId, activityTitle, activityDescription, activityTags, activityStarCount, activityTime, moduleId, isReady, completed }) {
+function TopActivityCard({ activityId, activityTitle, activityDescription, activityTags, activityStarCount, activityTime, moduleId, isReady, completed, activityImage }) {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const handleActivityClick = (activityId) => {
@@ -20,6 +20,11 @@ function TopActivityCard({ activityId, activityTitle, activityDescription, activ
             {loading && (
                 <div className="spinner-overlay">
                     <div className="spinner"></div>
+                </div>
+            )}
+            {activityImage && (
+                <div className="top-activity-card-image" onClick={() => handleActivityClick(activityId)} style={{ cursor: 'pointer' }}>
+                    <img src={activityImage} alt="Activity" />
                 </div>
             )}
             <div className='top-activity-card-upper-container'>
