@@ -118,7 +118,7 @@ const Leaderboard = () => {
                 {renderTopThree()}
                 {renderRemainingUsers()}
             </div>
-            <UserGrowthChart />
+            {/*<UserGrowthChart />*/}
         </div>
     );
 };
