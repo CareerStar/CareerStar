@@ -111,6 +111,11 @@ function Dashboard() {
                     <DashboardContent selectedPage={selectedPage} activityName={activityName} onComplete={(page) => handlePageChange(page)} userId={userId} />
                 </div>
             </div>
+                <section class="stars-container">
+                    <div id="stars"></div>
+                    <div id="stars2"></div>
+                    <div id="stars3"></div>
+                </section>
         </div>
     );
 };

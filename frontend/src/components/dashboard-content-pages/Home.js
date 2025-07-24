@@ -298,7 +298,7 @@ function Home({ onComplete, userId }) {
                         <p>It's a great day to be a Career Star!</p>
                     </div>
                 </div>
-                <div className="home-welcome-right"><span className="star-count"> {stars} </span>  <img src={star} className='star' /></div>
+                {/* <div className="home-welcome-right"><span className="star-count"> {stars} </span>  <img src={star} className='star' /></div> */}
             </div>
             {currentStep >= 1 && currentStep < totalSteps ? (
                 <div className="home-questions">
@@ -331,6 +331,11 @@ function Home({ onComplete, userId }) {
             ) : currentStep === (totalSteps + 1) ? (
                 <div className="">
                     {renderPage()}
+                     <section class="stars-container">
+                    <div id="stars"></div>
+                    <div id="stars2"></div>
+                    <div id="stars3"></div>
+                </section>
                 </div>
             ) : (
                 <div className="home-questions">
