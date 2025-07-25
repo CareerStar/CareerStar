@@ -5,6 +5,7 @@ import activity1 from '../assets/images/activities/activityGalery/activity1.svg'
 import activity5 from '../assets/images/activities/activityGalery/activity6.svg';
 import activity13 from '../assets/images/activities/activityGalery/acitivty10.svg';
 
+
 function TopActivities({ userId }) {
     const navigate = useNavigate();
     const [firstname, setFirstname] = useState(localStorage.getItem('firstname') || '');
@@ -98,6 +99,18 @@ function TopActivities({ userId }) {
                     activityImage={activity5}
                 />
 
+                <TopActivityCard
+                    activityId={15}
+                    activityTitle='We Want to Know About Your Internship'
+                    activityDescription='Help us Help you!'
+                    activityTags={[ 'Communication', 'Leadership']}
+                    activityStarCount={5}
+                    activityTime='5 min'
+                    moduleId={3}
+                    isReady={true}
+                    completed={!!activityStatuses?.[15]}
+                    activityImage={activity1}
+                />
             </div>
         </div>
     );

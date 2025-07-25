@@ -23,6 +23,7 @@ function Roadmap({ userId, activityName }) {
     const inputGoalRef = useRef(null);
     const inputSituationRef = useRef(null);
     const [activityStatuses, setActivityStatuses] = useState({});
+    const [starCount, setStarCount] = useState(5);
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -314,6 +315,19 @@ function Roadmap({ userId, activityName }) {
                     completed={!!activityStatuses?.[13]}
                     activityImage={activity10}
                     />
+                    
+                    <TopActivityCard
+                    activityId={15}
+                    activityTitle='We Want to Know About Your Internship'
+                    activityDescription='Help us Help you!'
+                    activityTags={[ 'Communication', 'Leadership']}
+                    activityStarCount={5}
+                    activityTime='5 min'
+                    moduleId={3}
+                    isReady={true}
+                    completed={!!activityStatuses?.[15]}
+                    activityImage={activity1}
+                />
                 </div>
             </div>
         </div>
