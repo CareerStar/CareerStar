@@ -2116,7 +2116,7 @@ button:hover {
   justify-content: space-between;
   align-items: center;
 
-  width: 100%;
+  width: 30%;
   height: auto;
   /* background: #FFFFFF; */
   border-radius: 12px;
@@ -2126,7 +2126,7 @@ button:hover {
 
 .activity-description-content {
   padding: 20px 40px;
-  width: 100%;
+  width: 30%;
 }
 
 .activity-box {
@@ -2570,11 +2570,6 @@ h3 {
   /* justify-content: space-between; */
   box-sizing: border-box;
   box-shadow: 0 0 10px #8B2CF5
-
-}
-
-.activity-description {
-  /* flex-grow: 1; */
 }
 
 .activity-description h2 {
@@ -5448,6 +5443,151 @@ h3 {
   border-radius: 14px 14px 0 0;
 }
 
+/* Activity15 Form Styling */
+.activity-description form {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 18px;
+  padding: 32px 28px 28px 28px;
+  box-shadow: 0 2px 16px rgba(88,26,209,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.activity-description label {
+  display: block;
+  font-weight: 600;
+  color: #581AD1;
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+.activity-description input[type="text"],
+.activity-description input[type="number"],
+.activity-description select,
+.activity-description textarea {
+  width: 260px; /* or your preferred width */
+  padding: 10px 14px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+  margin-bottom: 8px;
+  background: #f8f9fa;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.activity-description input:focus,
+.activity-description select:focus,
+.activity-description textarea:focus {
+  border-color: #581AD1;
+  outline: none;
+  box-shadow: 0 0 0 2px #e6e0fa;
+}
+
+.activity-description .radio-group {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 8px;
+}
+
+.activity-description .radio-group label {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 0;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.activity-description .save-button {
+  background: linear-gradient(90deg, #581AD1 0%, #7C3AED 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(88,26,209,0.08);
+}
+
+.activity-description .save-button:hover {
+  background: linear-gradient(90deg, #7C3AED 0%, #581AD1 100%);
+  box-shadow: 0 4px 16px rgba(88,26,209,0.12);
+}
+
+@media (max-width: 700px) {
+  .activity-description form {
+    padding: 18px 6px 18px 6px;
+    max-width: 98vw;
+  }
+}
+
+.activity15-term-year-row {
+  gap: 10px;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.activity15-term-year-row > div {
+  flex: 1 1 0;
+  min-width: 120px;
+}
+
+/* Activity 16 */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  color: #f3eeff;
+  cursor: pointer;
+  position: relative;
+  padding-left: 28px;
+  user-select: none;
+}
+
+/* Hide native input, we'll style with a pseudo-circle */
+.radio-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Custom radio appearance */
+.radio-option::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 18px;
+  width: 18px;
+  border: 2px solid #dfbdff;
+  border-radius: 50%;
+  background-color: transparent;
+  transition: all 0.2s ease;
+}
+
+/* Selected state */
+.radio-option input[type="radio"]:checked + label::before,
+.radio-option input[type="radio"]:checked ~ ::before {
+  background-color: #dfbd
+}
+
 #stars {
     width: 1px;
     height: 1px;
@@ -6020,65 +6160,4 @@ h3 {
     }
 }
 
-/* style for text boxes activity15 */
 
-.activity-input input {
-  width: 100%;
-  padding: 12px 16px;
-  font-size: 16px;
-  color: #f0f0ff;
-  background-color: whitesmoke; /* or use your dark theme color */
-  border: 1px solid #5e43a2;
-  border-radius: 10px;
-  outline: none;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-
-
-.radio-group {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.radio-option {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 16px;
-  color: #f3eeff;
-  cursor: pointer;
-  position: relative;
-  padding-left: 28px;
-  user-select: none;
-}
-
-/* Hide native input, we'll style with a pseudo-circle */
-.radio-option input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-}
-
-/* Custom radio appearance */
-.radio-option::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 18px;
-  width: 18px;
-  border: 2px solid #dfbdff;
-  border-radius: 50%;
-  background-color: transparent;
-  transition: all 0.2s ease;
-}
-
-/* Selected state */
-.radio-option input[type="radio"]:checked + label::before,
-.radio-option input[type="radio"]:checked ~ ::before {
-  background-color: #dfbd
-}
