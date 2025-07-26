@@ -9,15 +9,16 @@ import activityImage from '../../assets/images/activities/activity1/activity-ima
 import clock from '../../assets/images/activities/clock.png';
 import star from '../../assets/images/activities/star.png';
 import upArrowScroll from '../../assets/images/up-arrow-scroll.png';
-import step1Image1 from '../../assets/images/activities/activity1/step1-image1.png';
-import step1Image2 from '../../assets/images/activities/activity1/step1-image2.png';
-import step2Image1 from '../../assets/images/activities/activity1/step2-image1.png';
-import step3Image1 from '../../assets/images/activities/activity1/step3-image1.png';
-import step3Image2 from '../../assets/images/activities/activity1/step3-image2.png';
-import step4Image1 from '../../assets/images/activities/activity1/step4-image1.png';
-import fireFlameIcon from '../../assets/images/fire-flame-icon.png';
-import likeIcon from '../../assets/images/like-icon.png';
-import dislikeIcon from '../../assets/images/dislike-icon.png';
+import Stars3 from '../../assets/images/stars3.png';
+// import step1Image1 from '../../assets/images/activities/activity1/step1-image1.png';
+// import step1Image2 from '../../assets/images/activities/activity1/step1-image2.png';
+// import step2Image1 from '../../assets/images/activities/activity1/step2-image1.png';
+// import step3Image1 from '../../assets/images/activities/activity1/step3-image1.png';
+// import step3Image2 from '../../assets/images/activities/activity1/step3-image2.png';
+// import step4Image1 from '../../assets/images/activities/activity1/step4-image1.png';
+// import fireFlameIcon from '../../assets/images/fire-flame-icon.png';
+// import likeIcon from '../../assets/images/like-icon.png';
+// import dislikeIcon from '../../assets/images/dislike-icon.png';
 
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
@@ -42,6 +43,7 @@ const Activity15 = () => {
     });
     const [showHotTipPopup, setShowHotTipPopup] = useState(false);
     const [showLikeDislikePopup, setShowLikeDislikePopup] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const columnHeadings = [
@@ -474,7 +476,7 @@ const Activity15 = () => {
                                             </div>
                                         </div>
 
-                                        {showLikeDislikePopup && (
+                                        {/* {showLikeDislikePopup && (
                                             <div className='activity-like-dislike-popup'>
                                                 <div className='activity-like-dislike-popup-content'>
                                                     <p>How did you find this activity?</p>
@@ -488,17 +490,27 @@ const Activity15 = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        )}
+                                        )} */}
 
-                                        {showHotTipPopup && (
+                                        {/* {showHotTipPopup && (
                                             <div className='hot-tip-popup'>
                                                 <div className='hot-tip-popup-content' ref={popupRef}>
                                                     <img src={step1Image2} alt='3 stars' />
                                                 </div>
                                             </div>
-                                        )}
+                                        )} */}
+                                            {showPopup && (
+                                                <div className='popup'>
+                                                    <div className='popup-content'>
+                                                        <img src={Stars3} alt='5 stars' />
+                                                        <div className='earned-star'>You earned 3 stars!</div>
+                                                        <div className='popup-submit-button' onClick={() => handleSubmit(true)}>
+                                                            <p>Complete Activity!</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}        
                                     </div>
                                     );
 };
-
                                     export default Activity15;

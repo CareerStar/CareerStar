@@ -30,7 +30,7 @@ function Dashboard() {
     }, [location.pathname]);
     const activityName = location.pathname.split('/')[3];
     const [onboarded, setOnboarded] = useState(false);
-    const pages = ['Home', 'Profile', 'Activities', 'Workshops', 'Leaderboard', 'Resume Guide'];
+    const pages = ['Home', 'Profile', 'Activities', 'Leaderboard', 'Resume Guide']; //, 'Workshops'
 
     const fetchUserDetails = async () => {
         try {
@@ -105,6 +105,13 @@ function Dashboard() {
     return (
         <div className='dashboard'>
             <Header userName={firstname} />
+            <div>
+                <section className="stars-container">
+                    <div id="stars"></div>
+                    <div id="stars2"></div>
+                    <div id="stars3"></div>
+                </section>
+            </div>            
             <div className='dashboard-container'>
                 <Sidebar pages={pages} selectedPage={selectedPage} onboarded={onboarded} />
                 <div className='content'>
