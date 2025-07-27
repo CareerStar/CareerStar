@@ -135,10 +135,7 @@ const Activity15 = () => {
             help: answers.help,
           };
       
-          await axios.post(
-            'https://api.careerstar.co/user-internship-info',
-            internshipPayload
-          );
+        
       
           if (response.status === 200) {
             setCompleted(true);
