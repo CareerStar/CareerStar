@@ -211,7 +211,11 @@ const Activity16 = () => {
                 answers.videoUseful
             );
         } else if (currentStep === 3) {
-            return answers.rating && answers.feedbackText.trim().length > 0;
+            return (
+                answers.rating &&
+                typeof answers.feedbackText === 'string' &&
+                answers.feedbackText.trim().length > 0
+            );
         }
         return true;
     };
