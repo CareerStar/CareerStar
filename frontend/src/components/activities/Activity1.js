@@ -212,7 +212,7 @@ const Activity1 = () => {
                             <div className="activity-step-right-element">
                                 <div className="activity-step-number">{step.number}</div>
                                 <div className="activity-step-title">{step.title}</div>
-                                <div className={`activity-step-button ${currentStep === step.id ? "selected" : ""}`} onClick={() => handleStepChange(step.id)}>Dive In</div>
+                                {/* <div className={`activity-step-button ${currentStep === step.id ? "selected" : ""}`} onClick={() => handleStepChange(step.id)}>Dive In</div> */}
                             </div>
                         </div>
                     ))}

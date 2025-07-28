@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TopActivityCard from './TopActivityCard';
 import activity1 from '../assets/images/activities/activityGalery/activity1.svg';
-import activity5 from '../assets/images/activities/activityGalery/activity6.svg';
+import activity6 from '../assets/images/activities/activityGalery/activity6.svg';
 import activity13 from '../assets/images/activities/activityGalery/acitivty10.svg';
 
 
@@ -48,7 +48,7 @@ function TopActivities({ userId }) {
             </div>
             <div className='top-activities-container'>
 
-                <TopActivityCard
+                {/*<TopActivityCard
                     activityId={1}
                     activityTitle='Reaching Out To More Than Recruiters'
                     activityDescription='Reaching out to the people you could actually be working with is often be much more effective.'
@@ -73,6 +73,19 @@ function TopActivities({ userId }) {
                     completed={!!activityStatuses?.[2]}
                 /> */}
 
+            <TopActivityCard
+                    activityId={16}
+                    activityTitle='Welcome to CareerStar 101'
+                    activityDescription="We're glad you're here! this quick guide will help you get started with CareerStar."
+                    activityTags={[ 'Communication', 'Leadership']}
+                    activityStarCount={3}
+                    activityTime='5 min'
+                    moduleId={3}
+                    isReady={true}
+                    completed={!!activityStatuses?.[16]}
+                    activityImage={activity6}
+                />
+            
                 <TopActivityCard    
                     activityId={13}
                     activityTitle='3-2-1 + Report: Stand Out During Your Internship'
@@ -84,21 +97,8 @@ function TopActivities({ userId }) {
                     isReady={true}
                     completed={!!activityStatuses?.[13]}
                     activityImage={activity13}
-                />
-
-                <TopActivityCard
-                    activityId={5}
-                    activityTitle='Let’s Network Before We Network'
-                    activityDescription='Want to make the most of an event? Start by building a relationship with the event host!'
-                    activityTags={['Events', 'Networking']}
-                    activityStarCount={7}
-                    activityTime='15 min'
-                    moduleId={3}
-                    isReady={true}
-                    completed={!!activityStatuses?.[5]}
-                    activityImage={activity5}
-                />
-
+                /> 
+ 
                 <TopActivityCard
                     activityId={15}
                     activityTitle='We Want to Know About Your Internship'
@@ -111,6 +111,8 @@ function TopActivities({ userId }) {
                     completed={!!activityStatuses?.[15]}
                     activityImage={activity1}
                 />
+
+
             </div>
         </div>
     );
