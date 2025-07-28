@@ -34,7 +34,7 @@ const Activity16 = () => {
     const activityId = 16;
     const [completed, setCompleted] = useState(false);
     const [alreadyCompleted, setAlreadyCompleted] = useState(false);
-    const [starCount, setStarCount] = useState(5);
+    const [starCount, setStarCount] = useState(3);
     const [answers, setAnswers] = useState({
         answer1: '', //Answers can not be a null JSON object, it has to have at least one key-value pair
         tableData: Array.from({ length: 4 }, () => Array(7).fill("")),
@@ -252,7 +252,6 @@ const Activity16 = () => {
                         <p>CareerStar is a platform dedicated to helping students build their career journey by developing key professional skills. 
                             It supports students in improving their professionalism, answering tough career-related questions, strengthening their professional social presence, 
                             and enhancing their organizational and communication abilities.</p>
-
                     </div>
                 ) : currentStep === 1 ? (
                     <div className="activity-description">
@@ -264,7 +263,7 @@ const Activity16 = () => {
                             <li><p>Highlight: View notifications, upcoming tasks, recent activity, and quick access to key features.</p></li>
                         </ul>
                         <div className="activity-image">
-                            <img src={step1Image1} alt="Step 1" />
+                            <img src={step1Image1} alt="Image 1" />
                         </div>  
 
 
@@ -273,7 +272,7 @@ const Activity16 = () => {
                             <li><p>Highlight: Showcase your skills, goals, and experience to personalize your journey.</p></li>
                         </ul>                    
                         <div className="activity-image">
-                            <img src={step1Image2} alt="Step 2" />
+                            <img src={step1Image2} alt="Image 2" />
                         </div>
 
 
@@ -282,7 +281,7 @@ const Activity16 = () => {
                             <li><p>Highlight: Complete real-world scenarios, answer career questions, and track your progress.</p></li>
                         </ul>
                         <div className="activity-image">
-                            <img src={step1Image3} alt="Step 3" />
+                            <img src={step1Image3} alt="Image 3" />
                         </div>
 
                         <ul>
@@ -290,7 +289,7 @@ const Activity16 = () => {
                             <li><p>Highlight: Earn points for completing activities and see how you compare with peers.</p></li>
                         </ul>
                         <div className="activity-image">
-                            <img src={step1Image4} alt="Step 4" />
+                            <img src={step1Image4} alt="Image 4" />
                         </div>
 
                         <ul>
@@ -298,7 +297,7 @@ const Activity16 = () => {
                             <li><p>Highlight: Access templates, tips, and examples tailored for students.</p></li>
                         </ul>            
                         <div className="activity-image">
-                            <img src={step1Image5} alt="Step 5" />
+                            <img src={step1Image5} alt="Image 5" />
                         </div>
 
                         <ul>
@@ -337,17 +336,17 @@ const Activity16 = () => {
                         <h2>Step 3: Your Feedback Matters!</h2>
                         <form>
                             <p>On a scale of 1-5 how helpful was this video/activity?</p>
-                                <div class="simple-rating">
+                                <div class="radio-group">
                                     <label>
                                         <input type="radio" name="rating" value="1"/> 1
                                             </label>
-                                        <label>
+                                        <label >
                                             <input type="radio" name="rating" value="2"/> 2
                                         </label>
                                         <label>
                                             <input type="radio" name="rating" value="3" checked/> 3
                                         </label>
-                                        <label>
+                                        <label >
                                             <input type="radio" name="rating" value="4"/> 4
                                         </label>
                                         <label>
@@ -377,7 +376,7 @@ const Activity16 = () => {
             {showPopup && (
                 <div className='popup'>
                     <div className='popup-content'>
-                        <img src={Stars3} alt='5 stars' />
+                        <img src={Stars3} alt='3 stars' />
                         <div className='earned-star'>You earned 3 stars!</div>
                         <div className='popup-submit-button' onClick={() => handleSubmit(true)}>
                             <p>Complete Activity!</p>
@@ -390,4 +389,3 @@ const Activity16 = () => {
 };
 
 export default Activity16;
-

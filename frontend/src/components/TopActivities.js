@@ -112,6 +112,19 @@ function TopActivities({ userId }) {
                     activityImage={activity1}
                 />
 
+                <TopActivityCard
+                    activityId={16}
+                    activityTitle='Welcome to CareerStar 101'
+                    activityDescription="We're glad you're here! this quick guide will help you get started with CareerStar."
+                    activityTags={[ 'Communication', 'Leadership']}
+                    activityStarCount={3}
+                    activityTime='5 min'
+                    moduleId={3}
+                    isReady={true}
+                    completed={!!activityStatuses?.[16]}
+                    activityImage={activity1}
+                />
+
             </div>
         </div>
     );
