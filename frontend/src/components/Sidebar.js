@@ -3,12 +3,11 @@ import { useNavigate } from "react-router-dom";
 // <<<<<<< Updated upstream
 import { Trophy, Folder, Cast, FileText} from "lucide-react";
 // import { Trophy, Folder, Cast} from "lucide-react";
-import supportIcon from "../assets/images/support-icon-blue.svg";
 import networkIcon from "../assets/images/network-icon.png";
 import eventsIcon from "../assets/images/events-icon.png";
 import homeIcon from "../assets/images/home-icon-earth.svg";
 import profileIcon from "../assets/images/profile-icon-blue.svg";
-import roadmapIcon from "../assets/images/activites-icon-space.svg";
+import roadmapIcon from "../assets/images/activities-icon-blue.svg";
 import supportIcon from "../assets/images/support-icon-blue.svg";
 import leaderBoard from "../assets/images/leaderboard-icon-moon.svg";
 
@@ -22,7 +21,6 @@ function Sidebar({ pages, selectedPage, onboarded, isAdmin = false }) {
         Leaderboard: leaderBoard,
         Support: supportIcon,
         Network: networkIcon,
-        Leaderboard: leaderboardIcon,
         Events: eventsIcon,
         AdminEvents: eventsIcon,
         LinkedIn: eventsIcon,
