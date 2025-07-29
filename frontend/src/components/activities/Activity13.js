@@ -568,6 +568,53 @@ ${answers.idea}
         }
     };
     
+    const breakLongLines = (text, maxLen = 80) => {
+        if (!text) return '';
+        // Split by newline, then further break long lines
+        return text
+            .split('\n')
+            .map(line => {
+                if (line.length <= maxLen) return line;
+                // Break long lines at spaces
+                const words = line.split(' ');
+                let result = '';
+                let current = '';
+                for (const word of words) {
+                    if ((current + ' ' + word).trim().length > maxLen) {
+                        result += current.trim() + '<br/>';
+                        current = word + ' ';
+                    } else {
+                        current += word + ' ';
+                    }
+                }
+                result += current.trim();
+                return result;
+            })
+            .join('<br/>');
+    };
+
+    const generateEmailHtml = () => {
+        const reportDate = new Date().toLocaleDateString();
+        return `
+            <div style="font-family: Arial, sans-serif; font-size: 15px; color: #222; max-width: 600px; word-break: break-word;">
+                <h2 style="margin-bottom: 0;">Weekly Progress Report - ${reportDate}</h2>
+                <br/>
+                <b>Support Needed</b>
+                <div style="margin-bottom: 16px;">${breakLongLines(answers.supportNeeded)}</div>
+                <b>Work Delivery Highlights</b>
+                <ol>
+                    ${answers.highlights.map(h => h ? `<li>${breakLongLines(h)}</li>` : '').join('')}
+                </ol>
+                <b>Next Week's Focus</b>
+                <ol>
+                    ${answers.futureHighlights.map(h => h ? `<li>${breakLongLines(h)}</li>` : '').join('')}
+                </ol>
+                <b>Idea/Initiative</b>
+                <div>${breakLongLines(answers.idea)}</div>
+            </div>
+        `;
+    };
+    
     // Updated send email function with better error handling and optimization
     const sendReportToManager = async () => {
         if (!managerEmail || !managerName) {
@@ -700,7 +747,7 @@ ${answers.idea}
                 studentName: localStorage.getItem('firstname') || 'Student',
                 reportDate: reportDate,
                 pdfContent: pdfBase64,
-                reportPreview: reportContent.substring(0, 1000),
+                reportPreview: generateEmailHtml(),
                 userId: userId,         
                 userAnswers: answers 
             };
