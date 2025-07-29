@@ -295,14 +295,14 @@ const Activity13 = () => {
         const reportContent = `
 # Weekly Progress Report - ${reportDate}
 
+## Support Needed
+${answers.supportNeeded}
+
 ## Work Delivery Highlights
 ${answers.highlights.map((highlight, index) => highlight ? `${index + 1}. ${highlight}` : '').filter(Boolean).join('\n')}
 
 ## Next Week's Focus
 ${answers.futureHighlights.map((highlight, index) => highlight ? `${index + 1}. ${highlight}` : '').filter(Boolean).join('\n')}
-
-## Support Needed
-${answers.supportNeeded}
 
 ## Idea/Initiative
 ${answers.idea}
@@ -327,6 +327,23 @@ ${answers.idea}
                                         text: `Weekly Progress Report - ${reportDate}`,
                                         bold: true,
                                         size: 32
+                                    })
+                                ]
+                            }),
+                            new Paragraph({
+                                children: [
+                                    new TextRun({
+                                        text: '\nSupport Needed',
+                                        bold: true,
+                                        size: 24
+                                    })
+                                ]
+                            }),
+                            new Paragraph({
+                                children: [
+                                    new TextRun({
+                                        text: answers.supportNeeded,
+                                        size: 24
                                     })
                                 ]
                             }),
@@ -368,23 +385,6 @@ ${answers.idea}
                                     ]
                                 })
                             ),
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: '\nSupport Needed',
-                                        bold: true,
-                                        size: 24
-                                    })
-                                ]
-                            }),
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: answers.supportNeeded,
-                                        size: 24
-                                    })
-                                ]
-                            }),
                             new Paragraph({
                                 children: [
                                     new TextRun({
