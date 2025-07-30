@@ -1,14 +1,125 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import '../../App.css';
+import jsPDF from 'jspdf';
+
+// Helper to break long lines for PDF
+const breakLongLines = (text, maxLen = 80) => {
+  if (!text) return '';
+  return text
+    .split('\n')
+    .map(line => {
+      if (line.length <= maxLen) return line;
+      const words = line.split(' ');
+      let result = '';
+      let current = '';
+      for (const word of words) {
+        if ((current + ' ' + word).trim().length > maxLen) {
+          result += current.trim() + '\n';
+          current = word + ' ';
+        } else {
+          current += word + ' ';
+        }
+      }
+      result += current.trim();
+      return result;
+    })
+    .join('\n');
+};
+
+const downloadReportPDF = (report) => {
+  const pdf = new jsPDF();
+  let y = 20;
+  const reportDate = report.created_time
+    ? new Date(report.created_time).toLocaleDateString()
+    : '';
+  // Title
+  pdf.setFontSize(18);
+  pdf.setFont(undefined, 'bold');
+  pdf.text(`Weekly Progress Report - ${reportDate}`, 20, y);
+  y += 12;
+  // Add sender and recipient info under the title
+  pdf.setFontSize(12);
+  pdf.setFont(undefined, 'normal');
+  pdf.text(`Report from: ${report.student_name || 'N/A'}`, 20, y);
+  y += 7;
+  pdf.text(`To: ${report.manager_email || 'N/A'}`, 20, y);
+  y += 10;
+  // Support Needed
+  pdf.setFontSize(14);
+  pdf.setFont(undefined, 'bold');
+  pdf.text('Support Needed', 20, y);
+  y += 8;
+  pdf.setFont(undefined, 'normal');
+  const supportLines = breakLongLines(report.answers?.supportNeeded || '').split('\n');
+  supportLines.forEach(line => {
+    pdf.text(line, 20, y);
+    y += 7;
+  });
+  y += 4;
+  // Work Delivery Highlights
+  pdf.setFontSize(14);
+  pdf.setFont(undefined, 'bold');
+  pdf.text('Work Delivery Highlights', 20, y);
+  y += 8;
+  pdf.setFont(undefined, 'normal');
+  (report.answers?.highlights || []).forEach((h, i) => {
+    if (h) {
+      const lines = breakLongLines(h).split('\n');
+      pdf.text(`${i + 1}. ${lines[0]}`, 20, y);
+      y += 7;
+      for (let j = 1; j < lines.length; j++) {
+        pdf.text(`    ${lines[j]}`, 20, y);
+        y += 7;
+      }
+    }
+  });
+  y += 4;
+  // Next Week's Focus
+  pdf.setFontSize(14);
+  pdf.setFont(undefined, 'bold');
+  pdf.text("Next Week's Focus", 20, y);
+  y += 8;
+  pdf.setFont(undefined, 'normal');
+  (report.answers?.futureHighlights || []).forEach((h, i) => {
+    if (h) {
+      const lines = breakLongLines(h).split('\n');
+      pdf.text(`${i + 1}. ${lines[0]}`, 20, y);
+      y += 7;
+      for (let j = 1; j < lines.length; j++) {
+        pdf.text(`    ${lines[j]}`, 20, y);
+        y += 7;
+      }
+    }
+  });
+  y += 4;
+  // Idea/Initiative
+  pdf.setFontSize(14);
+  pdf.setFont(undefined, 'bold');
+  pdf.text('Idea/Initiative', 20, y);
+  y += 8;
+  pdf.setFont(undefined, 'normal');
+  const ideaLines = breakLongLines(report.answers?.idea || '').split('\n');
+  ideaLines.forEach(line => {
+    pdf.text(line, 20, y);
+    y += 7;
+  });
+  pdf.save(`Weekly_Report_${reportDate}.pdf`);
+};
 
 const AdminManagerReports = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [reports, setReports] = useState([]);
+  const [allReports, setAllReports] = useState([]); // All reports for 'All Reports' column
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [loadingReports, setLoadingReports] = useState(false);
   const [selectedReport, setSelectedReport] = useState(null);
+  // Date filter state for All Reports
+  const [filterFrom, setFilterFrom] = useState('');
+  const [filterTo, setFilterTo] = useState('');
+  const [filteredAllReports, setFilteredAllReports] = useState([]);
+  const [showUsersList, setShowUsersList] = useState(false);
 
   //const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5001';
 
@@ -27,6 +138,31 @@ const AdminManagerReports = () => {
     fetchUsers();
   }, []);
 
+  // Fetch all reports for 'All Reports' column
+  useEffect(() => {
+    axios.get('https://api.careerstar.co/admin/api/reports')
+      .then(res => setAllReports(res.data))
+      .catch(err => console.error(err));
+  }, []);
+
+  // Filter all reports by date range
+  useEffect(() => {
+    if (!filterFrom && !filterTo) {
+      setFilteredAllReports(allReports);
+      return;
+    }
+    const fromDate = filterFrom ? new Date(filterFrom) : null;
+    const toDate = filterTo ? new Date(filterTo) : null;
+    setFilteredAllReports(
+      allReports.filter(r => {
+        const created = new Date(r.created_time);
+        if (fromDate && created < fromDate) return false;
+        if (toDate && created > toDate) return false;
+        return true;
+      })
+    );
+  }, [allReports, filterFrom, filterTo]);
+
   // Fetch reports for selected user
   const handleUserClick = async (user) => {
     try {
@@ -40,58 +176,159 @@ const AdminManagerReports = () => {
   };
 
   return (
-    <div className="admin-reports-flex-container">
-      {/* User List */}
-      {!selectedUser ? (
-        <div className="admin-user-list">
-          <h2>Users Who Sent Reports</h2>
-          {loadingUsers ? (
-            <p>Loading users...</p>
-          ) : (
-            <ul className="admin-user-list-ul">
-              {users.map((user) => (
-                <li key={user.userid} className="admin-user-list-li">
-                  <div
-                    onClick={() => {
-                      setSelectedUser(user);
-                      setLoadingReports(true);
-                      axios.get(`https://api.careerstar.co/admin/reports/user/${user.userid}`)
-                        .then(res => setReports(res.data))
-                        .catch(() => setReports([]))
-                        .finally(() => setLoadingReports(false));
-                    }}
-                    className="admin-user-card"
-                  >
-                    {user.firstname}
-                    <div className="admin-user-last-report">
-                      Last report:
-                      {user.lastReport
-                        ? new Date(user.lastReport).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'short',
-                          day: '2-digit',
-                          timeZone: 'America/New_York'
-                        })
-                        : "N/A"}
-                      {" at "}
-                      {user.lastReport
-                        ? new Date(user.lastReport).toLocaleTimeString('en-US', {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                          second: '2-digit',
-                          hour12: true,
-                          timeZone: 'America/New_York'
-                        })
-                        : "N/A"}
+    <div className="admin-reports-flex-container" >
+      
+      {/* All Reports Column */}
+      <div>
+        <div className="admin-report-list">
+          <h2>All Reports</h2>
+          {/* Date filter UI */}
+          <div className="filter-header">
+            <label>
+              From:
+              <input
+                type="date"
+                value={filterFrom}
+                onChange={e => setFilterFrom(e.target.value)}
+                style={{ marginLeft: 4 }}
+              />
+            </label>
+            <label>
+              To:
+              <input
+                type="date"
+                value={filterTo}
+                onChange={e => setFilterTo(e.target.value)}
+                style={{ marginLeft: 4 }}
+              />
+            </label>
+            <button
+              className="filter-btn"
+              onClick={() => {}}
+            >
+              Filter
+            </button>
+            <button
+              className="clear-filter-btn"
+              onClick={() => { setFilterFrom(''); setFilterTo(''); }}
+            >
+              Clear Filter
+            </button>
+          </div>
+          <div className="all-reports-header">
+            <button
+              className="show-users-btn"
+              onClick={() => setShowUsersList((prev) => !prev)}
+            >
+              {showUsersList ? "Hide Users Who Sent Reports" : "Show Users Who Sent Reports"}
+            </button>
+          </div>
+          {showUsersList && (
+            <div style={{ flex: 1 }}>
+            <div className="admin-user-list">
+              {loadingUsers ? (
+                <p>Loading users...</p>
+              ) : (
+                <ul className="admin-user-list-ul">
+                  {users.map((user) => (
+                    <li key={user.userid} className="admin-user-list-li">
+                      <div
+                        onClick={() => {
+                          setSelectedUser(user);
+                          setLoadingReports(true);
+                          axios.get(`https://api.careerstar.co/admin/reports/user/${user.userid}`)
+                            .then(res => setReports(res.data))
+                            .catch(() => setReports([]))
+                            .finally(() => setLoadingReports(false));
+                        }}
+                        className="admin-user-card"
+                      >
+                        {user.firstname}
+                        <div className="admin-user-last-report">
+                          Last report:
+                          {user.lastReport
+                            ? new Date(user.lastReport).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'short',
+                              day: '2-digit',
+                              timeZone: 'America/New_York'
+                            })
+                            : "N/A"}
+                          {" at "}
+                          {user.lastReport
+                            ? new Date(user.lastReport).toLocaleTimeString('en-US', {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                              second: '2-digit',
+                              hour12: true,
+                              timeZone: 'America/New_York'
+                            })
+                            : "N/A"}
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+          )}
+          {(filterFrom && filterTo) ? (
+            <>
+              <div className="all-reports-count" style={{ fontWeight: 600, marginBottom: 12 }}>
+                {filteredAllReports.length} report{filteredAllReports.length !== 1 ? 's' : ''} found in this date range
+              </div>
+              {filteredAllReports.length === 0 ? (
+                <p className="date-range-prompt">No reports found in this date range.</p>
+              ) : (
+                <div className="admin-report-cards-container">
+                  {filteredAllReports.map((report) => (
+                    <div
+                      key={report.id}
+                      className={`admin-report-card${selectedReport && selectedReport.id === report.id ? ' selected' : ''}`}
+                      onClick={() => {
+                        setSelectedUser(null);
+                        setSelectedReport(report);
+                      }}
+                    >
+                      <div className="admin-report-username" style={{ fontWeight: 700, fontSize: 16, marginBottom: 4 }}>
+                        {report.student_name || report.firstname || 'Unknown User'}
+                      </div>
+                      <div className="admin-report-card-date">
+                        Report sent on:
+                        {report.created_time
+                          ? new Date(report.created_time).toLocaleDateString('en-US', {
+                              weekday: 'short',
+                              year: 'numeric',
+                              month: 'short',
+                              day: '2-digit',
+                              timeZone: 'America/New_York'
+                            })
+                          : "N/A"
+                        }
+                        {" at "}
+                        {report.created_time
+                          ? new Date(report.created_time).toLocaleTimeString('en-US', {
+                              hour: '2-digit',
+                              minute: '2-digit',
+                              second: '2-digit',
+                              hour12: true,
+                              timeZone: 'America/New_York'
+                            })
+                          : "N/A"
+                        }
+                      </div>
+                      <div className="admin-report-card-preview">Click to view full report</div>
                     </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
+                  ))}
+                </div>
+              )}
+            </>
+          ) : (
+            <p className="date-range-prompt">Please select a date range to view reports.</p>
           )}
         </div>
-      ) : null}
-
+      </div>
       {/* Reports List - User's Reports as Cards */}
       {selectedUser && !selectedReport && (
         <div className="admin-report-list">
@@ -160,6 +397,14 @@ const AdminManagerReports = () => {
             className="admin-back-btn"
           >
             ← Back to reports list
+          </button>
+          {/* Download PDF button for selected report */}
+          <button
+            className="download-pdf-btn"
+            style={{ marginLeft: 12, marginBottom: 16 }}
+            onClick={() => downloadReportPDF(selectedReport)}
+          >
+            Download PDF
           </button>
           <div className="admin-report-detail-date">
             Report sent on:
