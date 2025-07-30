@@ -5108,9 +5108,10 @@ h3 {
   min-width: 300px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center horizontally */
-  justify-content: center; /* Center vertically if you want */
+  align-items: center;
+  justify-content: center;
   margin: 0 auto;
+  color: #ffffff;
 }
 
 .admin-user-list-ul {
@@ -5119,7 +5120,7 @@ h3 {
   margin: 0;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center the list items */
+  align-items: center; 
 }
 
 .admin-user-list-li {
@@ -5285,13 +5286,13 @@ h3 {
   margin-bottom: 16px;
   font-size: 15px;
   color: #444;
-  text-align: left;         /* Ensure left alignment */
-  padding-left: 0;          /* Remove any accidental padding */
-  border-left: 3px solid #e0e0e0; /* Optional: subtle left border */
-  background: #f9f9f9;      /* Optional: subtle background */
-  padding: 12px 0 12px 16px; /* Top, right, bottom, left */
+  text-align: left; 
+  padding-left: 0;          
+  border-left: 3px solid #e0e0e0; 
+  background: #f9f9f9;     
+  padding: 12px 0 12px 16px; 
   border-radius: 6px;
-  max-width: 350px;         /* Optional: keep it compact */
+  max-width: 350px;         
 }
 .admin-report-meta div {
   margin-bottom: 4px;
@@ -6235,5 +6236,100 @@ form button {
     to {
         transform: translateY(-2000px);
     }
+}
+
+.download-pdf-btn {
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  padding: 8px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 12px;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, border 0.2s;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.08);
+}
+.download-pdf-btn:hover {
+  background: #a78bfa;
+  color: #fff;
+  border: 2px solid #7c3aed;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.18);
+}
+
+.show-users-btn {
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.show-users-btn:hover {
+  background: #a78bfa;
+}
+.users-who-sent-reports-list {
+  background: #f8f8ff;
+  border-radius: 12px;
+  padding: 10px 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.08);
+}
+.user-list-item {
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+.user-list-item:last-child {
+  border-bottom: none;
+}
+
+/* ManagerReports styles */
+.filter-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.filter-btn {
+  margin-left: 8px;
+  padding: 6px 16px;
+  border-radius: 8px;
+  border: none;
+  background: #7c3aed;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.filter-btn:hover {
+  background: #a78bfa;
+}
+
+.clear-filter-btn {
+  margin-left: 4px;
+  padding: 6px 16px;
+  border-radius: 8px;
+  border: none;
+  background: #eee;
+  color: #333;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.clear-filter-btn:hover {
+  background: #e0e7ff;
+}
+
+.date-range-prompt {
+  color: #888;
+  margin-top: 24px;
+  font-size: 16px;
+  text-align: center;
 }
 

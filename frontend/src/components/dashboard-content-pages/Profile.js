@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import star from '../../assets/images/star-yellow.png';
 import axios from 'axios';
+import jsPDF from 'jspdf';
 
 function Profile({ userId: propUserId }) {
     const dispatch = useDispatch();
@@ -169,6 +170,110 @@ function Profile({ userId: propUserId }) {
         navigate('/');
     }
 
+    // Helper to break long lines for PDF
+    const breakLongLines = (text, maxLen = 80) => {
+        if (!text) return '';
+        return text
+            .split('\n')
+            .map(line => {
+                if (line.length <= maxLen) return line;
+                const words = line.split(' ');
+                let result = '';
+                let current = '';
+                for (const word of words) {
+                    if ((current + ' ' + word).trim().length > maxLen) {
+                        result += current.trim() + '\n';
+                        current = word + ' ';
+                    } else {
+                        current += word + ' ';
+                    }
+                }
+                result += current.trim();
+                return result;
+            })
+            .join('\n');
+    };
+
+    const downloadReportPDF = (report) => {
+        const pdf = new jsPDF();
+        let y = 20;
+        const reportDate = report.created_time
+            ? new Date(report.created_time).toLocaleDateString()
+            : '';
+        // Title
+        pdf.setFontSize(18);
+        pdf.setFont(undefined, 'bold');
+        pdf.text(`Weekly Progress Report - ${reportDate}`, 20, y);
+        y += 12;
+        // Add sender and recipient info under the title
+        pdf.setFontSize(12);
+        pdf.setFont(undefined, 'normal');
+        pdf.text(`Report from: ${report.student_name || 'N/A'}`, 20, y);
+        y += 7;
+        pdf.text(`To: ${report.manager_email || 'N/A'}`, 20, y);
+        y += 10;
+        // Support Needed
+        pdf.setFontSize(14);
+        pdf.setFont(undefined, 'bold');
+        pdf.text('Support Needed', 20, y);
+        y += 8;
+        pdf.setFont(undefined, 'normal');
+        const supportLines = breakLongLines(report.answers?.supportNeeded || '').split('\n');
+        supportLines.forEach(line => {
+            pdf.text(line, 20, y);
+            y += 7;
+        });
+        y += 4;
+        // Work Delivery Highlights
+        pdf.setFontSize(14);
+        pdf.setFont(undefined, 'bold');
+        pdf.text('Work Delivery Highlights', 20, y);
+        y += 8;
+        pdf.setFont(undefined, 'normal');
+        (report.answers?.highlights || []).forEach((h, i) => {
+            if (h) {
+                const lines = breakLongLines(h).split('\n');
+                pdf.text(`${i + 1}. ${lines[0]}`, 20, y);
+                y += 7;
+                for (let j = 1; j < lines.length; j++) {
+                    pdf.text(`    ${lines[j]}`, 20, y);
+                    y += 7;
+                }
+            }
+        });
+        y += 4;
+        // Next Week's Focus
+        pdf.setFontSize(14);
+        pdf.setFont(undefined, 'bold');
+        pdf.text("Next Week's Focus", 20, y);
+        y += 8;
+        pdf.setFont(undefined, 'normal');
+        (report.answers?.futureHighlights || []).forEach((h, i) => {
+            if (h) {
+                const lines = breakLongLines(h).split('\n');
+                pdf.text(`${i + 1}. ${lines[0]}`, 20, y);
+                y += 7;
+                for (let j = 1; j < lines.length; j++) {
+                    pdf.text(`    ${lines[j]}`, 20, y);
+                    y += 7;
+                }
+            }
+        });
+        y += 4;
+        // Idea/Initiative
+        pdf.setFontSize(14);
+        pdf.setFont(undefined, 'bold');
+        pdf.text('Idea/Initiative', 20, y);
+        y += 8;
+        pdf.setFont(undefined, 'normal');
+        const ideaLines = breakLongLines(report.answers?.idea || '').split('\n');
+        ideaLines.forEach(line => {
+            pdf.text(line, 20, y);
+            y += 7;
+        });
+        pdf.save(`Weekly_Report_${reportDate}.pdf`);
+    };
+
     return (
         <div className='profile-container'>
             {loading && (
@@ -242,6 +347,16 @@ function Profile({ userId: propUserId }) {
                                         })
                                       : "N/A"}
                                   </strong>
+                                  <button
+                                    className="download-pdf-btn"
+                                    style={{ marginLeft: 12 }}
+                                    onClick={e => {
+                                      e.stopPropagation();
+                                      downloadReportPDF(report);
+                                    }}
+                                  >
+                                    Download PDF
+                                  </button>
                                 </li>
                               ))}
                             </ul>
@@ -252,6 +367,14 @@ function Profile({ userId: propUserId }) {
                         <div className="my-report-detail">
                           <button className="my-reports-back-btn" onClick={() => setSelectedReport(null)}>
                             ← Back to My Reports
+                          </button>
+                          {/* Download PDF button for selected report */}
+                          <button
+                            className="download-pdf-btn"
+                            style={{ marginLeft: 12, marginBottom: 16 }}
+                            onClick={() => downloadReportPDF(selectedReport)}
+                          >
+                            Download PDF
                           </button>
                           <div className="my-report-detail-header">
                             <div className="my-report-detail-date">

@@ -453,43 +453,76 @@ ${answers.idea}
 
             case 'pdf':
                 const pdf = new jsPDF();
-                const splitText = reportContent.split('\n');
                 let y = 20;
-                
-                // Add text content
-                splitText.forEach(line => {
-                    if (line.startsWith('# ')) {
-                        pdf.setFontSize(20);
-                        pdf.text(line.substring(2), 20, y);
-                    } else if (line.startsWith('## ')) {
-                        pdf.setFontSize(16);
-                        pdf.text(line.substring(3), 20, y);
-                    } else {
-                        pdf.setFontSize(12);
-                        pdf.text(line, 20, y);
-                    }
-                    y += 10;
+
+                // Title
+                pdf.setFontSize(18);
+                pdf.setFont(undefined, 'bold');
+                pdf.text(`Weekly Progress Report - ${reportDate}`, 20, y);
+                y += 12;
+
+                // Support Needed
+                pdf.setFontSize(14);
+                pdf.setFont(undefined, 'bold');
+                pdf.text('Support Needed', 20, y);
+                y += 8;
+                pdf.setFont(undefined, 'normal');
+                const supportLines = breakLongLines(answers.supportNeeded).split('<br/>');
+                supportLines.forEach(line => {
+                    pdf.text(line, 20, y);
+                    y += 7;
                 });
+                y += 4;
 
-                if (answers.screenshots && answers.screenshots.length > 0) {
-                    y += 10; // Add some space before screenshots
-                    pdf.setFontSize(16);
-                    pdf.text('Screenshots:', 20, y);
-                    y += 10;
-
-                    answers.screenshots.forEach((screenshot, index) => {
-                        if (y > 250) {
-                            pdf.addPage();
-                            y = 20;
+                // Work Delivery Highlights
+                pdf.setFontSize(14);
+                pdf.setFont(undefined, 'bold');
+                pdf.text('Work Delivery Highlights', 20, y);
+                y += 8;
+                pdf.setFont(undefined, 'normal');
+                answers.highlights.forEach((h, i) => {
+                    if (h) {
+                        const lines = breakLongLines(h).split('<br/>');
+                        pdf.text(`${i + 1}. ${lines[0]}`, 20, y);
+                        y += 7;
+                        for (let j = 1; j < lines.length; j++) {
+                            pdf.text(`    ${lines[j]}`, 20, y);
+                            y += 7;
                         }
+                    }
+                });
+                y += 4;
 
-                        const img = new Image();
-                        img.src = screenshot;
-                        
-                        pdf.addImage(img, 'JPEG', 20, y, 120, 90);
-                        y += 140;
-                    });
-                }
+                // Next Week's Focus
+                pdf.setFontSize(14);
+                pdf.setFont(undefined, 'bold');
+                pdf.text("Next Week's Focus", 20, y);
+                y += 8;
+                pdf.setFont(undefined, 'normal');
+                answers.futureHighlights.forEach((h, i) => {
+                    if (h) {
+                        const lines = breakLongLines(h).split('<br/>');
+                        pdf.text(`${i + 1}. ${lines[0]}`, 20, y);
+                        y += 7;
+                        for (let j = 1; j < lines.length; j++) {
+                            pdf.text(`    ${lines[j]}`, 20, y);
+                            y += 7;
+                        }
+                    }
+                });
+                y += 4;
+
+                // Idea/Initiative
+                pdf.setFontSize(14);
+                pdf.setFont(undefined, 'bold');
+                pdf.text('Idea/Initiative', 20, y);
+                y += 8;
+                pdf.setFont(undefined, 'normal');
+                const ideaLines = breakLongLines(answers.idea).split('<br/>');
+                ideaLines.forEach(line => {
+                    pdf.text(line, 20, y);
+                    y += 7;
+                });
 
                 pdf.save(`Weekly_Report_${reportDate}.pdf`);
                 break;
@@ -1151,7 +1184,11 @@ ${answers.idea}
                                 >
                                     Preview Report
                                 </button> */}
+                                <div style={{ margin: '16px 0' }}>
+                                    <button onClick={() => downloadReport('pdf')}>Download PDF</button>
+                                </div>
                                 <div className="email-manager-section">
+                                    
                                     <h3>Send Report to Manager</h3>
                                     <div className="email-input-container">
                                         <input
@@ -1207,7 +1244,7 @@ ${answers.idea}
                             </div>
                         )}
                         
-                        <div className="report-tips">
+                        {/*<div className="report-tips">
                             <h3>Tips for Effective Reporting:</h3>
                             <ul>
                                 <li>Be consistent - send your report on the same day each week</li>
@@ -1216,7 +1253,7 @@ ${answers.idea}
                                 <li>Save your reports to track your progress over time</li>
                                 <li>Use these reports when updating your resume or preparing for performance reviews</li>
                             </ul>
-                        </div>
+                        </div>*/}
                     </div>
                 ) : null}
                 <div className="activity-navigation-buttons">
