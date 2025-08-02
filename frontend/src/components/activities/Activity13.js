@@ -310,147 +310,11 @@ ${answers.idea}
         return reportContent;
     };
 
-    const downloadReport = (format = 'md') => {
+    const downloadReport = async (format = 'md') => {
         const reportContent = generateReportPreview();
         const reportDate = new Date().toLocaleDateString().replace(/\//g, '-');
         
         switch (format) {
-            case 'docx':
-                // Create a new document
-                const doc = new Document({
-                    sections: [{
-                        properties: {},
-                        children: [
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: `Weekly Progress Report - ${reportDate}`,
-                                        bold: true,
-                                        size: 32
-                                    })
-                                ]
-                            }),
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: '\nSupport Needed',
-                                        bold: true,
-                                        size: 24
-                                    })
-                                ]
-                            }),
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: answers.supportNeeded,
-                                        size: 24
-                                    })
-                                ]
-                            }),
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: '\nWork Delivery Highlights',
-                                        bold: true,
-                                        size: 24
-                                    })
-                                ]
-                            }),
-                            ...answers.highlights.map(highlight => 
-                                new Paragraph({
-                                    children: [
-                                        new TextRun({
-                                            text: highlight,
-                                            size: 24
-                                        })
-                                    ]
-                                })
-                            ),
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: '\nNext Week\'s Focus',
-                                        bold: true,
-                                        size: 24
-                                    })
-                                ]
-                            }),
-                            ...answers.futureHighlights.map(highlight => 
-                                new Paragraph({
-                                    children: [
-                                        new TextRun({
-                                            text: highlight,
-                                            size: 24
-                                        })
-                                    ]
-                                })
-                            ),
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: '\nIdea/Initiative',
-                                        bold: true,
-                                        size: 24
-                                    })
-                                ]
-                            }),
-                            new Paragraph({
-                                children: [
-                                    new TextRun({
-                                        text: answers.idea,
-                                        size: 24
-                                    })
-                                ]
-                            }),
-                            // Add screenshots section if there are any
-                            ...(answers.screenshots && answers.screenshots.length > 0 ? [
-                                new Paragraph({
-                                    children: [
-                                        new TextRun({
-                                            text: '\nScreenshots',
-                                            bold: true,
-                                            size: 24
-                                        })
-                                    ]
-                                }),
-                                // Add each screenshot
-                                ...answers.screenshots.map(screenshot => {
-                                    // Convert base64 to buffer
-                                    const base64Data = screenshot.split(',')[1];
-                                    const imageBuffer = Buffer.from(base64Data, 'base64');
-                                    
-                                    return new Paragraph({
-                                        children: [
-                                            new TextRun({
-                                                text: '',
-                                                size: 24,
-                                                image: {
-                                                    data: imageBuffer,
-                                                    transformation: {
-                                                        width: 400,
-                                                        height: 300
-                                                    }
-                                                }
-                                            })
-                                        ]
-                                    });
-                                })
-                            ] : [])
-                        ]
-                    }]
-                });
-
-                // Generate and download the document
-                Packer.toBlob(doc).then(blob => {
-                    const element = document.createElement("a");
-                    element.href = URL.createObjectURL(blob);
-                    element.download = `Weekly_Report_${reportDate}.docx`;
-                    document.body.appendChild(element);
-                    element.click();
-                    document.body.removeChild(element);
-                });
-                break;
-
             case 'pdf':
                 const pdf = new jsPDF();
                 let y = 20;
@@ -521,6 +385,45 @@ ${answers.idea}
                 const ideaLines = pdf.splitTextToSize(breakLongLines(answers.idea).replace(/<br\/>/g, '\n'), 170);
                 pdf.text(ideaLines, 20, y);
                 y += ideaLines.length * 5;
+
+                // Screenshots section (add this block)
+                if (answers.screenshots && answers.screenshots.length > 0) {
+                    const maxScreenshots = 5;
+                    const screenshotsToInclude = answers.screenshots.slice(0, maxScreenshots);
+                    if (y > 250) {
+                        pdf.addPage();
+                        y = 20;
+                    }
+                    pdf.setFontSize(14);
+                    pdf.setFont(undefined, 'bold');
+                    pdf.text('Screenshots:', 20, y);
+                    y += 15;
+                    for (let i = 0; i < screenshotsToInclude.length; i++) {
+                        const screenshot = screenshotsToInclude[i];
+                        if (y > 200) {
+                            pdf.addPage();
+                            y = 20;
+                        }
+                        try {
+                            const img = new window.Image();
+                            img.src = screenshot;
+                            await new Promise((res) => img.onload = res);
+                            const canvas = document.createElement('canvas');
+                            canvas.width = 800;
+                            canvas.height = 600;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                            const resizedBase64 = canvas.toDataURL('image/jpeg', 0.6);
+                            pdf.addImage(resizedBase64, 'JPEG', 20, y, 120, 90);
+                            y += 100;
+                        } catch (error) {
+                            // Handle error
+                        }
+                    }
+                    if (answers.screenshots.length > maxScreenshots) {
+                        pdf.text(`Note: Only first ${maxScreenshots} screenshots included due to size limits.`, 20, y);
+                    }
+                }
 
                 pdf.save(`Weekly_Report_${reportDate}.pdf`);
                 break;
@@ -1183,7 +1086,7 @@ ${answers.idea}
                                     Preview Report
                                 </button> */}
                                 <div style={{ margin: '16px 0' }}>
-                                    <button onClick={() => downloadReport('pdf')}>Download PDF</button>
+                                    <button onClick={async () => await downloadReport('pdf')}>Download PDF</button>
                                 </div>
                                 <div className="email-manager-section">
                                     
