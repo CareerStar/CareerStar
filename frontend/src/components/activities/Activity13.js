@@ -454,6 +454,7 @@ ${answers.idea}
             case 'pdf':
                 const pdf = new jsPDF();
                 let y = 20;
+                const studentName = localStorage.getItem('firstname') || 'Student';
 
                 // Title
                 pdf.setFontSize(18);
@@ -461,18 +462,22 @@ ${answers.idea}
                 pdf.text(`Weekly Progress Report - ${reportDate}`, 20, y);
                 y += 12;
 
+                 // Add sender's name
+                 pdf.setFontSize(12);
+                 pdf.setFont(undefined, 'normal');
+                 pdf.text(`Report from: ${studentName}`, 20, y);
+                 y += 10;
+
                 // Support Needed
                 pdf.setFontSize(14);
                 pdf.setFont(undefined, 'bold');
                 pdf.text('Support Needed', 20, y);
                 y += 8;
                 pdf.setFont(undefined, 'normal');
-                const supportLines = breakLongLines(answers.supportNeeded).split('<br/>');
-                supportLines.forEach(line => {
-                    pdf.text(line, 20, y);
-                    y += 7;
-                });
-                y += 4;
+                pdf.setFontSize(10);
+                const supportLines = pdf.splitTextToSize(breakLongLines(answers.supportNeeded).replace(/<br\/>/g, '\n'), 170);
+                pdf.text(supportLines, 20, y);
+                y += supportLines.length * 5 + 4;
 
                 // Work Delivery Highlights
                 pdf.setFontSize(14);
@@ -480,15 +485,12 @@ ${answers.idea}
                 pdf.text('Work Delivery Highlights', 20, y);
                 y += 8;
                 pdf.setFont(undefined, 'normal');
+                pdf.setFontSize(10);
                 answers.highlights.forEach((h, i) => {
                     if (h) {
-                        const lines = breakLongLines(h).split('<br/>');
-                        pdf.text(`${i + 1}. ${lines[0]}`, 20, y);
-                        y += 7;
-                        for (let j = 1; j < lines.length; j++) {
-                            pdf.text(`    ${lines[j]}`, 20, y);
-                            y += 7;
-                        }
+                        const lines = pdf.splitTextToSize(`${i + 1}. ${breakLongLines(h).replace(/<br\/>/g, '\n')}`, 170);
+                        pdf.text(lines, 20, y);
+                        y += lines.length * 5;
                     }
                 });
                 y += 4;
@@ -499,15 +501,12 @@ ${answers.idea}
                 pdf.text("Next Week's Focus", 20, y);
                 y += 8;
                 pdf.setFont(undefined, 'normal');
+                pdf.setFontSize(10);
                 answers.futureHighlights.forEach((h, i) => {
                     if (h) {
-                        const lines = breakLongLines(h).split('<br/>');
-                        pdf.text(`${i + 1}. ${lines[0]}`, 20, y);
-                        y += 7;
-                        for (let j = 1; j < lines.length; j++) {
-                            pdf.text(`    ${lines[j]}`, 20, y);
-                            y += 7;
-                        }
+                        const lines = pdf.splitTextToSize(`${i + 1}. ${breakLongLines(h).replace(/<br\/>/g, '\n')}`, 170);
+                        pdf.text(lines, 20, y);
+                        y += lines.length * 5;
                     }
                 });
                 y += 4;
@@ -518,11 +517,10 @@ ${answers.idea}
                 pdf.text('Idea/Initiative', 20, y);
                 y += 8;
                 pdf.setFont(undefined, 'normal');
-                const ideaLines = breakLongLines(answers.idea).split('<br/>');
-                ideaLines.forEach(line => {
-                    pdf.text(line, 20, y);
-                    y += 7;
-                });
+                pdf.setFontSize(10);
+                const ideaLines = pdf.splitTextToSize(breakLongLines(answers.idea).replace(/<br\/>/g, '\n'), 170);
+                pdf.text(ideaLines, 20, y);
+                y += ideaLines.length * 5;
 
                 pdf.save(`Weekly_Report_${reportDate}.pdf`);
                 break;
