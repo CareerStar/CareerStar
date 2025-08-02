@@ -194,7 +194,7 @@ function Profile({ userId: propUserId }) {
             .join('\n');
     };
 
-    const downloadReportPDF = (report) => {
+    const downloadReportPDF = async (report) => {
         const pdf = new jsPDF();
         let y = 20;
         const reportDate = report.created_time
@@ -205,12 +205,12 @@ function Profile({ userId: propUserId }) {
         pdf.setFont(undefined, 'bold');
         pdf.text(`Weekly Progress Report - ${reportDate}`, 20, y);
         y += 12;
-        // Add sender's name at the top
+        // Add sender's name 
         pdf.setFontSize(12);
         pdf.setFont(undefined, 'normal');
         pdf.text(`Report from: ${report.student_name || 'N/A'}`, 20, y);
         y += 10;
-        // Add recipient info under the title
+        // Add recipient info
         pdf.setFontSize(12);
         pdf.setFont(undefined, 'normal');
         pdf.text(`To: ${report.manager_email || 'N/A'}`, 20, y);
@@ -265,6 +265,44 @@ function Profile({ userId: propUserId }) {
         const ideaLines = pdf.splitTextToSize(breakLongLines(report.answers?.idea || '').replace(/<br\/>/g, '\n'), 170);
         pdf.text(ideaLines, 20, y);
         y += ideaLines.length * 5;
+        // Screenshots
+        if (report.answers?.screenshots && report.answers.screenshots.length > 0) {
+            const maxScreenshots = 5;
+            const screenshotsToInclude = report.answers.screenshots.slice(0, maxScreenshots);
+            if (y > 250) {
+                pdf.addPage();
+                y = 20;
+            }
+            pdf.setFontSize(14);
+            pdf.setFont(undefined, 'bold');
+            pdf.text('Screenshots:', 20, y);
+            y += 15;
+            for (let i = 0; i < screenshotsToInclude.length; i++) {
+                const screenshot = screenshotsToInclude[i];
+                if (y > 200) {
+                    pdf.addPage();
+                    y = 20;
+                }
+                try {
+                    const img = new window.Image();
+                    img.src = screenshot;
+                    await new Promise((res) => img.onload = res);
+                    const canvas = document.createElement('canvas');
+                    canvas.width = 800;
+                    canvas.height = 600;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    const resizedBase64 = canvas.toDataURL('image/jpeg', 0.6);
+                    pdf.addImage(resizedBase64, 'JPEG', 20, y, 120, 90);
+                    y += 100;
+                } catch (error) {
+                    // Handle error
+                }
+            }
+            if (report.answers.screenshots.length > maxScreenshots) {
+                pdf.text(`Note: Only first ${maxScreenshots} screenshots included due to size limits.`, 20, y);
+            }
+        }
         pdf.save(`Weekly_Report_${reportDate}.pdf`);
     };
 
