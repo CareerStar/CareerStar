@@ -205,11 +205,14 @@ function Profile({ userId: propUserId }) {
         pdf.setFont(undefined, 'bold');
         pdf.text(`Weekly Progress Report - ${reportDate}`, 20, y);
         y += 12;
-        // Add sender and recipient info under the title
+        // Add sender's name at the top
         pdf.setFontSize(12);
         pdf.setFont(undefined, 'normal');
         pdf.text(`Report from: ${report.student_name || 'N/A'}`, 20, y);
-        y += 7;
+        y += 10;
+        // Add recipient info under the title
+        pdf.setFontSize(12);
+        pdf.setFont(undefined, 'normal');
         pdf.text(`To: ${report.manager_email || 'N/A'}`, 20, y);
         y += 10;
         // Support Needed
@@ -218,27 +221,22 @@ function Profile({ userId: propUserId }) {
         pdf.text('Support Needed', 20, y);
         y += 8;
         pdf.setFont(undefined, 'normal');
-        const supportLines = breakLongLines(report.answers?.supportNeeded || '').split('\n');
-        supportLines.forEach(line => {
-            pdf.text(line, 20, y);
-            y += 7;
-        });
-        y += 4;
+        pdf.setFontSize(10);
+        const supportLines = pdf.splitTextToSize(breakLongLines(report.answers?.supportNeeded || '').replace(/<br\/>/g, '\n'), 170);
+        pdf.text(supportLines, 20, y);
+        y += supportLines.length * 5 + 4;
         // Work Delivery Highlights
         pdf.setFontSize(14);
         pdf.setFont(undefined, 'bold');
         pdf.text('Work Delivery Highlights', 20, y);
         y += 8;
         pdf.setFont(undefined, 'normal');
+        pdf.setFontSize(10);
         (report.answers?.highlights || []).forEach((h, i) => {
             if (h) {
-                const lines = breakLongLines(h).split('\n');
-                pdf.text(`${i + 1}. ${lines[0]}`, 20, y);
-                y += 7;
-                for (let j = 1; j < lines.length; j++) {
-                    pdf.text(`    ${lines[j]}`, 20, y);
-                    y += 7;
-                }
+                const lines = pdf.splitTextToSize(`${i + 1}. ${breakLongLines(h).replace(/<br\/>/g, '\n')}`, 170);
+                pdf.text(lines, 20, y);
+                y += lines.length * 5;
             }
         });
         y += 4;
@@ -248,15 +246,12 @@ function Profile({ userId: propUserId }) {
         pdf.text("Next Week's Focus", 20, y);
         y += 8;
         pdf.setFont(undefined, 'normal');
+        pdf.setFontSize(10);
         (report.answers?.futureHighlights || []).forEach((h, i) => {
             if (h) {
-                const lines = breakLongLines(h).split('\n');
-                pdf.text(`${i + 1}. ${lines[0]}`, 20, y);
-                y += 7;
-                for (let j = 1; j < lines.length; j++) {
-                    pdf.text(`    ${lines[j]}`, 20, y);
-                    y += 7;
-                }
+                const lines = pdf.splitTextToSize(`${i + 1}. ${breakLongLines(h).replace(/<br\/>/g, '\n')}`, 170);
+                pdf.text(lines, 20, y);
+                y += lines.length * 5;
             }
         });
         y += 4;
@@ -266,11 +261,10 @@ function Profile({ userId: propUserId }) {
         pdf.text('Idea/Initiative', 20, y);
         y += 8;
         pdf.setFont(undefined, 'normal');
-        const ideaLines = breakLongLines(report.answers?.idea || '').split('\n');
-        ideaLines.forEach(line => {
-            pdf.text(line, 20, y);
-            y += 7;
-        });
+        pdf.setFontSize(10);
+        const ideaLines = pdf.splitTextToSize(breakLongLines(report.answers?.idea || '').replace(/<br\/>/g, '\n'), 170);
+        pdf.text(ideaLines, 20, y);
+        y += ideaLines.length * 5;
         pdf.save(`Weekly_Report_${reportDate}.pdf`);
     };
 
