@@ -151,6 +151,7 @@ const AdminManagerReports = () => {
   const [filterFrom, setFilterFrom] = useState('');
   const [filterTo, setFilterTo] = useState('');
   const [filteredAllReports, setFilteredAllReports] = useState([]);
+  const [cohortFilter, setCohortFilter] = useState('');
   const [showUsersList, setShowUsersList] = useState(false);
 
   //const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5001';
@@ -179,21 +180,24 @@ const AdminManagerReports = () => {
 
   // Filter all reports by date range
   useEffect(() => {
-    if (!filterFrom && !filterTo) {
-      setFilteredAllReports(allReports);
-      return;
-    }
-    const fromDate = filterFrom ? new Date(filterFrom) : null;
-    const toDate = filterTo ? new Date(filterTo) : null;
-    setFilteredAllReports(
-      allReports.filter(r => {
+    let filtered = allReports;
+    if (filterFrom || filterTo) {
+      const fromDate = filterFrom ? new Date(filterFrom) : null;
+      const toDate = filterTo ? new Date(filterTo) : null;
+      filtered = filtered.filter(r => {
         const created = new Date(r.created_time);
         if (fromDate && created < fromDate) return false;
         if (toDate && created > toDate) return false;
         return true;
-      })
-    );
-  }, [allReports, filterFrom, filterTo]);
+      });
+    }
+    if (cohortFilter) {
+      filtered = filtered.filter(r =>
+        (r.user_cohort || '').toLowerCase().includes(cohortFilter.toLowerCase())
+      );
+    }
+    setFilteredAllReports(filtered);
+  }, [allReports, filterFrom, filterTo, cohortFilter]);
 
   // Fetch reports for selected user
   const handleUserClick = async (user) => {
@@ -234,6 +238,16 @@ const AdminManagerReports = () => {
                 style={{ marginLeft: 4 }}
               />
             </label>
+            <label style={{ marginLeft: 8 }}>
+              Cohort:
+              <input
+                type="text"
+                value={cohortFilter}
+                onChange={e => setCohortFilter(e.target.value)}
+                placeholder="Filter by cohort"
+                style={{ marginLeft: 4 }}
+              />
+            </label>
             <button
               className="filter-btn"
               onClick={() => {}}
@@ -242,7 +256,7 @@ const AdminManagerReports = () => {
             </button>
             <button
               className="clear-filter-btn"
-              onClick={() => { setFilterFrom(''); setFilterTo(''); }}
+              onClick={() => { setFilterFrom(''); setFilterTo(''); setCohortFilter(''); }}
             >
               Clear Filter
             </button>
@@ -351,6 +365,7 @@ const AdminManagerReports = () => {
                         }
                       </div>
                       <div className="admin-report-card-preview">Click to view full report</div>
+                      <div>Cohort: {report.user_cohort || 'N/A'}</div>
                     </div>
                   ))}
                 </div>
@@ -414,6 +429,7 @@ const AdminManagerReports = () => {
                     }
                   </div>
                   <div className="admin-report-card-preview">Click to view full report</div>
+                  <div>Cohort: {report.user_cohort || 'N/A'}</div>
                 </div>
               ))}
             </div>
