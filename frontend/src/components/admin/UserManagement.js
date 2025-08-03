@@ -13,6 +13,9 @@ const UserManagement = () => {
   const [updatedUsers, setUpdatedUsers] = useState({});
   const [notifications, setNotifications] = useState({});
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
+  const [updatedCohorts, setUpdatedCohorts] = useState({});
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const admin_token = localStorage.getItem('admin_token') || '';
 
@@ -66,6 +69,8 @@ const UserManagement = () => {
         ...notifications,
         [userId]: { type: 'success', message: 'Stars updated successfully!' }
       });
+      setSuccessMessage('Stars updated successfully!');
+      setShowSuccess(true);
 
       setTimeout(() => {
         setNotifications(prev => {
@@ -73,6 +78,7 @@ const UserManagement = () => {
           delete updated[userId];
           return updated;
         });
+        setShowSuccess(false);
       }, 3000);
 
     } catch (err) {
@@ -81,6 +87,42 @@ const UserManagement = () => {
         [userId]: { type: 'danger', message: 'Failed to update stars.' }
       });
       console.error('Error updating stars:', err);
+    }
+  };
+
+  const updateCohort = async (userId) => {
+    if (updatedCohorts[userId] === undefined) return;
+    try {
+      await axios.put(
+        `https://api.careerstar.co/users/${userId}/cohort`,
+        { cohort: updatedCohorts[userId] },
+        { headers }
+      );
+      setUsers(users.map(user =>
+        user.userId === userId
+          ? { ...user, cohort: updatedCohorts[userId] }
+          : user
+      ));
+      setNotifications({
+        ...notifications,
+        [userId]: { type: 'success', message: 'Cohort updated successfully!' }
+      });
+      setSuccessMessage('Cohort updated successfully!');
+      setShowSuccess(true);
+      setTimeout(() => {
+        setNotifications(prev => {
+          const updated = { ...prev };
+          delete updated[userId];
+          return updated;
+        });
+        setShowSuccess(false);
+      }, 3000);
+    } catch (err) {
+      setNotifications({
+        ...notifications,
+        [userId]: { type: 'danger', message: 'Failed to update cohort.' }
+      });
+      console.error('Error updating cohort:', err);
     }
   };
 
@@ -196,7 +238,7 @@ const UserManagement = () => {
                     Stars {getSortDirectionIndicator('stars')}
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
+                    Cohort
                   </th>
                 </tr>
               </thead>
@@ -223,28 +265,31 @@ const UserManagement = () => {
                           onChange={(e) => handleStarChange(user.userId, e.target.value)}
                           className="w-20 px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                         />
+                        <button
+                          type="button"
+                          onClick={() => updateStars(user.userId)}
+                          className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md transition-colors ml-2"
+                        >
+                          Update
+                        </button>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <div className="flex items-center space-x-2">
-                          <button
-                            onClick={() => updateStars(user.userId)}
-                            className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md transition-colors"
-                          >
-                            Update
-                          </button>
-
-                          {notifications[user.userId]?.type === 'success' && (
-                            <span className="text-green-600 bg-green-100 px-2 py-1 rounded">
-                              {notifications[user.userId].message}
-                            </span>
-                          )}
-
-                          {notifications[user.userId]?.type === 'danger' && (
-                            <span className="text-red-600 bg-red-100 px-2 py-1 rounded">
-                              {notifications[user.userId].message}
-                            </span>
-                          )}
-                        </div>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <input
+                          type="text"
+                          value={updatedCohorts[user.userId] !== undefined ? updatedCohorts[user.userId] : user.cohort || ''}
+                          onChange={e => setUpdatedCohorts({
+                            ...updatedCohorts,
+                            [user.userId]: e.target.value
+                          })}
+                          className="w-32 px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => updateCohort(user.userId)}
+                          className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md transition-colors ml-2"
+                        >
+                          Update Cohort
+                        </button>
                       </td>
                     </tr>
                   ))
@@ -260,6 +305,11 @@ const UserManagement = () => {
           </div>
         </div>
       </div>
+      {showSuccess && (
+        <div className="success-popup">
+          {successMessage}
+        </div>
+      )}
     </div>
   );
 };
