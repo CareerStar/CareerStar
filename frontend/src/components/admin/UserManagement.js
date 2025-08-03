@@ -186,7 +186,7 @@ const UserManagement = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="container mx-auto px-4 py-8 max-w-[85em]">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="bg-gradient-to-r from-purple-500 to-indigo-600 px-6 py-4">
           <h2 className="text-2xl font-bold text-white">User Management</h2>
