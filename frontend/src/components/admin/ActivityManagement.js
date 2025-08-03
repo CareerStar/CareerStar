@@ -139,7 +139,7 @@ const ActivityManagement = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="container mx-auto pr-[7rem] pl-0 pt-0 py-8 max-w-[85em] mt-[1rem]">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="bg-gradient-to-r from-blue-500 to-teal-400 px-6 py-4">
           <h2 className="text-2xl font-bold text-white">Activity Management</h2>
