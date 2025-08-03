@@ -25,7 +25,8 @@ const ActivityManagement = () => {
     11: "Unlock Your Volunteer Superpowers!",
     13: "3-2-1 + Report: Stand Out During Your Internship",
     14: "Mock Interview Jeopardy",
-    15: "Tell us about your internship"
+    15: "Tell us about your internship",
+    16: "Welcome to CareerStar 101"
   };
 
   const admin_token = localStorage.getItem('admin_token') || '';
@@ -103,7 +104,7 @@ const ActivityManagement = () => {
   }, [activities, searchTerm, sortConfig]);
 
   // IDs from Roadmap.js (except 13, which is handled specially)
-  const roadmapActivityIds = [1, 2, 3, 5, 7, 9, 10, 11, 14,15];
+  const roadmapActivityIds = [1, 2, 3, 5, 7, 9, 10, 11, 14, 15, 16];
 
   // Group and sum for Activity 13
   const activity13Counts = activities
