@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import axios from 'axios';
@@ -8,14 +8,16 @@ import Stars3 from '../assets/images/stars3.png';
 import eye from '../assets/images/eye.svg';
 import eyeOff from '../assets/images/eye-off.svg';
 
-function EmailCredentialPage() {
+function EmailCredentialPage({onChangeUniversity}) {
     const dispatch = useDispatch();
-    const currentStep = 2;
-    const totalSteps = 2;
+    const currentStep = 1;
+    const totalSteps = 1;
 
     const location = useLocation();
 
-    const [firstname, setFirstname] = useState(location.state?.firstname || {});
+    const [universityDetails, setUniversityDetails] = useState([]);
+    const [selectedUniversity, setSelectedUniversity] = useState('');
+    const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [emailID, setEmailID] = useState('');
     const [password, setPassword] = useState('');
@@ -26,6 +28,7 @@ function EmailCredentialPage() {
     const [isChecked, setIsChecked] = useState(true);
     const [showPopup, setShowPopup] = useState(false);
 
+    const [errorName, setErrorName] = useState('');
     const [errorEmail, setErrorEmail] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
     const [errorConfirmPassword, setErrorConfirmPassword] = useState('');
@@ -37,6 +40,36 @@ function EmailCredentialPage() {
 
     const handleToggle = () => {
         setIsChecked(!isChecked);
+    };
+    useEffect(() => {
+    const fetchuniversityDetails = async () => {
+        try {
+            const response = await axios.get('https://api.careerstar.co/universities');
+                if (response.data) {
+                    setUniversityDetails(response.data);  // Assuming the response is an array of university names
+                }
+            } catch (error) {
+                console.error('Error fetching university names', error);
+            }
+        };
+    
+        fetchuniversityDetails();
+    }, []);
+
+    const handleChangeUniversity = (event) => {
+        setSelectedUniversity(event.target.value);
+        if(typeof onChangeUniversity === 'function'){
+            onChangeUniversity(event.target.value);
+        }
+        console.log('Selected University:', event.target.value);
+    };
+
+
+    const handleFirstnameInputChange = (event) => {
+        setFirstname(event.target.value);
+        if (event.target.value.trim() !== '') {
+            setErrorName('');
+        }
     };
 
     const handleEmailIDInputChange = (event) => {
@@ -66,9 +99,15 @@ function EmailCredentialPage() {
 
     const nextPageNavigation = async () => {
 
+        setErrorName('');
         setErrorEmail('');
         setErrorPassword('');
         setErrorConfirmPassword('');
+
+        if (firstname.trim() === '') {
+            setErrorName('First name cannot be empty*');
+            return;
+        }
         
         if (emailID.trim() === '') {
             setErrorEmail('Email ID cannot be empty*');
@@ -138,6 +177,14 @@ function EmailCredentialPage() {
         navigate('/dashboard', { state: { firstname: firstname, userId: userId } });
     };
 
+    // const handleKeyPress = (event) => {
+    //     if (event.key === 'Enter' && !showPopup) {
+    //         nextPageNavigation();
+    //     }
+    //     if (event.key === 'Enter' && showPopup) {
+    //         navigateToDashboard();
+    //     }
+    // };
     const handleKeyPress = (event) => {
         if (event.key === 'Enter' && !showPopup) {
             nextPageNavigation();
@@ -165,14 +212,45 @@ function EmailCredentialPage() {
 
     return (
         <div className='signUp-page'>
+                <section className="stars-container">
+                    <div id="stars"></div>
+                    <div id="stars2"></div>
+                    <div id="stars3"></div>
+                </section>
             <div className='career-star-logo' onClick={navigateToStartPage}>
                 <img src={careerStarLogo} alt='Career Star Logo' />
             </div>
             <div className='signUp-page-content'>
-                <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
+                {/* <ProgressBar currentStep={currentStep} totalSteps={totalSteps} /> */}
                 <div className='signUp-page-question'>
                     <h2>Create <span className="highlight">my account</span></h2>
-                    <p>Email address</p>
+                    <label>Choose your University</label>
+                        <div>
+                            <select
+                                id="university-select"
+                                className="home-page-question-dropdown-menu"
+                                value={selectedUniversity}
+                                onChange={handleChangeUniversity}
+                            >
+                                <option value="" disabled>
+                                    Choose your university
+                                </option>
+                                    {universityDetails.map((university) => (
+                                <option key={university.universityId} value={university.universityId}>
+                                    {university.name}
+                                </option>
+                            ))}
+                            </select>
+                        </div>                            
+                    <label>Full name</label>
+                    <input
+                        type='text'
+                        placeholder='Name'
+                        onChange={handleFirstnameInputChange}
+                        onKeyDown={handleKeyPress}
+                    />
+
+                    <label>Email address</label>
                     <input
                         type='text'
                         placeholder='abigail@gmail.com'
@@ -180,7 +258,7 @@ function EmailCredentialPage() {
                         onKeyDown={handleKeyPress}
                     />
                     {errorEmail && <div className='error-text'><p>{errorEmail}</p></div>}
-                    <p>Password</p>
+                    <label>Password</label>
                     <div className='password-section'>
                         <input
                             type={showPassword ? 'text' : 'password'}
@@ -198,7 +276,7 @@ function EmailCredentialPage() {
                     </div>
                     {errorPassword && <div className='error-text'><p>{errorPassword}</p></div>}
 
-                    <p>Re-enter Password</p>
+                    <label>Re-enter Password</label>
                     <div className='password-section'>
                         <input
                             type={showConfirmPassword ? 'text' : 'password'}
@@ -216,7 +294,7 @@ function EmailCredentialPage() {
                     </div>
                     {errorConfirmPassword && <div className='error-text'><p>{errorConfirmPassword}</p></div>}
 
-                    <p>Access Code</p>
+                    <label>Access Code</label>
                     <input
                         type='text'
                         placeholder='**********'
