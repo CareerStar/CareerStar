@@ -1,10 +1,15 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
-import caseStudy from '../../assets/images/activities/activity1/case-study.png';
-import collaboratingInCircle from '../../assets/images/activities/activity1/collaborating-in-circle.png';
-import lawyer from '../../assets/images/activities/activity1/lawyer.png';
+import techstack from '../../assets/images/activities/activity2/techstack.png';
+import applicationdevelopment from '../../assets/images/activities/activity2/applicationdevelopment.png';
+import bonuscompany from '../../assets/images/activities/activity2/bonuscompany.png';
+import businesssales from '../../assets/images/activities/activity2/businesssales.png';
+import quiz from '../../assets/images/activities/activity2/quiz.png';
+
+
+import companyroles from '../../assets/images/activities/activity2/companyroles.png';
 import backArrow from '../../assets/images/back-arrow.png';
-import activityImage from '../../assets/images/activities/activity2/activity-image.jpg';
+import activityImage from '../../assets/images/activities/activity2/activityimage1.png';
 import clock from '../../assets/images/activities/clock.png';
 import star from '../../assets/images/activities/star.png';
 import upArrowScroll from '../../assets/images/up-arrow-scroll.png';
@@ -112,12 +117,14 @@ const Activity2 = () => {
     };
 
     const executiveLeadershipAndManagement = [
-        { abbreviation: 'CEO', fullForm: 'Chief Executive Officer', duty: 'Highest-ranking executive responsible for major corporate decisions, overall operations and financial solvency.' },
-        { abbreviation: 'CFO', fullForm: 'Chief Financial Officer', duty: 'Is responsible for a company\'s financial operations. They oversee the finance department and make strategic financial decisions.' },
-        { abbreviation: 'CTO', fullForm: 'Chief Technology Officer', duty: 'Executive responsible for technology strategy, innovation, and technical infrastructure.' },
-        { abbreviation: 'CMO', fullForm: 'Chief Marketing Officer', duty: 'Executive responsible for marketing strategy, brand management, and market growth. Develops and executes social media strategy and cross-brand partnerships.' },
-        { abbreviation: 'VP', fullForm: 'Vice President', duty: 'In charge of the overall business, institution, university, organization, agency or branch of government. A VP furthers the board of directors\' goals and missions by implementing new standards and strategies in the company.' },
-        { abbreviation: 'SVP', fullForm: 'Senior Vice President', duty: 'Is responsible for overseeing internal operations, helping to build strong customer relationships, and maximizing the company\'s financial goals.' },
+        { abbreviation: 'CEO', fullForm: 'Chief Executive Officer', duty: 'Oversees the entire company’s vision, long-term strategy, and high-level decision-making. The CEO aligns all departments toward company goals and represents the organization to stakeholders.' },
+        { abbreviation: 'CFO', fullForm: 'Chief Financial Officer', duty: ' Manages budgets, investments, and ensures financial health and growth.' },
+        { abbreviation: 'CTO', fullForm: 'Chief Technology Officer', duty: 'Drives tech strategy, oversees product development, and leads innovation.' },
+        { abbreviation: 'CMO', fullForm: 'Chief Marketing Officer', duty: 'Builds brand strategy, drives campaigns, and boosts customer engagement.' },
+        { abbreviation: 'COO', fullForm: 'Chief Information Officer ', duty: '' },
+        { abbreviation: 'VP', fullForm: 'Chief Operating Officer', duty: '.' },
+        { abbreviation: 'VP', fullForm: 'Chief Operating Officer', duty: '.' },
+        { abbreviation: 'VP', fullForm: 'Chief Operating Officer', duty: '.' },
         { abbreviation: 'CHRO', fullForm: 'Chief Human Resource Officer', duty: 'Is responsible for designing and rolling out strategies that help the company get the best out of its workforce.' }
     ];
 
@@ -142,9 +149,14 @@ const Activity2 = () => {
     ]
 
     const stepsData = [
-        { id: 1, number: "Step 1", title: "Executive Leadership & Senior Management", icon: lawyer },
-        { id: 2, number: "Step 2", title: "Technical & Product Roles & Terms", icon: caseStudy },
-        { id: 3, number: "Step 3", title: "Business Models, Metrics & Technology", icon: collaboratingInCircle }
+        { id: 1, number: "Step 1", title: "Company Roles", icon: companyroles },
+        { id: 2, number: "Step 2", title: "Tech Stack", icon: techstack },
+        { id: 3, number: "Step 3", title: "Application Development", icon: applicationdevelopment },
+        { id: 4, number: "Step 4", title: "Business & Sales", icon: businesssales },
+        { id: 5, number: "Step 5", title: "Bonus! Company", icon: bonuscompany },
+        { id: 6, number: "Step 6", title: "Quiz", icon: quiz },
+
+
     ];
 
     const handleStepChange = (stepId) => {
@@ -235,11 +247,14 @@ const Activity2 = () => {
                             </div>
                         </div>
                         <p>Test your knowledge of industry acronyms and their meanings, perfect for anyone looking to strengthen their business and tech vocabulary.</p>
+                        <p>An Acronym is a shorthand phrase that represents the first letter of each word. For example, CEO means ‘Chief Executive Officer’
+                        Crack the codes in our card game by figuring out what each letter stands for.</p>
 
                     </div>
                 ) : currentStep === 1 ? (
                     <div className="activity-description">
-                        <h2>Step 1 : Executive Leadership & Senior Management</h2>
+                        <h2>Step 1 : Company Roles</h2>
+                        <p> In this step, you’re to recognize each acronyms of Company Roles.</p>
                         <div className="flip-cards-container">
                             {executiveLeadershipAndManagement.map((role, index) => (
                                 <FlippableCard key={`step1-${index}`} abbreviation={role.abbreviation} fullForm={role.fullForm} duty={role.duty} />
@@ -248,16 +263,56 @@ const Activity2 = () => {
                     </div>
                 ) : currentStep === 2 ? (
                     <div className="activity-description">
-                        <h2>Step 2 : Technical & Product Roles & Terms</h2>
+                        <h2>Step 2 :Tech Stack </h2>
+                        <p>In this step, you’re to recognize each acronyms of tech stack.</p>
                         <div className="flip-cards-container">
                             {technicalAndProductRoles.map((role, index) => (
                                 <FlippableCard key={`step2-${index}`} abbreviation={role.abbreviation} fullForm={role.fullForm} duty={role.duty} />
                             ))}
                         </div>
                     </div>
+
                 ) : currentStep === 3 ? (
+               <div className="activity-description">
+               <h2>Step 3 :Application Development </h2>
+               <p>In this step, you’re to recognize each acronyms of Application Development.</p>
+               <div className="flip-cards-container">
+                  {technicalAndProductRoles.map((role, index) => (
+                  <FlippableCard key={`step2-${index}`} abbreviation={role.abbreviation} fullForm={role.fullForm} duty={role.duty} />
+                 ))}
+              </div>
+           </div>
+
+
+               ) : currentStep === 4 ? (
+              <div className="activity-description">
+              <h2>Step 4 :Business & Sales </h2>
+              <p>In this step, you’re to recognize each acronyms of Business & Sales.</p>
+              <div className="flip-cards-container">
+                 {technicalAndProductRoles.map((role, index) => (
+                 <FlippableCard key={`step2-${index}`} abbreviation={role.abbreviation} fullForm={role.fullForm} duty={role.duty} />
+               ))}
+            </div>
+          </div>
+
+
+              ) : currentStep === 5 ? (
+             <div className="activity-description">
+             <h2>Step 5 :Application Development </h2>
+             <p>In this step, you’re to recognize each acronyms of Application Development.</p>
+             <div className="flip-cards-container">
+               {technicalAndProductRoles.map((role, index) => (
+               <FlippableCard key={`step2-${index}`} abbreviation={role.abbreviation} fullForm={role.fullForm} duty={role.duty} />
+              ))}
+            </div>
+        </div>
+
+
+
+                ) : currentStep === 6 ? (
                     <div className="activity-description">
-                        <h2>Step 3 : Business Models, Metrics & Technology</h2>
+                        <h2>Step 6 : Quiz</h2>
+                        <p>In this step, you’re to recognize each acronyms all acronyms.</p>
                         <div className="flip-cards-container">
                             {businessModelsMetricsAndTechnology.map((role, index) => (
                                 <FlippableCard key={index} abbreviation={role.abbreviation} fullForm={role.fullForm} duty={role.duty} />

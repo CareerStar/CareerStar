@@ -3505,20 +3505,20 @@ h3 {
   font-family: 'Sora' !important;
   font-style: normal !important;
   font-weight: 700 !important;
-  font-size: 20px !important;
+  font-size: 35px !important;
   text-align: center !important;
 
-  color: #FFFFFF !important;
+  color: #ffffff !important;
 }
 
 .card-title {
   font-family: 'Sora' !important;
   font-style: normal !important;
   font-weight: 700 !important;
-  font-size: 15px !important;
+  font-size: 12px !important;
   text-align: center !important;
   margin: 0px;
-  color: #FFFFFF !important;
+  color: #000000 !important;
 }
 
 .card-duty {
@@ -3527,10 +3527,10 @@ h3 {
   font-family: 'Nunito' !important;
   font-style: normal !important;
   font-weight: 500 !important;
-  font-size: 12px !important;
+  font-size: 10px !important;
   text-align: center !important;
 
-  color: #FFFFFF !important;
+  color: #000000 !important;
 }
 
 /* Job Listing page styles */
