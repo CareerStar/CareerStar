@@ -13,6 +13,7 @@ import ProgressBar from "../ProgressBar";
 import Events from "../Events";
 import QoD from "../question-of-the-day/QoD";
 import TopActivities from "../TopActivities";
+import DailyPopup from "./DailyPopup";
 
 function Home({ onComplete, userId }) {
     const stars = useSelector(state => state.starCount);
@@ -290,6 +291,9 @@ function Home({ onComplete, userId }) {
                     </div>
                 </div>
             )}
+
+            <DailyPopup userId={userId} />
+
             <div className="home-welcome">
                 <div className='home-welcome-left'>
                     <img src={astronaut} alt="Astronaut" />

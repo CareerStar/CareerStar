@@ -1065,6 +1065,142 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   cursor: pointer !important;
 }
 
+/* Daily popup page styles */
+.daily-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.699);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;  
+}
+
+/* Popup card */
+
+.popup-container{
+  background: #FFF;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0pc 4px 16px rgba(255, 255, 255, 0.616);
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+}
+
+.popup-container p {
+  font-weight: 450;
+}
+
+.close-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.yes-no-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 12px;
+}
+
+.yes-no-buttons button {
+  padding: 10px 20px;
+  border: #7223CA 1.5px solid;
+  border-radius: 40px;
+  background: #ffffff;
+  color: #7223CA;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.yes-no-buttons button:hover {
+  background: #f6efff;
+  box-shadow: 0 0 0 2px rgba(87, 26, 209, 0.842);
+}
+
+.yes-no-buttons button:selected {
+  background: #7223CA;
+  color: #FFF;
+  font-weight: bold;
+  box-shadow: 0 0 0 6px rgba(87, 26, 209, 0.6);
+}
+
+@media (max-width: 768px) {
+  .daily-rating {
+    justify-content: center;
+  }
+
+  .rating-button {
+    font-size: 30px;
+  }
+}
+
+/* .submit-btn {
+  background: #7223CA;
+  color: #FFF;
+  padding: 10px 25px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 40px;
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: bold;
+} */
+
+.daily-submit-button{
+  background: #7223CA;
+  color: #FFF;
+  padding: 20px 50px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 40px;
+  font-size: 15px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.daily-submit-button:hover {
+  background: #4B118B;
+}
+
+.popup-input {
+  width: 100%;
+  padding: 10px 14px;
+  margin: 12px 0;
+  border: 1px solid #9d83b8;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s ease;
+}
+
+.popup-input:focus {
+  border-color: #7223CA;
+  box-shadow: 0 0 0 2px rgba(88, 26, 209, 0.2);
+}
+
+.floating-icon {
+  width: 85px;
+  height: 90px;
+  position: fixed;  
+  bottom: 30px;     
+  right: 35px;      
+  cursor: pointer;  
+  z-index: 100;    
+}
+
 /* Dashboard page styles */
 
 .dashboard {
