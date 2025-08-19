@@ -3499,6 +3499,10 @@ h3 {
 .card-back {
   transform: rotateY(180deg);
   flex-direction: column;
+  align-items: flex-start; /* left align everything */
+  justify-content: flex-start; /* start from top */
+  padding: 35px; /* consistent inner padding */
+  box-sizing: border-box;
 }
 
 .card-text {
@@ -3515,23 +3519,103 @@ h3 {
   font-family: 'Sora' !important;
   font-style: normal !important;
   font-weight: 700 !important;
-  font-size: 12px !important;
-  text-align: center !important;
-  margin: 0px;
+  font-size: 15px !important; /* slightly bigger if needed */
+  text-align: left !important;
+  margin: 0 0 10px 0; /* space below title */
   color: #000000 !important;
 }
 
 .card-duty {
-  margin-top: 4px;
-
-  font-family: 'Nunito' !important;
+  font-family: 'Sora' !important;
   font-style: normal !important;
   font-weight: 500 !important;
   font-size: 10px !important;
-  text-align: center !important;
-
+  text-align: left !important;
+  line-height: 1.4 !important; /* improve readability */
   color: #000000 !important;
+  margin: 0;
 }
+
+
+.quiz-step {
+  position: relative;
+  padding: 20px;
+}
+
+.quiz-header {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-weight: bold;
+  color: white;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.quiz-option {
+  padding: 14px;
+  border: 2px solid #6a1b9a;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #1e003a;
+  color: white;
+  transition: 0.2s;
+}
+
+.quiz-option:hover {
+  background: #4b007d;
+}
+
+.quiz-option.selected {
+  background: #6a1b9a;
+  border-color: #fff;
+}
+
+.quiz-option.correct {
+  background: #2e7d32;
+  border-color: #1b5e20;
+}
+
+.quiz-option.incorrect {
+  background: #c62828;
+  border-color: #8e0000;
+}
+
+.quiz-footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submit-btn {
+  padding: 10px 20px;
+  background: white;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.next-arrow {
+  font-size: 28px;
+  cursor: pointer;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 50%;
+  background: #6a1b9a;
+  transition: 0.2s;
+}
+
+.next-arrow:hover {
+  background: #9c27b0;
+}
+
 
 /* Job Listing page styles */
 
