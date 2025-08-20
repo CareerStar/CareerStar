@@ -40,7 +40,7 @@ function HomepageQuestion4({ onChangeDegree, onChangeMajor, onChangeUniversity }
 
     return (
         <div className='home-page-question'>
-
+{/* 
             <h2>Choose your University</h2>
 
             <div>
@@ -59,7 +59,7 @@ function HomepageQuestion4({ onChangeDegree, onChangeMajor, onChangeUniversity }
                         </option>
                     ))}
                 </select>
-            </div>
+            </div> */}
 
             <h2>Choose your Degree</h2>
 
