@@ -271,6 +271,15 @@ function Home({ onComplete, userId }) {
         setVideoEnded(true);
     }
 
+    const cleanLastName = (() => {
+        const ln = (userDetails.lastname || '').trim();
+        if (!ln) return '';
+        const lowered = ln.toLowerCase();
+        if (lowered === 'no last name' || lowered === 'n/a' || lowered === 'null' || lowered === 'undefined') return '';
+        return ln;
+    })();
+    const studentName = `${(userDetails.firstname || '').trim()} ${cleanLastName}`.trim();
+
     return (
         <div className="home">
             {loading && (
@@ -292,7 +301,7 @@ function Home({ onComplete, userId }) {
                 </div>
             )}
 
-            <DailyPopup userId={userId} />
+            <DailyPopup userId={userId} studentName={studentName} />
 
             <div className="home-welcome">
                 <div className='home-welcome-left'>

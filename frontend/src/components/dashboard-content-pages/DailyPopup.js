@@ -3,13 +3,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import dailyPopupIcon from '../../assets/images/dailyPopupIcon.png';
 
-const DailyPopup = ({ userId }) => {
+const DailyPopup = ({ userId, studentName }) => {
   const [showIcon, setShowIcon] = useState(false);
   const [selectedRating, setSelectedRating] = useState(null);
   const [followUpAnswer, setFollowUpAnswer] = useState(null);
   const [additionalFeedback, setAdditionalFeedback] = useState("");
-  const [showDailyPopup, setShowDailyPopup] = useState(false);
-  const [showDailyIcon, setShowDailyIcon] = useState(true);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showPopup, setShowPopup] = useState(() => {
     const lastPopupDate = localStorage.getItem("lastPopupDate");
@@ -22,14 +20,16 @@ const DailyPopup = ({ userId }) => {
     localStorage.setItem("lastPopupDate", today);
     localStorage.setItem("hasSubmittedToday", "true");
 
-    setShowDailyPopup(false);
-    setShowDailyIcon(true);
+    setShowPopup(false);
+    setShowIcon(false);
   };
 
   const handleSubmit = async () => {
     completeDailyPopup();
 
     const submission = {
+      userId,
+      studentName,
       rating: selectedRating,
       followUp: followUpAnswer,
       feedback: additionalFeedback,
@@ -37,7 +37,7 @@ const DailyPopup = ({ userId }) => {
     };
 
     try {
-      await axios.post("/api/daily-feedback", submission);
+      await axios.post("https://api.careerstar.co/api/daily-feedback", submission);
       console.log("feedback submitted:", submission);
     } catch (err) {
       console.error("Error submitting feedback:", err);
@@ -51,12 +51,14 @@ const DailyPopup = ({ userId }) => {
 
     if (lastPopupDate !== today) {
       setShowOnboarding(false);
-      setShowDailyPopup(true);
+      setShowPopup(true);
+      setShowIcon(false);
     } else if (hasSubmittedToday === "true") {
-      setShowDailyPopup(false);
-      setShowDailyIcon(true);
+      setShowPopup(false);
+      setShowIcon(false);
     } else {
-      setShowDailyIcon(true);
+      setShowPopup(false);
+      setShowIcon(true);
     }
   }, []);
 
@@ -80,6 +82,7 @@ const DailyPopup = ({ userId }) => {
                         key={rating}
                         className={`rating-button ${selectedRating >= rating ? "active" : ""}`}
                         onClick={() => setSelectedRating(rating)}
+                        type="button"
                       >
                         ★
                       </button>
@@ -93,12 +96,14 @@ const DailyPopup = ({ userId }) => {
                         <button
                           className={followUpAnswer === "Yes" ? "selected" : ""}
                           onClick={() => setFollowUpAnswer("Yes")}
+                          type="button"
                         >
                           Yes
                         </button>
                         <button
                           className={followUpAnswer === "No" ? "selected" : ""}
                           onClick={() => setFollowUpAnswer("No")}
+                          type="button"
                         >
                           No
                         </button>
@@ -149,6 +154,7 @@ const DailyPopup = ({ userId }) => {
                   setShowPopup(false);
                   setShowIcon(true);
                 }}
+                type="button"
               >
                 x
               </button>
@@ -162,7 +168,10 @@ const DailyPopup = ({ userId }) => {
           src={dailyPopupIcon}
           alt="Daily Popup Icon"
           className="floating-icon"
-          onClick={() => setShowPopup(true)}
+          onClick={() => {
+            setShowPopup(true);
+            setShowIcon(false);
+          }}
         />
       )}
     </>

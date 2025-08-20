@@ -1151,11 +1151,15 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   box-shadow: 0 0 0 2px rgba(87, 26, 209, 0.842);
 }
 
-.yes-no-buttons button:selected {
+.yes-no-buttons button.selected {
   background: #7223CA;
   color: #FFF;
   font-weight: bold;
-  box-shadow: 0 0 0 6px rgba(87, 26, 209, 0.6);
+}
+
+.yes-no-buttons button.selected:hover {
+  background: #5d1db3;
+  color: #FFF;
 }
 
 @media (max-width: 768px) {
