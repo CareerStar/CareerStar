@@ -13,8 +13,6 @@ import activityImage from '../../assets/images/activities/activity2/activity2.pn
 import clock from '../../assets/images/activities/clock.png';
 import star from '../../assets/images/activities/star.png';
 import upArrowScroll from '../../assets/images/up-arrow-scroll.png';
-import likeIcon from '../../assets/images/like-icon.png';
-import dislikeIcon from '../../assets/images/dislike-icon.png';
 import FlippableCard from "./activities-support/FlippableCard";
 
 import axios from 'axios';
@@ -449,30 +447,6 @@ const Activity2 = () => {
                     </div>
                 </div>
             </div>
-
-            {showLikeDislikePopup && (
-                <div className='activity-like-dislike-popup'>
-                    <div className='activity-like-dislike-popup-content'>
-                        <p>How did you find this activity?</p>
-                        <div className='activity-like-dislike-buttons'>
-                            <div className='activity-like-button' onClick={() => handleSubmit(true)}>
-                                <img src={likeIcon} alt="Like" />
-                            </div>
-                            <div className='activity-dislike-button' onClick={() => handleSubmit(true)}>
-                                <img src={dislikeIcon} alt="Dislike" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {showHotTipPopup && (
-                <div className='hot-tip-popup'>
-                    <div className='hot-tip-popup-content' ref={popupRef}>
-                        {/* <img src={step1Image2} alt='3 stars' /> */}
-                    </div>
-                </div>
-            )}
         </div>
     );
 };
