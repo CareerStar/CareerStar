@@ -71,7 +71,7 @@ const DailyPopup = ({ userId, studentName }) => {
             <img src={dailyPopupIcon} alt="Mascot" className="popup-mascot" />
 
             <div className="popup-container">
-              <div className="popup-content">
+              <div className="daily-popup-content">
                 <div className="popup-body">
                   <h2>Welcome!</h2>
                   <h3>How are you feeling today about your internship career readiness?</h3>
