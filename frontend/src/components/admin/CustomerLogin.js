@@ -36,10 +36,15 @@ const CustomerLogin = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0b0b1a' }}>
-      <div style={{ width: 360, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.15)', padding: 24, borderRadius: 12, color: '#fff', boxShadow: '0 8px 30px rgba(0,0,0,0.4)' }}>
+    <div style={{ minHeight: '100vh', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#200043' }}>
+      <section className="stars-container" style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+      </section>
+      <div style={{ width: 360, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.15)', padding: 24, borderRadius: 12, color: '#fff', boxShadow: '0 8px 30px rgba(0,0,0,0.4)', position: 'relative', zIndex: 1 }}>
         <h1 style={{ fontSize: 22, fontWeight: 800, marginBottom: 12 }}>Login as Customer</h1>
-        <p style={{ fontSize: 13, color: '#c7c7e5', marginBottom: 16 }}>Enter the password provided to you.</p>
+        <p style={{ fontSize: 13, color: '#c7c7e5', marginBottom: 16 }}>Enter login and password provided to you.</p>
         <form onSubmit={handleSubmit}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <input
