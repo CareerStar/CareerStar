@@ -4,6 +4,7 @@ import Header from '../Header';
 import Sidebar from '../Sidebar';
 import DashboardContent from '../DashboardContent';
 import InternshipDashboard from './InternshipDashboard';
+import CohortDashboard from './CohortDashboard';
 
 const AdminDashboard = () => {
     const location = useLocation();
@@ -12,10 +13,10 @@ const AdminDashboard = () => {
     const [onboarded, setOnboarded] = useState(true);
     //const pages = ['AdminEvents', 'LinkedIn', 'Users', 'Activity Management', 'Manager Reports'];
     // Only show Users, Activity Management, and Manager Reports for admin
-    const pages = ['Users', 'Activity Management', 'Manager Reports', 'Internship Program Dashboard'];
+    const pages = ['Users', 'Activity Management', 'Manager Reports', 'Internship Program Dashboard', 'Cohort Dashboard'];
     const validPages = ['Home', 'Adminevents', 'Profile', 'Roadmap', 'Events', 'Network', 'Support', 
         'Activity', 'Resumeguide', 'Workshops', 'Leaderboard', 'Linkedin', 'Users', 'Activitymanagement', 
-        'Managerreports', 'Internshipprogramdashboard'];
+        'Managerreports', 'Internshipprogramdashboard', 'Cohortdashboard'];
 
     useEffect(() => {
         console.log('AdminDashboard useEffect');
