@@ -341,6 +341,19 @@ function Roadmap({ userId, activityName }) {
                     completed={!!activityStatuses?.[16]}
                     activityImage={activity6}
                 />
+
+                <TopActivityCard
+                    activityId={17}
+                    activityTitle='Build a Company Virtual Card Game'
+                    activityDescription='Build your dream company by choosing a CEO, assembling your team with role cards, and earning stars for how you hire.'
+                    activityTags={['Career']}
+                    activityStarCount={7}
+                    activityTime='20 min'
+                    moduleId={1}
+                    isReady={true}
+                    completed={!!activityStatuses?.[17]}
+                    activityImage={activity3}
+                    />
                 </div>
             </div>
         </div>

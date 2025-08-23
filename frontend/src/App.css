@@ -3774,6 +3774,41 @@ h3 {
   margin: 0;
 }
 
+/* Virtual Game style*/
+.card-back-game {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.card-content-game {
+  position: absolute;
+  inset: 0; /* fill parent */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;  /* left align */
+  justify-content: flex-start; /* start from top */
+  padding: 35px;
+  box-sizing: border-box;
+  transform: translateY(-50px); 
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 per row */
+  gap: 20px; 
+}
+
 
 .quiz-step {
   position: relative;

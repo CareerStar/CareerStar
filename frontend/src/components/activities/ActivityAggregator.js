@@ -14,6 +14,7 @@ import Activity13 from './Activity13';
 import Activity14 from './Activity14';
 import Activity15 from './Activity15';
 import Activity16 from './Activity16';
+import VirtualCompanyGame from './VirtualCompanyGame';
 
 function ActivityAggregator({activity}) {
 
@@ -33,6 +34,7 @@ function ActivityAggregator({activity}) {
         14: <Activity14 />,
         15: <Activity15 />,
         16: <Activity16 />,
+        17: <VirtualCompanyGame />
     };
 
     return (
