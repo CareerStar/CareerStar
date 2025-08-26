@@ -30,6 +30,12 @@ function withAuth(WrappedComponent) {
                             navigate('/admin/login');
                         }
                     }
+                } else if (WrappedComponent.name === 'CustomerAdminView') {
+                    const token = localStorage.getItem('customer_cuny2x_token');
+                    if (!token) {
+                        navigate('/admin/customer/cuny2x');
+                        return;
+                    }
                 } else {
                     const accessToken = localStorage.getItem('access_token');
                     const refreshToken = localStorage.getItem('refresh_token');

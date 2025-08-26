@@ -11,7 +11,7 @@ import roadmapIcon from "../assets/images/activities-icon-blue.svg";
 import supportIcon from "../assets/images/support-icon-blue.svg";
 import leaderBoard from "../assets/images/leaderboard-icon-moon.svg";
 
-function Sidebar({ pages, selectedPage, onboarded, isAdmin = false }) {
+function Sidebar({ pages, selectedPage, onboarded, isAdmin = false, adminBase = '/admin/dashboard' }) {
     const navigate = useNavigate();
 
     const iconMap = {
@@ -29,11 +29,12 @@ function Sidebar({ pages, selectedPage, onboarded, isAdmin = false }) {
         Users: <Folder size={24} color="black" />,
         "Activity Management": <Folder size={24} color="black" />,
         "Manager Reports": <FileText size={24} color="black" />,
+        "Cohort Dashboard": <Trophy size={24} color="black" />,
     };
 
     const handleClick = (page) => {
         if (isAdmin) {
-            navigate(`/admin/dashboard/${page.replace(/\s+/g, "").toLowerCase()}`);
+            navigate(`${adminBase}/${page.replace(/\s+/g, "").toLowerCase()}`);
         }
         else if (onboarded || page === "Home") {
             navigate(`/dashboard/${page.replace(/\s+/g, "").toLowerCase()}`);
