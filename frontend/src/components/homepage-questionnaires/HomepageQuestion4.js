@@ -40,8 +40,8 @@ function HomepageQuestion4({ onChangeDegree, onChangeMajor, onChangeUniversity }
 
     return (
         <div className='home-page-question'>
-
-            {/* <h2>Choose your University</h2>
+{/* 
+            <h2>Choose your University</h2>
 
             <div>
                 <select
