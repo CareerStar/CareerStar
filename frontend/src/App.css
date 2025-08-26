@@ -2842,15 +2842,9 @@ h3 {
   min-height: 80vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   box-sizing: border-box;
-  box-shadow: 0 0 10px #8B2CF5;
-}
-
-.activity-13 .activity-description {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  box-shadow: 0 0 10px #8B2CF5
 }
 
 .activity-description h2 {
@@ -2858,9 +2852,6 @@ h3 {
   font-style: normal;
   font-weight: 700;
   font-size: 28px;
-}
-.activity-13 .activity-description h2 {
-  margin-bottom: 0px;
 }
 
 .activity-description h3 {
@@ -4583,7 +4574,7 @@ h3 {
 .example-card {
   background-color: #f8f9fa;
   border-radius: 8px;
-  padding: 0px 15px;
+  padding: 15px;
   margin-top: 15px;  
   margin-bottom: 15px;
   border-left: 3px solid #008080;
@@ -4602,6 +4593,7 @@ h3 {
 
 .example-card pre {
   font-family: 'Nunito';
+  margin: 10px 0 0;
   white-space: pre-wrap;
   font-size: 16px;
   line-height: 1.5;

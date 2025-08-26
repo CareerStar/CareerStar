@@ -244,25 +244,49 @@ const Activity13 = () => {
 
     const exampleHighlights = [
         {
-            details: "• Migrated 10K+ user profiles to new schema, cutting query time by 35% with zero data loss\n• Redesigned checkout UI, reducing steps from 5 to 3 and boosting completion rate by 12%\n• Built automated testing framework with CI/CD, adding 50+ tests and saving 8 QA hours per sprint"
+            title: "Completed database migration for user profiles",
+            details: "• Migrated 10,000+ user records to new schema\n• Reduced query time by 35%\n• Zero data loss during transition"
+        },
+        {
+            title: "Redesigned checkout process UI",
+            details: "• Simplified from 5 steps to 3 steps\n• Created responsive mobile version\n• Checkout completion rate increased by 12%"
+        },
+        {
+            title: "Implemented automated testing framework",
+            details: "• Set up CI/CD pipeline integration\n• Created 50+ test cases\n• Reduced manual QA time by 8 hours per sprint"
         }
     ];
 
     const exampleFutureHighlights = [
         {
-            details: "• Fully implement feature changes, push design from Figma to live application\n• Create one month's worth of social media postings for company, schedule first week of posts to go out automatically across channels\n• Develop new interactive card game to help users obtain better peer to peer feedback"
+            title: "Optimize database indexing strategy",
+            details: "• Will reduce query bottlenecks identified in last week's performance audit\n• Supports company-wide initiative to improve application responsiveness"
+        },
+        {
+            title: "Create user onboarding tutorial flow",
+            details: "• Design interactive guide for new feature rollout\n• Aligns with Q3 goal to improve user retention by 15%"
         }
     ];
 
     const exampleSupportRequests = [
         {
-            details: "• I need help directly connecting to the customer database to pull user records for my reports\n• I could use feedback on the new home page I designed, specifically the colorway. This would make whole website look more consistent"
+            title: "Access to production error logs",
+            details: "Having direct access to these logs would help me identify the source of intermittent authentication failures more efficiently, reducing debugging time by approximately 3-4 hours per week."
+        },
+        {
+            title: "Stakeholder feedback on proposed UI changes",
+            details: "Early feedback from marketing and sales teams would help ensure the new dashboard design meets both user needs and business objectives before development begins."
         }
     ];
 
     const exampleIdeas = [
         {
-            details: "• Incorporating a quick user sentiment survey at the end of our feature would help increase interaction and build a better workflow\n• Create an automatic workflow to remind new users to complete their onboarding"
+            title: "Agile Development Methodology",
+            details: "• Learned how to break down large projects into manageable sprints\n• Implemented daily stand-ups for better team communication\n• Applied this to improve project planning and delivery timelines"
+        },
+        {
+            title: "User-Centered Design Principles",
+            details: "• Discovered the importance of user feedback in design decisions\n• Applied these principles to improve our product's usability\n• Created a framework for gathering and implementing user feedback"
         }
     ];
 
@@ -777,7 +801,7 @@ ${answers.idea}
             </div>
 
             {/* Right Section */}
-            <div className="activity-container-right-element activity-container activity-13">
+            <div className="activity-container-right-element">
                 <img src={upArrowScroll} alt="Scroll to Top" className="scroll-top" onClick={scrollToTop} />
                 {currentStep === null ? (
                     <div className="activity-description">
@@ -812,18 +836,19 @@ ${answers.idea}
                 ) : currentStep === 1 ? (
                     <div className="activity-description">
                         <h2>Step 1: 3 Highlights</h2>
-                        <p>The first section of your report should showcase your most recent top three accomplishments or completed tasks. This is your chance to demonstrate your impact and value!</p>
+                        <p>The first section of your report should showcase your top three accomplishments or completed tasks from the week. This is your chance to demonstrate your impact and value.</p>
                         
-                        {/*<div className="activity-hot-tip">
+                        <div className="activity-hot-tip">
                             <img src={fireFlameIcon} alt="Fire Flame Icon" />
                             <p>Always try to quantify your accomplishments with specific numbers, percentages, or time saved. This makes your impact more concrete and impressive!</p>
-                        </div> */}
+                        </div>
                         
                         <h3>Key components for good highlights:</h3>
                         <ul>
                             <li>Be specific about what you accomplished</li>
                             <li>Include quantifiable results where possible</li>
                             <li>Connect your work to broader team or company goals</li>
+                            <li>Include 1-2 screenshots of your work when relevant</li>
                         </ul>
                         
                         <h3>Examples of effective highlights:</h3>
@@ -876,18 +901,19 @@ ${answers.idea}
                 ) : currentStep === 2 ? (
                     <div className="activity-description">
                         <h2>Step 2: 2 Future Highlights</h2>
-                        <p>This section of your report identifies one area where you need support, guidance, or resources. This shows self-awareness and proactive communication!</p>
+                        <p>In this section, outline two important tasks or initiatives you'll be focusing on in the coming week. This demonstrates forward thinking and helps set expectations.</p>
                         
-                        {/*<div className="activity-hot-tip">
+                        <div className="activity-hot-tip">
                             <img src={fireFlameIcon} alt="Fire Flame Icon" />
                             <p>Connect your future work to broader team goals or company values to show strategic thinking!</p>
-                        </div> */}
+                        </div>
                         
                         <h3>Key components for future highlights:</h3>
                         <ul>
                             <li>Be specific about what you plan to accomplish</li>
                             <li>Explain how this work contributes to larger objectives</li>
                             <li>Set realistic expectations for what you can achieve</li>
+                            <li>Avoid simply continuing last week's work without showing progression</li>
                         </ul>
                         
                         <h3>Examples of effective future highlights:</h3>
@@ -919,16 +945,17 @@ ${answers.idea}
                         <h2>Step 3: 1 Support Need</h2>
                         <p>The final section of your report identifies one area where you need support, guidance, or resources. This shows self-awareness and proactive communication.</p>
                         
-                        {/*<div className="activity-hot-tip">
+                        <div className="activity-hot-tip">
                             <img src={fireFlameIcon} alt="Fire Flame Icon" />
                             <p>Frame your request in terms of how solving this issue will benefit the team or project, not just yourself!</p>
-                        </div> */}
+                        </div>
                         
                         <h3>Key components for support requests:</h3>
                         <ul>
                             <li>Clearly identify the specific support you need</li>
                             <li>Explain how addressing this need benefits the team/project</li>
                             <li>Be solution-oriented, not just problem-focused</li>
+                            <li>Keep it constructive and positive</li>
                         </ul>
                         
                         <h3>Examples of effective support requests:</h3>
@@ -939,7 +966,7 @@ ${answers.idea}
                             </div>
                         ))}
                         
-                        <h3>Your turn - describe support you need:</h3>
+                        <h3>Your turn - describe your support need:</h3>
                         <textarea
                             className="support-need-textarea"
                             placeholder="Describe one area where you need support..."
@@ -951,12 +978,12 @@ ${answers.idea}
                 ) : currentStep === 4 ? (
                     <div className="activity-description">
                         <h2>Step 4: Idea</h2>
-                        <p>In this section, outline one key idea or concept you have that improves the company or your internship! This is your chance to demonstrate critical thinking and position yourself to get a future job!</p>
+                        <p>In this section, outline one key idea or concept you've learned or discovered during your internship.</p>
                         
-                        {/*<div className="activity-hot-tip">
+                        <div className="activity-hot-tip">
                             <img src={fireFlameIcon} alt="Fire Flame Icon" />
                             <p>Share your learning and apply it to future projects or challenges!</p>
-                        </div> */}
+                        </div>
                         
                         <h3>Key components for effective ideas:</h3>
                         <ul>
