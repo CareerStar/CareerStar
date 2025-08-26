@@ -10,7 +10,7 @@
 }
 
 body {
-    background: #200043;
+    background-color: #200043;
 }
 
 .App-logo {
@@ -239,8 +239,7 @@ body {
 
   /* background: linear-gradient(180deg, #BAB0D4 0%, #7562E3 45%, #2B30F5 100%); */
   /* background: radial-gradient(69.66% 91.85% at 54.1% 6.69%, #6B37F4 0%, #5118BF 72.89%, #D86C4C 100%); */
-  /* background: radial-gradient(circle at 7% 7%, #b33939, #732dff, #4e15be, #160438); */
-  background: #200043;
+  background: radial-gradient(circle at 7% 7%, #b33939, #732dff, #4e15be, #160438);
   margin: 0;
   height: 100vh;
   /* background-image: url('./assets/images/shootingstar.gif'); */
@@ -317,8 +316,7 @@ body {
   justify-content: center;
   align-items: center;
   padding: 12px 50px;
-  background: #581AD1;
-  box-shadow: 0px 2.0866px 25.9539px #dfceff ;
+  background: #ddd0f8;
   border-radius: 40px;
   margin: 0 auto;
   margin-top: 40px;
@@ -345,10 +343,6 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 }
 
 .main-page-button:hover {
-  background-color:#8345ff;
-}
-
-.main-page-button:hover {
   cursor: pointer !important;
   /* transform: translateY(-2px); */
   /* box-shadow: 0px 6px 0px #669977, 0px 10px 20px rgba(0, 0, 0, 0.3); */
@@ -367,7 +361,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   font-size: 18px;
   align-items: center;
   text-align: center;
-  color: #ffffff;
+  color: #1C1C1C;
 }
 
 .main-page-footer {
@@ -391,7 +385,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   line-height: 27px;
   text-align: center;
   text-decoration: underline;
-  color: #fff5ba;
+  color: #FFFFFF;
 }
 
 .main-page-footer a:hover {
@@ -399,7 +393,6 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 }
 
 /* Sign up page styles */
-
 .signUp-page {
   display: flex;
   flex-direction: column;
@@ -407,14 +400,12 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   justify-content: center;
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  padding: 2rem 1rem;
-  box-sizing: border-box;
+  height: 100vh;
 
-  /* background-image: url('./assets/images/main-page-sample-background.gif'); */
-  /* background-size: cover;
+  background-image: url('./assets/images/main-page-sample-background.gif');
+  background-size: cover;
   background-position: center;
-  background-repeat: no-repeat; */
+  background-repeat: no-repeat;
 
 }
 
@@ -440,6 +431,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   position: relative;
   max-width: 489px;
   width: 100%;
+  height: 100vh;
 }
 
 .signUp-page-question {
@@ -454,9 +446,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 
   background: #FFFFFF;
   border-radius: 24px;
-  border: 2px solid #ffffff;
-  box-shadow: 0px 2.0866px 15.9539px #dcd9de;
-
+  border: 2px solid #E5E5E5;
 
   flex: none;
   align-self: stretch;
@@ -483,12 +473,11 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 }
 
 .signUp-page-question h2 .highlight {
-  background: linear-gradient(to right, #5118BF , #9B5DE5 );
+  background: linear-gradient(210.77deg, #6B37F4 3.08%, #5118BF 74.31%, #D86C4C 100.81%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
-  /* font-style: bold; */
 }
 
 .signUp-page-question p {
@@ -504,8 +493,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   color: #161219;
 }
 
-.signUp-page-question input,
-.signUp-page-question select {
+.signUp-page-question input {
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -513,23 +501,12 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   padding: 10px;
   gap: 10px;
 
-  width: 400px;
+  width: 100%;
   height: 45px;
 
-  background-color: #fff;
-  border-radius: 8px;
-  border: 1px solid #A9A4FF;
-  box-shadow: 0px 2.0866px 8.9539px #b7b4ff ;
-}
-
-.signUp-page-question input:focus,
-.signUp-page-question select:focus {
-  border-color: #8B2CF5;
-  box-shadow: none;
-  outline: none;
-
-  background-color: #fff; 
-
+  background: #F5F5F5;
+  border-radius: 4px;
+  border: none;
 }
 
 .signUp-page-button {
@@ -541,16 +518,11 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   gap: 10px;
   width: 479px;
   height: 40px;
+  background: #581AD1;
   border-radius: 40px;
   margin: 0 auto;
   margin-top: 20px;
-  color: #ffffff;
-  background: #581AD1;
-  box-shadow: 0px 2.0866px 20.9539px #dfceff ;
-}
-
-.signUp-page-button:hover {
-  background-color:#8345ff;
+  color: #FFFFFF;
 }
 
 .signUp-page-button p {
@@ -560,7 +532,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   font-size: 18px;
   line-height: 25px;
   text-align: center;
-  color: #ffffff;
+  color: #FFFFFF;
 }
 
 .signUp-page-button:hover {
@@ -576,12 +548,12 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   line-height: 19px;
   text-align: center;
 
-  color: #ffffff;
+  color: #161219;
 }
 
 .signUp-page-footer a {
   text-decoration: underline;
-  color: #fff5ba;
+  color: #611DE4;
 }
 
 .signUp-page-footer a:hover {
@@ -619,8 +591,6 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   .signUp-page .signUp-page-content {
     max-width: 100%;
     height: auto;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
   }
 
   .signUp-page-question {
@@ -639,6 +609,11 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
     line-height: 24px;
   }
 
+  .signUp-page-question input {
+    width: 100%;
+    height: 35px;
+  }
+
   .signUp-page-button {
     width: 100%;
     margin-top: 20px;
@@ -655,7 +630,6 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #FFF;
 }
 
 .password-visibility-icon {
@@ -773,7 +747,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   padding: 12px 16px;
   font-family: 'Nunito', sans-serif;
   font-size: 16px;
-  border: 1px solid #ffffff;
+  border: 1px solid #ddd;
   border-radius: 8px;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
@@ -862,7 +836,6 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   white-space: wrap;
   font-size: 14px;
   margin: 0px;
-  color: #f0f0f0;
 }
 
 .email-credential-page-footer {
@@ -873,7 +846,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   font-size: 14px;
   line-height: 19px;
   text-align: center;
-  color: #ffffff;
+  color: #000000;
 }
 
 .email-credential-page-footer .email-credential-page-footer-bold {
@@ -929,27 +902,12 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   z-index: 99;
 }
 
-/* .home-questions {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  max-width: 489px;
-  width: 100%;
-  max-height: 100vh;
-  margin: auto;
-  margin-top: 50px;
-  margin-bottom: 30px;
-} */
-
 .popup-content {
   background: white;
   padding: 20px 20px;
   border-radius: 15px;
   text-align: center;
   position: relative;
-  margin: 0 auto;
 }
 
 .popup-content .earned-star {
@@ -1439,7 +1397,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   text-align: left;
   margin: 0;
   padding: 0px;
-  color: #200043;
+  color: #161219;
 }
 
 .home-page-question input {
@@ -1530,7 +1488,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   height: 57px;
 
   border-radius: 8px;
-  border: 1px solid #ffffff;
+  border: 1px solid #581AD1;
   border-radius: 40px;
 }
 
@@ -1563,6 +1521,7 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   padding: 20px;
   box-sizing: border-box;
   box-shadow: 0px 6.0866px 10.9539px #dcd9de;
+
 }
 
 .home-page-question-description p {
@@ -1822,7 +1781,6 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
   border-radius: 15px;
   text-align: center;
   position: relative;
-  
 }
 
 .event-popup-content h2 {
@@ -1840,7 +1798,6 @@ box-shadow: 0px 4px 0px #007aa3, 0px 8px 15px rgba(0, 0, 0, 0.3); */
 .event-popup-content img {
   gap: 12px;
   width: 100%;
-  
 }
 
 .event-popup-content .popup-image {

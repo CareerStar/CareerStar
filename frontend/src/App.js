@@ -33,11 +33,11 @@ function App() {
             element={<StartPage />}
           />
 
-          {/* <Route
+          <Route
             exact
             path="/signup"
             element={<SignUp />}
-          /> */}
+          />
 
           <Route
             exact
