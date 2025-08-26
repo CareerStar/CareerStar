@@ -1,10 +1,15 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
-import caseStudy from '../../assets/images/activities/activity1/case-study.png';
-import collaboratingInCircle from '../../assets/images/activities/activity1/collaborating-in-circle.png';
-import lawyer from '../../assets/images/activities/activity1/lawyer.png';
+import techstack from '../../assets/images/activities/activity2/techstack.png';
+import applicationdevelopment from '../../assets/images/activities/activity2/applicationdevelopment.png';
+import bonuscompany from '../../assets/images/activities/activity2/bonuscompany.png';
+import businesssales from '../../assets/images/activities/activity2/businesssales.png';
+import quiz from '../../assets/images/activities/activity2/quiz.png';
+
+
+import companyroles from '../../assets/images/activities/activity2/companyroles.png';
 import backArrow from '../../assets/images/back-arrow.png';
-import activityImage from '../../assets/images/activities/activity2/activity-image.jpg';
+import activityImage from '../../assets/images/activities/activity2/activity2.png';
 import clock from '../../assets/images/activities/clock.png';
 import star from '../../assets/images/activities/star.png';
 import upArrowScroll from '../../assets/images/up-arrow-scroll.png';
@@ -111,40 +116,70 @@ const Activity2 = () => {
         }
     };
 
-    const executiveLeadershipAndManagement = [
-        { abbreviation: 'CEO', fullForm: 'Chief Executive Officer', duty: 'Highest-ranking executive responsible for major corporate decisions, overall operations and financial solvency.' },
-        { abbreviation: 'CFO', fullForm: 'Chief Financial Officer', duty: 'Is responsible for a company\'s financial operations. They oversee the finance department and make strategic financial decisions.' },
-        { abbreviation: 'CTO', fullForm: 'Chief Technology Officer', duty: 'Executive responsible for technology strategy, innovation, and technical infrastructure.' },
-        { abbreviation: 'CMO', fullForm: 'Chief Marketing Officer', duty: 'Executive responsible for marketing strategy, brand management, and market growth. Develops and executes social media strategy and cross-brand partnerships.' },
-        { abbreviation: 'VP', fullForm: 'Vice President', duty: 'In charge of the overall business, institution, university, organization, agency or branch of government. A VP furthers the board of directors\' goals and missions by implementing new standards and strategies in the company.' },
-        { abbreviation: 'SVP', fullForm: 'Senior Vice President', duty: 'Is responsible for overseeing internal operations, helping to build strong customer relationships, and maximizing the company\'s financial goals.' },
-        { abbreviation: 'CHRO', fullForm: 'Chief Human Resource Officer', duty: 'Is responsible for designing and rolling out strategies that help the company get the best out of its workforce.' }
+    const companyRoles = [
+        { abbreviation: 'CEO', fullForm: 'Chief Executive Officer', duty: 'Oversees the entire company’s vision, long-term strategy, and high-level decision-making. The CEO aligns all departments toward company goals and represents the organization to stakeholders.' },
+        { abbreviation: 'CFO', fullForm: 'Chief Financial Officer', duty: ' Manages budgets, investments, and ensures financial health and growth.' },
+        { abbreviation: 'CTO', fullForm: 'Chief Technology Officer', duty: 'Drives tech strategy, oversees product development, and leads innovation.' },
+        { abbreviation: 'CMO', fullForm: 'Chief Marketing Officer', duty: 'Builds brand strategy, drives campaigns, and boosts customer engagement.' },
+        { abbreviation: 'CIO', fullForm: 'Chief Information Officer ', duty: 'Leads talent strategy, company culture, and employee growth initiatives.' },
+        { abbreviation: 'VP', fullForm: 'Vice President ', duty: 'Supports the CEO, leads key initiatives, and steps in as second-in-command..' },
+        { abbreviation: 'COO', fullForm: 'Chief Operating Officer', duty: 'Leads sales and revenue efforts .' },
+        { abbreviation: 'CPO', fullForm: 'Chief People Officer', duty: 'Leads talent strategy, company culture, and employee growth initiatives..' },
     ];
 
-    const technicalAndProductRoles = [
-        { abbreviation: 'PM', fullForm: 'Product Manager', duty: 'Responsible for the strategy, roadmap, and feature definition for that product or product line.' },
-        { abbreviation: 'UX', fullForm: 'User Experience Designer', duty: 'Responsible for creating products that provide meaningful and relevant experiences to users.' },
-        { abbreviation: 'UI', fullForm: 'User Interface Designer', duty: 'Responsible for the look and feel of a product, and ensuring that the user experience is seamless.' },
-        { abbreviation: 'QA', fullForm: 'Quality Assurance Engineer', duty: 'Responsible for ensuring the quality of the final product.' },
-        { abbreviation: 'SWE / SDE', fullForm: 'Software Engineer', duty: 'Responsible for designing, developing, and testing software systems or applications for software companies.' },
-        { abbreviation: 'SRE', fullForm: 'Site Reliability Engineer', duty: 'Responsible for ensuring that the company\'s services are reliable and scalable.' },
-        { abbreviation: 'DBA', fullForm: 'Database Administrator', duty: 'Responsible for the performance, integrity, and security of a database.' }
+    const techStack = [
+        { abbreviation: 'HTML', fullForm: 'HyperText Markup Language', duty: 'The standard language used to create and design websites and web applications.' },
+        { abbreviation: 'CSS', fullForm: 'Cascading Style Sheets', duty: 'A style sheet language used for describing the presentation of a document written in HTML.' },
+        { abbreviation: 'API', fullForm: 'Application Programming Interface', duty: 'A set of rules that allows different software applications to communicate with each other.' },
+        { abbreviation: 'AWS', fullForm: 'Amazon Web Services', duty: 'A comprehensive cloud computing platform provided by Amazon, offering storage, computing power, and other functionality.' },
+        { abbreviation: 'DB', fullForm: 'Database', duty: 'An organized collection of structured information or data, typically stored electronically in a computer system.' },
+        { abbreviation: 'SQL', fullForm: 'Structured Query Languager', duty: 'A programming language designed for managing and manipulating relational databases.' },
+        { abbreviation: 'AI', fullForm: 'Artificial Intelligencer', duty: 'Technology that enables computers to simulate human intelligence through learning, reasoning, and self-correction.' }
     ];
 
-    const businessModelsMetricsAndTechnology = [
-        { abbreviation: 'B2B', fullForm: 'Business-to-Business', duty: "A type of commerce where businesses exchange products, services, or information with other businesses." },
-        { abbreviation: 'B2C', fullForm: 'Business-to-Consumer', duty: "A business model where a company sells products or services directly to consumers." },
-        { abbreviation: 'SaaS', fullForm: 'Software as a Service', duty: "A cloud-based model for delivering software applications to users over the internet." },
-        { abbreviation: 'KPI', fullForm: 'Key Performance Indicator', duty: "A measurable value that demonstrates how effectively a company is achieving key objectives." },
-        { abbreviation: 'OKR', fullForm: 'Objectives and Key Results', duty: "A goal-setting methodology that can help teams set measurable goals." },
-        { abbreviation: 'CRM', fullForm: 'Customer Relationship Management', duty: "A system for managing all of your company's interactions with current and potential customers." },
-        { abbreviation: 'HR', fullForm: 'Human Resources', duty: "The department of a business that manages the employee life cycle." },
+    const applicationDevelopment = [
+        { abbreviation: 'UX', fullForm: 'User Experience', duty: "The overall experience a user has when interacting with a product, focusing on usability, accessibility, and satisfaction." },
+        { abbreviation: 'QA', fullForm: 'Quality Assurance', duty: "The process of ensuring a product or service meets specified requirements and quality standards before release." },
+        { abbreviation: 'SaaS', fullForm: 'Software as a Service', duty: "A software distribution model where applications are hosted by a provider and made available to customers over the internet." },
+        { abbreviation: 'MVP', fullForm: 'Minimum Viable Product', duty: "A version of a product with just enough features to be usable by early customers who can then provide feedback." },
+        { abbreviation: 'SWOT', fullForm: 'Strengths, Weaknesses, Opportunities, Threats', duty: "A strategic planning framework used to evaluate these four elements of a project or business venture." },
+        { abbreviation: 'CMS', fullForm: 'Content Management System', duty: "Software that helps users create, manage, and modify content on a website without specialized technical knowledge." },
+        { abbreviation: 'LoT', fullForm: 'Internet of Things', duty: "The network of physical objects embedded with sensors, software, and technologies to connect and exchange data with other devices over the internet." },
+        { abbreviation: 'UI', fullForm: 'User Interface', duty: "The visual elements and interactive components that allow users to interact with a digital product or service." },
+
+    ]
+
+    const businessSales = [
+        { abbreviation: 'B2B', fullForm: 'Business to Business', duty: "When one company provides products or services to another company to help them operate, grow, or serve their own customers" },
+        { abbreviation: 'B2C', fullForm: 'Business to Consumer', duty: "When a company sells products or services directly to everyday people who use them for their personal needs.." },
+        { abbreviation: 'BS', fullForm: 'Brand Strategist', duty: "A cloud-based model for delivering software applications to users over the internet." },
+        { abbreviation: 'EBIDTA', fullForm: 'Earnings before interest, depreciation, taxes and amortization', duty: "The financial metric that measures a company's overall financial performance." },
+        { abbreviation: 'SEO', fullForm: 'Search Engine Optimization', duty: "Steps a business takes to make its website show up higher on search engines so more people can find it online." },
+        { abbreviation: 'IRA', fullForm: 'Individual Retirement Account', duty: " A tax-advantaged investment account designed to help individuals save for retirement." },
+        { abbreviation: 'YTD', fullForm: 'Year to Date', duty: "The total amount of something, like sales or expenses, measured from the start of the year up to today." },
+        { abbreviation: 'ARR', fullForm: 'Annual Recurring Revenue', duty: "TA metric that shows the money that comes in every year from subscriptions or recurring contracts.." },
+
+    ]
+    const bonusCompany = [
+        { abbreviation: 'AAPL', fullForm: 'Apple Inc.', duty: "Technology company that designs, manufactures, and markets smartphones, personal computers, tablets, and wearables.." },
+        { abbreviation: 'MSFT', fullForm: 'Microsoft Corporation', duty: "Technology company that develops, licenses, and supports software, services, devices, and solutions." },
+        { abbreviation: 'AMZN', fullForm: 'Amazon.com, Inc.', duty: "E-commerce and cloud computing company offering online retail shopping, subscription services, and web services." },
+        { abbreviation: 'GOOGL', fullForm: 'Alphabet Inc.', duty: "Parent company of Google, focusing on search, advertising, operating systems, platforms, and hardware.." },
+        { abbreviation: 'META', fullForm: 'Meta Platforms, Inc.', duty: "Technology company focused on social media, including WhatsApp, Facebook and Instagram." },
+        { abbreviation: 'TSLA', fullForm: 'Tesla, Inc.', duty: "Electric vehicle and clean energy company that designs and manufactures electric cars and energy solutions.." },
+        { abbreviation: 'NVDA', fullForm: 'NVIDIA Corporation', duty: " Technology company specializing in graphics processing units (GPUs) and artificial intelligence technologies.." },
+        { abbreviation: 'JPM', fullForm: 'JPMorgan Chase & Co.', duty: "Global financial services firm and banking institution offering investment banking, asset management, and other services." }
     ]
 
     const stepsData = [
-        { id: 1, number: "Step 1", title: "Executive Leadership & Senior Management", icon: lawyer },
-        { id: 2, number: "Step 2", title: "Technical & Product Roles & Terms", icon: caseStudy },
-        { id: 3, number: "Step 3", title: "Business Models, Metrics & Technology", icon: collaboratingInCircle }
+        { id: 1, number: "Step 1", title: "Company Roles", icon: companyroles },
+        { id: 2, number: "Step 2", title: "Tech Stack", icon: techstack },
+        { id: 3, number: "Step 3", title: "Application Development", icon: applicationdevelopment },
+        { id: 4, number: "Step 4", title: "Business & Sales", icon: businesssales },
+        { id: 5, number: "Step 5", title: "Bonus! Company", icon: bonuscompany },
+        { id: 6, number: "Step 6", title: "Quiz", icon: quiz },
+
+
     ];
 
     const handleStepChange = (stepId) => {
@@ -185,6 +220,72 @@ const Activity2 = () => {
             navigate('/dashboard/home');
         }
     }
+
+    const quizQuestions = [
+        {
+            id: 1,
+            question: 'What does “HR” mean?',
+            options: [
+                { id: 'A', text: 'High Risk' },
+                { id: 'B', text: 'Hiring Relations' },
+                { id: 'C', text: 'Human Resources' }, 
+                { id: 'D', text: 'House Resources' }
+            ],
+            correctAnswer: 'C',
+        },
+        {
+            id: 2,
+            question: 'What does “CEO” mean?',
+            options: [
+                { id: 'A', text: 'Chief Executive Officer' },
+                { id: 'B', text: 'Corporate Employee Organizer' },
+                { id: 'C', text: 'Central Executive Operator' },
+                { id: 'D', text: 'Chief Engineering Officer' }
+            ],
+            correctAnswer: 'A',
+        },
+        {
+            id: 3,
+            question: 'What does JPM stand for?',
+            options: [
+                { id: 'A', text: 'Japan Manufacturing' }, 
+                { id: 'B', text: 'Joint Project Management' },
+                { id: 'C', text: 'JPMorgan Chase & Co.' },
+                { id: 'D', text: 'Junior Portfolio Manager' }
+            ],
+            correctAnswer: 'C',
+        },
+         
+         
+    ];
+
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [selectedAnswer, setSelectedAnswer] = useState(null);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const handleAnswerSelect = (optionId) => {
+        if (!isSubmitted) setSelectedAnswer(optionId);
+    };
+
+    const handleQuizSubmit = () => {
+        if (selectedAnswer) {
+            setIsSubmitted(true);
+        }
+    };
+
+    const handleNextQuestion = () => {
+        setIsSubmitted(false);
+        setSelectedAnswer(null);
+
+        if (currentQuestionIndex < quizQuestions.length - 1) {
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
+        } else {
+            // quiz finished
+            handleSubmit(true);
+        }
+    };
+
+
 
     return (
         <div className="activity-container">
@@ -235,36 +336,110 @@ const Activity2 = () => {
                             </div>
                         </div>
                         <p>Test your knowledge of industry acronyms and their meanings, perfect for anyone looking to strengthen their business and tech vocabulary.</p>
+                        <p>An Acronym is a shorthand phrase that represents the first letter of each word. For example, CEO means ‘Chief Executive Officer’
+                            Crack the codes in our card game by figuring out what each letter stands for.</p>
 
                     </div>
                 ) : currentStep === 1 ? (
                     <div className="activity-description">
-                        <h2>Step 1 : Executive Leadership & Senior Management</h2>
+                        <h2>Step 1 : Company Roles</h2>
+                        <p> In this step, you’re to recognize each acronyms of Company Roles.</p>
                         <div className="flip-cards-container">
-                            {executiveLeadershipAndManagement.map((role, index) => (
+                            {companyRoles.map((role, index) => (
                                 <FlippableCard key={`step1-${index}`} abbreviation={role.abbreviation} fullForm={role.fullForm} duty={role.duty} />
                             ))}
                         </div>
                     </div>
                 ) : currentStep === 2 ? (
                     <div className="activity-description">
-                        <h2>Step 2 : Technical & Product Roles & Terms</h2>
+                        <h2>Step 2 :Tech Stack </h2>
+                        <p>In this step, you’re to recognize each acronyms of tech stack.</p>
                         <div className="flip-cards-container">
-                            {technicalAndProductRoles.map((role, index) => (
+                            {techStack.map((role, index) => (
                                 <FlippableCard key={`step2-${index}`} abbreviation={role.abbreviation} fullForm={role.fullForm} duty={role.duty} />
                             ))}
                         </div>
                     </div>
+
                 ) : currentStep === 3 ? (
                     <div className="activity-description">
-                        <h2>Step 3 : Business Models, Metrics & Technology</h2>
+                        <h2>Step 3 :Application Development </h2>
+                        <p>In this step, you’re to recognize each acronyms of Application Development.</p>
                         <div className="flip-cards-container">
-                            {businessModelsMetricsAndTechnology.map((role, index) => (
-                                <FlippableCard key={index} abbreviation={role.abbreviation} fullForm={role.fullForm} duty={role.duty} />
+                            {applicationDevelopment.map((role, index) => (
+                                <FlippableCard key={`step2-${index}`} abbreviation={role.abbreviation} fullForm={role.fullForm} duty={role.duty} />
                             ))}
                         </div>
                     </div>
+
+
+                ) : currentStep === 4 ? (
+                    <div className="activity-description">
+                        <h2>Step 4 :Business & Sales </h2>
+                        <p>In this step, you’re to recognize each acronyms of Business & Sales.</p>
+                        <div className="flip-cards-container">
+                            {businessSales.map((role, index) => (
+                                <FlippableCard key={`step2-${index}`} abbreviation={role.abbreviation} fullForm={role.fullForm} duty={role.duty} />
+                            ))}
+                        </div>
+                    </div>
+
+
+                ) : currentStep === 5 ? (
+                    <div className="activity-description">
+                        <h2>Step 5 : Bonus Company </h2>
+                        <p>In this step, you’re to recognize each acronyms of Application Development.</p>
+                        <div className="flip-cards-container">
+                            {bonusCompany.map((role, index) => (
+                                <FlippableCard key={`step2-${index}`} abbreviation={role.abbreviation} fullForm={role.fullForm} duty={role.duty} />
+                            ))}
+                        </div>
+                    </div>
+
+
+
+                ) : currentStep === 6 ? (
+                    <div className="activity-description quiz-step">
+                        {/* Progress counter top-right */}
+                        <div className="quiz-header">
+                            <span>{currentQuestionIndex + 1}/{quizQuestions.length}</span>
+                        </div>
+
+                        {/* Question */}
+                        <h2>{quizQuestions[currentQuestionIndex].question}</h2>
+
+                        {/* Options */}
+                        <div className="quiz-options">
+                            {quizQuestions[currentQuestionIndex].options.map((opt) => (
+                                <div
+                                    key={opt.id}
+                                    className={`quiz-option 
+              ${selectedAnswer === opt.id ? "selected" : ""} 
+              ${isSubmitted && opt.id === quizQuestions[currentQuestionIndex].correctAnswer ? "correct" : ""} 
+              ${isSubmitted && selectedAnswer === opt.id && opt.id !== quizQuestions[currentQuestionIndex].correctAnswer ? "incorrect" : ""}`}
+                                    onClick={() => handleAnswerSelect(opt.id)}
+                                >
+                                    {opt.id}. {opt.text}
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Submit OR Next Arrow */}
+                        <div className="quiz-footer">
+                            {!isSubmitted ? (
+                                <button onClick={handleQuizSubmit} disabled={!selectedAnswer} className="submit-btn">
+                                   Submit Answer   
+                                </button>
+                            ) : (
+                                <div className="next-arrow" onClick={handleNextQuestion}>
+                                    ➡
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 ) : null}
+
+
                 <div className="activity-navigation-buttons">
                     <div className="activity-navigation-back-button" onClick={handleBack} disabled={currentStep === null} style={{ marginRight: "10px" }}>
                         {currentStep === null ? "Back to Activity Page" : "Back to Previous Step"}
