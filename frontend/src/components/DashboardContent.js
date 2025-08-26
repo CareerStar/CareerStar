@@ -14,7 +14,6 @@ import Leaderboard from './dashboard-content-pages/Leaderboard';
 import UserManagement from './admin/UserManagement';
 import ActivityManagement from './admin/ActivityManagement';
 import ManagerReports from './admin/ManagerReports';
-import InternshipDashboard from './admin/InternshipDashboard';
 
 function DashboardContent({ selectedPage, activityName, onComplete, userId }) {
     const renderPage = () => {
@@ -49,8 +48,6 @@ function DashboardContent({ selectedPage, activityName, onComplete, userId }) {
                 return <ActivityManagement />;
             case 'Managerreports':
                 return <ManagerReports />;
-            case 'Internshipprogramdashboard':
-                return <InternshipDashboard />;
             default:
                 return <Home />;
         }
