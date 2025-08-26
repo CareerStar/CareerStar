@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import star from '../../assets/images/star-yellow.png';
 import axios from 'axios';
 import jsPDF from 'jspdf';
-import { Star as StarIcon, TrendingUp as TrendingUpIcon, CheckCircle as CheckCircleIcon, Award as AwardIcon, Code as CodeIcon } from 'lucide-react';
 
 function Profile({ userId: propUserId }) {
     const dispatch = useDispatch();
@@ -21,11 +20,6 @@ function Profile({ userId: propUserId }) {
     const [reports, setReports] = useState([]);
     const [showReports, setShowReports] = useState(false);
     const [selectedReport, setSelectedReport] = useState(null);
-    const [internshipSummary, setInternshipSummary] = useState(null);
-    const [summaryLoading, setSummaryLoading] = useState(false);
-    const [summaryLoaded, setSummaryLoaded] = useState(false);
-    const [showInternDashboard, setShowInternDashboard] = useState(false);
-    const [internDashboardView, setInternDashboardView] = useState('summary'); // 'summary' | 'report'
 
     const avatarURL = '../../assets/images/avatars/';
 
@@ -39,31 +33,6 @@ function Profile({ userId: propUserId }) {
         'avatar7',
         'avatar8',
     ]
-
-    const getTechStyle = (techName) => {
-        const key = (techName || '').toString().toLowerCase();
-        switch (key) {
-            case 'javascript':
-                return { bg: '#FEF3C7', color: '#92400E' };
-            case 'react':
-                return { bg: '#CFFAFE', color: '#155E75' };
-            case 'python':
-                return { bg: '#E0E7FF', color: '#3730A3' };
-            case 'html':
-                return { bg: '#FFE4E6', color: '#9F1239' };
-            case 'css':
-                return { bg: '#DBEAFE', color: '#1E3A8A' };
-            case 'git':
-                return { bg: '#FFEDD5', color: '#9A3412' };
-            case 'node.js':
-            case 'node':
-                return { bg: '#DCFCE7', color: '#14532D' };
-            case 'sql':
-                return { bg: '#FEF9C3', color: '#854D0E' };
-            default:
-                return { bg: '#EEF2FF', color: '#3730A3' };
-        }
-    };
 
     const handleSummaryChange = (event) => {
         setSummary(event.target.value);
@@ -128,39 +97,6 @@ function Profile({ userId: propUserId }) {
         }
       };
       fetchReports();
-    }, [userId]);
-
-    const openInternDashboard = () => {
-      setShowInternDashboard(true);
-      setInternDashboardView('report');
-    };
-
-    const closeInternDashboard = () => {
-      setShowInternDashboard(false);
-      setInternDashboardView('summary');
-    };
-
-    const backToInternSummary = () => {
-      setShowInternDashboard(false);
-      setInternDashboardView('summary');
-    };
-    
-
-    useEffect(() => {
-      const fetchInternshipSummary = async () => {
-        if (!userId) return;
-        setSummaryLoading(true);
-        try {
-          const res = await axios.get(`https://api.careerstar.co/internship-summary/${userId}`);
-          setInternshipSummary(res.data);
-        } catch (err) {
-          setInternshipSummary(null);
-        } finally {
-          setSummaryLoading(false);
-          setSummaryLoaded(true);
-        }
-      };
-      fetchInternshipSummary();
     }, [userId]);
 
     const handleSave = async (updatedSummary) => {
@@ -526,232 +462,11 @@ function Profile({ userId: propUserId }) {
                         </div>
                       )}
                     </div>
-                    <div style={{ marginTop: 16, display: 'flex', justifyContent: 'flex-start' }}>
-                      <div
-                        onClick={openInternDashboard}
-                        style={{
-                          cursor: 'pointer',
-                          width: '100%',
-                          maxWidth: 300,
-                          minHeight: 180,
-                          background: 'rgba(255,255,255,0.2)',
-                          border: '1px solid rgba(255,255,255,0.15)',
-                          borderRadius: 16,
-                          padding: '24px 16px',
-                          boxShadow: '0 6px 24px rgba(0,0,0,0.25)',
-                          display: 'flex',
-                          flexDirection: 'column'
-                        }}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                            <div style={{
-                              width: 40,
-                              height: 40,
-                              borderRadius: 9999,
-                              background: 'linear-gradient(135deg, #60A5FA, #8B5CF6)',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              fontWeight: 800
-                            }}>
-                              {(internshipSummary?.user_name || firstname || 'U').charAt(0).toUpperCase()}
-                            </div>
-                            <div>
-                              <div style={{ fontSize: 18, fontWeight: 800, color: '#fff' }}>
-                                {internshipSummary?.user_name || firstname}
-                              </div>
-                              <div style={{ fontSize: 13, color: '#DDD6FE' }}>
-                                Manager: {internshipSummary?.manager_name || '—'}
-                              </div>
-                            </div>
-                          </div>
-                          <div style={{ fontSize: 18, opacity: 0.8 }}>›</div>
-                        </div>
-
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 10 }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <StarIcon size={18} color="#FBBF24" fill="#FBBF24" />
-                            <span style={{ fontWeight: 700, color: '#FDE68A' }}>
-                              {internshipSummary?.stars ?? stars ?? 0}
-                            </span>
-                          </div>
-                          <div style={{ fontSize: 13, color: '#DDD6FE' }}>
-                            {(internshipSummary?.reports_count ?? reports.length ?? 0)} reports
-                          </div>
-                        </div>
-
-                        <button
-                          style={{
-                            width: '100%',
-                            marginTop: 'auto',
-                            background: 'linear-gradient(90deg, #8B5CF6, #EC4899)',
-                            color: '#fff',
-                            fontWeight: 700,
-                            padding: '10px 14px',
-                            borderRadius: 10,
-                            border: '1px solid rgba(255,255,255,0.2)'
-                          }}
-                        >
-                          View My Internship Summary
-                        </button>
-                      </div>
-                    </div>
                     <div className='summary-buttons flex-row'>
                         <button className='save-button' onClick={handleLogout}>Log Out</button>
                     </div>
                 </div>
             </div>
-            {showInternDashboard && (
-                <div style={{
-                    position: 'fixed',
-                    inset: 0,
-                    zIndex: 1000,
-                    backgroundColor: '#200043',
-                    color: '#fff',
-                    overflowY: 'auto'
-                }}>
-                    <div style={{ position: 'relative', maxWidth: 980, margin: '0 auto', padding: 36 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
-                            <div style={{ fontWeight: 800, lineHeight: 1 }}>
-                                <div style={{ fontSize: 22 }}>career</div>
-                                <div style={{ fontSize: 22 }}>star</div>
-                                <button onClick={closeInternDashboard} style={{
-                                    marginTop: 30,
-                                    background: 'rgba(255,255,255,0.12)',
-                                    border: '1px solid rgba(255,255,255,0.25)',
-                                    borderRadius: 8,
-                                    padding: '8px 12px',
-                                    color: '#fff',
-                                    cursor: 'pointer'
-                                }}>← Back to Profile</button>
-                            </div>
-                            <div style={{ textAlign: 'right', marginLeft: 'auto' }}>
-                                <div style={{ fontSize: 36, fontWeight: 800 }}>{(internshipSummary && internshipSummary.user_name) || firstname || ''}</div>
-                                <div style={{ fontSize: 18, color: '#C4B5FD' }}>Manager: {(internshipSummary && internshipSummary.manager_name) || '—'}</div>
-                            </div>
-                        </div>
-
-                        {internDashboardView === 'summary' && (
-                            <div />
-                        )}
-
-                        {internDashboardView === 'report' && (
-                            <div>
-                                <div style={{ height: 8 }} />
-
-                                <div style={{ background: '#fff', color: '#111827', borderRadius: 12, padding: '29px 18px', marginBottom: 24, boxShadow: '0 2px 10px rgba(0,0,0,0.12)' }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <div style={{ fontSize: 23, marginRight: 12 }}>⭐</div>
-                                        <div style={{ fontSize: 23, fontWeight: 800 }}>Outstanding Work!</div>
-                                    </div>
-                                </div>
-
-                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18, marginBottom: 24 }}>
-                                    <div style={{ background: '#fff', color: '#111827', borderRadius: 12, padding: '27px 16px', textAlign: 'center', boxShadow: '0 2px 10px rgba(0,0,0,0.08)' }}>
-                                        <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 48, height: 48, borderRadius: 9999, background: '#FEF3C7', color: '#92400E', marginBottom: 8 }}>
-                                            <StarIcon size={22} />
-                                        </div>
-                                        <div style={{ fontSize: 33, fontWeight: 800, marginBottom: 7 }}>{(internshipSummary && (internshipSummary.stars ?? 0)) || 0}</div>
-                                        <div style={{ color: '#4B5563', fontSize: 14 }}>Stars Earned</div>
-                                    </div>
-                                    <div style={{ background: '#fff', color: '#111827', borderRadius: 12, padding: '27px 16px', textAlign: 'center', boxShadow: '0 2px 10px rgba(0,0,0,0.08)' }}>
-                                        <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 48, height: 48, borderRadius: 9999, background: '#DCFCE7', color: '#14532D', marginBottom: 8 }}>
-                                            <TrendingUpIcon size={22} />
-                                        </div>
-                                        <div style={{ fontSize: 33, fontWeight: 800, marginBottom: 7 }}>{((internshipSummary && Array.isArray(internshipSummary.highlights)) ? internshipSummary.highlights.length : 0)}</div>
-                                        <div style={{ color: '#4B5563', fontSize: 14 }}>Work Highlights</div>
-                                    </div>
-                                    <div style={{ background: '#fff', color: '#111827', borderRadius: 12, padding: '27px 16px', textAlign: 'center', boxShadow: '0 2px 10px rgba(0,0,0,0.08)' }}>
-                                        <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 48, height: 48, borderRadius: 9999, background: '#E0E7FF', color: '#3730A3', marginBottom: 8 }}>
-                                            <CheckCircleIcon size={22} />
-                                        </div>
-                                        <div style={{ fontSize: 33, fontWeight: 800, marginBottom: 7 }}>{(internshipSummary && (internshipSummary.reports_count ?? 0)) || 0}</div>
-                                        <div style={{ color: '#4B5563', fontSize: 14 }}>Reports Submitted</div>
-                                    </div>
-                                </div>
-
-                                <div style={{ background: '#fff', color: '#111827', borderRadius: 12, padding: '33px 22px', marginBottom: 24, boxShadow: '0 2px 10px rgba(0,0,0,0.10)' }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 25, fontWeight: 800, marginBottom: 20 }}>
-                                        <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 40, height: 40, borderRadius: 9999, background: '#D1FAE5', color: '#065F46' }}>
-                                            <AwardIcon size={20} />
-                                        </div>
-                                        Summer Accomplishments
-                                    </div>
-                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 14 }}>
-                                        {(((internshipSummary && Array.isArray(internshipSummary.highlights)) ? internshipSummary.highlights : [])).map((h, idx) => (
-                                            <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: 18, background: '#ECFDF5', borderRadius: 10, border: '1px solid #A7F3D0' }}>
-                                                <span style={{ color: '#059669', marginTop: 1, fontSize: 18 }}>✔️</span>
-                                                <p style={{ margin: 0, color: '#374151', fontSize: 18, lineHeight: 1.6 }}>{h}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div style={{ background: '#fff', color: '#111827', borderRadius: 12, padding: '33px 22px', marginBottom: 28, boxShadow: '0 2px 10px rgba(0,0,0,0.10)' }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 25, fontWeight: 800, marginBottom: 20 }}>
-                                        <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 40, height: 40, borderRadius: 9999, background: '#DBEAFE', color: '#1E3A8A' }}>
-                                            <CodeIcon size={20} />
-                                        </div>
-                                        Top Technologies / Skills
-                                    </div>
-                                    <div style={{
-                                        background: 'linear-gradient(135deg, rgba(59,130,246,0.10), rgba(147,51,234,0.10))',
-                                        borderRadius: 12,
-                                        padding: '33px 22px',
-                                        minHeight: 260
-                                    }}>
-                                        {(() => {
-                                            const techs = (((internshipSummary && Array.isArray(internshipSummary.technologies)) ? internshipSummary.technologies : [])).slice(0, 4);
-                                            const row1 = techs.slice(0, 2);
-                                            const row2 = techs.slice(2, 4);
-                                            const renderChip = (t, rankIdx, isFirstRow) => {
-                                                const name = typeof t === 'string' ? t : (t && t.name) ? t.name : '';
-                                                const count = typeof t === 'object' && t && t.count ? Number(t.count) : 1;
-                                                const base = Math.max(22, Math.min(60, count * 7)) + 3;
-                                                let multiplier = 1;
-                                                if (rankIdx === 0) multiplier = 1.6; else if (rankIdx === 1) multiplier = 1.4; // second in row is 20% smaller
-                                                const displaySize = Math.round(base * multiplier);
-                                                let { bg, color } = getTechStyle(name);
-                                                if (isFirstRow && rankIdx === 0) {
-                                                    bg = '#DBEAFE';
-                                                    color = '#1E3A8A';
-                                                }
-                                                return (
-                                                    <div key={`${name}-${rankIdx}`} style={{
-                                                        background: bg,
-                                                        color: color,
-                                                        padding: '17px 18px',
-                                                        borderRadius: 999,
-                                                        fontWeight: 800,
-                                                        fontSize: displaySize,
-                                                        boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.08)'
-                                                    }}>{name}</div>
-                                                );
-                                            };
-                                            return (
-                                                <>
-                                                    <div style={{ display: 'flex', justifyContent: 'center', gap: 16 }}>
-                                                        {row1.map((t, i) => renderChip(t, i, true))}
-                                                    </div>
-                                                    <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginTop: 12 }}>
-                                                        {row2.map((t, i) => renderChip(t, i, false))}
-                                                    </div>
-                                                </>
-                                            );
-                                        })()}
-                                    </div>
-                                </div>
-
-                                <div style={{ textAlign: 'center', padding: '24px 0', borderTop: '1px solid rgba(255,255,255,0.20)' }}>
-                                    <div style={{ color: '#E9D5FF', marginBottom: 6 }}>CareerStar • Summer 2025 Internship Program</div>
-                                    <div style={{ color: '#C4B5FD', fontSize: 12 }}>Questions? Message us hello@careerstar.co</div>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            )}
             {showAvatarModal && (
                 <div className='avatar-modal'>
                     <div className='avatar-modal-content'>

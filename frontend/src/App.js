@@ -16,13 +16,10 @@ import Dashboard from './components/Dashboard';
 import LogIn from './components/LogIn';
 import AdminLogin from './components/admin/AdminLogin';
 import AdminDashboard from './components/admin/AdminDashboard';
-import CustomerLogin from './components/admin/CustomerLogin';
-import CustomerAdminDashboard from './components/admin/CustomerAdminDashboard';
 import withAuth from './utils/withAuth';
 
 const AuthProtectedDashboard = withAuth(Dashboard);
 const AuthProtectedAdminDashboard = withAuth(AdminDashboard);
-const AuthProtectedCustomerAdmin = withAuth(CustomerAdminDashboard);
 
 function App() {
   return (
@@ -78,10 +75,6 @@ function App() {
             path='/admin/login'
             element={<AdminLogin />}
           />
-
-          {/* Customer (CUNY2x) login and dashboard */}
-          <Route exact path='/admin/customer/cuny2x' element={<CustomerLogin />} />
-          <Route exact path='/admin/customer/cuny2x/dashboard/*' element={<AuthProtectedCustomerAdmin />} />
 
           <Route
             exact
