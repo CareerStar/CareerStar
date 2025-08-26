@@ -250,9 +250,9 @@ function Home({ onComplete, userId }) {
         if (currentStep === 2 && !answers.major.trim()) {
             stepErrors.major = 'Please choose your major*';
         }
-        // if (currentStep === 2 && !answers.universityId) {
-        //     stepErrors.universityId = 'Please choose your university*';
-        // }
+        if (currentStep === 2 && !answers.universityId) {
+            stepErrors.universityId = 'Please choose your university*';
+        }
         setErrors(stepErrors);
         return Object.keys(stepErrors).length === 0;
     };
