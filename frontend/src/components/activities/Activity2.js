@@ -16,7 +16,6 @@ import upArrowScroll from '../../assets/images/up-arrow-scroll.png';
 import likeIcon from '../../assets/images/like-icon.png';
 import dislikeIcon from '../../assets/images/dislike-icon.png';
 import FlippableCard from "./activities-support/FlippableCard";
-import Stars3 from '../../assets/images/stars3.png';
 
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
@@ -39,8 +38,7 @@ const Activity2 = () => {
         answer1: "", //Answers can not be a null JSON object, it has to have at least one key-value pair
     });
     const [showHotTipPopup, setShowHotTipPopup] = useState(false);
-    // const [showLikeDislikePopup, setShowLikeDislikePopup] = useState(false);
-    const [showPopup, setShowPopup] = useState(false);
+    const [showLikeDislikePopup, setShowLikeDislikePopup] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const popupRef = useRef(null);
@@ -194,7 +192,7 @@ const Activity2 = () => {
         if (currentStep === null) {
             setCurrentStep(1);
         } else if (currentStep === stepsData.length) {
-            setShowPopup(true);
+            setShowLikeDislikePopup(true);
         } else if (currentStep < stepsData.length) {
             setCurrentStep(currentStep + 1);
         }
@@ -416,16 +414,15 @@ const Activity2 = () => {
                                 <div
                                     key={opt.id}
                                     className={`quiz-option 
-                                        ${selectedAnswer === opt.id ? "selected" : ""} 
-                                        ${isSubmitted && opt.id === quizQuestions[currentQuestionIndex].correctAnswer ? "correct" : ""} 
-                                        ${isSubmitted && selectedAnswer === opt.id && opt.id !== quizQuestions[currentQuestionIndex].correctAnswer ? "incorrect" : ""}`}
+              ${selectedAnswer === opt.id ? "selected" : ""} 
+              ${isSubmitted && opt.id === quizQuestions[currentQuestionIndex].correctAnswer ? "correct" : ""} 
+              ${isSubmitted && selectedAnswer === opt.id && opt.id !== quizQuestions[currentQuestionIndex].correctAnswer ? "incorrect" : ""}`}
                                     onClick={() => handleAnswerSelect(opt.id)}
                                 >
                                     {opt.id}. {opt.text}
                                 </div>
                             ))}
                         </div>
-                        
 
                         {/* Submit OR Next Arrow */}
                         <div className="quiz-footer">
@@ -434,15 +431,9 @@ const Activity2 = () => {
                                    Submit Answer   
                                 </button>
                             ) : (
-                                currentQuestionIndex === quizQuestions.length - 1 ? (
-                                    <label onClick={handleQuizSubmit}>
-                                        Quiz completed
-                                    </label>
-                                ) : (
-                                        <div className="next-arrow" onClick={handleNextQuestion}>
-                                        ➡
-                                        </div>
-                                )
+                                <div className="next-arrow" onClick={handleNextQuestion}>
+                                    ➡
+                                </div>
                             )}
                         </div>
                     </div>
@@ -459,7 +450,7 @@ const Activity2 = () => {
                 </div>
             </div>
 
-            {/* {showLikeDislikePopup && (
+            {showLikeDislikePopup && (
                 <div className='activity-like-dislike-popup'>
                     <div className='activity-like-dislike-popup-content'>
                         <p>How did you find this activity?</p>
@@ -470,18 +461,6 @@ const Activity2 = () => {
                             <div className='activity-dislike-button' onClick={() => handleSubmit(true)}>
                                 <img src={dislikeIcon} alt="Dislike" />
                             </div>
-                        </div>
-                    </div>
-                </div>
-            )} */}
-
-            {showPopup && (
-                <div className='popup'>
-                    <div className='popup-content'>
-                        <img src={Stars3} alt='3 stars' />
-                        <div className='earned-star'>You earned 7 stars!</div>
-                        <div className='popup-submit-button' onClick={() => handleSubmit(true)}>
-                            <p>Complete Activity!</p>
                         </div>
                     </div>
                 </div>
