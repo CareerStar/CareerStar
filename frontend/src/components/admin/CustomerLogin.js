@@ -29,7 +29,7 @@ const CustomerLogin = () => {
 
     if (password === expectedPassword) {
       localStorage.setItem('customer_cuny2x_token', 'true');
-      navigate('/admin/customer/cuny2x/dashboard/cohortdashboard');
+      navigate('/admin/customer/cuny2x/dashboard/managerreports');
     } else {
       setError('Invalid password.');
     }

@@ -6,15 +6,13 @@ import DashboardContent from '../DashboardContent';
 
 const CustomerAdminView = () => {
   const location = useLocation();
-  const [selectedPage, setSelectedPage] = useState('Cohortdashboard');
-  const pages = ['Cohort Dashboard', 'Manager Reports'];
+  const [selectedPage, setSelectedPage] = useState('Managerreports');
+  const pages = ['Manager Reports', 'Cohort Dashboard'];
 
   useEffect(() => {
     const parts = location.pathname.split('/');
-    const rawLast = parts[parts.length - 1];
-    let last = rawLast && rawLast.length > 0 ? rawLast.toLowerCase() : 'cohortdashboard';
-    if (last === 'dashboard') last = 'cohortdashboard';
-    const normalized = last.charAt(0).toUpperCase() + last.slice(1);
+    const last = parts[parts.length - 1] || 'managerreports';
+    const normalized = last ? last.charAt(0).toUpperCase() + last.slice(1) : 'Managerreports';
     setSelectedPage(normalized);
   }, [location.pathname]);
 
