@@ -3,19 +3,16 @@ import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../Header';
 import Sidebar from '../Sidebar';
 import DashboardContent from '../DashboardContent';
-import InternshipDashboard from './InternshipDashboard';
 
 const AdminDashboard = () => {
     const location = useLocation();
     const [userId, setUserId] = useState(location.state?.userId || '');
-    const [selectedPage, setSelectedPage] = useState('Users');
+    const [selectedPage, setSelectedPage] = useState('Adminevents');
     const [onboarded, setOnboarded] = useState(true);
     //const pages = ['AdminEvents', 'LinkedIn', 'Users', 'Activity Management', 'Manager Reports'];
     // Only show Users, Activity Management, and Manager Reports for admin
-    const pages = ['Users', 'Activity Management', 'Manager Reports', 'Internship Program Dashboard'];
-    const validPages = ['Home', 'Adminevents', 'Profile', 'Roadmap', 'Events', 'Network', 'Support', 
-        'Activity', 'Resumeguide', 'Workshops', 'Leaderboard', 'Linkedin', 'Users', 'Activitymanagement', 
-        'Managerreports', 'Internshipprogramdashboard'];
+    const pages = ['Users', 'Activity Management', 'Manager Reports'];
+    const validPages = ['Home', 'Adminevents', 'Profile', 'Roadmap', 'Events', 'Network', 'Support', 'Activity', 'Resumeguide', 'Workshops', 'Leaderboard', 'Linkedin', 'Users', 'Activitymanagement', 'Managerreports'];
 
     useEffect(() => {
         console.log('AdminDashboard useEffect');
