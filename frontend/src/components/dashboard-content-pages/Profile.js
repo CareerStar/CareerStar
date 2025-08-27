@@ -402,131 +402,7 @@ function Profile({ userId: propUserId }) {
                         <button className='help-me-button' onClick={handleHelp}>Help me write summary</button>
                         <button className='save-button' onClick={() => handleSave(summary)}>Save</button>
                     </div>
-                    <div className="my-reports-section">
-                      <button
-                        className="my-reports-main-btn"
-                        onClick={() => {
-                          setShowReports(!showReports);
-                          setSelectedReport(null);
-                        }}
-                      >
-                        {showReports ? "Hide My Reports" : "My Reports"}
-                      </button>
-                      {showReports && !selectedReport && (
-                        <div className="my-reports-list">
-                          {reports.length === 0 ? (
-                            <p>No reports found.</p>
-                          ) : (
-                            <ul>
-                              {reports.map((report) => (
-                                <li
-                                  key={report.id}
-                                  className="my-report-card clickable"
-                                  onClick={() => setSelectedReport(report)}
-                                >
-                                  <strong>
-                                    {report.created_time
-                                      ? new Date(report.created_time).toLocaleDateString('en-US', {
-                                          weekday: 'short',
-                                          year: 'numeric',
-                                          month: 'short',
-                                          day: '2-digit',
-                                          timeZone: 'America/New_York'
-                                        })
-                                      : "N/A"}
-                                    {" at "}
-                                    {report.created_time
-                                      ? new Date(report.created_time).toLocaleTimeString('en-US', {
-                                          hour: '2-digit',
-                                          minute: '2-digit',
-                                          hour12: true,
-                                          timeZone: 'America/New_York'
-                                        })
-                                      : "N/A"}
-                                  </strong>
-                                  <button
-                                    className="download-pdf-btn"
-                                    style={{ marginLeft: 12 }}
-                                    onClick={e => {
-                                      e.stopPropagation();
-                                      downloadReportPDF(report);
-                                    }}
-                                  >
-                                    Download PDF
-                                  </button>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                        </div>
-                      )}
-                      {showReports && selectedReport && (
-                        <div className="my-report-detail">
-                          <button className="my-reports-back-btn" onClick={() => setSelectedReport(null)}>
-                            ← Back to My Reports
-                          </button>
-                          {/* Download PDF button for selected report */}
-                          <button
-                            className="download-pdf-btn"
-                            style={{ marginLeft: 12, marginBottom: 16 }}
-                            onClick={() => downloadReportPDF(selectedReport)}
-                          >
-                            Download PDF
-                          </button>
-                          <div className="my-report-detail-header">
-                            <div className="my-report-detail-date">
-                              Report sent on: {selectedReport.created_time
-                                ? new Date(selectedReport.created_time).toLocaleDateString('en-US', {
-                                    weekday: 'short',
-                                    year: 'numeric',
-                                    month: 'short',
-                                    day: '2-digit',
-                                    timeZone: 'America/New_York'
-                                  })
-                                : "N/A"}
-                              {" at "}
-                              {selectedReport.created_time
-                                ? new Date(selectedReport.created_time).toLocaleTimeString('en-US', {
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                    hour12: true,
-                                    timeZone: 'America/New_York'
-                                  })
-                                : "N/A"}
-                            </div>
-                          </div>
-                          <div className="my-report-section">
-                            <div className="my-report-section-title">Highlights:</div>
-                            <ul className="my-report-section-list">
-                              {selectedReport.answers?.highlights?.map((h, i) => <li key={i}>{h}</li>)}
-                            </ul>
-                          </div>
-                          <div className="my-report-section">
-                            <div className="my-report-section-title">Future Highlights:</div>
-                            <ul className="my-report-section-list">
-                              {selectedReport.answers?.futureHighlights?.map((fh, i) => <li key={i}>{fh}</li>)}
-                            </ul>
-                          </div>
-                          <div className="my-report-section">
-                            <div className="my-report-section-title">Support Needed:</div>
-                            <div className="my-report-section-content">{selectedReport.answers?.supportNeeded || "N/A"}</div>
-                          </div>
-                          <div className="my-report-section">
-                            <div className="my-report-section-title">Idea:</div>
-                            <div className="my-report-section-content">{selectedReport.answers?.idea || "N/A"}</div>
-                          </div>
-                          <div className="my-report-section">
-                            <div className="my-report-section-title">Screenshots:</div>
-                            <ul className="my-report-section-list">
-                              {selectedReport.answers?.screenshots?.length
-                                ? selectedReport.answers.screenshots.map((s, i) => <li key={i}><a href={s} target="_blank" rel="noopener noreferrer">Screenshot {i + 1}</a></li>)
-                                : <li>None</li>
-                              }
-                            </ul>
-                          </div>
-                        </div>
-                      )}
-                    </div>
+                    {/* My Reports will be placed below the Internship Summary card */}
                     <div style={{ marginTop: 16, display: 'flex', justifyContent: 'flex-start' }}>
                       <div
                         onClick={openInternDashboard}
@@ -597,6 +473,131 @@ function Profile({ userId: propUserId }) {
                           View My Internship Summary
                         </button>
                       </div>
+                    </div>
+                    {/* My Reports moved here, below the summary card */}
+                    <div className="my-reports-section" style={{ marginTop: 16 }}>
+                      <button
+                        className="my-reports-main-btn"
+                        onClick={() => {
+                          setShowReports(!showReports);
+                          setSelectedReport(null);
+                        }}
+                      >
+                        {showReports ? 'Hide My Reports' : 'My Reports'}
+                      </button>
+                      {showReports && !selectedReport && (
+                        <div className="my-reports-list">
+                          {reports.length === 0 ? (
+                            <p>No reports found.</p>
+                          ) : (
+                            <ul>
+                              {reports.map((report) => (
+                                <li
+                                  key={report.id}
+                                  className="my-report-card clickable"
+                                  onClick={() => setSelectedReport(report)}
+                                >
+                                  <strong>
+                                    {report.created_time
+                                      ? new Date(report.created_time).toLocaleDateString('en-US', {
+                                          weekday: 'short',
+                                          year: 'numeric',
+                                          month: 'short',
+                                          day: '2-digit',
+                                          timeZone: 'America/New_York'
+                                        })
+                                      : 'N/A'}
+                                    {' at '}
+                                    {report.created_time
+                                      ? new Date(report.created_time).toLocaleTimeString('en-US', {
+                                          hour: '2-digit',
+                                          minute: '2-digit',
+                                          hour12: true,
+                                          timeZone: 'America/New_York'
+                                        })
+                                      : 'N/A'}
+                                  </strong>
+                                  <button
+                                    className="download-pdf-btn"
+                                    style={{ marginLeft: 12 }}
+                                    onClick={e => {
+                                      e.stopPropagation();
+                                      downloadReportPDF(report);
+                                    }}
+                                  >
+                                    Download PDF
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      )}
+                      {showReports && selectedReport && (
+                        <div className="my-report-detail">
+                          <button className="my-reports-back-btn" onClick={() => setSelectedReport(null)}>
+                            ← Back to My Reports
+                          </button>
+                          <button
+                            className="download-pdf-btn"
+                            style={{ marginLeft: 12, marginBottom: 16 }}
+                            onClick={() => downloadReportPDF(selectedReport)}
+                          >
+                            Download PDF
+                          </button>
+                          <div className="my-report-detail-header">
+                            <div className="my-report-detail-date">
+                              Report sent on: {selectedReport.created_time
+                                ? new Date(selectedReport.created_time).toLocaleDateString('en-US', {
+                                    weekday: 'short',
+                                    year: 'numeric',
+                                    month: 'short',
+                                    day: '2-digit',
+                                    timeZone: 'America/New_York'
+                                  })
+                                : 'N/A'}
+                              {' at '}
+                              {selectedReport.created_time
+                                ? new Date(selectedReport.created_time).toLocaleTimeString('en-US', {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: true,
+                                    timeZone: 'America/New_York'
+                                  })
+                                : 'N/A'}
+                            </div>
+                          </div>
+                          <div className="my-report-section">
+                            <div className="my-report-section-title">Highlights:</div>
+                            <ul className="my-report-section-list">
+                              {selectedReport.answers?.highlights?.map((h, i) => <li key={i}>{h}</li>)}
+                            </ul>
+                          </div>
+                          <div className="my-report-section">
+                            <div className="my-report-section-title">Future Highlights:</div>
+                            <ul className="my-report-section-list">
+                              {selectedReport.answers?.futureHighlights?.map((fh, i) => <li key={i}>{fh}</li>)}
+                            </ul>
+                          </div>
+                          <div className="my-report-section">
+                            <div className="my-report-section-title">Support Needed:</div>
+                            <div className="my-report-section-content">{selectedReport.answers?.supportNeeded || 'N/A'}</div>
+                          </div>
+                          <div className="my-report-section">
+                            <div className="my-report-section-title">Idea:</div>
+                            <div className="my-report-section-content">{selectedReport.answers?.idea || 'N/A'}</div>
+                          </div>
+                          <div className="my-report-section">
+                            <div className="my-report-section-title">Screenshots:</div>
+                            <ul className="my-report-section-list">
+                              {selectedReport.answers?.screenshots?.length
+                                ? selectedReport.answers.screenshots.map((s, i) => <li key={i}><a href={s} target="_blank" rel="noopener noreferrer">Screenshot {i + 1}</a></li>)
+                                : <li>None</li>
+                              }
+                            </ul>
+                          </div>
+                        </div>
+                      )}
                     </div>
                     <div className='summary-buttons flex-row'>
                         <button className='save-button' onClick={handleLogout}>Log Out</button>
@@ -833,6 +834,94 @@ function Profile({ userId: propUserId }) {
                                                                         const text = document.getElementById('proposal-template-box').innerText;
                                                                         navigator.clipboard.writeText(text).then(() => {
                                                                             alert('Proposal template copied to clipboard!');
+                                                                        });
+                                                                    }}
+                                                                    className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-4 py-2 rounded transition-colors"
+                                                                >
+                                                                    📄 Copy Template to Clipboard
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </details>
+                                                </div>
+                                            </div>
+
+                                            <div className="p-6 bg-indigo-50 rounded-xl border border-indigo-200">
+                                                <h4 className="font-semibold text-indigo-800 mb-2 text-lg text-left">Before You Leave Checklist</h4>
+                                                <p className="text-gray-700 text-sm mb-4 leading-relaxed text-left">Essential tasks to complete before your last day to maintain relationships and set yourself up for future opportunities.</p>
+                                                <div className="space-y-2 mb-4">
+                                                    <div className="flex items-start space-x-3">
+                                                        <div className="flex-shrink-0 mt-1">
+                                                            <div className="w-4 h-4 border-2 border-indigo-400 rounded bg-white flex items-center justify-center">
+                                                                <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
+                                                            </div>
+                                                        </div>
+                                                        <p className="text-gray-600 text-sm">Document all current work and prepare handover notes</p>
+                                                    </div>
+                                                    <div className="flex items-start space-x-3">
+                                                        <div className="flex-shrink-0 mt-1">
+                                                            <div className="w-4 h-4 border-2 border-indigo-400 rounded bg-white flex items-center justify-center">
+                                                                <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
+                                                            </div>
+                                                        </div>
+                                                        <p className="text-gray-600 text-sm">Schedule handover meetings with relevant team members</p>
+                                                    </div>
+                                                    <div className="flex items-start space-x-3">
+                                                        <div className="flex-shrink-0 mt-1">
+                                                            <div className="w-4 h-4 border-2 border-indigo-400 rounded bg-white flex items-center justify-center">
+                                                                <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
+                                                            </div>
+                                                        </div>
+                                                        <p className="text-gray-600 text-sm">Return all company hardware and equipment</p>
+                                                    </div>
+                                                    <div className="flex items-start space-x-3">
+                                                        <div className="flex-shrink-0 mt-1">
+                                                            <div className="w-4 h-4 border-2 border-red-400 rounded bg-white flex items-center justify-center">
+                                                                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                                                            </div>
+                                                        </div>
+                                                        <p className="text-gray-600 text-sm"><strong>CRITICAL: Request a LinkedIn referral from your manager</strong></p>
+                                                    </div>
+                                                </div>
+                                                <div className="mt-4 pt-4 border-t border-indigo-200">
+                                                    <details className="bg-white rounded-lg border border-indigo-200">
+                                                        <summary className="cursor-pointer p-3 font-medium text-indigo-700 hover:text-indigo-900 text-sm text-left">📄 LinkedIn Referral Request Template</summary>
+                                                        <div className="p-4 border-t border-indigo-100 text-xs bg-gray-50">
+                                                            <div className="bg-white p-3 rounded border text-gray-800 leading-relaxed text-left" id="referral-template-box">
+                                                                <strong>Subject:</strong> LinkedIn Referral Request - [Your Name]
+                                                                <br/><br/>
+                                                                Hi [Manager's Name],
+                                                                <br/><br/>
+                                                                As my internship comes to an end, I wanted to ask if you'd be willing to write a LinkedIn referral for me. I know you're busy, so I've drafted some specific points below that you could use or modify as you see fit:
+                                                                <br/><br/>
+                                                                <strong>Suggested referral points:</strong>
+                                                                <br/><br/>
+                                                                <em>"[Your Name] was an exceptional intern who consistently delivered high-quality work during their time with our team. Specifically, they:</em>
+                                                                <br/><br/>
+                                                                <em>• [Insert your top accomplishment, e.g., "Successfully created two interactive activities for our Career Star website, demonstrating strong design thinking and attention to user experience"]</em>
+                                                                <br/><br/>
+                                                                <em>• [Insert second accomplishment, e.g., "Led a presentation to 20+ students with engaging group exercises, showing excellent communication and leadership skills"]</em>
+                                                                <br/><br/>
+                                                                <em>• [Insert third accomplishment/skill, e.g., "Quickly learned new tools like Figma and contributed meaningful design work from day one"]</em>
+                                                                <br/><br/>
+                                                                <em>• [Insert soft skill example, e.g., "Proactively collaborated with team members and consistently met all deadlines while maintaining a positive attitude"]</em>
+                                                                <br/><br/>
+                                                                <em>[Your Name] would be a valuable addition to any team. They bring both technical skills and a collaborative mindset that made them a pleasure to work with. I highly recommend them for [type of role, e.g., 'design or frontend development roles."]</em>
+                                                                <br/><br/>
+                                                                Feel free to edit this in any way that feels authentic to your experience working with me. If you prefer to write something completely different, that would be wonderful too!
+                                                                <br/><br/>
+                                                                Thank you so much for everything you've taught me this summer and for considering this request.
+                                                                <br/><br/>
+                                                                Best regards,<br/>
+                                                                [Your Name]<br/>
+                                                                [Your LinkedIn Profile URL]
+                                                            </div>
+                                                            <div className="mt-3 text-center">
+                                                                <button 
+                                                                    onClick={() => {
+                                                                        const text = document.getElementById('referral-template-box').innerText;
+                                                                        navigator.clipboard.writeText(text).then(() => {
+                                                                            alert('LinkedIn referral request template copied to clipboard!');
                                                                         });
                                                                     }}
                                                                     className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-4 py-2 rounded transition-colors"
