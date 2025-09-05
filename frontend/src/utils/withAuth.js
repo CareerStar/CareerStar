@@ -1,13 +1,21 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function withAuth(WrappedComponent) {
     return function AuthWrapper(props) {
         const navigate = useNavigate();
+        const location = useLocation();
 
         useEffect(() => {
             const checkAuth = async () => {
-                if (WrappedComponent.name === 'AdminDashboard') {
+                const isAdminDashboard = WrappedComponent.name === 'AdminDashboard' || (location && location.pathname.startsWith('/admin/dashboard'));
+                const isCustomerAdmin = (
+                    WrappedComponent.name === 'CustomerAdminDashboard' ||
+                    WrappedComponent.name === 'CustomerAdminView' ||
+                    (location && location.pathname.startsWith('/admin/customer/cuny2x'))
+                );
+
+                if (isAdminDashboard) {
                     const admin_token = localStorage.getItem('admin_token');
                     if (!admin_token) {
                         navigate('/admin/login');
@@ -30,7 +38,7 @@ function withAuth(WrappedComponent) {
                             navigate('/admin/login');
                         }
                     }
-                } else if (WrappedComponent.name === 'CustomerAdminView') {
+                } else if (isCustomerAdmin) {
                     const token = localStorage.getItem('customer_cuny2x_token');
                     if (!token) {
                         navigate('/admin/customer/cuny2x');

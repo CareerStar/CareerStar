@@ -22,7 +22,7 @@ const CustomerAdminView = () => {
 
   return (
     <div className='dashboard'>
-      <Header userName={'Customer'} />
+      <Header userName={'Customer'} showAvatar={false} />
       <div className='dashboard-container'>
         <Sidebar pages={pages} selectedPage={selectedPage} onboarded={true} isAdmin={true} adminBase={'/admin/customer/cuny2x/dashboard'} />
         <div className='content'>
