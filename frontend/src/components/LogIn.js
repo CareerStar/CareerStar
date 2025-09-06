@@ -146,7 +146,7 @@ function LogIn() {
     };
 
     const signUpPageNavigation = () => {
-        navigate('/signup');
+        navigate('/emalCredential');
     };
 
     const togglePasswordVisibility = () => {
