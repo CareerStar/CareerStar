@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import Header from '../Header';
+import CustomerHeader from './CustomerHeader';
 import Sidebar from '../Sidebar';
 import DashboardContent from '../DashboardContent';
 
@@ -22,7 +22,7 @@ const CustomerAdminView = () => {
 
   return (
     <div className='dashboard'>
-      <Header userName={'Customer'} showAvatar={false} />
+      <CustomerHeader userName={'Customer'} />
       <div className='dashboard-container'>
         <Sidebar pages={pages} selectedPage={selectedPage} onboarded={true} isAdmin={true} adminBase={'/admin/customer/cuny2x/dashboard'} />
         <div className='content'>
