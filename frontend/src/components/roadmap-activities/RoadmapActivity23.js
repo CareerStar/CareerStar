@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import { apiUrl } from '../../utils/api';
 import starEmpty from '../../assets/images/star-empty.png';
 import star from '../../assets/images/star.png';
 import downArrow from '../../assets/images/down-arrow-roadmap.png';
@@ -18,7 +19,7 @@ function RoadmapActivity23({ userId }) {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`);
+                const response = await axios.get(apiUrl(`/roadmapactivity/${userId}/${activityId}`));
                 if (response.data) {
                     setAnswers(response.data[0]);
                     setCompleted(response.data[1]);
@@ -41,7 +42,7 @@ function RoadmapActivity23({ userId }) {
                 answers: answers,
                 stars: starCount,
             };
-            const response = await axios.post(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`, payload);
+            const response = await axios.post(apiUrl(`/roadmapactivity/${userId}/${activityId}`), payload);
             if (response.status === 200) {
                 if (completed) {
                     setCompleted(true);

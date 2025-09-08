@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { apiUrl } from '../../utils/api';
 import EventCard from '../EventCard';
 import starEmpty from '../../assets/images/star-empty.png';
 
@@ -22,7 +23,7 @@ function AdminEvents() {
         const fetchUserEventsDetails = async () => {
             try {
                 const admin_token = localStorage.getItem('admin_token');
-                const response = await axios.get('https://api.careerstar.co/events', {
+                const response = await axios.get(apiUrl('/events'), {
                     headers: {
                         Authorization: `Bearer ${admin_token}`
                     }
@@ -54,7 +55,7 @@ function AdminEvents() {
             const requestBody = {
                 newEvents
             };
-            const response = await axios.post('https://api.careerstar.co/events', newEvents, {
+            const response = await axios.post(apiUrl('/events'), newEvents, {
                 headers: {
                     Authorization: `Bearer ${admin_token}`,
                     'Content-Type': 'application/json',
@@ -103,7 +104,7 @@ function AdminEvents() {
     const handleDelete = async (activityId) => {
         try {
             const admin_token = localStorage.getItem('admin_token');
-            const response = await axios.delete(`https://api.careerstar.co/events/${activityId}`, {
+            const response = await axios.delete(apiUrl(`/events/${activityId}`), {
                 headers: {
                     Authorization: `Bearer ${admin_token}`
                 }
@@ -135,7 +136,7 @@ function AdminEvents() {
             // Convert tags back into an array
             // activity.tags = activity.tags.split(',').map(tag => tag.trim());
             const response = await axios.put(
-                `https://api.careerstar.co/events/${activity.activityId}`,
+                apiUrl(`/events/${activity.activityId}`),
                 activity,
                 {
                     headers: {

@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { apiUrl } from '../utils/api';
 import ProgressBar from './ProgressBar';
 import careerStarLogo from '../assets/images/career-star-logo-white.png';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -60,7 +61,7 @@ function LogIn() {
 
     const verifyToken = async (access_token) => {
         try {
-            const response = await axios.get('https://api.careerstar.co/protected', {
+            const response = await axios.get(apiUrl('/protected'), {
                 headers: {
                     Authorization: `Bearer ${access_token}`,
                 },
@@ -89,7 +90,7 @@ function LogIn() {
                 "password": password
             };
 
-            const response = await axios.post('https://api.careerstar.co/login', requestBody);
+            const response = await axios.post(apiUrl('/login'), requestBody);
             // const response = await axios.post('http://localhost:8080/users/login', requestBody);
             if (response.status === 200) {
                 const data = await response.data;
@@ -120,7 +121,7 @@ function LogIn() {
     const handleSendLink = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.post('https://api.careerstar.co/forgot-password', {
+            const response = await axios.post(apiUrl('/forgot-password'), {
                 email: resetPasswordEmail
             });
     

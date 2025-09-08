@@ -13,6 +13,7 @@ import dislikeIcon from '../../assets/images/dislike-icon.png';
 import SalaryNegotiationApp from './activities-support/SalaryNegotiationApp';
 
 import axios from 'axios';
+import { apiUrl } from '../../utils/api';
 import { useDispatch } from 'react-redux';
 
 
@@ -50,7 +51,7 @@ const Activity7 = () => {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`);
+                const response = await axios.get(apiUrl(`/roadmapactivity/${userId}/${activityId}`));
                 if (response.data) {
                     setAnswers(response.data[0]);
                     setCompleted(response.data[1]);
@@ -73,7 +74,7 @@ const Activity7 = () => {
                 answers: answers,
                 stars: starCount,
             };
-            const response = await axios.post(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`, payload);
+            const response = await axios.post(apiUrl(`/roadmapactivity/${userId}/${activityId}`), payload);
             if (response.status === 200) {
                 if (completed) {
                     setCompleted(true);

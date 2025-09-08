@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { apiUrl } from '../utils/api';
 
 import careerStarLogo from '../assets/images/career-star-logo-white.png';
 import eye from '../assets/images/eye.svg';
@@ -54,7 +55,7 @@ function ResetPasswordPage() {
         }
 
         try {
-            const res = await axios.post(`https://api.careerstar.co/reset-password/${token}`, {
+            const res = await axios.post(apiUrl(`/reset-password/${token}`), {
                 password
             });
             setMessage(res.data.message || 'Password successfully reset!');

@@ -18,6 +18,7 @@ import step1Image5 from '../../assets/images/activities/activity16/resume-pg.jpg
 import Stars3 from '../../assets/images/stars3.png';
 
 import axios from 'axios';
+import { apiUrl } from '../../utils/api';
 import { useDispatch } from 'react-redux';
 import likeIcon from '../../assets/images/like-icon.png';
 import dislikeIcon from '../../assets/images/dislike-icon.png';
@@ -101,7 +102,7 @@ const Activity16 = () => {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`);
+                const response = await axios.get(apiUrl(`/roadmapactivity/${userId}/${activityId}`));
                 if (response.data) {
                     setAnswers(response.data[0]);
                     // setTableData(response.data[0].tableData);
@@ -118,7 +119,7 @@ const Activity16 = () => {
     }, [userId]);
     const handleSubmit = async (completed) => {
         try {
-            await axios.post('https://api.careerstar.co/activity101/feedback', {
+            await axios.post(apiUrl('/activity101/feedback'), {
                 user_id: userId,
                 conditional_help: answers.conditionalHelp,
                 video_useful: answers.videoUseful,

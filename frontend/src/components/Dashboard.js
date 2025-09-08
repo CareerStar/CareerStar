@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import DashboardContent from './DashboardContent';
+import { apiUrl } from '../utils/api';
 
 function Dashboard() {
 
@@ -34,7 +35,7 @@ function Dashboard() {
 
     const fetchUserDetails = async () => {
         try {
-            const response = await fetch(`https://api.careerstar.co/user/${userId}`);
+            const response = await fetch(apiUrl(`/user/${userId}`));
             // const response = await fetch(`http://localhost:8080/users/${userId}`);
             const data = await response.json();
             if (response.ok) {
@@ -48,7 +49,7 @@ function Dashboard() {
         }
 
         try {
-            const response = await fetch(`https://api.careerstar.co/onboarding/${userId}`);
+            const response = await fetch(apiUrl(`/onboarding/${userId}`));
             // const response = await fetch(`http://localhost:8080/onboarding/${userId}`);
             const data = await response.json();
             if (response.ok) {

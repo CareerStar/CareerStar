@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import axios from 'axios';
+import { apiUrl } from '../utils/api';
 import ProgressBar from './ProgressBar';
 import careerStarLogo from '../assets/images/career-star-logo-white.png';
 import Stars3 from '../assets/images/stars3.png';
@@ -44,7 +45,7 @@ function EmailCredentialPage({onChangeUniversity}) {
     useEffect(() => {
     const fetchuniversityDetails = async () => {
         try {
-            const response = await axios.get('https://api.careerstar.co/universities');
+            const response = await axios.get(apiUrl('/universities'));
                 if (response.data) {
                     setUniversityDetails(response.data);  // Assuming the response is an array of university names
                 }
@@ -146,7 +147,7 @@ function EmailCredentialPage({onChangeUniversity}) {
                 stars: 3,
                 accesscode: accessCode
             };
-            const response = await axios.post('https://api.careerstar.co/users', requestBody);
+            const response = await axios.post(apiUrl('/users'), requestBody);
 
             if (response.status === 201) {
                 const data = await response.data;

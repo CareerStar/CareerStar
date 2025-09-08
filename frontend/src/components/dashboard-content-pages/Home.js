@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { apiUrl } from '../../utils/api';
 import astronaut from '../../assets/images/home-page-astronaut.png'
 import star from '../../assets/images/star-yellow.png'
 import HomepageQuestion1 from "../homepage-questionnaires/HomepageQuestion1";
@@ -60,7 +61,7 @@ function Home({ onComplete, userId }) {
         const fetchUserDetails = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`https://api.careerstar.co/user/${userId}`);
+                const response = await fetch(apiUrl(`/user/${userId}`));
                 // const response = await fetch(`http://localhost:8080/users/${userId}`);
                 const data = await response.json();
                 if (response.ok) {
@@ -73,7 +74,7 @@ function Home({ onComplete, userId }) {
             }
 
             try {
-                const response = await fetch(`https://api.careerstar.co/onboarding/${userId}`);
+                const response = await fetch(apiUrl(`/onboarding/${userId}`));
                 // const response = await fetch(`http://localhost:8080/onboarding/${userId}`);
                 const data = await response.json();
                 if (response.ok) {
@@ -181,7 +182,7 @@ function Home({ onComplete, userId }) {
                 "activityChoices": answers.activityChoices,
                 "universityId": answers.universityId
             };
-            const response = await axios.post('https://api.careerstar.co/onboarding', requestBody);
+            const response = await axios.post(apiUrl('/onboarding'), requestBody);
             // const response = await axios.post('http://localhost:8080/onboarding', requestBody);
             if (response.status === 200) {
                 const { responseUserId } = response.data;

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { apiUrl } from './api';
 
 function withAuth(WrappedComponent) {
     return function AuthWrapper(props) {
@@ -22,7 +23,7 @@ function withAuth(WrappedComponent) {
                         return;
                     } else {
                         try {
-                            const response = await fetch('https://api.careerstar.co/verifyAdminToken', {
+                            const response = await fetch(apiUrl('/verifyAdminToken'), {
                                 headers: {
                                     'Authorization': `Bearer ${admin_token}`
                                 }
@@ -62,7 +63,7 @@ function withAuth(WrappedComponent) {
                     }
 
                     try {
-                        const response = await fetch('https://api.careerstar.co/protected', {
+                        const response = await fetch(apiUrl('/protected'), {
                             method: 'GET',
                             headers: {
                                 'Authorization': `Bearer ${accessToken}`
@@ -70,7 +71,7 @@ function withAuth(WrappedComponent) {
                         });
 
                         if (!response.ok) {
-                            const refreshResponse = await fetch('https://api.careerstar.co/refresh', {
+                            const refreshResponse = await fetch(apiUrl('/refresh'), {
                                 method: 'POST',
                                 headers: {
                                     'Authorization': `Bearer ${refreshToken}`

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import EventCard from '../EventCard';
 import starEmpty from '../../assets/images/star-empty.png';
 import star from '../../assets/images/star.png';
+import { apiUrl } from '../../utils/api';
 
 function EventPage({ userId }) {
     const [events, setEvents] = useState([]);
@@ -11,7 +12,7 @@ function EventPage({ userId }) {
     useEffect(() => {
         const fetchUserEventsDetails = async () => {
             try {
-                const responseAll = await fetch(`https://api.careerstar.co/events`);
+                const responseAll = await fetch(apiUrl('/events'));
                 const eventsData = await responseAll.json();
             
                 if (!responseAll.ok) {
@@ -19,7 +20,7 @@ function EventPage({ userId }) {
                     return;
                 }
             
-                const responseUser = await fetch(`https://api.careerstar.co/events/${userId}`);
+                const responseUser = await fetch(apiUrl(`/events/${userId}`));
                 const completedData = await responseUser.json();
             
                 if (!responseUser.ok) {
@@ -89,7 +90,7 @@ function EventPage({ userId }) {
             return;
         }
         try {
-            const response = await fetch(`https://api.careerstar.co/events/${userId}/${currentCard.activityId}`, {
+            const response = await fetch(apiUrl(`/events/${userId}/${currentCard.activityId}`), {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

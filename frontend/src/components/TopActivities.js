@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TopActivityCard from './TopActivityCard';
+import { apiUrl } from '../utils/api';
 import activity1 from '../assets/images/activities/activityGalery/activity1.svg';
 import activity6 from '../assets/images/activities/activityGalery/activity6.svg';
 import activity13 from '../assets/images/activities/activityGalery/acitivty10.svg';
@@ -17,7 +18,7 @@ function TopActivities({ userId }) {
             setLoading(true);
 
             try {
-                const response = await fetch(`https://api.careerstar.co/roadmapactivity/${userId}`);
+                const response = await fetch(apiUrl(`/roadmapactivity/${userId}`));
                 const data = await response.json();
                 if (response.ok) {
                     setActivityStatuses(data);

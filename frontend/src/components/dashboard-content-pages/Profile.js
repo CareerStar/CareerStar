@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import star from '../../assets/images/star-yellow.png';
 import axios from 'axios';
+import { apiUrl } from '../../utils/api';
 import jsPDF from 'jspdf';
 import { Star as StarIcon, TrendingUp as TrendingUpIcon, CheckCircle as CheckCircleIcon, Award as AwardIcon, Code as CodeIcon, Users, Lightbulb } from 'lucide-react';
 import { cohortData, internshipTips } from '../admin/CohortDashboard';
@@ -78,7 +79,7 @@ function Profile({ userId: propUserId }) {
         const fetchUserDetails = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`https://api.careerstar.co/user/${userId}`);
+                const response = await axios.get(apiUrl(`/user/${userId}`));
             
                 if (response.status === 200) {
                     const data = response.data;
@@ -94,7 +95,7 @@ function Profile({ userId: propUserId }) {
                 console.error('Error fetching user details:', error);
             }
             try {
-                const response = await axios.get(`https://api.careerstar.co/onboarding/${userId}`);
+                const response = await axios.get(apiUrl(`/onboarding/${userId}`));
             
                 if (response.status === 200) {
                     const data = response.data;
@@ -122,7 +123,7 @@ function Profile({ userId: propUserId }) {
       const fetchReports = async () => {
         if (!userId) return;
         try {
-          const res = await axios.get(`https://api.careerstar.co/admin/reports/user/${userId}`);
+          const res = await axios.get(apiUrl(`/admin/reports/user/${userId}`));
           setReports(res.data.sort((a, b) => new Date(b.created_time) - new Date(a.created_time)));
         } catch (err) {
           setReports([]);
@@ -152,7 +153,7 @@ function Profile({ userId: propUserId }) {
         if (!userId) return;
         setSummaryLoading(true);
         try {
-          const res = await axios.get(`https://api.careerstar.co/internship-summary/${userId}`);
+          const res = await axios.get(apiUrl(`/internship-summary/${userId}`));
           setInternshipSummary(res.data);
         } catch (err) {
           setInternshipSummary(null);
@@ -167,7 +168,7 @@ function Profile({ userId: propUserId }) {
     const handleSave = async (updatedSummary) => {
         setLoading(true);
         try {
-            const response = await axios.put(`https://api.careerstar.co/update_profile/${userId}`, {
+            const response = await axios.put(apiUrl(`/update_profile/${userId}`), {
                 summary: updatedSummary,
             });
         
@@ -187,7 +188,7 @@ function Profile({ userId: propUserId }) {
         setShowavatarModal(false);
         dispatch({ type: "SET_AVATAR", payload: avatar });
         try {
-            const response = await axios.put(`https://api.careerstar.co/profile_picture/${userId}`, {
+            const response = await axios.put(apiUrl(`/profile_picture/${userId}`), {
                 profilepicture: avatar,
             });
         
@@ -206,7 +207,7 @@ function Profile({ userId: propUserId }) {
         setLoading(true); // Show loader
     
         try {
-            const response = await axios.post("https://api.careerstar.co/generate-ai-feedback", {
+            const response = await axios.post(apiUrl('/generate-ai-feedback'), {
                 prompt: `You are a professional summary writer. 
                     your role is to write a resume summary / LinkedIn About section based on the details I provide. 
                     Do not give options or any other instructions, I just want summary, no heading, nothing. 

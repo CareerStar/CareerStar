@@ -14,6 +14,7 @@ import likeIcon from '../../assets/images/like-icon.png';
 import dislikeIcon from '../../assets/images/dislike-icon.png';
 
 import axios from 'axios';
+import { apiUrl } from '../../utils/api';
 import { useDispatch } from 'react-redux';
 
 
@@ -77,7 +78,7 @@ const Activity3 = () => {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`);
+                const response = await axios.get(apiUrl(`/roadmapactivity/${userId}/${activityId}`));
                 if (response.data) {
                     setAnswers(response.data[0]);
                     setCompleted(response.data[1]);
@@ -96,7 +97,7 @@ const Activity3 = () => {
         setLoading(true); // Show loader
 
         try {
-            const response = await axios.post("https://api.careerstar.co/generate-ai-feedback", {
+            const response = await axios.post(apiUrl('/generate-ai-feedback'), {
                 prompt: `You are a Career Guide. This message is what I am sending to a recruiter. Provide feedback on the message. The feedback should be concise and also write the message in an improved way. The message is as follows:\n\n "${userMessage}"`
             });
 
@@ -120,7 +121,7 @@ const Activity3 = () => {
                 answers: answers,
                 stars: starCount,
             };
-            const response = await axios.post(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`, payload);
+            const response = await axios.post(apiUrl(`/roadmapactivity/${userId}/${activityId}`), payload);
             if (response.status === 200) {
                 if (completed) {
                     setCompleted(true);

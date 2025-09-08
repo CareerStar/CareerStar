@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { apiUrl } from '../../utils/api';
 import '../../App.css';
 import jsPDF from 'jspdf';
 
@@ -161,7 +162,7 @@ const AdminManagerReports = () => {
     const fetchUsers = async () => {
       setLoadingUsers(true);
       try {
-        const res = await axios.get(`https://api.careerstar.co/admin/reports/users`);
+        const res = await axios.get(apiUrl('/admin/reports/users'));
         setUsers(res.data);
       } catch (err) {
         alert("Failed to fetch users");
@@ -173,7 +174,7 @@ const AdminManagerReports = () => {
 
   // Fetch all reports for 'All Reports' column
   useEffect(() => {
-    axios.get('https://api.careerstar.co/admin/api/reports')
+    axios.get(apiUrl('/admin/api/reports'))
       .then(res => setAllReports(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -202,7 +203,7 @@ const AdminManagerReports = () => {
   // Fetch reports for selected user
   const handleUserClick = async (user) => {
     try {
-      const res = await axios.get(`https://api.careerstar.co/admin/reports/user/${user.userid}`);
+      const res = await axios.get(apiUrl(`/admin/reports/user/${user.userid}`));
       setReports(res.data);
     } catch (err) {
       alert("Failed to fetch reports");
@@ -282,7 +283,7 @@ const AdminManagerReports = () => {
                         onClick={() => {
                           setSelectedUser(user);
                           setLoadingReports(true);
-                          axios.get(`https://api.careerstar.co/admin/reports/user/${user.userid}`)
+                          axios.get(apiUrl(`/admin/reports/user/${user.userid}`))
                             .then(res => setReports(res.data))
                             .catch(() => setReports([]))
                             .finally(() => setLoadingReports(false));

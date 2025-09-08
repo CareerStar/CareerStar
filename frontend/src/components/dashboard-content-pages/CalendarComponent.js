@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { apiUrl } from "../../utils/api";
 
 const CalendarComponent = () => {
     const [userId, setUserId] = useState(localStorage.getItem('userId'));
@@ -26,7 +27,7 @@ const CalendarComponent = () => {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await fetch(`https://api.careerstar.co/interviewschedule/${userId}`, {
+                const response = await fetch(apiUrl(`/interviewschedule/${userId}`), {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                 });
@@ -48,7 +49,7 @@ const CalendarComponent = () => {
             }
 
             try {
-                const response = await fetch(`https://api.careerstar.co/user/${userId}`);
+                const response = await fetch(apiUrl(`/user/${userId}`));
                 const data = await response.json();
                 if (response.ok) {
                     setEmailID(data.emailID);
@@ -93,7 +94,7 @@ const CalendarComponent = () => {
         const newEvent = { date: selectedDate, ...interviewDetails };
 
         try {
-            const response = await fetch(`https://api.careerstar.co/interviewschedule/${userId}`, {
+            const response = await fetch(apiUrl(`/interviewschedule/${userId}`), {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

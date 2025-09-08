@@ -1,6 +1,7 @@
 // src/components/popups/DailyPopup.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { apiUrl } from '../../utils/api';
 import dailyPopupIcon from '../../assets/images/dailyPopupIcon.png';
 
 const DailyPopup = ({ userId, studentName }) => {
@@ -37,7 +38,7 @@ const DailyPopup = ({ userId, studentName }) => {
     };
 
     try {
-      await axios.post("https://api.careerstar.co/api/daily-feedback", submission);
+      await axios.post(apiUrl('/api/daily-feedback'), submission);
       console.log("feedback submitted:", submission);
     } catch (err) {
       console.error("Error submitting feedback:", err);

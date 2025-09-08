@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { apiUrl } from '../../utils/api';
 
 function HomepageQuestion4({ onChangeDegree, onChangeMajor, onChangeUniversity }) {
     const [universityDetails, setUniversityDetails] = useState([]);
@@ -10,7 +11,7 @@ function HomepageQuestion4({ onChangeDegree, onChangeMajor, onChangeUniversity }
     useEffect(() => {
         const fetchuniversityDetails = async () => {
             try {
-                const response = await axios.get('https://api.careerstar.co/universities');
+                const response = await axios.get(apiUrl('/universities'));
                 if (response.data) {
                     setUniversityDetails(response.data);  // Assuming the response is an array of university names
                 }
