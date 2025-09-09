@@ -114,7 +114,8 @@ logging.basicConfig(
     handlers=[logging.FileHandler("careerstar-backend.log"), logging.StreamHandler()],
 )
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 serializer = URLSafeTimedSerializer(os.getenv("SECRET_KEY"))
@@ -2852,5 +2853,4 @@ def list_internship_summaries():
             return_db_connection(connection)
 
 if __name__ == '__main__':
-    # app.run(host='0.0.0.0', port=5000, ssl_context=('cert.pem', 'key.pem'))
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, ssl_context=("cert.pem", "key.pem"))
