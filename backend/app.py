@@ -22,7 +22,10 @@ from typing import List, Dict, Any
 
 from pypdf import PdfReader  # modern package name
 
-load_dotenv()
+# first try to load from development
+load_dotenv(".env.development")
+# override with prod values if they exist
+load_dotenv(".env")
 
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = os.getenv("SECRET_KEY")
