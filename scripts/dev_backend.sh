@@ -18,5 +18,5 @@ if [[ -f requirements.txt ]]; then
 fi
 
 echo "[backend] Starting Flask dev server with reload..."
-exec .venv/bin/python -m flask --app app run --debug --host 0.0.0.0 --port 5000
+exec .venv/bin/python -m flask --app app run --debug --host 0.0.0.0 --port 3001
 
