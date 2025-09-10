@@ -14,6 +14,7 @@ import Events from "../Events";
 import QoD from "../question-of-the-day/QoD";
 import TopActivities from "../TopActivities";
 import DailyPopup from "./DailyPopup";
+import Stars3 from "../../assets/images/stars3.png";
 
 function Home({ onComplete, userId }) {
     const stars = useSelector(state => state.starCount);
@@ -36,6 +37,7 @@ function Home({ onComplete, userId }) {
         activityChoices: [],
         universityId: null
     });
+    const [showSignupStarsPopup, setShowSignupStarsPopup] = useState(false);
     const [errors, setErrors] = useState({
         describeMe: '',
         currentSituation: '',
@@ -104,6 +106,23 @@ function Home({ onComplete, userId }) {
         }
     }, [userId]);
 
+    // Show the signup stars popup only after onboarding is complete
+    useEffect(() => {
+        const isOnboardingComplete = answers.onboarded || currentStep >= 4;
+        if (isOnboardingComplete && localStorage.getItem('show_signup_stars_after_onboarding') === 'true') {
+            setShowSignupStarsPopup(true);
+            localStorage.removeItem('show_signup_stars_after_onboarding');
+        }
+    }, [answers.onboarded, currentStep]);
+
+    // Auto-dismiss the 3-star popup so it doesn't block sidebar interaction
+    useEffect(() => {
+        if (showSignupStarsPopup) {
+            const timer = setTimeout(() => setShowSignupStarsPopup(false), 4000);
+            return () => clearTimeout(timer);
+        }
+    }, [showSignupStarsPopup]);
+
     useEffect(() => {
         const handleKeyDown = (event) => {
             if (event.key === 'Enter') {
@@ -168,6 +187,7 @@ function Home({ onComplete, userId }) {
 
     const addUserOnboardingDeatils = async () => {
         try {
+            const universityIdNumeric = Number(answers.universityId) || 0;
             const requestBody = {
                 "userId": userId,
                 "describeMe": answers.describeMe,
@@ -179,11 +199,11 @@ function Home({ onComplete, userId }) {
                 "degree": answers.degree,
                 "major": answers.major,
                 "activityChoices": answers.activityChoices,
-                "universityId": answers.universityId
+                "universityId": universityIdNumeric
             };
             const response = await axios.post('https://api.careerstar.co/onboarding', requestBody);
             // const response = await axios.post('http://localhost:8080/onboarding', requestBody);
-            if (response.status === 200) {
+            if (response.status === 200 || response.status === 201) {
                 const { responseUserId } = response.data;
                 return true;
             } else {
@@ -301,7 +321,28 @@ function Home({ onComplete, userId }) {
                 </div>
             )}
 
-            <DailyPopup userId={userId} studentName={studentName} />
+            {(answers.onboarded || currentStep >= 4) && (
+                <DailyPopup userId={userId} studentName={studentName} />
+            )}
+
+            {showSignupStarsPopup && (
+                <div className='popup' onClick={() => setShowSignupStarsPopup(false)}>
+                    <div className='popup-content' onClick={(e) => e.stopPropagation()}>
+                        <button
+                            className='close material-icons'
+                            onClick={() => setShowSignupStarsPopup(false)}
+                            style={{ position: 'absolute', top: 8, right: 12, background: 'transparent', border: 'none', cursor: 'pointer' }}
+                        >
+                            close
+                        </button>
+                        <img src={Stars3} alt='3 stars' />
+                        <div className='earned-star'>You earned 3 stars!</div>
+                        <div className='popup-submit-button' onClick={() => setShowSignupStarsPopup(false)}>
+                            <p>Let's get started</p>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <div className="home-welcome">
                 <div className='home-welcome-left'>

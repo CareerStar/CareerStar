@@ -159,7 +159,10 @@ function EmailCredentialPage({onChangeUniversity}) {
 
                 setUserID(response.data.userId);
                 dispatch({ type: "SET_STAR_COUNT", payload: 3 });
-                setShowPopup(true);
+                // Defer the 3-star popup until onboarding is completed
+                localStorage.setItem('show_signup_stars_after_onboarding', 'true');
+                setShowPopup(false);
+                navigate('/dashboard', { state: { firstname: data.firstname, userId: data.userId } });
             }
 
         } catch (error) {
