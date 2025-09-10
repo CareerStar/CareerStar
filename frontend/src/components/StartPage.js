@@ -3,6 +3,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 
 import careerStarLogo from '../assets/images/career-star-logo-white.png';
 import astroaut from '../assets/images/main-page-astronaut.png';
+import StarField from './StarField';
 
 function StartPage() {
     const navigate = useNavigate();
@@ -21,11 +22,7 @@ function StartPage() {
 
     return (
         <div className='main-page'>
-                <section className="stars-container">
-                    <div id="stars"></div>
-                    <div id="stars2"></div>
-                    <div id="stars3"></div>
-                </section>
+                <StarField />
             <div className='career-star-logo'>
                 <img src={careerStarLogo} alt='Career Star Logo' />
             </div>

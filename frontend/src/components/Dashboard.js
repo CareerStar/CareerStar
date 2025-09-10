@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import DashboardContent from './DashboardContent';
+import StarField from './StarField';
 import { apiUrl } from '../utils/api';
 
 function Dashboard() {
@@ -106,13 +107,7 @@ function Dashboard() {
     return (
         <div className='dashboard'>
             <Header userName={firstname} />
-            <div>
-                <section className="stars-container">
-                    <div id="stars"></div>
-                    <div id="stars2"></div>
-                    <div id="stars3"></div>
-                </section>
-            </div>            
+            <StarField />            
             <div className='dashboard-container'>
                 <Sidebar pages={pages} selectedPage={selectedPage} onboarded={onboarded} />
                 <div className='content'>

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { apiUrl } from '../../utils/api';
+import StarField from '../StarField';
 import astronaut from '../../assets/images/home-page-astronaut.png'
 import star from '../../assets/images/star-yellow.png'
 import HomepageQuestion1 from "../homepage-questionnaires/HomepageQuestion1";
@@ -386,11 +387,7 @@ function Home({ onComplete, userId }) {
             ) : currentStep === (totalSteps + 1) ? (
                 <div className="">
                     {renderPage()}
-                     <section class="stars-container">
-                    <div id="stars"></div>
-                    <div id="stars2"></div>
-                    <div id="stars3"></div>
-                </section>
+                     <StarField />
                 </div>
             ) : (
                 <div className="home-questions">
