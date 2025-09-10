@@ -20,6 +20,7 @@ import likeIcon from '../../assets/images/like-icon.png';
 import dislikeIcon from '../../assets/images/dislike-icon.png';
 
 import axios from 'axios';
+import { apiUrl } from '../../utils/api';
 import { useDispatch } from 'react-redux';
 
 
@@ -86,7 +87,7 @@ const Activity15 = () => {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`);
+                const response = await axios.get(apiUrl(`/roadmapactivity/${userId}/${activityId}`));
                 if (response.data) {
                     setAnswers(response.data[0]);
                     // setTableData(response.data[0].tableData);
@@ -115,7 +116,7 @@ const Activity15 = () => {
       
           // roadmap POST 
           const response = await axios.post(
-            `https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`,
+            apiUrl(`/roadmapactivity/${userId}/${activityId}`),
             payload
           );
       
@@ -173,7 +174,7 @@ const Activity15 = () => {
             help: answers.help,
           };
       
-          await axios.post('https://api.careerstar.co/user-internship-info', payload);
+          await axios.post(apiUrl('/user-internship-info'), payload);
       
           if (prevPage === 'activities') {
             navigate('/dashboard/activities');

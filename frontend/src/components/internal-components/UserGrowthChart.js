@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { apiUrl } from '../../utils/api';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const UserGrowthChart = () => {
@@ -7,7 +8,7 @@ const UserGrowthChart = () => {
     const [goal, setGoal] = useState(1000);
 
     useEffect(() => {
-        axios.get('https://api.careerstar.co/users/stats')
+        axios.get(apiUrl('/users/stats'))
             .then(response => {
                 const { data, goal_count } = response.data;
                 setData(data);

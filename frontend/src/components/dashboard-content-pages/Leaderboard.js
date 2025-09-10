@@ -1,6 +1,7 @@
 import React, { useMemo, useEffect, useState } from 'react';
 import { Star } from 'lucide-react';
 import axios from "axios";
+import { apiUrl } from '../../utils/api';
 import UserGrowthChart from '../internal-components/UserGrowthChart';
 
 const Leaderboard = () => {
@@ -12,7 +13,7 @@ const Leaderboard = () => {
         const fetchTopUsers = async () => {
             setLoading(true);
             try {
-                const response = await axios.get("https://api.careerstar.co/top-users");
+                const response = await axios.get(apiUrl('/top-users'));
                 const updatedUsers = response.data.map(user => ({
                     firstname: user.firstname,
                     stars: user.stars

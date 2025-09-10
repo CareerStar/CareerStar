@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { apiUrl } from '../../utils/api';
 import careerStarLogo from '../../assets/images/career-star-logo-black.png';
 
 const AdminLogin = () => {
@@ -36,7 +37,7 @@ const AdminLogin = () => {
 
     const verifyToken = async (admin_token) => {
         try {
-            const response = await axios.get('https://api.careerstar.co/verifyAdminToken', {
+            const response = await axios.get(apiUrl('/verifyAdminToken'), {
                 headers: {
                     Authorization: `Bearer ${admin_token}`,
                 },
@@ -65,7 +66,7 @@ const AdminLogin = () => {
                 "password": password
             };
 
-            const response = await axios.post('https://api.careerstar.co/adminlogin', requestBody);
+            const response = await axios.post(apiUrl('/adminlogin'), requestBody);
             if (response.status === 200) {
                 const admin_token = response.data.access_token;
                 localStorage.setItem('admin_token', admin_token);

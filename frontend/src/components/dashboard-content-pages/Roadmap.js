@@ -12,6 +12,7 @@ import activity7 from '../../assets/images/activities/activityGalery/activity7.s
 import activity8 from '../../assets/images/activities/activityGalery/activity8.svg';
 import activity9 from '../../assets/images/activities/activityGalery/activity9.svg';
 import activity10 from '../../assets/images/activities/activityGalery/acitivty10.svg';
+import { apiUrl } from '../../utils/api';
 
 function Roadmap({ userId, activityName }) {
     const [currentSituation, setCurrentSituation] = useState('I’m a recent grad');
@@ -29,7 +30,7 @@ function Roadmap({ userId, activityName }) {
         const fetchUserDetails = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`https://api.careerstar.co/onboarding/${userId}`);
+                const response = await fetch(apiUrl(`/onboarding/${userId}`));
                 const data = await response.json();
                 if (response.ok) {
                     setCurrentSituation(data.currentSituation);
@@ -44,7 +45,7 @@ function Roadmap({ userId, activityName }) {
             }
 
             try {
-                const response = await fetch(`https://api.careerstar.co/roadmapactivity/${userId}`);
+                const response = await fetch(apiUrl(`/roadmapactivity/${userId}`));
                 const data = await response.json();
                 if (response.ok) {
                     setActivityStatuses(data);
@@ -65,7 +66,7 @@ function Roadmap({ userId, activityName }) {
     const saveUserDetails = async () => {
         setLoading(true);
         try {
-            const response = await fetch(`https://api.careerstar.co/update_onboarding/${userId}`, {
+            const response = await fetch(apiUrl(`/update_onboarding/${userId}`), {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

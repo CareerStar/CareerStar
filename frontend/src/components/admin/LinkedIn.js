@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { apiUrl } from '../../utils/api';
 
 function LinkedIn() {
     const navigate = useNavigate();
@@ -12,7 +13,7 @@ function LinkedIn() {
         const fetchUsersLinkedInDetails = async () => {
             try {
                 const admin_token = localStorage.getItem('admin_token');
-                const response = await axios.get('https://api.careerstar.co/linkedin', {
+                const response = await axios.get(apiUrl('/linkedin'), {
                     headers: {
                         Authorization: `Bearer ${admin_token}`,
                     },
@@ -55,7 +56,7 @@ function LinkedIn() {
                 LinkedIn: linkedInData,
             };
             const response = await axios.put(
-                `https://api.careerstar.co/linkedin/${userId}`,
+                apiUrl(`/linkedin/${userId}`),
                 payload,
                 {
                     headers: {

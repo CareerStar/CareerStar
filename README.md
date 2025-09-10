@@ -17,6 +17,24 @@ CareerStar is a platform that helps users build a personalized roadmap for their
 
 **CareerStar LLC** retains full ownership of this codebase. This repository is intended for internal development, collaboration, and deployment purposes only. Unauthorized distribution or use is strictly prohibited.
 
+## Local development
+### Install local dependencies
+
+Install homebrew + npm + python3 if you haven't already
+```bash
+brew install npm
+brew install python3
+```
+Install development dependencies for frontend + backend
+```bash
+npm run install:all
+```
+
+Start the development server
+```bash
+npm run dev
+```
+
 ## Features
 
 - Dynamic user roadmaps based on career goals and progress.

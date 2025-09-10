@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { apiUrl } from '../../utils/api';
 import {
   Container, Table, Form, Button, InputGroup,
   Alert, Spinner, Card, Row, Col
@@ -31,7 +32,7 @@ const UserManagement = () => {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('https://api.careerstar.co/users', { headers });
+      const response = await axios.get(apiUrl('/users'), { headers });
       setUsers(response.data.users);
       setError(null);
     } catch (err) {
@@ -54,7 +55,7 @@ const UserManagement = () => {
 
     try {
       const response = await axios.put(
-        `https://api.careerstar.co/users/${userId}/stars`,
+        apiUrl(`/users/${userId}/stars`),
         { stars: updatedUsers[userId] },
         { headers }
       );
@@ -94,7 +95,7 @@ const UserManagement = () => {
     if (updatedCohorts[userId] === undefined) return;
     try {
       await axios.put(
-        `https://api.careerstar.co/users/${userId}/cohort`,
+        apiUrl(`/users/${userId}/cohort`),
         { cohort: updatedCohorts[userId] },
         { headers }
       );

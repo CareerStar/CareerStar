@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
+import { apiUrl } from '../../utils/api';
 import astronaut from '../../assets/images/home-page-astronaut.png'
 import star from '../../assets/images/star-yellow.png'
 
@@ -33,7 +34,7 @@ function ResumeGuide() {
             const formData = new FormData();
             formData.append('resume', file);
 
-            const response = await axios.post('https://api.careerstar.co/resumefeedback', formData, {
+            const response = await axios.post(apiUrl('/resumefeedback'), formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

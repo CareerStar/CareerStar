@@ -32,6 +32,7 @@ import {
   Info as InfoIcon,
   AlertTriangle as AlertTriangleIcon
 } from 'lucide-react';
+import { apiUrl } from '../../utils/api';
 
 function HeaderBar({ selectedCohort, setSelectedCohort, selectedUniversity, setSelectedUniversity, reportFilter, setReportFilter }) {
   const universities = ['Baruch College', 'Brooklyn College', 'City College of New York', 'City Tech','Hunter College', 'Queens College', 'Lehman College', 'John Jay College of Criminal Justice', 'College of Staten Island', 'Medgar Evers College', 'York College'];
@@ -565,7 +566,7 @@ const InternshipDashboard = () => {
     const fetchLeaderboard = async () => {
       try {
         setLoading(true);
-        const topUsersRes = await fetch('https://api.careerstar.co/top-users');
+        const topUsersRes = await fetch(apiUrl('/top-users'));
         if (topUsersRes.ok) {
           const data = await topUsersRes.json();
           const topUsers = (data || []).map((u) => ({
@@ -618,7 +619,7 @@ const InternshipDashboard = () => {
       try {
         setLoading(true);
         const end = new Date();
-        const reportsRes = await fetch('https://api.careerstar.co/admin/api/reports');
+        const reportsRes = await fetch(apiUrl('/admin/api/reports'));
         if (reportsRes.ok) {
           const reports = await reportsRes.json();
 
@@ -720,7 +721,7 @@ const InternshipDashboard = () => {
       setLoadingAllInterns(true);
       setAllInternsError('');
       const adminToken = localStorage.getItem('admin_token') || '';
-      const res = await fetch('https://api.careerstar.co/users', {
+      const res = await fetch(apiUrl('/users'), {
         headers: {
           Authorization: `Bearer ${adminToken}`,
           'Content-Type': 'application/json'

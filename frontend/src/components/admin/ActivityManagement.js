@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { apiUrl } from '../../utils/api';
 import {
   Container, Spinner
 } from 'react-bootstrap';
@@ -44,7 +45,7 @@ const ActivityManagement = () => {
     try {
       setLoading(true);
       // You'll need to replace this with your actual API endpoint
-      const response = await axios.get('https://api.careerstar.co/roadmapactivity', { headers });
+      const response = await axios.get(apiUrl('/roadmapactivity'), { headers });
       setActivities(response.data);
       setError(null);
     } catch (err) {

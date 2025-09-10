@@ -14,6 +14,7 @@ import speakingIcon from '../../assets/images/activities/activity10/speaking-ico
 import cameraIcon from '../../assets/images/activities/activity10/camera-icon.png';
 
 import axios from 'axios';
+import { apiUrl } from '../../utils/api';
 import { useDispatch } from 'react-redux';
 
 const Activity10 = () => {
@@ -91,7 +92,7 @@ const Activity10 = () => {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`);
+                const response = await axios.get(apiUrl(`/roadmapactivity/${userId}/${activityId}`));
                 if (response.data) {
                     setAnswers(response.data[0]);
                     if (response.data[0].photoUrl) {
@@ -137,7 +138,7 @@ const Activity10 = () => {
             formData.append('userId', userId);
             formData.append('activityId', activityId);
 
-            const response = await axios.post('https://api.careerstar.co/upload-image', formData, {
+            const response = await axios.post(apiUrl('/upload-image'), formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -165,7 +166,7 @@ const Activity10 = () => {
                 answers: answers,
                 stars: starCount,
             };
-            const response = await axios.post(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`, payload);
+            const response = await axios.post(apiUrl(`/roadmapactivity/${userId}/${activityId}`), payload);
             if (response.status === 200) {
                 if (completed) {
                     setCompleted(true);

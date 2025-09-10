@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import careerStarLogo from '../assets/images/career-star-logo-white.png';
 import star from '../assets/images/star-yellow.png';
+import { apiUrl } from '../utils/api';
 
 function Header({ userName }) {
     const dispatch = useDispatch();
@@ -17,7 +18,7 @@ function Header({ userName }) {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await fetch(`https://api.careerstar.co/profile_picture/${userId}`);
+                const response = await fetch(apiUrl(`/profile_picture/${userId}`));
                 const data = await response.json();
                 if (response.ok) {
                     if (data.profilepicture) {

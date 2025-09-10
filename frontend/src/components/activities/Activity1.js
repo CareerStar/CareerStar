@@ -20,6 +20,7 @@ import likeIcon from '../../assets/images/like-icon.png';
 import dislikeIcon from '../../assets/images/dislike-icon.png';
 
 import axios from 'axios';
+import { apiUrl } from '../../utils/api';
 import { useDispatch } from 'react-redux';
 
 
@@ -85,7 +86,7 @@ const Activity1 = () => {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`);
+                const response = await axios.get(apiUrl(`/roadmapactivity/${userId}/${activityId}`));
                 if (response.data) {
                     setAnswers(response.data[0]);
                     // setTableData(response.data[0].tableData);
@@ -108,7 +109,7 @@ const Activity1 = () => {
                 answers: answers,
                 stars: starCount,
             };
-            const response = await axios.post(`https://api.careerstar.co/roadmapactivity/${userId}/${activityId}`, payload);
+            const response = await axios.post(apiUrl(`/roadmapactivity/${userId}/${activityId}`), payload);
             if (response.status === 200) {
                 if (completed) {
                     setCompleted(true);
