@@ -74,7 +74,7 @@ const DailyPopup = ({ userId, studentName }) => {
               <div className="daily-popup-content">
                 <div className="popup-body">
                   <h2>Welcome!</h2>
-                  <h3>How are you feeling today about your internship career readiness?</h3>
+                  <h3>How are you feeling today about your professional readiness</h3>
 
                   <div className="daily-rating">
                     {[1, 2, 3, 4, 5].map((rating) => (
