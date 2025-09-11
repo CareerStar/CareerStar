@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import axios from 'axios';
 import { apiUrl } from '../utils/api';
 import ProgressBar from './ProgressBar';
+import StarField from './StarField';
 import careerStarLogo from '../assets/images/career-star-logo-white.png';
 import Stars3 from '../assets/images/stars3.png';
 import eye from '../assets/images/eye.svg';
@@ -216,11 +217,7 @@ function EmailCredentialPage({onChangeUniversity}) {
 
     return (
         <div className='signUp-page'>
-                <section className="stars-container">
-                    <div id="stars"></div>
-                    <div id="stars2"></div>
-                    <div id="stars3"></div>
-                </section>
+                <StarField />
             <div className='career-star-logo' onClick={navigateToStartPage}>
                 <img src={careerStarLogo} alt='Career Star Logo' />
             </div>
