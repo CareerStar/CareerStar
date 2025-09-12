@@ -75,7 +75,16 @@ const StarField = ({
       large1: generateStarLayer(starCount.large, 3, animationSpeed.large, 0),
       large2: generateStarLayer(starCount.large, 3, animationSpeed.large, 100),
     };
-  }, [windowSize, starCount, animationSpeed]);
+  }, [
+    windowSize.width, 
+    windowSize.height, 
+    starCount.small, 
+    starCount.medium, 
+    starCount.large,
+    animationSpeed.small,
+    animationSpeed.medium,
+    animationSpeed.large
+  ]);
 
   const containerStyle = {
     width: '100%',
