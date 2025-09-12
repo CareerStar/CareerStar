@@ -4,6 +4,7 @@ import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { apiUrl } from '../utils/api';
 import ProgressBar from './ProgressBar';
+import StarField from './StarField';
 import careerStarLogo from '../assets/images/career-star-logo-white.png';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -156,6 +157,7 @@ function LogIn() {
 
     return (
         <div className='signUp-page'>
+            <StarField />
             <div className='career-star-logo' onClick={navigateToStartPage}>
                 <img src={careerStarLogo} alt='Career Star Logo' />
             </div>
